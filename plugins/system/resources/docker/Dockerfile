@@ -12,11 +12,10 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 ARG CACHE_BREAKER=1
 
 #RUN mkdir -p /usr/share/ && wget --output-document=/usr/share/eme-lib.tar.gz --no-cache -q http://192.229.4.120:8080/eme-lib.tar.gz && \
-
 #RUN  mkdir -p /usr/share/ && wget --output-document=/usr/share/eme-lib.tar.gz --no-cache -q https://dev.entermediadb.org/jenkins/view/EM12/job/eme-lib/lastSuccessfulBuild/artifact/deploy/eme-lib.tar.gz && \
 #   cd /usr/share/ && tar -xzf eme-lib.tar.gz && rm -rf eme-lib.tar.gz 
 
-RUN wget -O - https://raw.githubusercontent.com/entermedia-community/eme-lib/refs/heads/main/resources/bin/eme.sh >> /usr/bin/eme  && chmod +x /usr/bin/eme
+RUN wget -O - https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/plugins/system/resources/bin/eme.sh >> /usr/bin/eme  && chmod +x /usr/bin/eme
 COPY delegates.xml /opt/imei/share/ImageMagick-7/delegates.xml
 COPY sysctl.conf /etc/sysctl.conf
 COPY limits.conf /etc/security/limits.conf
