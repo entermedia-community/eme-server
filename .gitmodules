@@ -1,5 +1,9 @@
-[submodule "eme-lib"]
-	path = eme-lib
-	url = https://github.com/entermedia-community/eme-lib.git
+[submodule "eme-plugin-finder"]
+	path = plugins/finder/html
+	url = https://github.com/entermedia-community/eme-plugin-finder.git
 	branch = main
     depth = 1
+[submodule "plugins/finder/html"]
+	path = plugins/finder/html
+	url = https://github.com/entermedia-community/eme-lib.git
+	branch = main
