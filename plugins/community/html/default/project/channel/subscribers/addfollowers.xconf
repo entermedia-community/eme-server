@@ -1,0 +1,10 @@
+<page>
+	<property name="virtual">true</property>
+	
+	<path-action name="Script.run">
+	
+		<script>./addfollowers.groovy</script>
+		
+	</path-action>
+	<inner-layout />
+</page>

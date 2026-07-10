@@ -1,0 +1,11 @@
+<properties>
+	<property id="name" />
+	<property id="generatedoutputfile" />
+	<property id="guid" />
+	<property id="systemdefinedpreset" />
+	<property id="onimport" />
+	<property id="inputtype"/>
+	
+</properties>
+
+   

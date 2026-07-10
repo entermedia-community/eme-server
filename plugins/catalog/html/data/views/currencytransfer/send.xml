@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+ 
+   <property id="total" />
+   <property id="name" />
+
+   <property id="paymententitydesttype" />
+   <property id="paymententitydest"  />
+
+   <property id="expensetype" />
+
+</properties>

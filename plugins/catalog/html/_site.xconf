@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="catalogid">catalog</property>
+  <property name="applicationid">catalog</property>
+  <property name="siteid">catalog</property>
+  <path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
+
+</page>

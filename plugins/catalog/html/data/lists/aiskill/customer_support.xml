@@ -1,0 +1,29 @@
+<records>
+
+
+  <data id="answer_query" bean="questionManagerSkill" agenttype="taskagent" ordering="30">
+    <name>
+      <![CDATA[Find Answer for Customer Query]]>
+    </name>
+  </data>
+
+  <data id="mark_as_critical" bean="goalManagerSkill" agenttype="taskagent" ordering="50">
+    <name>
+      <![CDATA[Mark as Critical]]>
+    </name>
+  </data>
+
+  <data id="escalate_issue" bean="goalManagerSkill" agenttype="taskagent" ordering="60">
+    <name>
+      <![CDATA[Escalate Issue]]>
+    </name>
+  </data>
+
+  <data id="mark_as_done" bean="goalManagerSkill" agenttype="taskagent" ordering="40">
+    <name>
+      <![CDATA[Mark as Done]]>
+    </name>
+  </data>
+
+
+</records>

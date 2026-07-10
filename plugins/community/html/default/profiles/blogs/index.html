@@ -1,0 +1,67 @@
+ 
+$context.putPageValue("showchannel",false)
+
+#if($permissions.canEntity($module,$emeprofile,"edit"))
+	#set( $query = $mediaarchive.query("userpost").exact("emeprofile", $emeprofile.getId()).sort("entity_dateDown") )
+#else
+	#set( $query = $mediaarchive.query("userpost").exact("emeprofile", $emeprofile.getId()).exact("poststatus", "published").sort("entity_dateDown") )
+#end
+
+#set( $tag = $context.getRequestParameter("tag") )
+
+#ifnotnull($tag)
+	#set( $query = $query.exact("keywords", $tag) )
+#end
+
+#set( $userposts = $query.search() )
+
+<div id="bloglistindex" class="bloglistindex" data-url="${page.path}" data-collectionid="$emeprofile.id" data-oemaxlevel="1">
+
+	<div class="d-flex flex-column mb-3 blog-list-title">
+		#if( !$userposts.isEmpty() )
+			#if($tag)
+				<h1 class="h3 mb-2">[[Blogs tagged with ]] <span class="blog-tag-filter">#esc($tag)</span> <a class="ms-1 text-muted small" href="${projectlink}"><i class="fa fa-times"></i></a></h1>
+			#else
+				<h1 class="h3 mb-2">[[Recent Blogs]]</h1>
+			#end
+		#end
+		#if($permissions.canEntity($module,$emeprofile,"edit"))
+			<div>
+			#set( $drafts = $mediaarchive.query("userpost").exact("emeprofile", $emeprofile.getId()).exact("poststatus", "draft").search() )
+					
+			#if($drafts)
+				<a class="btn btn-sm  btn-light mx-2" 
+						href="${projectlink}/blog-list/index-pending.html" 
+						data-collectionid="$emeprofile.id">
+						<i class="fa fa-file me-1"></i>
+						[[Draft & Pending Posts]]
+				</a>
+			#end
+			<a class="btn btn-sm btn-primary emdialog"
+				href="${communitylink}/project/channel/addnew.html"
+				data-collectionid="$emeprofile.id"
+				data-dialogid="createPostDialog"
+				data-hidefooter="true">
+				<i class="fa fa-plus me-1"></i>
+				[[Create a New Blog]]
+			</a>
+			</div>
+		#end
+	</div>
+
+	#if( $userposts.isEmpty() )
+		<p class="text-center text-muted my-5">
+			[[Nothing posted yet]]
+		</p>
+	#else
+		<div class="blog-list-container">
+			#foreach( $userpost in $userposts.getPageOfHits())
+				$context.putPageValue("userpost",$userpost)
+				$pages.include("${apphome}/project/blog-list/blog-item.html",$context)
+			#end
+		</div>
+	#end
+
+	## $pages.include("${apphome}/project/blog-list/pagination.html", $context)
+
+</div>

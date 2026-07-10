@@ -1,0 +1,82 @@
+<properties>
+
+  <parameter id="imagethumb1" parameterdata="imagethumb" value="200" >prefwidth</parameter> 
+  <parameter id="imagethumb2" parameterdata="imagethumb" value="200" >prefheight</parameter> 
+  <parameter id="imagethumb3" parameterdata="imagethumb" value="76" >quality</parameter> 
+  <parameter id="imagethumb4" parameterdata="imagethumb" value="4:2:0" >sampling-factor</parameter> 
+
+  <parameter id="imagemedium1" parameterdata="imagemedium" value="550" >prefwidth</parameter> 
+  <parameter id="imagemedium2" parameterdata="imagemedium" value="550" >prefheight</parameter> 
+  <parameter id="imagemedium3" parameterdata="imagemedium" value="80" >quality</parameter> 
+  <parameter id="imagemedium4" parameterdata="imagemedium" value="4:2:0" >sampling-factor</parameter>
+  <parameter name="layers" value="flatten" parameterdata="imagemedium" id="1447783333851">layers</parameter> 
+
+  <parameter id="imagemediumsm1" parameterdata="imagemediumsmall" value="300" >prefwidth</parameter> 
+  <parameter id="imagemediumsm2" parameterdata="imagemediumsmall" value="300" >prefheight</parameter> 
+  <parameter id="imagemediumsm3" parameterdata="imagemediumsmall" value="76" >quality</parameter> 
+  <parameter id="imagemediumsm4" parameterdata="imagemediumsmall" value="4:2:0" >sampling-factor</parameter> 
+
+  <parameter id="imagepreview1" parameterdata="imagepreview" value="3000" >prefwidth</parameter> 
+  <parameter id="imagepreview2" parameterdata="imagepreview" value="3000" >prefheight</parameter>
+  <parameter id="imagepreview3" parameterdata="imagepreview" value="55" >quality</parameter>  
+  <parameter id="1447786760361" parameterdata="imagepreview" name="layers" value="flatten"  />
+  <parameter id="imagepreview5" parameterdata="imagepreview" value="4:2:0" >sampling-factor</parameter>
+  <!--  parameter id="1447784755291" name="background" value="white" parameterdata="imagepreview" / -->  
+
+  <parameter id="imagelarge1" parameterdata="imagelarge" value="640" >prefwidth</parameter> 
+  <parameter id="imagelarge2" parameterdata="imagelarge" value="480" >prefheight</parameter> 
+  <parameter id="imagelarge3" parameterdata="imagelarge" value="76" >quality</parameter> 
+  <parameter id="imagelarge4" parameterdata="imagelarge" value="4:2:0" >sampling-factor</parameter> 
+  
+  <parameter id="imagexlarge1" parameterdata="imagexlarge" value="3000" >prefwidth</parameter> 
+  <parameter id="imagexlarge2" parameterdata="imagexlarge" value="3000" >prefheight</parameter> 
+  <parameter id="imagexlarge3" parameterdata="imagexlarge" value="90" >quality</parameter> 
+  <parameter id="imagexlarge4" parameterdata="imagexlarge" value="4:2:0" >sampling-factor</parameter> 
+
+  <parameter id="imgcropgravity" parameterdata="imagecrop" name="gravity" value="center"  >gravity</parameter> 
+  <parameter id="1447788371700" parameterdata="imagecrop" name="crop" value="true"  >crop</parameter>
+  <parameter id="imagecrop1" parameterdata="imagecrop" value="110" >prefwidth</parameter> 
+  <parameter id="imagecrop2" parameterdata="imagecrop" value="62" >prefheight</parameter>
+  <parameter name="layers" value="flatten" parameterdata="imagecrop" id="1447786789989">layers</parameter>
+  <parameter id="imagecrop1" parameterdata="imagecrop" value="110" >prefwidth</parameter> 
+  <parameter id="imagecrop2" parameterdata="imagecrop" value="62" >prefheight</parameter> 
+    <!-- data name="background" value="white" parameterdata="imagecrop" id="1447786042115"/ -->
+
+  <parameter id="imagewidecrop1" parameterdata="imagewidesscreencrop" value="1920" >prefwidth</parameter> 
+  <parameter id="imagewidecrop2" parameterdata="imagewidesscreencrop" value="500" >prefheight</parameter> 
+  <data name="crop" value="true" parameterdata="imagewidesscreencrop" id="widecropcroptrueff"/>
+
+  <parameter id="imagethumb1png" parameterdata="imagethumbpng" value="200" >prefwidth</parameter> 
+  <parameter id="imagethumb2png" parameterdata="imagethumbpng" value="200" >prefheight</parameter> 
+  <parameter id="imagethumb3png" parameterdata="imagethumbpng" value="76" >quality</parameter> 
+  <parameter id="imagethumb4png" parameterdata="imagethumbpng" value="4:2:0" >sampling-factor</parameter> 
+
+  <parameter id="imagewidecrop3" parameterdata="widesscreencrop" value="1920" >prefwidth</parameter> 
+  <parameter id="imagewidecrop4" parameterdata="widesscreencrop" value="500" >prefheight</parameter> 
+  <data name="crop" value="true" parameterdata="widesscreencrop" id="widecropcroptrue"/>
+
+
+  <parameter id="imagecmyk1" parameterdata="imagecmyk" value="1500" >prefwidth</parameter> 
+  <parameter id="imagecmyk2" parameterdata="imagecmyk" value="1500" >prefheight</parameter> 
+  <parameter id="imagecmyk3" parameterdata="imagecmyk" value="CMYK" >colorspace</parameter> 
+
+  <parameter id="imagepreviewfpo1" parameterdata="imagepreviewfpo" value="3000"  >prefwidth</parameter> 
+  <parameter id="imagepreviewfpo2" parameterdata="imagepreviewfpo" value="3000" >prefheight</parameter> 
+  <parameter id="imagepreviewfpo3" parameterdata="imagepreviewfpo" value="true" >watermark</parameter> 
+
+  <parameter id="documentlarge1" parameterdata="documentlarge" value="3000" >prefwidth</parameter> 
+  <parameter id="documentlarge2" parameterdata="documentlarge" value="3000" >prefheight</parameter> 
+  <data name="background" value="white" parameterdata="documentlarge" id="documentlarge3"/> 
+  <data name="layers" value="flatten" parameterdata="documentlarge" id="documentlarge4"/>
+  
+  <data name="background" value="white" parameterdata="cropdocument" id="1447789384658"/>  
+  <data name="layers" value="flatten" parameterdata="cropdocument" id="1447790062578"/>  
+  <data name="gravity" value="NorthEast" parameterdata="cropdocument" id="1447790070354"/>  
+  <data name="prefheight" value="62" parameterdata="cropdocument" id="1447790093028"/>  
+  <data name="prefwidth" value="110" parameterdata="cropdocument" id="1447790100132"/>  
+  <data name="crop" value="true" parameterdata="cropdocument" id="1447790183613"/>  
+  <data name="x1" value="0" parameterdata="cropdocument" id="1447790399176"/>  
+  <data name="y1" value="0" parameterdata="cropdocument" id="1447790405247"/>
+  
+  
+</properties>

@@ -1,0 +1,6 @@
+
+<root>
+  <property id="followeruser" rendermask="$data.name" />
+  
+  <property id="addeddate"/>
+</root>

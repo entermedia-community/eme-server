@@ -1,0 +1,182 @@
+#set($collectivesection = $content.collectivesection)
+
+#if($librarycol.urlname)
+	#set($projectlink = "$!{community.externaldomain}/${librarycol.urlname}")
+#else
+	#set($projectlink = "/project")
+#end
+
+<div class="navbar-container project-navbar mt-0">
+	<ul class="navbar-collective">
+		#set($menu_blog = $content.isPropertyTrue("menu_blog",true))
+		#if($menu_blog)
+		<li class="nav-item #if($collectivesection == "blog") active #end">
+			 <a class="nav-link" href="${projectlink}" title="[[Blog]]">[[Blog]]</a>
+		</li>
+		#end
+		
+		#set($menu_chat = $content.isPropertyTrue("menu_chat",true))
+		#if($menu_chat)
+		<li class="nav-item #if($collectivesection == "community") active #end">
+			<a class="nav-link" href="${projectlink}/chat/index.html" title="[[Chat]]">[[Chat]]</a>
+		</li>
+		#end
+		
+		#set($menu_referrals = $content.isPropertyTrue("menu_referrals",true))
+		#if($menu_referrals)
+		<li class="nav-item #if($collectivesection == "referrals") active #end">
+			<a class="nav-link" href="${projectlink}/services/linktracker/index.html?collectionid=${librarycol.getId()}">[[Referrals]]</a>
+		</li>
+		#end
+		
+		#set($menu_goals = $content.isPropertyTrue("menu_goals",true))
+		#if($menu_goals)
+			#if( $caneditcollection)
+			<li class="nav-item #if($collectivesection == "tasks") active #end">
+				<a class="nav-link" href="${projectlink}/goals/priorities" title="[[Goals]]">[[Goals]]</a>
+			</li>
+			#end
+		#end
+		
+		#set($menu_store = $content.isPropertyTrue("menu_store",true))
+		#if($menu_store)
+			<li class="nav-item #if($collectivesection == "store") active #end">
+				<a class="nav-link" href="${projectlink}/store/index.html" title="[[Store]]">[[Store]]</a>
+			</li>
+		#end
+		
+		#set($menu_contact = $content.isPropertyTrue("menu_contact",true))
+		#if($menu_contact)
+			#if( $librarycol.contactemail )
+			<li class="nav-item #if($collectivesection == "contact") active #end">
+				<a class="nav-link" href="${projectlink}/contact/index.html" title="[[Contact]]">[[Contact]]</a>
+			</li>
+			#end
+		#end
+		
+		#set($menu_finances = $content.isPropertyTrue("menu_finances",true))
+		#if($menu_finances)
+			#if($caneditcollection  || $librarycol.priviacylevel != "commercial" )
+			<li class="nav-item #if($collectivesection == "finances") active #end">
+				<a class="nav-link" href="${projectlink}/services/finances/dashboard.html" title="[[Referrals]]" rel="nofollow">[[Finances]]</a>
+			</li>
+			#end
+		#end
+		
+		#set($menu_settings = $content.isPropertyTrue("menu_settings",true))
+		#if($menu_settings)
+			#if( $caneditcollection )
+			<li class="nav-item #if($collectivesection == "settings") active #end">
+				<a class="nav-link" href="${projectlink}/admin/index.html" title="[[Settings]]" rel="nofollow">
+					<i class="fas fa-cog mx-auto"></i>
+				</a>
+			</li>
+			#end
+		#end
+		
+		#if( $canviewsettings )
+		##/site/find/views/modules/librarycollection/editors/default/tabs/index.html
+			<li class="nav-item">
+				<a class="nav-link emdialog" 
+					href="${apphome}/views/modules/librarycollection/editors/default/tabs/index.html" title="[[Data Base]]"
+					data-dialogid="entitydialog"
+					data-entityid="$librarycol.getId()"  
+					rel="nofollow">
+					<i class="fas fa-database me-1"></i>
+				</a>
+			</li>
+		#end
+		
+		<li class="dropdown collapsed-menu">
+			<button class="btn btn-transparent dropdown-toggle" data-bs-toggle="dropdown" data-toggle="dropdown">
+				<i class="fas fa-bars mx-auto" style="font-size: 1rem;"></i>
+			</button>
+			<ul class="dropdown-menu">
+				#set($menu_blog = $content.isPropertyTrue("menu_blog",true))
+				#if($menu_blog)
+				<li class="#if($collectivesection == "blog") active #end">
+					<a class="nav-link" href="${projectlink}">[[Blog]]</a>
+				</li>
+				#end
+				
+				#set($menu_chat = $content.isPropertyTrue("menu_chat",true))
+				#if($menu_chat)
+				<li class="#if($collectivesection == "community") active #end">
+					<a class="nav-link" href="${projectlink}/chat/index.html">[[Chat]]</a>
+				</li>
+				#end
+				
+				#set($menu_referrals = $content.isPropertyTrue("menu_referrals",true))
+				#if($menu_referrals)
+				<li class="nav-item #if($collectivesection == "referrals") active #end">
+					<a class="nav-link" href="${projectlink}/services/linktracker/index.html?collectionid=${librarycol.getId()}">[[Referrals]]</a>
+				</li>
+				#end
+				
+				#set($menu_goals = $content.isPropertyTrue("menu_goals",true))
+				#if($menu_goals)
+					#if( $caneditcollection)
+					<li class="#if($collectivesection == "tasks") active #end">
+						<a class="nav-link" href="${projectlink}/goals/priorities">[[Goals]]</a>
+					</li>
+					#end
+				#end
+								
+				#set($menu_store = $content.isPropertyTrue("menu_store",true))
+				#if($menu_store)
+					#if($caneditcollection)
+					<li class="#if($collectivesection == "store") active #end">
+						<a class="nav-link" href="${projectlink}/store/index.html">[[Store]]</a>
+					</li>
+					#end
+				#end
+				
+				#set($menu_contact = $content.isPropertyTrue("menu_contact",true))
+				#if($menu_contact)
+					#if($librarycol.contactemail )
+					<li class="#if($collectivesection == "contact") active #end">
+						<a class="nav-link" href="${projectlink}/contact/index.html">[[Contact]]</a>
+					</li>
+					#end
+				#end
+				
+				#set($menu_finances = $content.isPropertyTrue("menu_finances",true))
+				#if($menu_finances)
+					#if($caneditcollection  || $librarycol.priviacylevel != "commercial" )
+					<li class="#if($collectivesection == "finances") active #end">
+						<a class="nav-link" href="${projectlink}/services/finances/dashboard.html"  rel="nofollow">[[Finances]]</a>
+					</li>
+					#end
+				#end
+				
+
+				
+				#set($menu_settings = $content.isPropertyTrue("menu_settings",true))
+				#if($menu_settings)
+					#if( $caneditcollection )
+					<li class="#if($collectivesection == "settings") active #end">
+						<a class="nav-link" href="${projectlink}/admin/index.html" title="[[Settings]]"  rel="nofollow">
+							<i class="fas fa-cog me-1"></i> [[Settings]]
+						</a>
+					</li>
+					#end
+				#end
+				
+				
+				#if( $caneditcollection )
+					<li class="">
+						<a class="nav-link" href="${projectlink}/admin/index.html" title="[[Data Base]]"  rel="nofollow">
+							<i class="fas fa-database me-1"></i> [[Data Base]]
+						</a>
+					</li>
+				#end
+				
+								
+								
+			</ul>
+		</li>
+	</ul> 
+	<button class="btn toggleCommunityDrawer">
+		<i class="fas fa-chevron-circle-left mx-auto" style="font-size: 1rem;"></i>
+	</button>
+</div>

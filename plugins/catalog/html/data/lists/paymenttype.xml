@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="paypal"> 
+    <name> 
+      <language id="en"><![CDATA[PayPal]]></language> 
+      <language id="es"><![CDATA[PayPal]]></language>
+    </name> 
+  </data>  
+  <data id="stripe"> 
+   <name> 
+      <language id="en"><![CDATA[Credit Card]]></language> 
+      <language id="es"><![CDATA[Tarjeta de Crédito]]></language>
+    </name> 
+  </data>  
+  <data id="cash"> 
+   <name> 
+      <language id="en"><![CDATA[Cash]]></language> 
+      <language id="es"><![CDATA[Efectivo]]></language>
+    </name> 
+  </data>  
+ 
+</root>

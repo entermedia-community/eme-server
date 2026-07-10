@@ -1,0 +1,35 @@
+#set($collectionid = $librarycol.getId())
+
+#ifnotnull($collectionid)
+	$context.putPageValue("collectionid",$librarycol.getId() )
+	#set($logo = $mediaarchive.getAsset($librarycol.assetportrait) )
+	#if ($logo)
+	    #set($logourl = "/$mediaarchive.getMediaDbId()/services/module/asset/generated/${logo.sourcepath}/image200x200.webp")
+	#else
+	    #set($logourl = "$apphome/theme/images/OI_flower.png")
+	#end
+	
+	#if ($librarycol.collectivebanner)
+	    #set( $banner= $mediaarchive.getAsset($librarycol.collectivebanner) )
+	    #set ($bannerurl = "/$mediaarchive.getMediaDbId()/services/module/asset/generate/$!{banner.sourcepath}/image1920x500cropped.webp/banner.webp")
+	#end
+	
+	<div class="project-header">
+	    <div
+	        #if($bannerurl)
+	            class="banner"
+	            style="background-image: url('$bannerurl')" 
+	        #else
+	            class="banner coverRandom"
+	        #end>
+	        <a class="header-logo" href="$projectlink" title="$!librarycol.name">
+	            <img src="$logourl" alt="logo" />
+	        </a>
+	        
+	        $pages.include("${apphome}/project/layout/menu-collectives.html",$context)
+	        #if($librarycol.name)
+	            <h1 class="project-title">#text($librarycol.name)</h1>
+	        #end
+	    </div>
+	</div>
+#end

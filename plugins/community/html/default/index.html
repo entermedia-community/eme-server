@@ -1,0 +1,14 @@
+#if( $user.oe_edit_mode == "postedit" )
+  <div class="row">
+    <div class="oe-editable bodywebsite" id="edit-$postdata.id" data-dataid="$!postdata.id" data-field="maincontent"
+      data-searchtype="postdata" data-viewtype="html">
+      $!postdata.maincontent
+    </div>
+    <div class="editpostbtn">
+      <a href="${sitelink}/emshare2/views/modules/postdata/edit/edit.html?id=$!{postdata.id}&viewid=postdatageneral&viewpath=postdata/postdatageneral&searchtype=postdata&detailsreadonly=false&preview=true"
+        class="btn btn-xs btn-light">Edit Post</a>
+    </div>
+  </div>
+#end
+
+Default template

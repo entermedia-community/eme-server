@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+	<property name="virtual">true</property>
+	<property name="oisection">stations</property>
+	<property name="collectivesection">tasks</property>
+	<property name="fullwidth">true</property>
+	<property name="goalfolder">search</property>
+	
+	<path-action name="ProjectModule.loadCollection"/>
+	<path-action name="OiModule.loadCommunityCategory" />
+	<path-action name="TaskModule.createTree" />
+
+	<property name="defaulttab">goaltab</property>
+	
+	<style id="tasks" href="/${applicationid}/project/goals/goals.css" />
+    <script id="goals" src="/${applicationid}/project/goals/goals.js"/>
+
+</page>

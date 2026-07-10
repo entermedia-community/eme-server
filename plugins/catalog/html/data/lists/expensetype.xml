@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="1"> 
+    <name> 
+      <language id="en"><![CDATA[Materials]]></language> 
+      <language id="es"><![CDATA[Materiales]]></language>
+    </name>
+  </data>  
+  <data id="2"> 
+  <name> 
+      <language id="en"><![CDATA[Labor]]></language> 
+      <language id="es"><![CDATA[Trabajo]]></language>
+    </name>
+  </data>  
+  <data id="3"> 
+  <name> 
+      <language id="en"><![CDATA[Tools]]></language> 
+      <language id="es"><![CDATA[Herramientas]]></language>
+    </name>
+  </data>  
+  <data id="4"> 
+  <name> 
+      <language id="en"><![CDATA[Food]]></language> 
+      <language id="es"><![CDATA[Comida]]></language>
+    </name>
+  </data>  
+  <data id="5"> 
+  <name> 
+      <language id="en"><![CDATA[Misc]]></language> 
+      <language id="es"><![CDATA[Miscelaneos]]></language>
+    </name>
+  </data>  
+  <data id="6" iscapitalloan="true"> 
+  <name> 
+      <language id="en"><![CDATA[Capital: Reimbursement]]></language> 
+    </name>
+  </data>  
+  <data id="7" iscapitalloan="true"> 
+  <name> 
+      <language id="en"><![CDATA[Capital: Loan Payment]]></language> 
+    </name>
+  </data>  
+  <data id="8" iscapitalloan="true"> 
+  <name> 
+      <language id="en"><![CDATA[Capital: Transfer Funds]]></language> 
+    </name>
+  </data>  
+  <data id="AX-oS0XP5OXsVhEn3agJ" iscapitalloan="true"> 
+  <name> 
+      <language id="en"><![CDATA[Capital: Disbursement]]></language> 
+    </name>
+  </data>  
+  <data id="9" iscapitalloan="true"> 
+  <name> 
+      <language id="en"><![CDATA[Capital:Credit Card Payment]]></language> 
+    </name>
+  </data>  
+  <data id="10" iscapitalloan="true"> 
+  <name> 
+      <language id="en"><![CDATA[Capital: Depreciating Asset]]></language> 
+    </name>
+  </data>  
+  <data id="transportation"> 
+  <name> 
+      <language id="en"><![CDATA[Transportation]]></language> 
+      <language id="es"><![CDATA[Transporte]]></language>
+    </name>
+  </data>  
+  
+    
+  <data id="AX-oUQ_iqFnpF58wgkHu"> 
+    <name> 
+      <language id="en"><![CDATA[Professional Services]]></language>  
+      <language id="es"><![CDATA[Servicios Profesionales]]></language> 
+    </name> 
+  </data>  
+  <data id="AX-oSAaF5OXsVhEn3agG"> 
+    <name> 
+      <language id="en"><![CDATA[Taxes]]></language>  
+      <language id="es"><![CDATA[Impuestos]]></language> 
+    </name> 
+  </data>  
+  <data id="AYHZzog6TncrdaxoMDMP"> 
+    <name> 
+      <language id="en"><![CDATA[Tuition]]></language>  
+      <language id="es"><![CDATA[Matrícula]]></language> 
+    </name> 
+  </data>  
+  <data id="AX-oQNJF5OXsVhEn3agA"> 
+    <name> 
+      <language id="en"><![CDATA[Utilities]]></language>  
+      <language id="es"><![CDATA[Utilidades]]></language> 
+    </name> 
+  </data>  
+  <expensetype id="AYLgGd74-IrDS1zX5bg0"> 
+    <name> 
+      <language id="en"><![CDATA[Deposit]]></language> 
+    </name> 
+  </expensetype>  
+  <expensetype id="AYNC6U1Gn7lTq8hyMT65"> 
+    <name> 
+      <language id="en"><![CDATA[Loan]]></language> 
+    </name> 
+  </expensetype>  
+  <expensetype id="AYN_ABcOcwoa0teStA4T"> 
+    <name> 
+      <language id="en"><![CDATA[Insurance]]></language> 
+    </name> 
+  </expensetype>  
+  <expensetype id="AYS1D_R9RYtzhQgMjFzk"> 
+    <name> 
+      <language id="en"><![CDATA[Rent]]></language> 
+    </name> 
+  </expensetype>  
+  <expensetype id="AYc4iZbk2mY-O9e1_OMN"> 
+    <name> 
+      <language id="en"><![CDATA[Finance Fees]]></language> 
+    </name> 
+  </expensetype>  
+  <expensetype id="AYgQ9DlQitgO56r0UO5P"> 
+    <name> 
+      <language id="en"><![CDATA[Hosting]]></language> 
+    </name> 
+  </expensetype>  
+  <expensetype id="AYokt6-TyelXlL5_2RnU">
+    <name>
+      <language id="en"><![CDATA[Online Services]]></language>
+    </name>
+  </expensetype>
+  
+ 
+</root>

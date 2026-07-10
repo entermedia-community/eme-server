@@ -1,0 +1,107 @@
+
+
+ 	<div class="contentcolumn contentpadding" style="width:100%;">
+    
+    <h1>[[Contact us]]</h1>
+	
+
+    <div class="row">
+        <div class="col">
+			#if( $caneditcollection)
+				<a class="oe-dataedit float-right" data-target="#editcontactdescription-$librarycol.id" title="[[Edit Contact Description]]" data-width="500"	href="#"><i class="fas fa-edit"></i></a>
+			#end
+			<div class="oe-editable" id="editcontactdescription-$librarycol.id" data-dataid="$librarycol.id" data-field="contactdescription" data-searchtype="librarycollection">
+		   		#if($librarycol.contactdescription) 
+					$!librarycol.contactdescription
+				#else
+				<p>
+				[[Do you have any questions? Please do not hesitate to contact us.]]
+				</p> 
+				#end
+			</div>
+					
+            <form id="contact-form" name="contact-form" action="sent.html" method="POST">
+
+				
+				##<input type="hidden" name="project" value="${librarycol}" />
+				<input type="hidden" name="collectionid" value="${librarycol.id}" />
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form">
+                            <input type="hidden" name="field" value="name">
+                            <input type="text" id="name" name="name.value" class="form-control" placeholder="[[Your name]]">
+                            
+                        </div>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="md-form">
+                            <input type="hidden" name="field" value="email">
+                            <input type="text" id="email" name="email.value" class="form-control" placeholder="[[Your email]]">
+                            
+                        </div>
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+                
+                <!--Grid row-->
+				<div style="margin-bottom:20px;"></div>
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <input type="hidden" name="field" value="message">
+                            <textarea id="message" name="message.value" rows="2" class="form-control md-textarea" placeholder="[[Your message]]"></textarea>
+                            
+                        </div>
+
+                    </div>
+                </div>
+                <!--Grid row-->
+                #if( $user )
+                	<br>
+                #else
+					#if( !$answer )
+		              <div style="margin-top:10px">
+						<label for="registration-human-test" >[[Registration test]] ([[write out]]):<br><em>$question.description:</em></label>
+					
+						<input class="field small" type="text" name="answerid" id="registration-human-test" />
+					   </div>
+					#end
+				#end				
+				
+					<input type="submit" class="btn btn-primary" value="[[Send]]">
+
+            </form>
+            
+<!-- 			<div style="margin-bottom:20px;"></div>
+            <div class="center-on-small-only">
+                <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">[[Send]]</a>
+            </div>
+            <div class="status"></div> -->
+        
+		</div>
+		#if( $librarycol.contactinfo)
+		<div class="col-md-5">
+			#if( $caneditcollection)
+				<a class="oe-dataedit  float-right" data-target="#editcontactinfo-$librarycol.id" title="[[Edit Contact Information]]" data-width="500"	href="#"><i class="fas fa-edit"></i></a>
+			#end
+				<div class="oe-editable" id="editcontactinfo-$librarycol.id" data-dataid="$librarycol.id" data-field="contactinfo" data-searchtype="librarycollection">
+				   		#if($librarycol.contactinfo) $!librarycol.contactinfo #end
+			</div>
+		</div>
+        #end
+	</div>
+	</div>
+   

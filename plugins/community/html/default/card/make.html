@@ -1,0 +1,36 @@
+<div style="padding:10px">
+#set( $made = $mediaarchive.getBean("qrCreator").createQrCodes() )
+<div style="display: grid; grid-template-columns: repeat(3, auto); gap: 1px;">
+#foreach( $card in $made)
+	<div> <a class="copylink" href="https://impactbank.world/card/?l=${card.id}" ><img src="/catalog/cards/carddone_${card.id}.png" download="${card.id}.png" style="display: block;"> </a> </div> 
+#end
+</div>
+
+</div>
+
+<script>
+	$(document).ready(function() {
+	  // Capture clicks on any <a> tag with the class 'copy-link'
+	  $('.copylink').on('click', function(event) {
+	    // 1. Prevent the link from opening
+	    event.preventDefault();
+
+	    // 2. Get the URL from the href attribute or a data attribute
+	    const linkToCopy = $(this).attr('href');
+	    
+	    // 3. Copy to clipboard
+	    navigator.clipboard.writeText(linkToCopy).then(() => {
+	      // 4. Provide visual feedback
+	      $(this).text('Link Copied!');
+	      
+	      // Optional: Reset the text after 2 seconds
+	      setTimeout(() => {
+	        $(this).text('Click to Copy');
+	      }, 2000);
+	      
+	    }).catch(err => {
+	      console.error('Error copying: ', err);
+	    });
+	  });
+	});
+</script>

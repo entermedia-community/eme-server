@@ -1,0 +1,56 @@
+<div class="loginform-container" >
+<h2 class="text-center">[[Two Factor Authentication]]</h2>
+$!request.getAttribute( "oe-exception")
+<div class="login-area" >
+<div class="login-form" >
+	#if($user)
+		<div class="alert alert-info">[[You are logged in as]] <strong>$user</strong></div>		
+	#end
+		#set($loginok = $context.findValue("loginokpage") )
+		
+
+		<p class="note">[[To generate an authenticator key please enter your username and password: ]]</p>
+		<div class="hr"></div>
+		<form name="login" id="login" action="$home$content.loginroot/getkeyfinish.html" method="POST" onsubmit="return confirmPassword(this);">
+			<input type="hidden" name="loginokpage" value="#esc($!loginok)"/>
+			<div class="form-group">
+			<label for="accountname">[[Username]]</label>
+			<input class="form-control focusme" type="text" id="accountname" name="accountname" autocapitalize="off"
+                autocorrect="off" />
+			</div>
+			<div class="form-group">
+			<label for="password">[[Password]]</label>
+			<input class="form-control" id="password" name="password" type="password" />
+			</div>
+		
+			
+			<div class="form-group">
+			<input class="btn btn-sm btn-primary float-right" name="submit" type="submit" id="login-submit" value="[[Get Key]]" />
+			</div>
+			#if ( $context.getPageValue("oe-exception") )
+				<div style="border: 1px solid black; width: 60%; text-align: center">$context.getPageValue("oe-exception")</div>
+				$context.removePageValue("oe-exception")
+			#end
+		</form>
+		<p class="login-otherlinks">
+		<a href="login.html" title="[[Back to login page]]">[[Back to Login Page]]</a>
+		</p>
+</div>	
+</div>
+</div>
+	<script >
+
+	function confirmPassword(form)
+	{
+		if(form.password.value=="")
+		{
+			alert("[[Please enter your password]]");
+			form.password.focus();
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	</script> 

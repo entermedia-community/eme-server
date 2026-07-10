@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+		
+	<property name="collectivesection">finances</property>
+	<property name="collectiveadminsection">invoices</property> 
+	
+	<property name="invoicepayment">true</property>
+	
+	<path-action name="FinanceModule.loadFinanceManager" />
+	
+	<page-action bean="dateStorageUtil2" name="PageValue.loadPageVariable"  class="org.openedit.util.DateStorageUtil" />
+	 
+	<page-action name="PageValue.loadPageVariable" bean="mathutil" />
+	
+	<permission name="view">
+		<or>
+			<group id="administrators"/>
+			<action name="ProjectModule.canEditCollection" />
+			<action name="ProjectModule.isOnTeam" />		
+		</or>
+	</permission>
+		
+	
+	<inner-layout>/${applicationid}/project/services/layout.html</inner-layout>
+</page>

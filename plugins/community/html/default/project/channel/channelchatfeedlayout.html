@@ -1,0 +1,114 @@
+#set ($collectionid = $librarycol.getId()) #ifnull($librarycol)
+#set($collectionid = $context.getRequestParameter("collectionid") ) #set(
+$librarycol =
+$mediaarchive.query("librarycollection").exact("id",$collectionid).searchOne() )
+#end
+
+<div
+  id="channelcontainer"
+  class="channel-container #if($logo) channel-container-logo #end h-100"
+>
+  <div class="row no-gutters justify-content-md-center h-100">
+    <div
+      class="col community-maincol community-maincol-homepage channel-feed feed-maincol"
+    >
+      #if($librarycol.htmlintro || $caneditcollection)
+      <div
+        class="contentcolumn content-body content-collective-home #if($logo) content-collective-home-logo #end"
+        style="#if( $caneditcollection) min-height:60px;#end"
+      >
+        #if( $caneditcollection)
+        <a
+          class="oe-dataedit"
+          style="position: absolute; bottom: 22px; right: 17px"
+          data-target="#edithtmlintro-$librarycol.id"
+          title="[[Edit Project Intro]]"
+          data-width="500"
+          href="#"
+          ><i class="fa-solidfa-edit"></i>
+        </a>
+
+        #end
+        <div
+          class="#if( $caneditcollection)oe-editable#end"
+          id="edithtmlintro-$librarycol.id"
+          data-dataid="$librarycol.id"
+          data-field="htmlintro"
+          data-searchtype="librarycollection"
+        >
+          #if($librarycol.htmlintro) $!librarycol.htmlintro #else
+          $pages.include("$apphome/project/about/htmlintro.html")#end
+        </div>
+      </div>
+      #end #if( $librarycol.collectivetype == "4") #set( $value =
+      $librarycol.communitytag ) #set( $communityprojects =
+      $mediaarchive.query("librarycollection").exact("communitytag",$value).not("id",$librarycol.id).search($context)
+      )
+
+      <div class="collective-sidebar">
+        #foreach( $collection in $communityprojects )
+        $context.putPageValue("collective", $collection)
+        $pages.include("$apphome/browse/collectivelisting.html", $context) #end
+      </div>
+
+      #end #if( $caneditcollection )
+      $pages.include("$apphome/project/channel/addnewupload.html") #end #set(
+      $topic = $context.getRequestParameter("topic")) #if($caneditcollection)
+      #set( $allprojects =
+      $mediaarchive.getSearcher("collectiveproject").query().match("parentcollectionid",$collectionid).match("featured","true").sort("name").search($context)
+      ) #else #set( $allprojects =
+      $mediaarchive.getSearcher("collectiveproject").query().match("parentcollectionid",$collectionid).exact("teamproject","false").match("featured","true").sort("name").search($context)
+      ) #end #if($allprojects.size()>0)
+      <div class="feed-topics">
+        <span class="d-none d-md-block"><strong>[[Topics]]:</strong></span>
+        <a
+          href="$apphome/project/channel/${collectionid}/${librarycol.name}.html"
+          class="btn-toolbar #if (!$topic) topicselected #end"
+          title="[[All Posts]]"
+          >#[[All]]</a
+        >
+
+        #foreach( $project in $allprojects )
+        <a
+          href="$apphome/project/channel/${collectionid}/topics.html?topic=${project.getId()}"
+          class="btn-toolbar #if($topic == $project.getId()) topicselected #end"
+          title="#esc($!{project.projectdescription})"
+          >$project</a
+        >
+        #end #if($caneditcollection)
+        <a
+          href="${projectlink}/projects/edit.html?collectionid=${collectionid}"
+          class="btn-toolbar float-right emdialog"
+          data-hidefooter="true"
+          title="[[Edit Topics]]"
+          style="margin-left: 5px"
+          ><i class="fa-solidfa-ellipsis-v"></i
+        ></a>
+        <a
+          href="${projectlink}/projects/addnew.html?collectionid=${collectionid}"
+          class="btn-toolbar emdialog"
+          title="[[Add a Topic]]"
+          ><i class="fa-solidfa-plus"></i
+        ></a>
+        #end
+      </div>
+      #end #if( $librarycol.streamurl && !$topic )
+      $pages.include("$apphome/components/streaming/play.html",$context) #end
+      #set($resultsPage =
+      "$content.getPath()?hitssessionid=$topuploads.sessionId&useruploadpageposition")
+      $context.putPageValue("collectivehomepage",true)
+      $context.putPageValue("hits",$topuploads)
+      $context.putPageValue("resultsPage",$resultsPage)
+      $context.putPageValue("targetdiv","channelcontainer")
+      $context.putPageValue("oemaxlevel","2")
+      $pages.include("$apphome/components/results/positions.html",$context)
+      #foreach( $event in $combinedevents) #if( $event.type == "chatterbox")
+      $context.putPageValue("chat",$event.data)
+      $pages.include("$apphome/project/community/chatterbox/message.html",
+      $context) #else #set( $upload = $event.data )
+      $context.putPageValue("upload",$upload)
+      $pages.include("$apphome/project/channel/showpost.html",$context) #end
+      #end $pages.include("$apphome/components/results/positions.html",$context)
+    </div>
+  </div>
+</div>

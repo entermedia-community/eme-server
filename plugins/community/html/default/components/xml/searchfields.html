@@ -1,0 +1,57 @@
+##requires $details  //List of Detail
+##requires $hits //Gets input from that
+##requires $searcher //used to get the catalogid and searcherManager
+
+$context.putPageValue("insearch",true)
+<div class="" style="width:25%"> 
+#foreach( $detail in $details)
+<div class="me-1 mb-4">
+	<div class="emsearchfield mr-2"> 
+	$!detail.getText($context) 
+	</div> 
+	<div id="detail_${detail.id}" class="emsearchfieldvalue">
+		<input name="field" value="$searcher.getCatalogId():$view:${detail.getId()}" type="hidden">
+		#set( $viewtype = false )
+		#set( $viewtype = $detail.searchcomponent )
+		#if (!$viewtype)
+			#set( $viewtype = $detail.viewType )
+		#end
+		
+		#if (!$viewtype)
+			#set ($viewtype = $detail.dataType)
+		#end
+
+		#if (!$viewtype || $viewtype == "text")
+			#set ($viewtype = "default")
+		#end
+		<!-- This needs to be fixed up. -->
+		#if (!$viewtype || $viewtype == "map")
+			#set ($viewtype = "default")
+		#end
+		
+		#if (!$viewtype || $viewtype == "date" ||  $viewtype == "datesearch")
+			#set ($viewtype = "datesearch")
+		#else
+			<input name="operation" value="startswith" type="hidden" />
+		#end
+
+		#if( $hits.getSearchQuery() )
+			#set( $value = "$!hits.getSearchQuery().getInput($detail.id)" )
+			#set( $term = $hits.getSearchQuery().getTermByDetailId($detail.id) )
+			$context.putPageValue("term",$term)			
+			$context.putPageValue("val",$value)
+		#end
+		$context.putPageValue("detail",$detail)
+
+		#if( $viewtype.equals("asset") || $viewtype.equals("primarymedia") || $viewtype.equals("category"))
+			$pages.include("/${applicationid}/components/xml/types/default.html", $context)
+		#else
+			$pages.include("/${applicationid}/components/xml/types/${viewtype}.html", $context)
+		#end
+	</div>
+	</div>
+#end
+</div>
+#if( $details.size() == 0)
+	[[No search fields found with index]]=true 
+#end

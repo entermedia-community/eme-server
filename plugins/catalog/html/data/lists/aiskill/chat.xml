@@ -1,0 +1,37 @@
+<results>
+
+   <data id="autoDetectWelcomeSkill" bean="autoDetectWelcomeSkill" agenttype="remoteagent" ordering="10" contextbean="chatMessageContext">
+      <name>
+         <language id="en"><![CDATA[Auto Detect]]></language>
+      </name>
+   </data>
+
+   <data id="renderLocalTemplateSkill" bean="renderLocalTemplateSkill" agenttype="remoteagent" ordering="10" contextbean="chatMessageContext">
+      <name>
+         <language id="en"><![CDATA[Render Local Template]]></language>
+      </name>
+   </data>
+
+
+
+   <data id="autoDetectChatSkill" bean="autoDetectChatSkill" agenttype="remoteagent" ordering="10" contextbean="chatMessageContext">
+      <name>
+         <language id="en"><![CDATA[Auto Detect Next Step]]></language>
+      </name>
+   </data>
+
+   <data id="questionsSkill" bean="questionsSkill" agenttype="remoteagent" ordering="10" contextbean="chatMessageContext">
+      <name>
+         <language id="en"><![CDATA[Questions Chat]]></language>
+      </name>
+   </data>
+
+
+   <data id="searchingChatSkill" bean="searchingSkill" agenttype="remoteagent" ordering="10" contextbean="chatMessageContext">
+      <name>
+         <language id="en"><![CDATA[Searching Chat]]></language>
+      </name>
+   </data>
+
+
+</results>

@@ -1,0 +1,19 @@
+<properties>
+	<property id="assetsremoved">
+		<name> 
+	    	<language id="en"><![CDATA[Asset Removed]]></language>  
+	    </name>
+	</property>
+	<property id="assetsadded">
+		<name> 
+	    	<language id="en"><![CDATA[Asset Added]]></language>  
+	    </name>
+	</property>
+	
+	<property id="entitysaved">
+		<name> 
+	    	<language id="en"><![CDATA[Entity Saved]]></language>  
+	    </name>
+	</property>
+	
+</properties>

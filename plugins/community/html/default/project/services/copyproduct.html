@@ -1,0 +1,37 @@
+#set($id = $context.getRequestParameter("id"))
+#if(!$data)
+	#set($data  = $mediaarchive.getData("collectiveproduct", $id) )
+#end
+
+##Exising ones 
+##No existing programs found.
+
+#set( $searcher = $mediaarchive.getSearcher("collectiveproduct") )
+#set( $xmledithome  = "$apphome/components/xml")
+$context.putPageValue("searcher",$searcher)
+<form name="saveproject" id="saveproject" action="${projectlink}/services/editsave.html" method="post">
+
+	<input type="hidden" name="id" value="$data.getId()" />
+	<input type="hidden" name="save" value="true" />
+	<input type="hidden" name="searchtype" value="collectiveproduct" />
+	
+	<input type="hidden" name="field" value="owner" />
+	<input type="hidden" name="owner.value" value="$user.getId()" />
+	
+	<input type="hidden" name="field" value="collectionid" />
+	<input type="hidden" name="collectionid.value" value="$librarycol.getId()" />
+	<input type="hidden" name="collectionid" value="$librarycol.getId()" />
+	
+	#set( $searcher = $mediaarchive.getSearcher("collectiveproduct") )
+	$context.putPageValue("searcher",$searcher)
+	$context.putPageValue("viewid", "collectiveproductgeneral")
+	$context.putPageValue("data", $data)
+
+ 	$context.putPageValue("fieldcolumnsize", 12)
+	$pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
+	
+
+  <button type="submit" class="btn btn-primary" hidden>[[Submit]]</button>
+</form>
+
+

@@ -1,0 +1,33 @@
+#set( $searcher = $mediaarchive.getSearcher("userpost") )
+$context.putPageValue("searcher",$searcher)
+$context.putPageValue("viewid", "userpostgeneral")
+
+<div id="channeledit">
+	<form name="savecommunityblog" 
+		id="savecommunityblog"
+		class="userpostform"
+		enctype="multipart/form-data"  
+		action="$apphome/project/channel/save.html" 
+		method="post">
+	
+		<input type="hidden" name="save" value="true" />
+		<input type="hidden" name="id" value="$!{data.id}" />
+		<input type="hidden" name="collectionid" value="$!{librarycol.id}" />
+	
+		$context.putPageValue("pickerurl", "${content.findroot}/blockiframe.html?targetfieldid=primarymedia-value")
+	
+		$pages.include("/$applicationid/components/xml/detaileditorcss.html", $context)
+		
+		<div class="d-flex mt-4" style="margin-bottom: calc(1rem - 6px);">
+			<input class="btn btn-sm btn-primary me-2" type="submit" value="[[Save]]" />
+			<a class="btn btn-sm btn-danger confirm ajax"   
+				data-confirm="[[Are you sure]]?"
+				data-targetdiv="applicationcontent"
+				data-closedialog="true"
+				data-updateurl="true"
+				data-url="${projectlink}/blog"
+				data-oemaxlevel="1"
+				href="${projectlink}/channel/delete.html?id=${data.id}&collectionid=$!{librarycol.id}">[[Delete]]</a>
+		</div>
+	</form>
+</div>

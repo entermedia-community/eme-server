@@ -1,0 +1,105 @@
+<div id="donationsreport">
+                 
+         <div class="emdata">
+             <table class="table table-striped">
+                 <thead>
+                     <tr class="tableheader">
+						<th style="width: 110px">[[Date]]</th>
+						
+						
+						<th>[[User]]</th>
+						<th>[[Email]]</th>
+						<th>[[Platform]]</th>
+						<th>[[Total]]</th>
+                         
+                         <th></th>
+                     </tr>
+                 </thead>
+                 #set($totalarray = {})
+                 #foreach($hit in $donations.getPageOfHits())
+                    #if(!$totalarray.get($hit.currencytype))
+                 		#set($totalarray[$hit.currencytype] = [])
+                 	#end
+                 	#set($dumb = $totalarray[$hit.currencytype].add($hit.totalprice))
+                     <tr>
+                        <td>
+			        		$!context.getDate($hit.paymentdate)
+						</td> 
+			        	<td>
+				        	#set( $followeruser = $mediaarchive.getUser($hit.userid) )
+						    #set( $userlink = "${apphome}/users/${followeruser.getId()}/${followeruser.getAnonNickName()}.html")
+							###set( $userimageurl = $mediaarchive.asLinkToProfile($followeruser.assetportrait) )
+							###if(!$userimageurl)
+							##	#set( $userimageurl = "${communitylink}/theme/images/user.svg" )
+							###end
+							#if( $followeruser )
+								<a href="#esc($userlink)" title="$!followeruser.getAnonNickName()">
+								$followeruser.getAnonNickName()
+								##<img src="${userimageurl}"  title="$!followeruser.getAnonNickName()" class="img-fluid align-middle usericon"> <span class="username">$followeruser.getAnonNickName()</span>
+								</a>
+							#end
+						</td> 
+			        	<td >
+			        	#if( $caneditcollection )
+			        		$!transaction.name
+			        	
+					      #if( $hit.paymentemail ) &lt;$hit.paymentemail&gt;
+					      #else ($followeruser)
+					      	&lt;$!followeruser.getEmail()&gt;
+					      #end
+					      #end
+			        	</td>
+			       	 	<td  style="width: 80px" class="text-center">
+			       	 	$hit.paymenttype
+			       	 	</td>
+			       	 	
+			       	 	<td  style="width: 150px" class="text-right">$hit.totalprice  $!context.getText($!mediaarchive.getCachedData("currencytype", $hit.currencytype))</td>
+			       	 	
+			       	 	
+			       	 
+			        	<td class="text-center"  style="width: 80px">
+				        	 	<a class="btn btn-xs btn-secondary emdialog" 
+			        	 		href="${projectlink}/services/donations/detail.html?id=$hit.id&viewid=transactiongeneral&viewpath=transaction/transactiongeneral&hitssessionid=hitstransactionsite/catalog&searchtype=transaction&detailsreadonly=true"
+			        	 		title="[[Donation Details]]">
+			        	 		<i class="fa fa-eye"></i>
+			        	 		</a>
+			        	#if( $canviewsettings )
+				        	 	<a class="btn btn-xs btn-secondary" target="_blank"
+			        	 		href="/find/views/settings/lists/datamanager/edit/edit.html?id=$hit.id&searchtype=transaction"
+			        	 		title="[[Edit Data]]">
+			        	 		<i class="fa fa-edit"></i>
+			        	 		</a>        	
+			        	#end
+			        	</td>    
+                    </tr>
+                #end
+                #if($totalarray.size())
+                	#set($firstrow = true)
+                	#foreach( $total_ in $totalarray.keySet())
+						#set($total = $totalarray.get($total_))
+	                	<tr class="table-totals #if($firstrow)table-totalfirst #set($firstrow=false) #end">
+	                		<td colspan="3"></td>
+	                		<td class="text-right">[[Total]]:</td>
+	                		<td class="text-right">
+	                			#set($totaltotal = 0)
+	                			#foreach($t in $total)
+	                				#set($totaltotal = $mathutil.addition($totaltotal, $t))
+	                			#end
+	                			$!context.doubleToMoney($!totaltotal, 2) $!context.getText($!mediaarchive.getCachedData("currencytype", $total_)) 
+	                		</td>
+	                		<td></td>
+	                	</tr>
+                	#end
+                #end
+            </table>
+            
+            #if($donations.size() > 0)
+            <div>$!donations.size() [[hits]]</div>
+        
+			##  <div>  <a href="${projectlink}/services/expenses/export/expenses.csv?collectionid=${librarycol.id}&hitssessionid=$expenses.getSessionId()"
+			##                      class="btn btn-sm btn-primary mb-4">[[Download]]</a></div>
+			#end
+
+</div>
+        
+</div>

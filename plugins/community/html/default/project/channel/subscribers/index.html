@@ -1,0 +1,85 @@
+#set($collectionid = $librarycol.getId())
+#ifnotnull($collectionid)
+<div class="team-list"  id="subscriberssidebar">
+	<div class="d-flex align-items-center justify-content-between sidebar-list-header">
+		<h3>[[Team Circle]]</h3> 
+		#if($user)
+			<a class="btn btn-xs emdialog" data-cancelsubmit="true"
+				title="[[View Members]]"
+				href="$apphome/project/channel/subscribers/teamlist.html?collectionid=$librarycol.getId()">
+				<i class="fas fa-list"></i>
+			</a>
+		#end
+	</div> 
+	
+	<div>
+		#set( $team = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",true).search($context) )
+		
+		#if( $team.isEmpty()) 
+			<p class="text-muted text-center">[[No team yet]]</p>
+		#else
+		<div class="d-flex flex-column">
+			#foreach( $hit in $team)
+				#set( $followeruser = $mediaarchive.getUser($hit.followeruser) )
+				
+				#if($followeruser && $followeruser.enabled == "true")
+					#set( $userlink = "$!apphome/users/index.html?id=${followeruser.getId()}")
+					
+					#set( $emeprofile = $mediaarchive.query("emeprofile").exact("owner", $followeruser.getId()).searchOne() )
+
+					#ifnotnull($emeprofile)
+						#set( $userlink = "$!{siteroot}/profiles/${emeprofile.urlname}" )
+					#end
+
+					#set( $userimageurl = $mediaarchive.asLinkToUserProfile($followeruser) )
+					
+					#if(!$userimageurl)
+						#set( $userimageurl = "$!apphome/theme/images/user.svg" )
+					#end 
+					<div class="d-flex flex-row teammember pretty-list">
+						<a href="#esc($userlink)" class="d-flex align-items-center flex-grow-1">
+							<img  src="${userimageurl}" title="$!followeruser.getAnonNickName()" width="30px" height="30px" class="me-2">
+							<span title="$!followeruser.getAnonNickName()  ($!followeruser.getEmail())" style="font-weight: bold;">$!followeruser.getAnonNickName()</span>
+
+							#set($roles=$hit.getValues("teamroles"))
+
+							#ifnotnull($roles)
+								<div class="teammemberrole"> 
+									#foreach($urole in $roles)
+										#set( $role = $mediaarchive.getCachedData("collectiverole",$urole) )
+										
+										<div class="px-2" style="display:block;">$!{role}</div>
+									#end 
+								</div>
+							#end
+						</a>
+						#if($canviewsettings)
+							<a class="btn btn-xs emdialog"
+								href="$apphome/project/channel/subscribers/edit/edit.html?collectionid=$librarycol.getId()&id=$!hit.getId()"
+								title="[[Edit Entry]]">
+								<i class="fas fa-pen"></i>
+							</a>
+						#end
+					</div>
+				#end
+			#end
+		</div>
+		#end 
+		<br>
+		
+		#if( $caneditcollection || $canviewsettings)
+		<div class="d-flex align-items-center justify-content-between w-100 flex-wrap mt-2">
+			<a href="${apphome}/project/channel/subscribers/usersearch.html?collectionid=${collectionid}"
+				class="emdialog btn btn-light btn-xs me-1" title="[[Add Users to Team]]">
+				<i class="fas fa-search me-1"></i> [[Add to Team]]
+			</a>
+			<a href="${apphome}/project/channel/subscribers/addnew.html?collectionid=${collectionid}"
+				class="emdialog btn btn-light btn-xs" title="[[Add New User to Team]]">
+				<i class="fas fa-plus me-1"></i> [[New User]]
+			</a>
+		</div>
+		#end
+	</div>
+</div>
+ #end
+ 

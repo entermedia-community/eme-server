@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+		<property name="goalfolder">search</property>
+
+		<property name="module">projectgoal</property>
+
+
+		
+		<property name="xmledithome">/${applicationid}/components/xml</property>
+
+		<property name="usestartswith">true</property>
+		<property name="searchhome">/${applicationid}/collective/goals/search</property>
+		
+	<!-- Tickets filters permissions -->
+	<permission name="viewfilterprojectstatus">
+		<boolean value="false" />
+	</permission>
+</page>

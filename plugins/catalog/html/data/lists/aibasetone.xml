@@ -1,0 +1,9 @@
+<properties>
+	<property id="default">Default</property>
+	<property id="professional">Professional</property>
+	<property id="friendly">Friendly</property>
+	<property id="candid">Candid</property>
+	<property id="quirky">Quirky</property>
+	<property id="efficient">Efficient</property>
+	<property id="cynical">Cynical</property>
+</properties>

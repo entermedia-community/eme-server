@@ -1,0 +1,14 @@
+#set($collectionid = $context.getRequestParameter("collectionid"))
+
+
+<select name="collectiverole" id="#eid($task.id)picker" 
+	style="width:300px;"
+	class="listautocomplete picknewrolefortask" 
+	data-taskid="$task.id" data-collectionid = "$collectionid"
+	data-savepath="${apphome}/project/goals/task/rolelistsave.html" 
+	data-showdefault="Search" data-addnewlabel="[[[Add New]]]" 
+	data-searchfield="name" data-searchtype="collectiverole"  
+	data-placeholder="[[Search roles]]" data-sortby="name">
+</select>
+
+

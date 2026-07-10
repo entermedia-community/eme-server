@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+	<property id="date"  />
+	<property id="collectiveproject" />
+	<property id="expensetype" />
+	<property id="expensedescription" />
+	<property id="currencytype" />
+	<property id="total" />
+	<property id="receiptattachment" />
+	
+	<property id="user" />
+   	<property id="ispaid"  editable="false"/> 
+   	<property id="paidfromaccount" editable="false"/> 
+   	<property id="paymentdate"  editable="false"/>  
+   	<property id="paymentdescription"  editable="false"/>  
+
+  
+  
+</properties>

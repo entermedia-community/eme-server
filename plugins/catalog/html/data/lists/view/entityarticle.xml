@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+
+    <data id="entityarticlesmart_creator" renderexternalid="entityarticle" showonsearch="false" deleted="false" byassettype="false" ordering="1781293923831" systemdefined="false" renderinternalid="id" rendertype="tabsmartcreator" moduleid="entityarticle"> 
+    <name><![CDATA[Smart Creator]]></name> 
+  </data>  
+  <data id="entityarticlepreview" renderexternalid="entityarticle" showonsearch="false" deleted="false" byassettype="false" ordering="1781293938780" systemdefined="false" renderinternalid="id" rendertype="tabsmartcreatorpreview" moduleid="entityarticle">
+    <name><![CDATA[Preview]]></name>
+  </data> 
+</properties>

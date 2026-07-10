@@ -1,0 +1,61 @@
+
+<root>
+
+
+  <data id="user">
+    <name><![CDATA[Users]]></name>
+  </data>
+  <data id="communitytag">
+    <name><![CDATA[OI Campaigns]]></name>
+  </data>
+
+  <data id="projectgoal">
+    <name><![CDATA[OI Project Goals]]></name>
+  </data>
+  <data id="goaltask">
+    <name><![CDATA[OI Goal Tasks]]></name>
+  </data>
+
+  <data id="projectstatus">
+    <name><![CDATA[List: Project Status]]></name>
+  </data>
+
+  <data id="projectdepartment">
+    <name><![CDATA[List: Project Department]]></name>
+  </data>
+
+  <data id="chatterboxreaction">
+    <name><![CDATA[Chatterbox Reactions]]></name>
+  </data>
+
+  <data id="chatterboxattachment">
+    <name><![CDATA[Chatterbox Attachments]]></name>
+  </data>
+
+  <data id="projectdepartment">
+    <name><![CDATA[List: Project Department]]></name>
+  </data>
+
+
+  <data id="taskstatus">
+    <name><![CDATA[List: Task Status]]></name>
+  </data>
+
+  <data id="userpost">
+    <name><![CDATA[User Post]]></name>
+  </data>
+
+  <data id="userprofile">
+    <name><![CDATA[User Profile]]></name>
+  </data>
+  
+  <data id="userchat">
+    <name><![CDATA[User Chat]]></name>
+  </data>
+  
+  <data id="entitywebcontent"  isentity="true" >
+    <name><![CDATA[Web Content]]></name>
+  </data>
+
+
+</root>

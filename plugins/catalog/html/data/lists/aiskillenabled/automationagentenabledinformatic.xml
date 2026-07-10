@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- using more descriptive ids for easier debugging -->
+
+<records>
+
+   <data id="informaticsrunEventAgent" aiskill="handleWebEventSkill" runoperation="llm.addmetadata" automationscenario="informatics" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+
+   <data id="informaticsSTART" aiskill="informaticsagent" automationscenario="informatics" runafter="informaticsrunEventAgent" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+
+   <data id="informaticsDocumentSplitting" aiskill="documentsplitting" searchtypes="entitydocument|entityasset" automationscenario="informatics" runafter="informaticsSTART" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+
+   <data id="informaticsAutoTranscribe" aiskill="autotranscribe" automationscenario="informatics" runafter="informaticsDocumentSplitting" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+   <data id="informaticsClassifyAgent" aiskill="classify" automationscenario="informatics" runafter="informaticsAutoTranscribe" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+   <data id="informaticsAutoTranslate" aiskill="autotranslate" automationscenario="informatics" runafter="informaticsClassifyAgent" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+
+   <data id="informaticsSemanticTopics" aiskill="semantictopics" automationscenario="informatics" runafter="informaticsAutoTranslate" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+   <data id="informaticsNamedEntityRecognition" aiskill="namedentityrecognition" automationscenario="informatics" runafter="informaticsSemanticTopics" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+   <data id="informaticsFaceDetect" aiskill="facedetect" automationscenario="informatics" runafter="informaticsNamedEntityRecognition" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+
+   <data id="informaticsDocumentEmbedding" aiskill="documentEmbedding" automationscenario="informatics" runafter="informaticsFaceDetect" enabled="true">
+      <skilloverview>
+         <language id="en"><![CDATA[This is a custom skill that does cool things]]></language>
+      </skilloverview>
+   </data>
+
+</records>

@@ -1,0 +1,67 @@
+#if($librarycol.get("collectiontype") == "5")
+	#set($isproposal = "true")
+#end
+
+
+#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+$context.putPageValue("searcher",$searcher)
+
+#set( $viewid = "librarycollectioneditinvoicetemplate" )
+$context.putPageValue("viewid", $viewid)
+$context.putPageValue("data", $librarycol)
+
+
+<div class="emwidget">
+	<div class="emwidget-header">
+		<div class="emwidget-name">[[Invoices Template]]</div>
+	</div>
+	<div class="emwidget-content">
+
+<form name="savecollective" 
+	enctype="multipart/form-data" 
+	id="savecollective"
+	action="${projectlink}/edit/invoice-template-save.html"
+	class="ajaxform scrolltotop"
+	data-targetdivinner="collectivesettingscontent"
+	data-oemaxlevel="1"
+	method="post">
+<input type="hidden" name="save" value="true" />
+<input type="hidden" name="searchtype" value="librarycollection" />
+<input type="hidden" name="id" value="$librarycol.id" />
+<input type="hidden" name="collectionid" value="$librarycol.id" />
+<input type="hidden" name="viewid" value="$!viewid" />
+<input type="hidden" name="editform" value="invoice-template.html" />
+
+
+#if(!$librarycol.get("invoiceemailheader"))
+	#set($invoiceemailheader = $mediaarchive.getCatalogSettingValue("invoice_email_header"))
+	#if($invoiceemailheader)
+		$!context.setRequestParameter("invoiceemailheader.value",$invoiceemailheader)
+	#end
+#end
+
+#if(!$librarycol.get("invoiceemailfooter"))
+	#set($invoiceemailfooter = $mediaarchive.getCatalogSettingValue("invoice_email_footer"))
+	#if($invoiceemailfooter)
+		$!context.setRequestParameter("invoiceemailfooter.value",$invoiceemailfooter)
+	#end
+#end
+ 
+ 
+#if(!$librarycol.get("invoicepaidemail"))
+	#set($invoicepaidemail = $mediaarchive.getCatalogSettingValue("invoice_paid_email"))
+	#if($invoicepaidemail)
+		$!context.setRequestParameter("invoicepaidemail.value",$invoicepaidemail)
+	#end
+#end
+
+$pages.include("${apphome}/components/xml/detaileditor4.html", $context)
+
+	<a class="btn btn-sm btn-primary submitform ">[[Save]]</a>
+	
+
+</form>
+</div>
+</div>
+
+

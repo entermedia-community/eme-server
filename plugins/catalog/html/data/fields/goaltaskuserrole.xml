@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher"> 
+  <property id="id" index="true" filter="false" internalfield="true" editable="true" stored="true" sortable="true" keyword="false">New
+    <name>
+      <language id="de"><![CDATA[Id]]></language>
+      <language id="en"><![CDATA[Id]]></language>
+      <language id="es"><![CDATA[Id]]></language>
+      <language id="fr"><![CDATA[Id]]></language>
+    </name>
+  </property>
+  <property id="date" index="true" filter="false" datatype="date" editable="false" stored="true" sortable="true" keyword="false">New 
+    <name> 
+      <language id="de"><![CDATA[Datum]]></language>  
+      <language id="en"><![CDATA[Date]]></language>  
+      <language id="es"><![CDATA[Fecha]]></language>  
+      <language id="fr"><![CDATA[Date]]></language> 
+    </name> 
+  </property>  
+  <property id="roleactioncount" index="true" editable="true" stored="true" type="number"> 
+    <name> 
+      <language id="en"><![CDATA[Action Count]]></language> 
+    </name> 
+  </property>  
+  <property id="name" index="true" multilanguage="true" filter="false" editable="true" stored="true" sortable="true" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Notes]]></language>  
+    </name> 
+  </property>  
+  <property id="goaltaskid" index="true" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[goaltaskid]]></language> 
+    </name> 
+  </property>
+  <property id="collectiverole" index="true" stored="true" type="list"  editable="true">
+  <name>
+    <language id="en" > <![CDATA[Role]]> </language>
+  </name>
+  </property>
+	 <property id="roleuserid" index="true" viewtype="user" type="list" listid="user" keyword="true" stored="true"  editable="true" > 
+    <name> 
+      <language id="de"><![CDATA[Owner]]></language>  
+      <language id="en"><![CDATA[Owner]]></language>  
+      <language id="es"><![CDATA[Propietario]]></language>  
+      <language id="fr"><![CDATA[Propriétaire]]></language> 
+    </name> 
+  </property>  
+	 <property id="owner" index="true" viewtype="user" type="list" listid="user" keyword="true" stored="true"  editable="true" > 
+    <name> 
+      <language id="de"><![CDATA[Owner]]></language>  
+      <language id="en"><![CDATA[Owner]]></language>  
+      <language id="es"><![CDATA[Propietario]]></language>  
+      <language id="fr"><![CDATA[Propriétaire]]></language> 
+    </name> 
+  </property>  
+  
+   <property id="name" index="true" stored="true" editable="true">
+		<name>
+			<language id="en"><![CDATA[Note]]></language>
+		</name>
+	</property>
+    
+</properties>

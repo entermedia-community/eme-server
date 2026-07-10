@@ -1,0 +1,115 @@
+#if(!$librarycol)
+  #set( $librarycol = $mediaarchive.getData("librarycollection",$userpost.librarycollection) )
+#end
+
+#set( $community = $mediaarchive.getCachedData("communitytag", $librarycol.communitytag))
+
+#if($librarycol.urlname)
+	#set($projectlink = "$!{community.externaldomain}/${librarycol.urlname}")
+#else
+	#set($projectlink = "${apphome}/#dash($librarycol.getName())")
+#end
+
+#if($userpost.urlname)
+  #set($bloglink = "${projectlink}/blog/${userpost.urlname}")
+#else
+  #set($bloglink = "${projectlink}/blog/${userpost.id}")
+#end
+
+<article class="article-card">
+
+  #set($postasset = $mediaarchive.getAsset($userpost.primarymedia))
+  
+  #set($postimagesrc = $mediaarchive.asLinkToGenerated($postasset, "image600x314"))
+
+  <div class="article-thumbnail-wrap">
+    <a href="${bloglink}" title="$!userpost.name">
+		#if($postimagesrc)
+      <img loading="lazy" src="${postimagesrc}" alt="$!userpost.name" />
+	  #end
+    </a>
+  </div>
+  <div class="article-article">
+
+	#if($showchannel)
+     <div class="d-flex align-items-center justify-content-end">
+      <a href="${projectlink}" class="blog-community-name" title="[[Project]]: #text($librarycol)">
+        #text($librarycol)
+      </a>
+     </div>
+	#end
+    #ifnotnull($!userpost.name)
+      <h2>
+        <a href="${bloglink}" title="$!userpost.name">$!userpost.name</a>
+      </h2>
+    #end
+
+    <div class="article-content">
+      <div class="blog-item-body">
+        $!userpost.maincontent
+      </div>
+    </div>
+
+
+    <div class="mt-auto">
+      <div class="blog-tags">
+        #set( $tags = $userpost.getValues("keywords") )
+        #if($tags && !$tags.isEmpty() )
+          #foreach( $tag in $tags )
+            <a href="${projectlink}?tag=${tag}" class="blog-tag" title="#esc($tag)">
+              #esc($tag)
+            </a>
+          #end
+        #end
+      </div>
+
+      <div class="d-flex align-items-center justify-content-end">
+        #if($caneditcollection)
+          <a class="text-primary emdialog small ms-4" data-width="900"
+            data-hidefooter="true"
+            data-collectionid="${librarycol.getId()}"
+            data-id="${userpost.id}"
+            href="$projectlink/channel/edit.html"
+            title="[[Edit]]: $!userpost.name">
+            <i class="fas fa-pen"></i>
+          </a>
+          #if($userpost.poststatus != "published")
+            <div class="badge badge-sm small text-bg-warning text-capitalize ms-3">$userpost.poststatus</div>
+          #end
+        #end
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="author-row">
+          #set( $postuser = $userManager.getUser($userpost.owner, true))
+          $context.putPageValue("chatuser",$postuser)
+          $pages.include("${apphome}/users/icon.html",$context)
+          <div class="d-flex flex-column">
+            <a class="author-name" href='#urlescape("${apphome}/users/index.html?id=${postuser.getId()}")' title="[[Author]]: $postuser.getAnonNickName()">$postuser.getAnonNickName()</a>
+            <time datetime='$userpost.getDate("entity_date")' class="text-muted small">
+              [[Posted]]
+              #set($timestamp = $context.getAge($userpost.getDate("entity_date")))
+              #ifnull($timestamp)
+                [[today]]
+              #end
+              #ifnotnull($timestamp)
+                <span>$timestamp [[ago]]</span>
+              #end
+            </time>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          $context.putPageValue("userpostid", $userpost.getId())
+
+          <a href="${bloglink}" title="[[Like]]: $!userpost.name">
+            $pages.include("${apphome}/project/blog/likecount.html?userpostid=$userpost.getId()", $context)
+          </a>
+
+          <a class="emdialog text-muted small ms-3" data-width="900" data-hidefooter="true" data-librarycol="${librarycol.getId()}" data-userpostid="${userpost.id}" href="$apphome/project/channel/share.html" title="[[Share]]: $!userpost.name">
+            <i class="fas fa-share-alt"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+	<property id="producttype" />
+	<property id="name" />
+	<property id="productdescription" />
+
+	<property id="producttags" />
+	<property id="productattachment" />
+
+	<property id="currencytype" />
+	<property id="productprice" />
+	<property id="paymentstatus" />
+	<property id="recurring" />
+	<property id="recurringperiod" />
+	<property id="nextbillon" /> 
+	
+	<property id="sentto" />
+</properties>

@@ -1,0 +1,82 @@
+#if($sidebarcomponent != "")
+
+  #if($sidebarcomponent == "libraries" )
+    #set($sidebarurl = "$apphome/components/sidebars/libraries/index.html")
+  #end
+
+  #if($sidebarcomponent == "eme" )
+    #set($sidebarurl = "$apphome/components/sidebars/eme/index.html")
+  #end
+
+  #if($sidebarcomponent == "guide" )
+    #set($sidebarurl = "$apphome/components/sidebars/guide/index.html")
+  #end
+
+  #if($sidebarcomponent == "topics" )
+    #set($sidebarurl = "$apphome/components/sidebars/tags/index.html")
+  #end
+
+  #if($sidebarcomponent == "faceprofiles" )
+    #set($sidebarurl = "$apphome/components/sidebars/faceprofiles/index.html")
+  #end
+
+  #if($sidebarcomponent == "favorites" )
+    #set($sidebarurl = "$applink/views/modules/modulesearch/favorites.html?clearselection=true&clearfilters=true")
+  #end
+
+
+  #if($sidebarcomponent == "categories" )
+    #if( $canviewcategorynav )
+      #set($sidebarurl = "$apphome/components/sidebars/categories/index.html")
+    #end
+  #end
+
+  #if($sidebarcomponent == "localdrives" )
+    #if($canviewcategorynav && $desktop)
+      #set( $selectedModuleId = $userprofile.get("desktop_lastselected_module") )
+      
+      #ifnull($selectedModuleId )
+        #set( $selectedModuleId = $module.id )
+      #end
+      #set($sidebarurl = "$apphome/views/modules/${selectedModuleId}/components/sidebars/localdrives/index.html")
+    #end
+  #end
+
+  #if($sidebarcomponent == "addentity" )
+    #set($sidebarurl = "$apphome/components/sidebars/addentity/index.html?selectedmodule=$!module.id")
+  #end
+
+  #if($sidebarcomponent == "userdownloads" )
+    #if($candownload || $canconvert || $candownloadfpo)
+      #set($sidebarurl = "$apphome/components/sidebars/userdownloads/index.html")
+    #end
+  #end
+
+  #if($sidebarcomponent == "settings" )
+    #set($sidebarurl = "$apphome/components/sidebars/settings/index.html")
+  #end
+
+  $userprofile.setValue("sidebarcomponent", $sidebarcomponent)
+
+#end
+
+##SIDEBAR WIDTH
+
+#set( $sidebarwidth = $userprofile.get("sidebarwidth"))
+#if($sidebarwidth=='' || $sidebarwidth=='undefined')
+  #set($sidebarwidth = 280)
+#end
+
+#ifnotnull($sidebarurl)
+  <div class="col-main col-mainsidebar #if($sidebarwidth && $sidebarwidth>320)sidebarwide #end"
+    style="#if($sidebarwidth) width:${sidebarwidth}px;#end" data-sidebarwidth="$!sidebarwidth">
+    <div id="col-$sidebarcomponent" class="col-left col-$sidebarcomponent">
+      <div class="col-main-inner">
+        $pages.include($sidebarurl, $context)
+        <div class="colslidercontainer">
+          <a href="#" class="col-resize" title="[[Resize Sidebar]]"><i class="bi bi-arrows-expand-vertical"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+#end

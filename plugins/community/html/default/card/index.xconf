@@ -1,0 +1,6 @@
+<page>
+
+<path-action name="BankAccountModule.loadBankAccount" />
+	<page-action name="PageValue.loadPageVariable" bean="mathutil" />
+
+</page>

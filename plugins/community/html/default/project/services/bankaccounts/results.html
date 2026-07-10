@@ -1,0 +1,57 @@
+<div id="investmentreport">
+                  <div class="emdata emdatatable">
+					#set($sortedby= $hits.getSortBy())
+                      <table class="table table-striped">
+                          <thead>
+                              <tr class="tableheader">
+                                  <th>[[Name]] #if($sortedby.startsWith("name")) #if($sortedby.endsWith("Down")) <i class="fas fa-arrow-down"></i> #else <i class="fas fa-arrow-up"></i>  #end #end</th>
+                                  <th style="width:90px;">[[Currency]] #if($sortedby.startsWith("currencytype")) #if($sortedby.endsWith("Down")) <i class="fas fa-arrow-down"></i> #else <i class="fas fa-arrow-up"></i>  #end #end</th>
+                                  <th>[[Owner]]</th>
+                                  <th style="width:350px"></th>
+                              </tr>
+                          </thead>
+                          #foreach($hit in $hits.getPageOfHits())
+                              <tr>
+                                  <td>$!context.getText($hit)</td>
+                                  <td>$!context.getText($!mediaarchive.getCachedData("currencytype", $hit.currencytype))</td>
+                                  <td>$!context.getText($!mediaarchive.getCachedData("user", $hit.owner))</td>
+                        <td style="text-align: center">
+
+                                <a
+                                    href="${projectlink}/services/bankaccounts/transactions.html?paidfromaccount=$hit.id&collectionid=$librarycol.id"
+                                    class="btn btn-xs btn-secondary"
+                                    data-hidefooter="true" data-updateurl="true"
+                                    ><i class="fa fa-edit"></i>[[View All Trasactions]]</a>
+
+                                <a
+                                    href="${projectlink}/services/bankaccounts/investments.html?paidfromaccount=$hit.id&collectionid=$librarycol.id"
+                                    class="btn btn-xs btn-primary"
+                                    data-hidefooter="true" data-updateurl="true"
+                                    ><i class="fa fa-edit"></i>[[View Investments]]</a>
+
+                            #if( $caneditcollection )
+                                <a
+                                    href="${projectlink}/services/bankaccounts/edit.html?id=$hit.id&collectionid=$librarycol.id&librarycol=$librarycol.id"
+                                    class="btn btn-xs btn-warning emdialog"
+                                    data-hidefooter="true"
+									title="[[Edit]]"
+                                    ><i class="fa fa-edit"></i></a>
+                                    
+                            #end
+                        </td>
+                    </tr>
+                #end
+            </table>
+            
+        </div>
+        
+        #if($hits.size() >0)
+        	<div>$hits.size() [[hits]]</div>
+	        #if( $canviewsettings)
+	        ##<div><a class="ajax btn btn-sm btn-secondary" data-collectionid="$librarycol.id" data-confirm="[[Sure you want to delete all] $hits.size() [[records?]]" data-targetdiv="investmentreport" href="${projectlink}/services/bankaccounts/deleteall.html" data-hitssessionid="$hits.getSessionId()">[[Delete All]]</a></div>
+	        #end
+		#end
+        <div>
+        </div>
+        
+</div>

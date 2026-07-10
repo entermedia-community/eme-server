@@ -1,0 +1,105 @@
+#set($collectionid = $librarycol.getId())
+
+<div id="subscriberssidebar" style="position:relative; ">
+
+	#set($currentTotal = $transactionManager.getCombinedTotalIncome($librarycol.getId(),"1"))
+#set( $hidegoals = $context.getRequestParameter("hidegoals"))
+#if( $hidegoals != "true")
+
+##	#if( $caneditcollection)
+	
+##	<a class="emdialog btn btn-sm btn-light" style="position:absolute; right: 0px; top:20px;" data-allwaysloadpage="true" href="$applink/collective/edit/editcollective.html?collectionid=$librarycol.getId()" title="[[Edit your Goals]]"><i class="fas fa-cog"></i> [[Goals]]</a>
+	
+##	#end
+
+
+##Distribution details, move all this to Donate/Expendetures area 
+#if($librarycol.goaldate)
+	<div class="sidebarbox" style="margin-top:0;"  >
+		<h4><i class="fas fa-bullseye"></i> [[Goal]]
+		</h4>
+				<div class="" style="padding-left:25px; color:#555;">		
+				#if($librarycol.goaldate)
+				<strong>[[Our Goal]]: $${librarycol.goalamount} by #date($librarycol,"goaldate")! </strong><br>
+				#if($librarycol.distributedtotal) 
+				[[We have raised]]: $$!context.doubleToMoney($currentTotal, 2) USD<br> 
+				[[Spent]]: $${librarycol.distributedtotal} <br>[[Remaining]]: $$mathutil.subtract($currentTotal,$librarycol.distributedtotal) #end
+				#else
+				<strong>[[No goals yet]]!</strong>
+				#end
+				</div>	
+
+	</div>
+#end
+	<div  class="sidebarbox text-center">
+		<a href="$applink/collective/donate/$collectionid/donate.html" class="btn subscribe-btn">[[Donate]]</a>
+	</div>
+#end	
+	
+	#set( $donations = $mediaarchive.query("transaction").exact("collectionid",$collectionid).sort("paymentdateDown").search($context) )
+	#set( $n = $donations.setHitsPerPage(6))
+	<div class="sidebarbox" >
+	
+	<h4>
+		<div class="float-right" style="font-size:0.9em; line-height: 1.4;">$$!context.doubleToMoney($currentTotal, 0)</div>
+		<i class="fas fa-hand-holding-usd"></i> [[Donations]]
+	</h4>	
+			#if( !$donations.isEmpty() )
+			<strong>[[Recent Donations]] ($donations.size())</strong>
+				#foreach($transaction in $donations.getPageOfHits())
+				 	#set( $selecteduser = $mediaarchive.getUser($transaction.userid) )
+					<div style="background-color:#eee;padding:5px 10px 5px 10px; margin:4px 0;">
+					
+					<table  style="width:100%;">
+						<tr>
+							<td style="width:28%; text-align: right;"><strong>$$!context.doubleToMoney($transaction.totalprice,2) <span style="font-size:0.8rem">$context.getText($!mediaarchive.getCachedData("currencytype", $transaction.currencytype))</span></strong></td>
+							<td style="width:28%; text-align: center; padding-left:5px;">$!context.getDate($transaction.paymentdate)</td>
+							<td style="width:44%">
+							#if( $transaction.paymenttype =="paypal" && $transaction.name) 
+							 	$transaction.name
+							#elseif($selecteduser)
+								$!selecteduser.getAnonNickName()
+							#end
+							</td>
+						</tr>
+					</table>
+					</div>	
+				#end
+			#end
+
+			#set( $other = $mediaarchive.query("collectiveincome").exact("collectionid",$collectionid).sort("dateDown").search($context) )
+			#if( !$other.isEmpty() )
+				#set( $n = $other.setHitsPerPage(6))
+				
+				<strong>[[Other Income]] ($other.size())</strong>
+				#foreach($transaction in $other.getPageOfHits())
+				 	#set( $selecteduser = $mediaarchive.getUser($transaction.paidfrom) )
+					<div style="background-color:#eee;padding:5px 10px 5px 10px; margin:4px 0;">
+					<table  style="width:100%;">
+						<tr>
+							<td style="width:28%; text-align: right;"><strong>$$!context.doubleToMoney($transaction.total,2) <span style="font-size:0.8rem">$context.getText($!mediaarchive.getCachedData("currencytype", $transaction.currencytype))</span></strong></td>
+							<td style="width:28%; text-align: center; padding-left:5px;">$!context.getDate($transaction.date)</td>
+							<td style="width:44%">
+							#if($selecteduser)
+								$!selecteduser.getAnonNickName()
+							#else
+								##$transaction.incomedescription
+								$!context.getText($!mediaarchive.getCachedData("incometype", $transaction.incometype))
+							#end
+							</td>
+						</tr>
+					</table>
+						
+						 
+						
+						 
+					</div>	
+				#end
+			#end
+
+
+	</div>
+
+</div>
+        
+ 

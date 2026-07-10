@@ -1,0 +1,77 @@
+#if($librarycol.get("collectiontype") == "5")
+	#set($isproposal = "true")
+#end
+
+#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+$context.putPageValue("searcher",$searcher)
+
+#set( $viewid = "" )
+#if($isproposal)
+	##Proposals Settings
+	#set( $viewid = "proposalgeneral")
+#else
+	#if($canviewsettings)
+		#set( $viewid = "agentedit")
+	#else
+		#set( $viewid = "general")
+	#end
+#end
+
+$context.putPageValue("viewid", "librarycollection${viewid}")
+$context.putPageValue("data", $librarycol)
+
+##Legacy project URL 
+#set($savelink = "/project/edit/save.html")
+			
+<div class="emwidget">
+	<div class="emwidget-header">
+		<div class="emwidget-name">[[General Settings]]</div>
+	</div>
+	<div class="emwidget-content">
+	<form name="savecollective" 
+		enctype="multipart/form-data" 
+		id="savecollective"
+		action="${savelink}"
+		class="ajaxform scrolltotop"
+		data-targetdivinner="collectivesettingscontent"
+		data-oemaxlevel="1"
+		data-scrolltotop="true"
+		method="post"
+		data-toastsuccess="[[Project Saved]]">
+		<input type="hidden" name="save" value="true" />
+		<input type="hidden" name="searchtype" value="librarycollection" />
+		<input type="hidden" name="id" value="$librarycol.id" />
+		<input type="hidden" name="collectionid" value="$librarycol.id" />
+		<input type="hidden" name="viewid" value="$!viewid" />
+
+		$pages.include("${apphome}/components/xml/detaileditor4.html", $context)
+
+
+<div class="py-4">
+		<a class="btn btn-primary submitform ">[[Save]]</a>
+			
+		#if($canviewsettings && ($view == "agentedit" || $view == "edit"))	
+		<a class="btn btn-danger confirm"
+			style="margin: 0px 0 0 10px;" 
+			data-confirm="[[Are you sure]]?" 
+			href="${projectlink}/edit/delete.html?id=$librarycol.id&collectionid=$librarycol.id&catalogid=$searcher.catalogId&searchtype=$searcher.searchType&viewid=$viewid&viewpath=$viewpath&oemaxlevel=1">
+			[[Delete]]
+		</a>
+		#end
+
+		#if($canviewsettings)
+		<a class="btn  btn-light float-right"
+			style="margin: 0px 0 0 10px;" 
+			target="_blank"
+			href="/find/views/settings/lists/datamanager/edit/edit.html?id=$librarycol.id&searchtype=librarycollection">
+			
+			<i class="fa fa-database"></i>
+		</a>
+		
+		#end
+		</div>
+	</form>
+	</div>
+</div>
+
+

@@ -1,0 +1,85 @@
+<div style="padding:10px 20px">
+
+#set( $searcher = $mediaarchive.getSearcher("transaction") )
+#set( $donations = $searcher.query().exact("collectionid",$librarycol.getId()).sort("paymentdateDown").search($context))
+#if( $donations.isEmpty()) 
+	<p>[[No Donations yet]]</p>
+#else
+<h3>[[Online Donations]]</h3>
+<div class="emdata">
+                      <table class="table table-striped">
+                          <thead>
+                              <tr class="tableheader">
+		
+		<th style="width: 110px">[[Date]]</th>
+		
+		
+		<th>[[User]]</th>
+		<th>[[Email]]</th>
+		<th>[[Platform]]</th>
+		<th>[[Total]]</th>
+		<th></th>
+		</tr>
+   		</thead>
+  		#foreach( $transaction in $donations)
+        <tr>
+             <td>
+        		$!context.getDate($transaction.paymentdate)
+			</td> 
+			
+			
+			
+			
+        	<td>
+	        	#set( $followeruser = $mediaarchive.getUser($transaction.userid) )
+			    #set( $userlink = "${apphome}/users/${followeruser.getId()}/${followeruser.getAnonNickName()}.html")
+				###set( $userimageurl = $mediaarchive.asLinkToProfile($followeruser.assetportrait) )
+				###if(!$userimageurl)
+				##	#set( $userimageurl = "${communitylink}/theme/images/user.svg" )
+				###end
+				#if( $followeruser )
+					<a href="#esc($userlink)" title="$!followeruser.getAnonNickName()">
+					$followeruser.getAnonNickName()
+					##<img src="${userimageurl}"  title="$!followeruser.getAnonNickName()" class="img-fluid align-middle usericon"> <span class="username">$followeruser.getAnonNickName()</span>
+					</a>
+				#end
+			</td> 
+        	<td >
+        	#if( $caneditcollection )
+        		$!transaction.name
+        	
+		      #if( $transaction.paymentemail ) &lt;$transaction.paymentemail&gt;
+		      #else ($followeruser)
+		      	&lt;$!followeruser.getEmail()&gt;
+		      #end
+		      #end
+        	</td>
+       	 	<td  style="width: 80px" class="text-center">
+       	 	$transaction.paymenttype
+       	 	</td>
+       	 	
+       	 	<td  style="width: 150px" class="text-right">$transaction.totalprice  $!mediaarchive.getData("currencytype", $transaction.currencytype)</td>
+       	 	
+       	 	
+       	 
+        	<td class="text-center"  style="width: 80px">
+	        	 	<a class="btn btn-xs btn-secondary emdialog" 
+        	 		href="${projectlink}/services/donations/detail.html?id=$transaction.id&viewid=transactiongeneral&viewpath=transaction/transactiongeneral&hitssessionid=hitstransactionsite/catalog&searchtype=transaction&detailsreadonly=true"
+        	 		title="[[Donation Details]]">
+        	 		<i class="fa fa-eye"></i>
+        	 		</a>
+        	#if( $canviewsettings )
+	        	 	<a class="btn btn-xs btn-secondary" target="_blank"
+        	 		href="/find/views/settings/lists/datamanager/edit/edit.html?id=$transaction.id&searchtype=transaction"
+        	 		title="[[Edit Data]]">
+        	 		<i class="fa fa-edit"></i>
+        	 		</a>        	
+        	#end
+        	</td>        	
+       		
+        </tr>
+  #end
+  </table>
+  </div>
+#end
+</div>

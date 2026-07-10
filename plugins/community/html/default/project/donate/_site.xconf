@@ -1,0 +1,14 @@
+<page>
+	<property name="collectivesection">donate</property>
+
+	<property name="virtual">true</property>
+
+	<property name="fullwidth">true</property>
+	
+	<permission name="view">
+		<boolean value="true" />
+	</permission>
+	
+
+
+</page>

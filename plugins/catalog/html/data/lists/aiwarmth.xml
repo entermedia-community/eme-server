@@ -1,0 +1,5 @@
+<properties>
+  <property id="default">Default</property>
+  <property id="more">Friendlier and more personable</property>
+  <property id="less">More professional and factual</property>
+</properties>

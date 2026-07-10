@@ -1,0 +1,31 @@
+#set($paypalclientid = $mediaarchive.getCatalogSettingValue("paypalclientid"))
+<div class="currentcampaign py-3">		
+	##$pages.include("$apphome/project/donate/donationlist.html", $context)
+	##<hr style="opacity: 0.8;">
+	<div class="sidebar-list-header text-center">
+		<h3>[[Donate]]</h3>
+	</div>
+	<div class="d-flex align-items-center justify-content-between mb-3">
+		<div class="oe-editable" id="editdonatedescription-$librarycol.id"
+			data-dataid="$librarycol.id" data-field="donatedescription"
+			data-searchtype="librarycollection">
+			#if($librarycol.donatedescription)
+				<p class="m-0">$!librarycol.donatedescription</p>
+			#else
+				<p class="m-0">[[Be a Part of This Project]]</p>
+			#end
+		</div>
+		#if( $caneditcollection)
+			<a class="oe-dataedit showeditonright"
+				data-target="#editdonatedescription-$librarycol.id"
+				title="[[Edit Donation Description]]" data-width="500" href="#">
+				<i class="fas fa-edit"></i>
+			</a>
+		#end
+	</div>
+	<div class="d-flex justify-content-center">
+		<a href="${projectlink}/donate/index.html" class="btn btn-sm btn-follow btn-donate">
+			<i class="fas fa-credit-card mr-1"></i> [[Donate]]
+		</a> 
+	</div>
+</div>

@@ -1,0 +1,153 @@
+#set( $currency = '$' )
+
+#if(!$invoice)
+	#set( $id = $context.getRequestParameter('invoiceid'))
+	#if(!$id)
+		#set( $id = $invoiceid)
+	#end
+	#set( $invoice =	$mediaarchive.getBean("invoiceManager").getInvoiceById($id))
+#end
+ 
+<div id="invoicecontainer">
+#if($invoice) 
+	###set( $products = $mediaarchive.getBean("invoiceManager").getInvoiceProductList($id))
+	#set( $collectionid = $invoice.getValue("collectionid"))
+	#set( $collection = $mediaarchive.query("librarycollection").exact("id", $collectionid).searchOne() )
+
+	
+<form method="post" action="${projectlink}/services/editinvoicesave.html" class="ajaxform" data-targetdiv="invoicecontainer">	
+	<input type="hidden" name="id" value="$id">
+	<input type="hidden" name="invoiceid" value="$id">
+	<input type="hidden" name="collectionid" value='$invoice.getValue("collectionid")' />
+
+	<div class="row" style="background-color:#efefef; padding:10px 0;">
+		<div class="col-sm-6">
+				<strong>[[Invoice Number]]: $invoice.getValue("invoicenumber")</strong>
+				<br>
+				[[Created on]]: $!context.getDate($invoice.getValue("createdon"))
+		</div>
+		
+	</div>
+
+
+	##contacts
+	<div style="margin:20px 0 20px;">
+		<strong>[[Send invoice to]]:</strong>
+		#set($sentto = $invoice.getValue("sentto"))
+		#if (!$sentto)
+			#set( $team = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",true).exact("isbillingcontact","true").search($context) )
+			#foreach( $hit in $team)
+				#set($followeruser = $mediaarchive.getUser($hit.followeruser) )
+			  	#if($followeruser && $followeruser.getEmail())
+			  		#if (!$sentto)
+			  			#set($sentto = $followeruser.getEmail())
+			  		#else
+			  			#set($sentto = "${sentto}, ${followeruser.getEmail()}")
+			  		#end
+			  	#end
+			  	
+			#end
+		#end
+		<input type="hidden" name="field" value="sentto" />
+		<textarea class="form-control" name="sentto.value">$!sentto</textarea>
+		<div style="font-size: .8em;">*[[Comma separated emails]]</div>
+	</div>
+	
+	<div style="margin:20px 0 20px;">
+		<strong>[[Invoice Name]]:</strong>
+
+		<div class="emfield-default">
+			<input type="hidden" value="name" name="field">
+			<input type="text" class="form-control detail_name textinput autosubmited " value='$!invoice.getValue("name")' id="name.value" name="name.value">
+		</div>
+	
+	</div>
+
+	
+	<div style="margin:20px 0 20px;">
+		<strong>[[Invoice Description]]:</strong>
+		#set($invoicedescription = $invoice.getValue("invoicedescription"))
+		
+		#set( $searcher  = $mediaarchive.getSearcher("collectiveinvoice"))
+		#set( $detail = $searcher.getDetail("invoicedescription") ) 
+		$context.putPageValue("detail", $detail)
+		$context.putPageValue("value", $!invoicedescription)
+		$pages.include("$apphome/components/xml/types/html.html", $context)
+		
+		##<textarea class="form-control" name="invoicedescription">$!invoicedescription</textarea>
+	</div>
+	
+	<div style="margin:20px 0 20px;">
+		<strong>[[Invoice Total]]:</strong>
+
+		<div class="emfield-default">
+			<input type="hidden" value="totalprice" name="field">
+			<input type="text" class="form-control detail_name textinput autosubmited " value='$!invoice.getValue("totalprice")' id="totalprice.value" name="totalprice.value">
+		</div>
+
+	</div>
+
+		
+		<div style="margin: 20px 0; ">		
+			<strong>[[Products]]:</strong>
+			<div class="table-responsive">
+				<table class="d-print-table table">
+					<col span="1" style="width: 10%;">
+			       	<col span="1" style="width: 70%;">
+			       	<col span="1" style="width: 20%;">
+					<tr>
+						<th class="purchase_heading" align="left">
+							<p class="f-fallback">[[Quantity]]</p>
+						</th>
+						<th class="purchase_heading" align="left">
+							<p class="f-fallback">[[Description]]</p>
+						</th>
+						<th class="purchase_heading" align="right" style="text-align: right">
+							<p class="f-fallback">[[Amount]]</p>
+						</th>
+					</tr>
+					#set($products = $invoice.getValue("productlist"))
+					
+					#foreach ($product in $products)
+						#set ( $prod = $mediaarchive.getBean("invoiceManager").getProductById($product.productid) )
+					<tr>
+						<td valign="top" style="vertical-align: top;">
+							##<input type="text" class="form-control" name="productquantity[]" value="$product.productquantity" /></td>
+							$product.productquantity
+						<td valign="top" style="vertical-align: top;">
+							<div>
+								##<input type="text" class="form-control" name="productname[]" value="$!product.productname" />
+								$!product.productname
+							</div>
+							<div style="font-size: 0.9em;">
+								$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)
+							</div>
+						</td>
+						<td  valign="top" style="text-align: right; vertical-align: top;">
+							##$currency <input type="text" class="form-control form-control-sm" style="width: 90px;" name="productprice[]" value="$!context.doubleToMoney($product.productprice, 2)" />
+							$!context.doubleToMoney($invoice.totalprice, 2)
+							</td>
+					</tr>
+					#end
+
+				</table>
+			</div>
+
+		</div>
+		#if( $canviewsettings )
+		<div class="text-right" style="padding:15px 10px;">
+			<a href="${projectlink}/services/previewinvoice.html?invoiceid=$id&oemaxlevel=1" 
+				class="btn btn-secondary ajax" 
+				data-targetdiv="invoicecontainer" 
+				style="margin-right:10px;">[[Back]]</a>
+			<input type="submit" class="btn btn-primary dialogsubmitbtn" value="[[Save]]"/>
+	
+		</div>
+		#end
+</form>
+#end
+
+</div>
+	
+	
+	

@@ -1,0 +1,224 @@
+.loginbox {
+	--auth-bg: #121920;
+	--auth-card: #18181b;
+	--auth-border: #2a2a30;
+	--auth-text: #f4f4f5;
+	--auth-muted: #cfcfcf;
+	--auth-accent: #6ee7b7;
+	--auth-accent-text: #121920;
+	--auth-accent-h: #34d399;
+	--auth-input-bg: #111114;
+	--auth-radius: 14px;
+	font-family: "Inter", system-ui, sans-serif;
+	background: var(--auth-bg);
+	color: var(--auth-text);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem;
+	text-align: left;
+}
+
+.loginbox hr {
+	border-color: var(--auth-border);
+}
+
+.loginbox.card {
+	background: var(--auth-card);
+	border: 1px solid var(--auth-border);
+	border-radius: var(--auth-radius);
+	padding: 2.5rem 2.25rem 1.25rem;
+	width: 100%;
+	max-width: 400px;
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+	margin: 2rem auto;
+}
+
+.loginbox h1 {
+	font-size: 1.35rem !important;
+	font-weight: 600;
+	letter-spacing: -0.3px;
+	margin-bottom: 0.5rem !important;
+}
+
+.loginbox .subtitle {
+	font-size: 0.875rem;
+	color: var(--auth-muted);
+	margin-bottom: 0.35rem !important;
+	line-height: 1.5;
+}
+.loginbox a:hover {
+	color: var(--auth-text);
+}
+.loginbox form {
+	margin-top: 1.75rem;
+}
+.loginbox label {
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: var(--auth-muted);
+	letter-spacing: 0.4px;
+	text-transform: uppercase;
+	margin-bottom: 0.45rem;
+	display: block;
+	text-align: left;
+}
+.loginbox .form-control {
+	background: var(--auth-input-bg);
+	border: 1px solid var(--auth-border);
+	border-radius: 9px !important;
+	color: var(--auth-text) !important;
+	font-size: 0.95rem;
+	height: 46px !important;
+	padding: 0.75rem 1rem !important;
+	transition:
+		border-color 0.18s,
+		box-shadow 0.18s;
+	width: 100%;
+}
+.loginbox .form-control:focus {
+	background: var(--auth-input-bg);
+	border-color: var(--auth-accent-h);
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+	color: var(--auth-text) !important;
+	outline: none;
+}
+.loginbox .form-control::placeholder {
+	color: #3f3f46;
+}
+
+.loginbox .otp-row {
+	display: flex;
+	gap: 0.6rem;
+	margin-bottom: 1.25rem;
+}
+.otp-row .form-control {
+	text-align: center;
+	font-size: 1.2rem;
+	font-weight: 600;
+	padding: 0.75rem 0.5rem;
+	letter-spacing: 2px;
+}
+.loginbox .btn-primary {
+	background: var(--auth-accent);
+	border: none;
+	border-radius: 9px;
+	color: var(--auth-accent-text) !important;
+	font-size: 1rem;
+	font-weight: 500;
+	padding: 0.65rem 1.25rem;
+	width: 100%;
+	transition:
+		background 0.18s,
+		transform 0.1s;
+	cursor: pointer;
+	letter-spacing: 0.1px;
+	margin-bottom: 1rem;
+}
+.loginbox .btn-primary:hover {
+	background: var(--auth-accent-h) !important;
+}
+.loginbox .btn-primary:active {
+	transform: scale(0.98);
+}
+.loginbox .btn-primary:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.loginbox .back-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.82rem;
+	color: var(--auth-muted);
+	cursor: pointer;
+	margin-bottom: 1.75rem;
+	background: none;
+	border: none;
+	padding: 0;
+	transition: color 0.15s;
+}
+.loginbox .back-link:hover {
+	color: var(--auth-text);
+}
+.loginbox .resend-row {
+	margin-top: 1.25rem;
+	font-size: 0.82rem;
+	color: var(--auth-muted);
+	text-align: center;
+}
+.resend-row button {
+	background: none;
+	border: none;
+	padding: 0;
+	color: var(--auth-accent-h);
+	font-size: 0.82rem;
+	cursor: pointer;
+	font-family: inherit;
+	transition: color 0.15s;
+}
+.resend-row button:hover {
+	color: var(--auth-accent-h);
+}
+.resend-row button:disabled {
+	color: var(--auth-muted);
+	cursor: default;
+}
+
+.loginbox .step-dots {
+	display: flex;
+	gap: 0.35rem;
+	margin-bottom: 1.6rem;
+}
+.loginbox .dot {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: var(--auth-muted);
+	transition:
+		background 0.25s,
+		width 0.25s;
+}
+.loginbox .dot.active {
+	background: var(--auth-accent);
+	width: 18px;
+	border-radius: 3px;
+}
+
+.loginbox .email-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	border: 1px solid var(--auth-border);
+	border-radius: 4px;
+	padding: 0.28rem 0.75rem;
+	font-size: 0.8rem;
+	color: var(--auth-muted);
+}
+.loginbox .email-chip span {
+	color: var(--auth-text);
+	font-weight: 500;
+}
+.loginbox .step {
+	animation: fadeUp 0.28s ease both;
+}
+@keyframes fadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.loginbox .error {
+	padding: 0.75rem;
+	background: rgba(239, 68, 68, 0.1);
+	border: 1px solid rgba(239, 68, 68, 0.3);
+	color: #ef4444;
+	border-radius: 0.25rem;
+	width: 100%;
+}

@@ -1,0 +1,6 @@
+#
+#Thu Aug 25 17:01:35 CDT 2022
+Delete=Borrar
+Login\ to\ comment=Inicia sesi\u00F3n para comentar
+Comment\ as=Comentar como
+Write\ a\ comment=Escribir un comentario

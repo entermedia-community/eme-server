@@ -1,0 +1,10 @@
+<properties >
+	<property id="date" viewtype="time" />
+	<property id="status" />
+	<property id="publishdestination" />
+	<property id="presetid" />
+	<property id="errordetails" />
+	<property id="exportname" />
+	<property id="trackingnumber" />
+	<property id="completionpercent" />
+</properties>

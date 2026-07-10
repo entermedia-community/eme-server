@@ -1,0 +1,5 @@
+<page>
+	<property name="collectiveadminsection">expenses</property>
+	<property name="searchtype">collectiveexpense</property>
+	<path-action name="ProjectModule.loadCollection"></path-action>
+</page>

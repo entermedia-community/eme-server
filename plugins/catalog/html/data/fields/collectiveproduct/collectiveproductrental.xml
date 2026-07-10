@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+		
+  <property id="blockeddates" index="true" stored="true" editable="false" multi="true">
+  <name> 
+      <language id="en"><![CDATA[Blocked Dates]]></language>  
+    </name> 
+  </property>
+
+
+	<property id="activeregions" listid="activeregions"
+		index="true" stored="true" editable="true" viewtype="multiselect" type="list">
+		<name>
+			<language id="en"><![CDATA[Active Region]]></language>
+		</name>
+	</property>
+	<property id="fullybooked" index="true" stored="true" type="boolean" >
+	 <name>
+	 <language id="en" > <![CDATA[Fully Booked ]]> </language>
+	 </name>
+	</property>
+	
+	<property id="guests" index="true" stored="true" editable="true" >
+		<name>
+			<language id="en"><![CDATA[Guests]]></language>
+		</name>
+	</property>
+	
+
+</properties>

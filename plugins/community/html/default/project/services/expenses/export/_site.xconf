@@ -1,0 +1,18 @@
+<page>
+    <path-action name="PageValue.loadPageVariable"  bean="searcherManager" alltypes="true"/>
+	<path-action name="DataEditModule.loadHits"  alltypes="true">
+		<property name="searchtype">collectiveexpense</property>
+		<property name="hitsname">expenses</property>
+	</path-action>
+	
+	<property name="searchtype">collectiveexpense</property>
+	
+	
+	<path-action name="BaseExporter.exportHits" alltypes="true" >
+		<property name="hitsname">expenses</property>
+	</path-action>
+	<generator name="velocity"/>
+	
+	<property name="virtual">true</property>
+	
+</page>

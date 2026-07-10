@@ -1,0 +1,19 @@
+<page>
+
+	<path-action name="DataEditModule.saveData">
+		<property name="searchtype">projectgoal</property>
+		<property name ="pageval">goal</property>
+	</path-action>
+	<path-action name="DataEditModule.loadHits">
+		<property name="hitsname">goalhits</property>
+	</path-action>
+
+	<path-action name="TaskModule.addGoalToCategory"/>
+	<path-action name="TaskModule.loadGoal"/>
+
+	<path-action name="TaskModule.searchGoals">
+		<property name="hitsname">goalhits</property>
+	</path-action>
+
+
+</page>

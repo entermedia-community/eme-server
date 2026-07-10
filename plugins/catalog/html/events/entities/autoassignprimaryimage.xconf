@@ -1,0 +1,11 @@
+<page>
+	<property name="eventname">Auto assign Entity Image</property>	
+	<property name="period">1m</property>
+	<property name="enabled">true</property>
+	
+	<path-action name="Script.run" allowduplicates="true" >
+		<script>
+			/${catalogid}/events/scripts/entities/autoassignprimaryimage.groovy
+		</script>
+	</path-action>
+</page>

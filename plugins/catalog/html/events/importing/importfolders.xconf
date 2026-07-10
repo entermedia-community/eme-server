@@ -1,0 +1,6 @@
+<page>
+	<property name="eventname">Import Hot Folders</property>	
+	<property name="period">10m</property>
+	<property name="enabled">true</property>
+	
+</page>

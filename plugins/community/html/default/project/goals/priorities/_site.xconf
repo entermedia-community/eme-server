@@ -1,0 +1,8 @@
+<page>
+<path-action name="TaskModule.recalculateSessions"/>
+
+		<property name="goalfolder">priorities</property>
+		<property name="hitsname">goalhits</property>
+
+
+</page>

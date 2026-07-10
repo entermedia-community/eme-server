@@ -1,0 +1,18 @@
+<presets>
+
+	<preset id="postimage" guid="postimage" 
+		generatedoutputfile="image1200x628.webp" outputextension="webp" 
+		display="true" fileexportformat="${shortfilename}post.webp" transcoderid="imagemagick" 
+		inputtype="video|document|image" onimport="true" ordering="400" enforceaspectratio="true"  singlepage="true">Post Image JPG</preset>
+
+	<preset id="blogimage" guid="blogimage" 
+		generatedoutputfile="image600x314.webp" outputextension="webp" 
+		display="true" fileexportformat="${shortfilename}post.webp" transcoderid="imagemagick" 
+		inputtype="video|document|image" onimport="true" ordering="450" enforceaspectratio="true"  singlepage="true">Thumbnail Image JPG</preset>
+
+	<preset id="shareimage" guid="shareimage" 
+		generatedoutputfile="image1200x628.jpg" outputextension="jpg" 
+		display="true" fileexportformat="${shortfilename}post.jpg" transcoderid="imagemagick" 
+		inputtype="video|document|image" onimport="true" ordering="455" enforceaspectratio="true"  singlepage="true">SEO Thumbnail JPG</preset>
+
+</presets>

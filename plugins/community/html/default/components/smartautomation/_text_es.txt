@@ -1,0 +1,26 @@
+#
+#Fri Jul 03 17:38:47 CST 2026
+Add\ Label=A\u00F1adir etiqueta
+Add\ Labels=A\u00F1adir etiquetas
+Add\ Scenario=A\u00F1adir escenario
+Agent\ Manager=Gerente de agentes
+Are\ you\ sure\ you\ want\ to\ delete\ this\ scenario?=\u00BFEst\u00E1s seguro de que deseas eliminar este escenario?
+Back=Atr\u00E1s
+Close\ Dialog=Cerrar el di\u00E1logo
+Create\ New=Crear nuevo
+Delete\ Scenario=Eliminar el escenario
+Edit=Edici\u00F3n
+Edit\ Scenario=Editar el escenario
+Export=Exportar
+Import=Importaci\u00F3n
+Move\ Down\ (Ctrl\ +\ Scroll\ Down)=Mueva hacia abajo (Ctrl + Despl\u00E1cese hacia abajo)
+Move\ Left\ (Ctrl\ +\ Shift\ +\ Scroll\ Up)=Mueva a la izquierda (Ctrl + Shift + Despl\u00E1cese hacia arriba)
+Move\ Right\ (Ctrl\ +\ Shift\ +\ Scroll\ Down)=Mueva a la derecha (Ctrl + Shift + Despl\u00E1cese hacia abajo)
+Move\ Up\ (Ctrl\ +\ Scroll\ Up)=Subir (Ctrl + Desplazar hacia arriba)
+Reset\ Zoom=Reiniciar el zoom
+Save=Guardar
+Save\ Layout=Guardar el dise\u00F1o
+Save\ Preview\ Layout=Guardar el dise\u00F1o de vista previa
+Smart\ Organizer=Organizador inteligente
+Zoom\ In=Acercar
+Zoom\ Out=Alejar

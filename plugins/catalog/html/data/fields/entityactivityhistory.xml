@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dynamicLogSearcher"> 
+  <property id="id" index="true" stored="true" editable="true" internalfield="true">New
+    <name>
+      <language id="de"><![CDATA[Id]]></language>
+      <language id="en"><![CDATA[Id]]></language>
+      <language id="es"><![CDATA[Id]]></language>
+      <language id="fr"><![CDATA[Id]]></language>
+    </name>
+  </property>
+  <property id="applicationid" index="true" stored="true" editable="true">New 
+    <name> 
+      <language id="en"><![CDATA[Applicationid]]></language>  
+    </name> 
+  </property>  
+  <property id="moduleid" index="true" keyword="true" stored="true" editable="true" type="list"  listid="module"> 
+    <name> 
+      <language id="en"><![CDATA[Module]]></language> 
+    </name> 
+  </property>
+  <property id="entityid" index="true" keyword="true" stored="true" editable="true">New 
+    <name> 
+      <language id="en"><![CDATA[Entity]]></language> 
+    </name> 
+  </property>  
+   <property id="entitysource" index="true"  stored="true" indextype="not_analyzed"> 
+    <name> 
+      <language id="en"><![CDATA[Entity Source]]></language> 
+    </name> 
+  </property>  
+  <property id="assetids" index="true" stored="true" editable="true">New 
+    <name> 
+      <language id="en"><![CDATA[Asset Ids]]></language>  
+    </name> 
+  </property> 
+  <property id="assetnames" index="true" stored="true" editable="true">New 
+    <name> 
+      <language id="en"><![CDATA[Asset Names]]></language>  
+    </name> 
+  </property>  
+  <property id="date" index="true" stored="true" editable="false" type="date" datatype="date" viewtype="datetime">New 
+    <name> 
+      <language id="de"><![CDATA[Datum]]></language>  
+      <language id="en"><![CDATA[Date]]></language>  
+      <language id="es"><![CDATA[Fecha]]></language>  
+      <language id="fr"><![CDATA[Date]]></language> 
+    </name> 
+  </property>  
+  <property id="operation" index="true" indextype="not_analyzed" stored="true">  
+    <name> 
+      <language id="de"><![CDATA[Betrieb]]></language>  
+      <language id="en"><![CDATA[Operation]]></language>  
+      <language id="es"><![CDATA[Operación]]></language>  
+      <language id="fr"><![CDATA[Opération]]></language> 
+    </name> 
+  </property>  
+    <property id="historydetails" index="true" indextype="not_analyzed" stored="true">  
+    <name> 
+      <language id="en"><![CDATA[Note]]></language>  
+    </name> 
+  </property> 
+  <property id="user" index="true" stored="true" editable="false" type="list" viewtype="user">New 
+    <name> 
+      <language id="de"><![CDATA[Benutzername]]></language>  
+      <language id="en"><![CDATA[User Name]]></language>  
+      <language id="es"><![CDATA[Nombre de usuario]]></language>  
+      <language id="fr"><![CDATA[Nom d&#39;utilisateur]]></language> 
+    </name> 
+  </property>  
+</properties>

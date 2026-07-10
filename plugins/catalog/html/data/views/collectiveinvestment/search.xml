@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+	<property id="investmentuser" />
+	<property id="date"  />
+  
+</properties>

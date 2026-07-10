@@ -1,0 +1,5 @@
+<properties>
+	
+	<property id="publishqueuegeneral" moduleid="publishqueue" systemdefined="true" >Publish Details</property>
+
+</properties>

@@ -1,0 +1,29 @@
+<properties>
+
+
+  <data name="crop" value="false" parameterdata="postimage" id="pi1447790183613"/>  
+  <data name="background" value="white" parameterdata="postimage" id="pi1447789384658"/>  
+  <data name="layers" value="flatten" parameterdata="postimage" id="pi1447790062578"/>  
+  <data name="prefwidth" value="1200" parameterdata="postimage" id="pi1447790100132"/>  
+  <data name="prefheight" value="628" parameterdata="postimage" id="pi1447790093028"/>  
+  <data name="useoriginalasinput" value="true" parameterdata="postimage" id="pi144779040orig"/>
+  
+  
+  <data name="crop" value="false" parameterdata="blogimage" id="bpi1447789384dontcrop"/>  
+  <data name="background" value="white" parameterdata="blogimage" id="bpi1447789384658share"/>  
+  <data name="layers" value="flatten" parameterdata="blogimage" id="bpi1447790062578share"/>  
+  <data name="prefwidth" value="600" parameterdata="blogimage" id="bpi1447790100132share"/>  
+  <data name="prefheight" value="314" parameterdata="blogimage" id="bpi1447790093028share"/>  
+  <data name="useoriginalasinput" value="true" parameterdata="blogimage" id="bpi144779040origshare"/>
+
+
+  <data name="crop" value="false" parameterdata="shareimage" id="share1447790183613"/>  
+  <data name="background" value="white" parameterdata="shareimage" id="share1447789384658"/>  
+  <data name="layers" value="flatten" parameterdata="shareimage" id="share1447790062578"/>  
+  <data name="prefwidth" value="1200" parameterdata="shareimage" id="share1447790100132"/>  
+  <data name="prefheight" value="628" parameterdata="shareimage" id="share1447790093028"/>  
+  <data name="useoriginalasinput" value="true" parameterdata="shareimage" id="share144779040orig"/>
+  <data name="scaleup" value="true" parameterdata="shareimage" id="sharescale1447790093028"/>  
+ 
+  
+</properties>

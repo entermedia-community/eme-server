@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<publishlocations>
+  <location id="0" publishtype="http" url="">Browser Download</location>
+  <location id="email" publishtype="email" >Send To Email</location>
+  <location id="local" publishtype="filecopy" url="/tmp" administrativeemail="" presetid="0">Local File Copy (Original)</location>
+  <location id="5" publishtype="youtube" >YouTube</location>
+  <location id="6" publishtype="entermedia" server="em10.entermediadb.org"  bucket="asset/catalogs/public" username="admin" >Demo EM Server</location>
+
+</publishlocations>

@@ -1,0 +1,29 @@
+#
+#Mon Aug 29 15:35:40 CDT 2022
+Add\ Ticket=Agregar ticket
+Task=Tarea
+Done=Hecho
+Not\ Defined=No definida
+added=adicional
+ago=atr\u00E1s
+New\ Topic=Nuevo tema
+Due\ by=Finaliza el
+Add\ Task=Agregar tarea
+Add\ Field=Agregue campo
+Search=B\u00FAsqueda
+by=por
+missing=perdido
+Export=Exportar
+Open\ Topics=Temas abiertos
+Export\ Results=Exportar resultados
+Ticket\ limit\ reached.\ Please\ close\ older\ tickets.=L\u00EDmite de entradas alcanzado. Cierra los tickets m\u00E1s antiguos.
+Topics=Temas
+Create\ a\ new\ Topic\ to\ get\ started=Crea un nuevo tema para empezar
+Show\ Less=Muestra menos
+Edit\ Task=Editar tarea
+New\ Ticket=Nuevo Ticket
+Resolve=Resolver
+Show\ More=Mostrar m\u00E1s
+Create\ a\ Topic=Crear un tema
+Add\ Note=Agregar Nota
+Add\ a\ Topic=Agregar un tema

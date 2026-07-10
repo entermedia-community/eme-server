@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="0"> 
+    <name> 
+      <language id="en"><![CDATA[Requested]]></language> 
+      <language id="es"><![CDATA[Solicitado]]></language>
+    </name> 
+  </data>  
+  <data id="1"> 
+    <name> 
+      <language id="en"><![CDATA[Pending]]></language> 
+      <language id="es"><![CDATA[Pendiente]]></language>
+    </name> 
+  </data>  
+  <data id="2"> 
+    <name> 
+      <language id="en"><![CDATA[Blocked]]></language>
+      <language id="es"><![CDATA[Bloqueado]]></language> 
+    </name> 
+  </data>  
+  <data id="3"> 
+    <name> 
+      <language id="en"><![CDATA[Completed]]></language>
+      <language id="es"><![CDATA[Terminado]]></language> 
+    </name> 
+  </data>  
+  <data id="4"> 
+    <name> 
+      <language id="en"><![CDATA[Redo]]></language> 
+      <language id="es"><![CDATA[Rehacer]]></language>
+    </name> 
+  </data>  
+  <data id="5"> 
+    <name> 
+      <language id="en"><![CDATA[Note]]></language> 
+      <language id="es"><![CDATA[Nota]]></language>
+    </name> 
+  </data>  
+  <data id="6"> 
+    <name> 
+      <language id="en"><![CDATA[On Agenda]]></language>
+      <language id="es"><![CDATA[En Agenda]]></language> 
+    </name> 
+  </data>
+   <data id="7"> 
+    <name> 
+      <language id="en"><![CDATA[Urgent]]></language>
+      <language id="es"><![CDATA[Urgente]]></language> 
+    </name> 
+  </data>  
+     <data id="readytostart"> 
+    <name> 
+      <language id="en"><![CDATA[Ready to Start]]></language>
+    </name> 
+  </data> 
+     <data id="urgent"> 
+    <name> 
+      <language id="en"><![CDATA[Urgent]]></language>
+    </name> 
+  </data> 
+    
+</root>

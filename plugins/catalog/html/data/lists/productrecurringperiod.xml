@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="0"> 
+    <name> 
+      <language id="en"><![CDATA[Daily]]></language> 
+    </name> 
+  </data>  
+  <data id="1"> 
+    <name> 
+      <language id="en"><![CDATA[Monthly]]></language> 
+    </name> 
+  </data>  
+    <data id="3"> 
+    <name> 
+      <language id="en"><![CDATA[Quarterly]]></language> 
+    </name> 
+  </data>
+  
+  <data id="6"> 
+    <name> 
+      <language id="en"><![CDATA[Biannual]]></language> 
+      
+    </name> 
+  </data>  
+  <data id="12"> 
+    <name> 
+      <language id="en"><![CDATA[Yearly]]></language>
+    </name> 
+  </data>  
+</root>

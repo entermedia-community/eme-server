@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties  beanname="dataSearcher"> 
+ 
+
+  <property id="id" index="true" filter="false" internalfield="true" editable="true" stored="true" sortable="true" keyword="false">Id
+    <name> 
+      <language id="de"><![CDATA[Id]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Id]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property> 
+  
+    <property id="collectionid" index="true" filter="false" editable="false" stored="true" sortable="true" type="list" keyword="false" listid="librarycollection">
+    <name>
+      <language id="de"><![CDATA[Sammlung ID]]></language>
+      <language id="en"><![CDATA[Collection Id]]></language>
+      <language id="es"><![CDATA[colección Id]]></language>
+      <language id="fr"><![CDATA[Id Collection]]></language>
+    </name>
+  </property> 
+  
+      <property id="currencytype" index="true" editable="true" stored="true"  datatype="list" listid="currencytype" defaultvalue="1">
+    <name> 
+      <language id="en"><![CDATA[Currency Type]]></language>
+      <language id="es"><![CDATA[Moneda]]></language> 
+    </name> 
+  </property>  
+ 
+    <property id="incometype" index="true" editable="true" stored="true"  datatype="list" listid="incometype">
+    <name> 
+      <language id="en"><![CDATA[Income Type]]></language>
+      <language id="es"><![CDATA[Tipo de Ingreso]]></language> 
+    </name> 
+  </property>    
+  
+   <property id="total" index="true" editable="true" stored="true" type="double">
+    <name> 
+      <language id="en"><![CDATA[Total Price]]></language> 
+      <language id="es"><![CDATA[Precio Total]]></language>
+    </name> 
+  </property> 
+  
+    <property id="date" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="true" filter="false" multilanguage="false" deleted="false" datatype="date" autocreatefromexif="false" keyword="false" writenametoexif="false">New
+    <name>
+      <language id="en"><![CDATA[Income Date]]></language>
+    </name>
+  </property> 
+  
+    <property id="user" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="list" rendertype="list" required="false" filter="false" multilanguage="false" deleted="false" datatype="list" autocreatefromexif="false" keyword="false" writenametoexif="false">New
+    <name> 
+      <language id="en"><![CDATA[Entered By]]></language> 
+    </name> 
+  </property>  
+ <property id="owner" index="true" listid="user" deleted="false" editable="true" stored="true" viewtype="user" keyword="true" datatype="list">New 
+    <name> 
+      <language id="de"><![CDATA[Owner]]></language>  
+      <language id="en"><![CDATA[Owner]]></language>  
+      <language id="es"><![CDATA[Propietario]]></language>  
+      <language id="fr"><![CDATA[Propriétaire]]></language> 
+    </name> 
+  </property>  
+    <property id="paidfromaccount" 
+    viewtype="bankaccount" searchcomponent="bankaccount"
+    index="true" editable="true" stored="true"  datatype="list" listid="bankaccount" defaultvalue="1">
+	 <name>
+	 <language id="en" > <![CDATA[Account Balance]]> </language>
+	 </name>
+	</property>
+
+    <property id="paidfrom" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="list" rendertype="list" required="false" filter="false" multilanguage="false" deleted="false" datatype="list" autocreatefromexif="false" keyword="false" writenametoexif="false">New
+    <name> 
+      <language id="en"><![CDATA[Paid By]]></language> 
+    </name> 
+  </property>  
+
+  	<property id="receiptattachment" listid="asset" index="true"
+		stored="true" editable="true" viewtype="asset" type="list"
+		sourcepath="/uploads/${data.collectiveid}/income/${formattedyear}/${shortguid}">
+		<name>
+			<language id="en"><![CDATA[Receipt Photo]]></language>
+		</name>
+	</property>
+  
+    <property id="incomedescription" index="true" editable="true" stored="true" viewtype="textarea">
+    <name> 
+      <language id="en"><![CDATA[Details]]></language> 
+    </name> 
+  </property>  
+  
+    <property id="collectiveproject" required="true" 
+ 	index="true" stored="true" editable="true"  type="list"  datatype="list"
+ 	viewtype="collectionproject" searchcomponent="collectionproject" > 
+    <name> 
+      <language id="en"><![CDATA[Topic]]></language>  
+    </name> 
+  </property> 
+
+   <property id="paymenttype" index="true" filter="false" editable="false" stored="true" sortable="true" keyword="false" type="list">
+    <name>
+      <language id="en"><![CDATA[Payment Type]]></language>
+    </name>
+  </property>
+
+  <property id="paymentemail" index="true" editable="true" stored="true">
+    <name> 
+      <language id="en"><![CDATA[Payment Email]]></language> 
+    </name> 
+  </property>     
+
+  
+</properties>

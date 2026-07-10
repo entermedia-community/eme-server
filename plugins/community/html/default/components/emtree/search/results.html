@@ -1,0 +1,34 @@
+#set($emtreehome = "$apphome/views/modules/asset/components/emtree")
+
+#set($hits = $searchcathits)
+
+<div id="categoryresultsdialog" class="categoryresults">
+
+		
+		#set( $targetdiv = $context.getRequestParameter("targetdiv") )
+		#ifnull($targetdiv)
+		  #set($targetdiv = "applicationcontent")
+		#end
+		#set($assetid = $context.getRequestParameter("assetid") )
+		<div class="categorypathpicker  overflow-y" style="min-height: 200px"  >
+
+			#foreach( $hit in $hits.getPageOfHits() )
+				<div class="categorypath">
+
+					<a class="categorypathlink ajax"
+						href="$applink/views/modules/asset/editors/viewfilescategory/$hit.getId()/#dash($hit.name).html" 
+						data-targetdiv="edithomeassetresultarea"
+						data-categoryid="$hit.getId()"
+						data-oemaxlevel="2"
+						data-updateurl="true"
+						data-scrolltocat="true">
+						#esc($hit.categorypath)															
+						</a>
+					
+				</div>
+			#end	
+			
+		</div>
+		$pages.include("$apphome/components/sidebars/categories/pages.html",$context)
+	
+</div>

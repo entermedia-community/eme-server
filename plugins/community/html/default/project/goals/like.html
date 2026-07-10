@@ -1,0 +1,39 @@
+#set( $users = $goal.getValues("userlikes"))
+<div id="like${goal.id}" class="goallike" >
+#if($user)
+ <a href="${apphome}/project/goals/like.html?goalid=${goal.id}"
+	  	title="[[Toggle]]" 
+		class="editgoallike ajax" targetdiv="like$goal.id"> 
+			<i class="fas fa-thumbs-up"></i>
+</a>
+#else
+		<i class="fas fa-thumbs-up"></i>
+#end
+	#if($caneditcollection)
+	  <a href="${apphome}/project/goals/like.html?goalid=${goal.id}"
+	  	title="[[Make Priority]]" 
+		class="editgoallike ajax" targetdiv="like$goal.id" 
+	  	 #if( $users )
+	  	 	#if( $users.contains($context.getUserName()))
+	   			style="font-weight:bold;"
+	   		#else
+	   			
+	   		#end 
+	   		>		
+	   			
+	   		#foreach($us in $users)
+	   			#if( $foreach.count > 1)|#end $!mediaarchive.getUser($us).getAnonNickName() 
+	   		#end
+	   	#else
+	   		>
+	   	#end	
+	  </a>
+	#else
+		<i class="fas fa-user"></i>
+	   		#foreach($us in $users)
+	   			#if( $foreach.count > 1)|#end $!mediaarchive.getUser($us).getAnonNickName() 
+	   		#end
+	
+	#end
+	  				
+</div> 

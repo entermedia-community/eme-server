@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<endpoints> 
+
+    <endpoint id="pullfolder" name="Folders - Pull Folder" url="/${applicationid}/services/module/asset/folders/pullfolder.json" httpmethod="POST" docsection="finder"> 
+<samplerequest><![CDATA[
+    	{
+         	"entermediakey": "900040md5425b0ed4f250a10957c08f0a00e419040e608d0f36etstampc7QVeqTVDs6Fix5RRyfX+A==", "categorypath": "Activities/Vacations"   
+	    } 
+	      ]]></samplerequest> 
+
+  </endpoint>  
+	    <endpoint id="entitypush" name="Check Push List" url="/${applicationid}/services/module/asset/sync/entitypushcheck.json" httpmethod="POST" docsection="finder"> 
+	<samplerequest><![CDATA[
+    	{
+			"entityid":"entityid123",
+			"moduleid":"entitymusic",
+			"rootpath":"/home/user/eMedia/",
+			"categorypath":"Music/Songs",
+			"files":[{
+				"path":"filepath",
+				"size":632532
+			}],
+		"folders":[{
+			"path":"/home/user/eMedia/Activities/Sub1/Sub2"
+		}]
+		}
+		      ]]></samplerequest> 
+	</endpoint>  
+    <endpoint id="entitypull" name="Check Pull List" url="/${applicationid}/services/module/asset/sync/entitypullcheck.json" httpmethod="POST" docsection="finder"> 
+	<samplerequest><![CDATA[
+    	{
+			"entityid":"entityid123",
+			"moduleid":"entitymusic",
+			"rootpath":"/home/user/eMedia/",
+			"categorypath":"Music/Songs",
+			"files":[{
+				"path":"filepath",
+				"size":632532
+			}],
+		"folders":[{
+			"path":"/home/user/eMedia/Activities/Sub1/Sub2"
+		}]
+		}
+	      ]]></samplerequest> 
+
+
+  </endpoint>  
+  
+   <endpoint id="pullfolderlist" name="List All Sub Folders" url="/${applicationid}/services/module/asset/entity/pullfolderlist.xconf" httpmethod="POST" docsection="finder"> 
+	<samplerequest><![CDATA[
+    	{
+			"categorypath":"Music/Songs",
+		}
+     ]]></samplerequest> 
+
+
+  </endpoint>
+
+    
+ </endpoints>

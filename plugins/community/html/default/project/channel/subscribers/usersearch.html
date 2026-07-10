@@ -1,0 +1,28 @@
+#set($searcher = $mediaarchive.getSearcher("user") ) 
+#set($collectionid = $context.getRequestParameter("collectionid"))
+
+#set($edithome = "$apphome/views/modules/user/editors/projectadduser")
+$context.putPageValue("edithome", $edithome)
+$pages.include("${edithome}/index.html", $context)
+
+$context.putPageValue("searcher",$searcher) #set($targetdiv = "subscriberssidebar")
+
+<div id="search-collections">
+  <div id="searcharea">
+    #set($viewid = "usersearch") #set($viewpath = "user/${viewid}")
+    #set($details = $searcher.getDetailsForView($viewpath, $userprofile))
+    <div
+      id="adduserpicker"
+	    class="pickerresultsgeneral"
+      data-targetdiv="subscriberssidebar"
+      data-oemaxlevel="1"
+      data-collectionid="$!{collectionid}"
+	    data-communityid="${communitytag.getId()}"
+      data-hitssessionid="$!hits.sessionId"
+	    data-addtoteam="true"
+      data-url="$!{apphome}/project/channel/subscribers/addsave.html"
+    >
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+#set($loginokpage = $context.getRequestParameter("loginokpage") )
+#if(!$loginokpage)
+	#set($loginokpage = $context.findValue("loginokpage") )
+#end 
+#if(!$loginokpage)
+	#set($loginokpage = $context.getSessionValue("fullOriginalEntryPage") )
+#end 
+$context.putSessionValue("fullOriginalEntryPage", $!loginokpage)
+
+#set($targetdiv = $context.getRequestParameter("targetdiv") )
+#if(!$targetdiv)
+	#set($targetdiv = $context.findValue("targetdiv") )
+#end
+
+#set($providers = $mediaarchive.query("oauthprovider").exact("enabled","true").search())
+#set( $allowguestregistration = $context.findValue("allowguestregistration") )
+
+#set($allowloginbyemail = $mediaarchive.getCatalogSettingValue("allowloginbyemail") )
+
+
+<div id="ajaxlogincontainer">
+	<div class="loginbox card">
+		<div id="ajaxloginstep1" class="step">
+			<div class="step-dots">
+				<div class="dot active"></div>
+				<div class="dot"></div>
+			</div>
+			#if( $allowguestregistration == "true")
+				<h1>[[Sign in / Sign up]]</h1>
+			#else
+				<h1>[[Sign in]]</h1>
+			#end
+			
+			<p class="subtitle">
+				#set($customloginmessage = $mediaarchive.getCatalogSettingValue("customloginmessage") )
+				#ifnotnull($customloginmessage)
+					$customloginmessage
+				#end
+				#ifnull($customloginmessage)
+					Enter your email and we'll send a one-time code.
+				#end
+			</p>
+			
+			<form class="ajaxform" 
+				data-targetdiv="ajaxlogincontainer"
+				action="$home$content.loginroot/sendmagiclinkfinish.html" id="login" name="login"  method="post">
+				#ifnotnull( $userCategory)
+					<input type="hidden" name="categoryid" value="$!userCategory.id" />
+				#end
+				
+				<label for="loginemail">Email</label>
+				<input
+					id="loginemail"
+					type="email"
+					name="email"
+					placeholder="[[Enter your email address]]"
+					class="form-control required grabfocus"
+					autocomplete="email"
+				/>
+
+				#set( $error = $context.getPageValue("oe-exception") )
+				#if ( $error ) 
+					<div class="alert alert-danger w-100 mt-3 mb-0 p-2" role="alert">
+						<i class="fas fa-exclamation-triangle me-1"></i>
+						$error
+					</div>
+					$context.removeSessionValue("oe-exception")
+				#end
+
+				<button class="btn-primary mt-3" id="nextBtn" type="submit">Next</button>
+				<input type="hidden" name="subject" value="[[Your Login Info]]"/>
+			</form>
+			<div class="text-end">
+				<a href="$content.loginroot/legacyform.html" class="ajax p-1" data-targetdiv="ajaxlogincontainer" title="[[Legacy login with username & password]]"><i class="fas fa-key me-1 me-1"></i>[[Legacy Login]]</a>
+			</div>
+		</div>
+		$pages.include("$home$content.loginroot/sociallogin.html", $context)
+    $pages.include("$home$content.loginroot/loginhelp.html", $context)
+	</div>
+</div>
+
+	
+
+ 

@@ -1,0 +1,37 @@
+<ul class="d-flex flex-column list-unstyled accordion" id="drupalMediaAccordion">
+  #foreach($row in $value)
+    #set($pagelink = $row.get("page"))
+    <li class="mb-2">
+      <div class="d-flex flex-column">
+        <div class="d-flex align-items-center">
+          <a href="$pagelink" target="_blank" class="small text-accent" style="word-break: break-all;">
+            $pagelink
+          </a>
+          <a type="button" class="bg-contrast text-contrast ms-1 px-1 collapsed" data-bs-toggle="collapse" href="#drupalMedia-${detail.id}-${foreach.count}">
+            <i class="bi bi-chevron-expand ns"></i>
+            <i class="bi bi-chevron-contract ns"></i>
+          </a>
+        </div>
+       
+        <div class="collapse  mt-1" id="drupalMedia-${detail.id}-$!{foreach.count}" data-parent="#drupalMediaAccordion">
+          <div class="py-1 px-2 bg-contrast ">
+          #foreach($key in $row.keySet())
+            #if($key != "page")
+              #set($val = $row.get($key))
+              #if($key == "lang")
+                #set($locale = $mediaarchive.getCachedData("locale", $val))
+                #ifnotnull($locale)
+                  #set($val = $locale.getName())
+                #end
+              #end
+              <p class="mb-1 small">
+                <span class="fw-bold me-2">$key:</span><span style="word-break: break-all;">$val</span>
+              </p>
+            #end
+          #end
+          </div>
+        </div>
+      </div>
+    </li>
+  #end
+</ul>

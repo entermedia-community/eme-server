@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+  <property id="librarycollectionagentedit" moduleid="librarycollection" systemdefined="true">Admin Edit</property>
+
+  <property id="librarycollectionaddteam" moduleid="librarycollection" systemdefined="true">Add New Team</property>
+
+  <property id="librarycollectioneditdonations" moduleid="librarycollection" systemdefined="true">Edit Donations</property>
+  <property id="librarycollectioneditinvoicetemplate" moduleid="librarycollection" systemdefined="true">Edit Invoice Template</property>
+  <property id="librarycollectionproposalsummary" moduleid="librarycollection" systemdefined="true">Edit Proposal</property>
+  <property id="librarycollectionproposaltestimonials" moduleid="librarycollection" systemdefined="true">Edit Testimonials</property>
+  <property id="librarycollectionpaymentmethods" moduleid="librarycollection" systemdefined="true">Edit Payment Methods</property>
+
+</properties>

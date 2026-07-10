@@ -1,0 +1,9 @@
+<properties>
+	
+	
+	<property id="assetstatus" moduleid="asset" systemdefined="false"  ordering="15">Status</property>
+	<property id="assetfileproperties"  moduleid="asset"  systemdefined="false"  ordering="20">File</property>
+	
+	<property id="assetmultipleupload" moduleid="asset" systemdefined="true" byassettype="false">Multiple Upload</property>
+	
+</properties>

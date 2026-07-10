@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="user"> 
+    <name> 
+      <language id="en"><![CDATA[Person]]></language> 
+      <language id="es"><![CDATA[Persona]]></language> 
+    </name> 
+  </data>   
+     
+  <data id="librarycollection"> 
+    <name> 
+      <language id="en"><![CDATA[Project]]></language> 
+      <language id="es"><![CDATA[Proyecto]]></language> 
+    </name> 
+  </data>   
+
+  <data id="externalpaypal"> 
+    <name> 
+      <language id="en"><![CDATA[External PayPal]]></language> 
+      <language id="es"><![CDATA[External PayPal]]></language> 
+    </name> 
+  </data>   
+
+  <data id="externalbank"> 
+    <name> 
+      <language id="en"><![CDATA[External Bank Deposit]]></language> 
+      <language id="es"><![CDATA[Transferencia de Banco]]></language> 
+    </name> 
+  </data>   
+
+  <data id="externalwise"> 
+    <name> 
+      <language id="en"><![CDATA[Transfer to Wise.com]]></language> 
+      <language id="es"><![CDATA[Transferencia por Wise.com]]></language> 
+    </name> 
+  </data>   
+
+    
+</root>

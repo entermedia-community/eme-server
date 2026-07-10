@@ -1,0 +1,28 @@
+<properties>
+
+
+  <property id="finances" ordering="39">
+    <name>
+      <language id="en"><![CDATA[Finances]]></language>
+    </name>
+  </property>
+
+  <property id="goals" ordering="40">
+    <name>
+      <language id="en"><![CDATA[Goals]]></language>
+    </name>
+  </property>
+
+  <property id="referrals" ordering="41">
+    <name>
+      <language id="en"><![CDATA[Referrals]]></language>
+    </name>
+  </property>
+
+  <property id="blogs" ordering="41">
+    <name>
+      <language id="en"><![CDATA[Blogs]]></language>
+    </name>
+  </property>
+
+</properties>

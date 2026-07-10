@@ -1,0 +1,7 @@
+#
+#Mon Aug 29 10:42:32 CDT 2022
+Delete=Borrar
+Remove\ task=Quitar tarea
+Cancel=Cancelar
+Save=Guardar
+Are\ you\ sure?=\u00BFEst\u00E1 seguro?

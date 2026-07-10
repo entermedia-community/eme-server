@@ -1,0 +1,11 @@
+<page>
+	
+	<path-action name="Script.run">
+	
+		<script>./liketoggle.groovy</script>
+		
+	</path-action>
+	
+	
+	<inner-layout>/${applicationid}/innerlayout.html</inner-layout>
+</page>

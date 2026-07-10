@@ -1,0 +1,14 @@
+<div class="login-area bodywebsite text-center">
+	    <h2 style="text-align:center; margin-bottom:30px;">[[Thank you for registering]]</h2>
+
+		<div >
+			[[Your application for an account is currently pending approval. Once it has been approved,you will receive an email containing information about how to log in.]]
+			#ifnotnull($userapproveremail)
+				<p style="text-align: center;">
+					<a href="mailto:$!{userapproveremail}">$userapproveremail</a> [[has been notified]].
+				</p>
+			#end	
+			 	
+		</div>
+
+</div>

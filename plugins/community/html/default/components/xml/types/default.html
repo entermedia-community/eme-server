@@ -1,0 +1,89 @@
+#if( $value && !$value.isEmpty() )
+	#set($val = $value)
+#end
+
+#if($detail.isRequired() && $multiedit != "true")
+	#set($isrequired = "true")
+#end
+
+#if($detail.isMultiLanguage())
+	<div class="${detail.id}-languages languages-field #if( $searchform )insearchform#end">
+		
+		#set($languages = $mediaarchive.getList("locale"))
+		#set($languagemap = $data.getValue($detail.getId()))
+		#set($language_count = 0)
+		<div class="languagesfield">
+			<div class="translation-mask text-white">
+				<i class="fas fa-spinner fa-spin"></i>
+				<span>[[Translating...]]</span>
+			</div>
+			#foreach($locale in $languages)
+				#set($localval = $languagemap.getText($locale.id))
+				#if($localval && $localval != "")
+					#set($language_count = $language_count+1)
+					$pages.include("$apphome/components/xml/types/language/extralanguage.html?detailid=${detail.id}&locale=$locale&languagecode=${locale.id}&isrequired=$!isrequired",$context)
+					#set($isrequired = "false")
+				#end
+				#set($localval = "")
+			#end
+
+			#if($language_count == 0)
+				#set($language_count = 1)
+				#set($locale = $mediaarchive.query("locale").exact("id", $context.getLanguage()).searchOne() )
+				$context.putPageValue("addedlocale", $locale.id)
+				$pages.include("$apphome/components/xml/types/language/extralanguage.html?detailid=${detail.id}&locale=$locale&languagecode=${locale.id}&isrequired=$!isrequired",$context)
+			#end
+
+			#if($language_count == 1)
+				<div class="hide-remove-btn"></div>
+			#end
+
+			<div id="languagesextra_${detail.id}"></div>
+			
+			$context.putPageValue("languagemap", $languagemap)
+			$pages.include("$apphome/components/xml/types/translationfooter.html",$context)
+		</div>
+	</div>
+#elseif( $detail.isKeywordMap() )
+	<div class="${detail.id}-kwmap kwmap-field">
+		#set($map = $data.getValue($detail.getId()))
+		#set($dlocale = $context.getLanguage() )
+		<input type="hidden" value="#esc($val)" name="$!{detailprefix}${detail.getId()}.value" /> ##if this really needed?
+		
+		#set($map_count = 0)
+		<div class="languageselector pull-left">
+			#foreach($key in $map.keySet())
+				#set($keyval = $map.get($key))
+				#if($keyval && $keyval != "")
+					#set($map_count = $map_count + 1)
+					$pages.include("$apphome/components/xml/types/map/extravalue.html?detailid=${detail.id}&count=$map_count&keycode=$locale.id",$context)
+				#end
+				#set($keyval = "")
+			#end
+			#if($keyval == 0)
+			#set($keyval = $keyval+1)
+			$pages.include("$apphome/components/xml/types/map/extravalue.html?detailid=${detail.id}&count=$map_count&keycode=$dlocale",$context)
+			#end
+			<div id="mapextra_${detail.id}" data-count='$map_count' ></div>
+		</div>
+		
+		<div style="padding:10px 0" class="float-left"> ##TODO, update the parameters using jQuery
+			<a class="languagesavebtn" href="$siteroot$apphome/components/xml/types/language/extralanguage.html" data-targetdiv="languagesextra_${detail.id}" data-detailid="${detail.id}" data-locale="$dlocale"><img src="$home$themeprefix/images/icons/addgray.png"></a>
+		</div>
+
+	</div>
+#else
+	<textarea 
+		autocomplete="off"
+		id="${detail.getId()}.value"
+		name="$!{detailprefix}${detail.getId()}.value"
+		class="autogrow form-control #if($detail.isRequired() && !$multiedit) required #end"
+		#if($detail.isRequired() && !$multiedit) required #end
+		placeholder="$!detail.getText($context)"
+		rows="1">#esc($!val)</textarea>
+#end
+
+#set($fieldhint = $detail.hint)
+#if($fieldhint)
+<span>$fieldhint</span>
+#end

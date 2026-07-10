@@ -1,0 +1,15 @@
+#
+#Mon Jun 27 19:42:59 CDT 2022
+Donation\ Details=Detalles de la donaci\u00F3n
+Email=Correo electr\u00F3nico
+User=Usuario
+Reverse=Reverso
+Platform=Plataforma
+Online\ Donation=Donaci\u00F3n en l\u00EDnea
+Edit\ Data=Editar datos
+Date=Fecha
+hits=registros
+Sort\ by=Ordenar por
+Search\ Donations=Buscar donaciones
+Total=Total
+Download=Descargar

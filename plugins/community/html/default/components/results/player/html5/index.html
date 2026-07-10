@@ -1,0 +1,87 @@
+#ifnull($asset)
+	#set ($asset = $hit)
+#end
+#ifnull($hit)
+	#set ($hit = $asset)
+#end
+
+#set( $source = $mediaarchive.asLinkToGenerated($asset,"video.m3u8")) 
+#set( $sourcemp4 = $mediaarchive.asLinkToGenerated($asset,"video.mp4")) 
+
+#set( $streams = $hit.getValues("hlsstreams"))
+#set( $thumb = $mediaarchive.asLinkToPreview($hit,"image1900x1080"))
+#set( $autoplay = $context.getRequestParameter("autoplay") ) 
+#set( $loop = $context.getRequestParameter("loop") ) 
+#set( $embed = $context.getRequestParameter("embed") )
+#set( $assetidpostfix = $context.getPageValue("assetidpostfix"))
+#set( $mediadbappid = $mediaarchive.getMediaDbId() )
+#set( $root = "$!prefix$siteroot$page.directory")
+#set( $catalogid = $asset.catalogId )
+
+#set($contextlang = $context.getRequestParameter("selectedlang") )
+#if($contextlang)
+	#set( $assetidpostfix = "$!assetidpostfix$contextlang")
+#else
+	#set($contextlang = $context.getLanguage())
+#end
+
+#set( $rendertype = $mediaarchive.getMediaRenderType($hit.fileformat))
+
+<div id="playarea-$hit.id$!assetidpostfix" 
+	class="player d-flex align-items-center justify-content-center">
+	<video id="videoviewer-$hit.id$!assetidpostfix" 
+		class="video-js vjs-default-skin vjs-big-play-centered"
+		#if( $rendertype && $rendertype == "audio" )
+			poster="$home$themeprefix/images/audio.png"
+		#else
+			poster="$!{thumb}"
+		#end
+		#if( $loop && $loop == "true") loop #end
+		#if($autoplay && $autoplay == "true") autoplay #end
+	>
+			#if( $rendertype && $rendertype == "audio" )
+				#set( $sourcemp3 = "$!siteroot$home/${mediadbappid}/services/module/asset/downloads/preset/${hit.sourcepath}/audio.mp3")
+				<source type="audio/mp3" src="$sourcemp3"  label="$!hit.width" />
+			#else
+				#if( $streams )
+					#foreach( $size in $streams)
+						#if($size=="720") 
+						<source src="$source/$size/video.m3u8" type="application/x-mpegURL" label="$size" res="$size"  />
+						#end
+					#end
+					#foreach( $size in $streams)
+						#if($size!="720") 
+						<source src="$source/$size/video.m3u8" type="application/x-mpegURL" label="$size" res="$size"  />
+						#end
+					#end								
+				#else	
+					<source type="video/mp4" src="$sourcemp4"  label="$!hit.width" />
+					#set( $short = $url_util.getPathUtilities().extractPagePath($sourcemp4) )
+					<source type="video/flash" src="mp4:$short"  label="$!hit.width" />
+				#end
+			#end
+			
+			#if( $tracks && !$tracks.isEmpty() )
+				#foreach( $track in $tracks)
+					<track 
+					label="$track.sourcelang subtitles" 
+					kind="subtitles" 
+					srclang="$track.sourcelang" 
+					src="$!siteroot/${mediadbappid}/services/module/asset/players/closedcaption/${asset.id}/closedcaption-${track.sourcelang}.vtt"
+					#if( $contextlang == ${track.sourcelang})	 default #end
+					>
+				#end
+			#end
+	</video>
+</div>
+
+<script>
+	var thevideo = "videoviewer-${hit.id}$!{assetidpostfix}";
+	var player = videojs.getPlayer(thevideo);
+	if(player){
+		player.dispose();
+	}
+	player = videojs(thevideo, { controls: true }, function() {
+		this.controlBar.addChild('QualitySelector');
+	});
+</script>

@@ -1,0 +1,33 @@
+<div class="d-flex flex-column">
+	#if($caneditcollection  || $librarycol.priviacylevel != "commercial" )
+	$pages.include("$apphome/project/channel/subscribers/index.html", $context)
+	#end
+	
+	#if($librarycol.priviacylevel == "community")
+		$pages.include("$apphome/project/donate/donate.html", $context)
+	#end
+	
+	$pages.include("$apphome/project/channel/likeoptions.html", $context)
+
+	#if($librarycol.proposaltestimonials)
+		<div class="proposal-sidebarbox">
+			<h3>[[Testimonials]]</h3>
+				$!librarycol.proposaltestimonials
+		</div>
+	#end
+
+
+	#if ($librarycol.facebooklink || $librarycol.instagramlink || $librarycol.websitelink)
+		<div class="text-center" style="margin:20px;">
+			#if ($librarycol.facebooklink)
+				<a href="${librarycol.facebooklink}" class="btn btn-light btn-sm" target="_blank" title="[[Facebook]]"><i class="fab fa-facebook-f"></i></a>
+			#end
+			#if ($librarycol.instagramlink)
+				<a href="${librarycol.instagramlink}" class="btn btn-light btn-sm" target="_blank" title="[[Instagram]]"><i class="fab fa-instagram"></i></a>
+			#end
+			#if ($librarycol.websitelink)
+				<a href="${librarycol.websitelink}" class="btn btn-light btn-sm" target="_blank"  title="[[Website]]"><i class="fas fa-link"></i></a>
+			#end
+		</div>
+	#end
+</div>

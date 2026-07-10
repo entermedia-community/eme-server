@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+	
+	<property id="duedate"  editable="false" />
+	<property id="enddate"  editable="false"/>
+	<property id="headcount" defaultvalue="1"  editable="false" />
+	<property id="customernote" />
+	<property id="paymentstatus"  editable="false" />
+	<property id="totalprice"  editable="false" />
+	<property id="currencytype"  editable="false" />
+	<property id="invoicepaidon"  editable="false" />
+	
+</properties>

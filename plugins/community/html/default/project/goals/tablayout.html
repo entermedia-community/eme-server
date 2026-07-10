@@ -1,0 +1,50 @@
+#if($caneditcollection)
+#set($goalssection = $content.goalssection)
+#if( $librarycol )
+#set($collectionid = $librarycol.getId())
+<div class="collectivecontent">
+<div id="collectiontoplevel" class="collectivemaincol goal-tabs h-100" data-collectionid='$collectionid' data-catalogid='$catalogid'>
+		<ul class="ui-tabs-nav nav emtabs" data-defaulttab="${content.goalfolder}tab" data-targetdiv="goals-tab-content" >
+		<li class=""><a  id="prioritiestab" data-alwaysreloadpage="true" 	
+		 	href="${apphome}/project/goals/priorities/index.html?collectionid=$!collectionid" >[[Open Tickets]]</a></li>
+		<li class=""><a  id="searchtab" data-alwaysreloadpage="true" 
+				  	href="${apphome}/project/goals/search/index.html?collectionid=$!collectionid" >[[Search]]</a></li>		  
+		<li class=#if($goalssection == "activity") emtabselected #end>
+	 		$pages.include("${apphome}/project/goals/activity/link.html", $context)
+		 </li>
+		  
+		 <li class=""><a  id="pointstab"  data-alwaysreloadpage="true"  
+		  href="${apphome}/project/goals/points/index.html?collectionid=$!collectionid" >[[Completed]]</a></li>
+ 			
+  		 ##<li class=""><a  id="hourstab"  data-alwaysreloadpage="true"  
+		 ## href="${apphome}/project/goals/hours/index.html?collectionid=$!collectionid" >[[Time]]</a></li>
+	     
+ ## <li class=""><a  id="sessionstab"  data-alwaysreloadpage="true"  	  href="${apphome}/project/goals/sessions/index.html?collectionid=$!collectionid" >[[Extended Support]]</a></li>
+		
+		</ul>
+		#if( $canviewsettings )
+		  	<a  id="actionstab"  
+				data-alwaysreloadpage="true"
+				class="goalsactions"
+				title="Settings" 
+		    href="${apphome}/project/goals/actions/index.html?collectionid=$!collectionid&nodeID=tasks$!collectionid" ><i class="fas fa-ellipsis-v"></i></a>
+		    #end
+		<div class="clearfix"></div>
+		<div id="goals-tab-content">
+		  <div class="tab-pane" id="loadedpanel" style="overflow: hidden; padding-bottom:20px;">
+	  			$pages.includeContent()
+		  </div>
+		</div>
+</div>
+</div>
+#else
+
+	$pages.includeContent()
+
+#end
+
+#else
+
+	$pages.include("$apphome/project/channel/subscribers/index.html")
+
+#end

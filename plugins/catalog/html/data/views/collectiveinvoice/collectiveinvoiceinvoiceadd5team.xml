@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+	
+	<property id="name" hint="" />
+	<property id="duedate" >
+	  <name> 
+	      <language id="en"><![CDATA[Start Date]]></language> 
+	    </name> 
+    </property>
+	<property id="enddate" />
+	<property id="headcount" defaultvalue="1" />
+	<property id="customernote" />
+	<property id="invoicenotes" />
+	<property id="paymentstatus"  defaultvalue="invoiced" />
+	<property id="totalprice" />
+	<property id="currencytype" defaultvalue="1"/>
+	<property id="invoicepaidon" />
+	<property id="forcustomer" />
+</properties>

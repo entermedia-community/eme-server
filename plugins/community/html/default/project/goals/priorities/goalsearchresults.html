@@ -1,0 +1,40 @@
+#ifnull($collectionid)
+	#set($collectionid = $context.getRequestParameter("collectionid"))
+#end
+<div id="goalresultsdiv">
+	<div class="d-flex justify-content-between align-items-end mb-3">
+		<div class="d-flex align-items-center text-muted">
+			<strong class="me-3">[[Total Priorities]]: $totallikes</strong>
+			<strong class="me-3">[[Open]]: $totalopen</strong>
+			<strong class="me-3">[[Closed]]: $totalclosed</strong>
+		</div>
+		<a class="btn btn-accent emdialog me-3" 
+			title="[[New Goal]]"
+			data-width="900"
+			data-hidefooter="true"
+			style="margin-left: 10px;"
+			href="${projectlink}/goals/editgoalpanel.html?newgoal=true&categoryid=$!selectedcat.getId()&goalfolder=priorities&userlikes=$user.id&targetdiv=goalresultsdiv">
+			<i class="fas fa-plus"></i> [[New Goal]]
+		</a>
+	</div>
+</div>
+
+<hr style="border-color: #cfcfcf;">
+
+<div class="d-flex flex-column">
+#set( $goalfolder = $content.goalfolder)
+#set( $opengoalid = $context.getRequestParameter("opengoalid"))
+#if( $opengoalid )
+	#set( $goal = $mediaarchive.getData("projectgoal",$opengoalid))
+	#set( $goallink = "${apphome}/project/goals/editgoalpanel.html?id=${goal.id}&collectionid=$collectionid&categoryid=$!selectedcat.getId()&hitssessionid=$!{goalhits.getSessionId()}&goalfolder=$goalfolder")
+	<a href="$goallink" title="$goal.name" class="emdialog editgoalshow">[[Goal link]]</a>	
+#end
+	
+#set( $hits = $mediaarchive.query("projectgoal").orgroup("collectionid",$collectionid).orgroup("projectstatus","open|critical").enduser(true).sort("ticketlevelDown").sort("creationdateDown").search() )
+
+#foreach($goal in $hits)
+	#set( $goal = $mediaarchive.getSearcher("projectgoal").loadData($goal))
+	$context.putPageValue("goal",$goal)
+	$pages.include("${apphome}/project/goals/priorities/goalsearchrow.html",$context)
+#end
+</div>

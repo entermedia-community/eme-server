@@ -1,0 +1,9 @@
+<page>
+	<path-action name="PaymentModule.addProductsToInvoice"/>
+
+    <!-- script id="stripe" src="https://js.stripe.com/v3/"/ -->
+ 	
+ 	<script id="stripe" src="https://js.stripe.com/basil/stripe.js"/>
+
+
+</page>

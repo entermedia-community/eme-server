@@ -1,0 +1,71 @@
+#set( $moduleid = $content.module)
+#if($moduleid)
+#set($module = $mediaarchive.getData("module", $moduleid))
+#end
+
+
+<div class="col-sidebar-header">
+	<h2>
+		[[Data Entity Manager]]
+	</h2>
+	<a href="#" title="[[Hide Search Sidebar]]" class="sidebar-toggler sidebar-toggler-hide" data-action="hide"
+		data-targetdiv="col-sidebars">
+		<i class="bi bi-chevron-left closebar"></i>
+	</a>
+</div>
+<div class="col-sidebar-scroll">
+	<ul class="sidebar-list auto-active-container overflow-y" id="sidebar-entities">
+		#set( $urlbase = "$siteroot$applink/views/modules" )
+		#foreach ( $amodule in $userprofile.getEntities() )
+			#if($module.get("isentity"))
+				<li class="#if($moduleid==$amodule.id) current #end">
+					<a class=" ajax auto-active-link " data-targetdiv="applicationcontent" data-updateurl="true"
+						data-hidefooter="true" data-oemaxlayout="3" data-profilepreference="defaultmodule"
+						data-profilepreference.value="${amodule.getId()}" data-scrolltotop="true"
+						href="$urlbase/${amodule.id}/index.html">
+						#set($moduleicon = "box")
+						#if ($amodule.moduleicon)
+							#set($moduleicon = $amodule.moduleicon)
+						#end
+						<i class="bi bi-$moduleicon ns me-2" style="font-size: 14px"></i>#text($amodule)</a>
+					#if($canviewsettings)
+						<a class="ajax action" style="position:absolute; right: 0; top:0;"
+							href="$apphome/views/settings/modules/${amodule.getId()}/info/module-setup.html"
+							data-targetdiv="applicationstructure" data-oemaxlayout="2" 
+							title="#text($amodule) [[Properties]]"><i class="bi bi-gear-fill"></i></a>
+							#if($moduleid==$amodule.id)
+								<ul class="sidebar-sublist auto-active-container">
+									<li id="setup" #if( $tab == "setup" || !$tab ) class="current" #end>
+										<a href="$!home$apphome/views/settings/modules/${module.id}/info/module-setup.html" class="ajax auto-active-link" 
+										data-targetdiv="applicationcontent" 
+										data-updateurl="true" 
+										data-oemaxlayout="3"
+										title="#text($amodule) [[Properties]]">[[Properties]]</a>
+									</li>
+									#set( $searcher = $searcherManager.getSearcher($catalogid,"settingsmenumodule") )
+									#set( $query = $searcher.createSearchQuery() )
+									#set( $null = $query.addExact("menulevel","toplevel") )
+									#set( $null = $query.addExact("moduleid",$amodule.id) )
+									$!query.addSortBy("ordering")
+									#set($screens =  $searcher.search($query))
+									
+									#foreach($screen in $screens) 
+										<li id="$!{screen.id}" 
+											#if( $tab == "$screen.id" ) class="current" #end
+										>
+											<a href="${apphome}${screen.path}" 
+											class="ajax auto-active-link" 
+											data-targetdiv="applicationcontent" 
+											data-updateurl="true" 
+											data-oemaxlayout="3"
+											title="#text($amodule) $context.getText($screen.toString())">$context.getText($screen.toString())</a>
+										</li>
+									#end
+								</ul>
+							#end
+					#end
+				</li>
+			#end
+		#end
+	</ul>
+</div>

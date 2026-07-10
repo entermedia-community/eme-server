@@ -1,0 +1,45 @@
+#if($librarycol.get("collectiontype") == "5")
+	#set($isproposal = "true")
+#end
+
+#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+$context.putPageValue("searcher",$searcher)
+
+#set( $viewid = "librarycollectioneditdonations" )
+$context.putPageValue("viewid", $viewid)
+$context.putPageValue("data", $librarycol)
+
+<div class="emwidget">
+	<div class="emwidget-header">
+		<div class="emwidget-name">[[Fundraiser Settings]]</div>
+	</div>
+	<div class="emwidget-content">
+  <form name="savecollective" 
+    enctype="multipart/form-data" 
+    id="savecollective"
+    action="${projectlink}/edit/fundraising-save.html"
+    class="ajaxform scrolltotop"
+    data-targetdivinner="collectivesettingscontent"
+    data-oemaxlevel="1"
+    method="post">
+    <input type="hidden" name="save" value="true" />
+    <input type="hidden" name="searchtype" value="librarycollection" />
+    <input type="hidden" name="id" value="$librarycol.id" />
+    <input type="hidden" name="collectionid" value="$librarycol.id" />
+    <input type="hidden" name="viewid" value="$!viewid" />
+
+    #if(!$librarycol.get("donationemailtemplate"))
+      #set($defaultdonationtemplate = $mediaarchive.getCatalogSettingValue("donation_email_body"))
+      #if($defaultdonationtemplate)
+        $!context.setRequestParameter("donationemailtemplate.value",$defaultdonationtemplate)
+      #end
+    #end
+
+		$pages.include("${apphome}/components/xml/detaileditor4.html", $context)
+
+		<a class="btn btn-sm btn-primary submitform ">[[Save]]</a>
+			
+	</form>
+</div>
+</div>
+

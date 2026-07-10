@@ -1,0 +1,47 @@
+#set($collectionid = $context.getRequestParameter("collectionid"))
+#set($target = $context.getRequestParameter("targetdiv"))
+
+<div id="taskrownew" class="taskgoaledit m-1 rounded shadow-sm">
+	<form id="taskeditform" class="ajaxform" data-targetdiv="$target" data-oemaxlevel="1" action="${apphome}/project/goals/task/tasksave.html">
+		<input type="hidden" name="goalid" value="$selectedgoal.id" />
+		<input type="hidden" name="onlyopen" value="false" />
+		<input type="hidden" name="collectionid" value="$collectionid" />
+
+		<div class="d-flex flex-column gap-2">
+			<textarea id="commenttext" class="form-control grabfocus" name="comment" placeholder="[[Task Comment/Description]]" required></textarea>
+
+			#set( $completedby = $user.id)
+
+			<select class="form-control form-control-sm"  name="completedby">
+				<option value=""></option>
+				#set( $team = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",true).search($context) )
+				#foreach( $hit in $team)
+					#set( $followeruser = $mediaarchive.getUser($hit.followeruser) )
+					#if( $followeruser)
+					<option value="$hit.followeruser" #if( $completedby == $hit.followeruser ) selected #end>$followeruser.getName()</option>
+					#end
+				#end
+			</select>
+		</div>
+
+		<div class="pt-2 d-flex align-items-center">
+			<input id="submitbutton" 
+				type="submit" 
+				form="taskeditform" 
+				value="[[Save]]" 
+				name="submitbutton" 
+				class="btn btn-sm btn-primary me-2">
+	
+			#set( $cancellink = "${apphome}/project/goals/search/goaltasks.html?collectionid=$collectionid&goalid=$selectedgoal.id")
+			
+			<a href="$cancellink"
+				class="btn btn-sm btn-secondary ajax" 
+				data-targetdiv="$target" 
+				data-oemaxlevel="1" 
+				title="[[Cancel]] $!tree.getCategoryPath()">
+				[[Cancel]]
+			</a>
+		</div>
+
+	</form>
+</div>

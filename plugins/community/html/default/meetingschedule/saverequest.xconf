@@ -1,0 +1,11 @@
+<page>
+	<inner-layout>/${applicationid}/views/layouts/app.html</inner-layout>
+	<page-action name="Script.run">
+	
+	<script>./saverequest.groovy</script>
+
+	</page-action>
+	
+
+			
+</page>

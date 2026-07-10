@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="1" currencytype="1"> 
+    
+    <name> 
+      <language id="en"><![CDATA[USD General Funds]]></language> 
+      <language id="es"><![CDATA[Fondos Generales USD]]></language>
+    </name> 
+  </data>   
+  <data id="2" currencytype="1"> 
+    <name> 
+      <language id="en"><![CDATA[USD Cash on Hand]]></language> 
+      <language id="es"><![CDATA[USD En Efectivo]]></language>
+    </name> 
+  </data>   
+</root>

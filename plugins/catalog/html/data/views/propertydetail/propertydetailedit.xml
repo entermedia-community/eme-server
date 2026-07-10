@@ -1,0 +1,10 @@
+<properties >
+	<property id="id" />
+	<property id="name" />
+	<property id="editable" />
+	<property id="required"   />
+	<property id="note" />	
+	<property id="datatype"  />	
+	<property id="rendertype"   />	
+		
+</properties>

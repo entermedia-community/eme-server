@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+	<property id="date"  />
+	<property id="collectiveproject" />
+	<property id="incometype" />
+	<property id="incomedescription" />
+	<property id="currencytype" />
+	<property id="total" />
+	<property id="receiptattachment" />
+	<property id="paymenttype" />
+  <property id="paymentemail" />     
+<property id="paidfromaccount" />
+</properties>

@@ -1,0 +1,10 @@
+#set($proposalproblem = $librarycol.get("proposalproblem"))
+#set($proposalcauses = $librarycol.get("proposalcauses"))
+#set($proposalempowerment = $librarycol.get("proposalempowerment"))
+
+ 
+<div class="d-flex flex-column align-items-center py-3 px-2">
+	
+	$pages.include("${apphome}/project/layout/donateproposalsidebar.html?hidegoals=true",$context) 
+	<!-- <div class="w-50 border-top mb-4"></div>  -->
+</div>

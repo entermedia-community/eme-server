@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+  <property id="name"/>
+  <data id="primarymedia"/>
+  <property id="longcaption"/>
+  <property id="keywords"/>
+  <property id="entity_date" rendermask="${formatteddate}"/>
+</root>

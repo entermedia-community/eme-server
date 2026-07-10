@@ -1,0 +1,73 @@
+
+
+#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+$context.putPageValue("searcher",$searcher)
+
+#set( $viewid = "librarycollectionpaymentmethods" )
+$context.putPageValue("viewid", $viewid)
+$context.putPageValue("data", $librarycol)
+
+
+<div class="emwidget">
+	<div class="emwidget-header">
+		<div class="emwidget-name">[[Project Vision]]</div>
+	</div>
+	<div class="emwidget-content">
+		#*
+		<div class="container">
+			<div class="form-check form-switch mb-3">
+			  <input class="form-check-input toggleCheckbox" type="checkbox" id="swapCheckbox" data-container1="container1" data-container2="container2" />
+			  <label class="form-check-label" for="swapCheckbox">[[Use parent Project payment settings]]</label>
+			</div>
+			<div id="container1" class="p-3 bg-primary text-white">Content A (Default)</div>
+			<div id="container2" class="p-3 bg-success text-white d-none">Content B (Swapped)</div>
+		</div>
+		  *#
+  
+ 		    
+		  
+	<div>
+		
+		<form name="savecollective" 
+			id="savecollective"
+			action="${projectlink}/edit/payments-save.html"
+			class="ajaxform scrolltotop"
+			data-targetdivinner="collectivesettingscontent"
+			data-oemaxlevel="1"
+			method="post">
+			<input type="hidden" name="save" value="true" />
+			<input type="hidden" name="searchtype" value="librarycollection" />
+			<input type="hidden" name="id" value="$librarycol.id" />
+			<input type="hidden" name="collectionid" value="$librarycol.id" />
+			<input type="hidden" name="viewid" value="$!viewid" />
+			
+			#if($canviewsettings)
+			  <div class="mb-4">	
+			  <label>[[Use parent Project payment settings]]:</label>	
+			  <input type="hidden" value="parentprojectinvoicing" name="field">  	
+			  #set($value = $librarycol.get("parentprojectinvoicing"))
+			  
+			  <select id="parentprojectinvoicingvalue" 
+			  	name="parentprojectinvoicing.value"
+			  	class="listdropdown choose-select detail-select form-control" 
+			  	>
+			  	<option value="">[[Select Project]]</option>
+			  	#set($projects = $mediaarchive.getList("librarycollection"))
+			  	#foreach( $type in $projects )
+			  		#set( $key = $type.id)
+			     		#set($label = $type.getName($context.getLanguage()))
+			  		<option value="$key" #if( $value && $key.equals($value) ) selected #end>#esc($label)</option>
+			  	#end
+			     </select>
+				</div>
+				#end
+			
+			<p>[[Configure your own Stripe keys to receive payments or donations directly in your account.]]</p>
+	
+			$pages.include("${apphome}/components/xml/detaileditor4.html", $context)
+	
+			<a class="btn btn-sm btn-primary submitform ">[[Save]]</a>
+		</form>
+	</div>
+</div>
+</div>

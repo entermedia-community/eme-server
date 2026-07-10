@@ -1,0 +1,20 @@
+#
+#Thu Aug 25 17:22:25 CDT 2022
+Status=Estatus
+Ticket=Ticket
+Due\ on=Termina el
+Edit\ Goal=Editar objetivo
+Staff=Personal
+ago=atr\u00E1s
+Sessions\ Completed=Sesiones finalizadas
+New\ Ticket=Nuevo boleto
+as\ of=a partir de
+Open=Abierto
+Total\ Priorities=Prioridades totales
+Project=Proyecto
+Details=Detalles
+Closed=Cerrado
+by=por
+Sessions\ Purchased=Sesiones compradas
+Any\ Staff=Cualquier Staff
+Goal\ link=Enlace al Gol

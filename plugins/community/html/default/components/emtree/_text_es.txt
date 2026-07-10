@@ -1,0 +1,19 @@
+#
+#Fri Jul 03 17:10:54 CST 2026
+Add\ Folder=A\u00F1adir carpeta
+Add\ Sub-Folder=A\u00F1adir subcarpeta
+Category\ id=ID de categor\u00EDa
+Copy=\u00BFQu\u00E9 es eso?
+Copy\ to=Copiado a
+Create\ Collection=Crear colecci\u00F3n
+Cut=Corte
+Download=Descargar
+Expand\ =Expandir.
+Make\ it\ Featured=H\u00E1galo destacado
+No\ folder\ set=No hay carpetas configuradas
+Paste=Pegar
+Properties=Propiedades
+Remove=Eliminar
+Remove\ From\ Featured=Eliminar de Destacados
+Rename=Renombrar
+Upload=Subir

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <permission name="view">
+    <boolean value="true"/>
+  </permission>
+  
+  <property name="loginroot">/${applicationid}/authentication</property>
+  
+  <property name="sectiontitle">Authentication</property>
+  <property name="shownav">false</property>
+  <property name="usemap">false</property>
+  <property name="hidemediaviewer">true</property>
+</page>

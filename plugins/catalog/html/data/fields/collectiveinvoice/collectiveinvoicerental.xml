@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+	
+	<property id="headcount" editable="false" index="true"
+		stored="true" datatype="number" >
+		<name>
+			<language id="en"><![CDATA[Number of people]]></language>
+		</name>
+		
+	</property>
+
+ 
+</properties>

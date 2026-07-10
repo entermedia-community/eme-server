@@ -1,0 +1,134 @@
+
+<div id="emresultscontent" class="">
+	
+  #set( $searcher =  $mediaarchive.getSearcher("librarycollectionlikes") )
+  $context.putPageValue("searcher",$searcher) 
+  #set($viewid = "librarycollectionlikesresultstable")
+  #set($hits = $collikes)
+  $context.putPageValue("hits",$hits)
+  
+  
+
+  #ifnull($details)
+  	#set( $viewdata = $mediaarchive.getCachedData("view",$viewid) )
+  	#set ($details = $viewdata.getDetailsForView($context.getUserProfile()))
+  #end	
+  #ifnull($details)
+  	#set ($details = $searcher.getDetailsForView($viewid, $context.getUserProfile()))
+  #end	
+
+  #ifnull($details)
+  	No details found for $viewid - Searchtype: $searcher.getSearchType() in $content.path
+  #end
+  <div id="resultsdiv" 
+  	data-hitssessionid="$hits.getSessionId()" 
+  	data-searchtype="$!searchtype"
+  	data-viewid="$!viewid" 
+  	data-pagenum="$hits.getPage()"  
+  	data-collectionid="$!collectionid"
+  	data-totalpages="$hits.getTotalPages()">
+
+
+  #set($targetdiv = "resultsdiv")
+
+  #set( $edit = $context.getRequestParameter("editheader"))
+  #if( !$edit || $edit == "false")
+  #set( $edit = false)
+  #end
+  
+  
+
+  <div>
+  <table>
+  <tr>
+  	<td>
+  		$pages.include("${apphome}/components/table/pages.html", $context)
+  	</td>
+  	<td class="edit-columns">	
+  				
+  	</td>
+  	</tr>			
+  </table>
+
+  <div class="clearfix"></div>
+  </div>
+
+  #if( $hits.size() == 0  )
+  [[No results found]]
+  #else
+  <div class="tableholder">
+  	#set( $xmledithome = "$apphome/components/xml")    
+  	#set( $sortby = $hits.getSearchQuery().getSortBy() )
+  	
+  	<table  id="main-results-table" class="emdata table table-striped table-hover emresultstable" >
+  		<thead>
+  		<tr class="tableheader">
+  		#foreach( $detail in $details )
+  		
+  		<th  class="#if($edit)sortable editcolumnheader #end #if( $sortby.startsWith($detail.getId() ) ) currentsort #if( $sortby.endsWith("Up") ) up #else down #end #end" id="th-$detail.id" sortby="$detail.id">
+  					
+  			<div id="$detail.id" 
+  				hitssessionid="$hits.getSessionId()"  
+  				editing="$edit" 
+  				class="#if($edit) headerdraggable headerdroppable #end"> 
+  					#text( $detail.name )
+  					#if( $edit)
+  						<a class="baseemenableonhover ajax edit-table-header" targetdivinner="resultsdiv" 
+  							href="$home$apphome/components/table/addremovecolumns.html?oemaxlevel=1&searchtype=$hits.searchType&hitssessionid=$hits.getSessionId()&editheader=true&removecolumn=$detail.id&viewid=$!viewid"><i class="fas fa-times"></i></a>
+  					
+  					#elseif ($sortby.startsWith($detail.getId()))
+  			 				#if($sortby.endsWith("Up"))
+  			 					#set($sorticon="up")
+  			 				#else
+  			 					#set($sorticon="down")
+  			 				#end	
+  			 				&nbsp;&nbsp;&nbsp;<i class="fas fa-caret-$sorticon"></i>
+  					#end
+  			</div>
+  		 </th>
+  		#end
+		#if( $caneditcollection ) <th></th> #end
+  		</tr>
+  		</thead>
+  		<tbody>
+  			#foreach( $hit in $hits.getPageOfHits() )
+  				<tr  #if($candelete != "false") data-dataid="$hit.id" #end class="resultsdivdata rowclick #if($selectedid == $hit.id) emhighlight #end">
+  				#foreach( $detail in $details)
+  					<td style="padding:4px;">
+  							#set($values = false)
+  							#set($value = $searcherManager.getValue($hit, $detail, $context.getLocale() ) ) 
+  							#if($detail.isMultiValue())
+  								#set($values = $value )
+  							#end
+  							
+  							$!context.putPageValue("detail",$detail)
+  							$!context.putPageValue("value", $value)
+  							$!context.putPageValue("values",$values)
+  						
+  						$pages.include("$xmledithome/detailreadonly.html", $context)
+  					</td>
+  				#end	
+				#if( $caneditcollection )
+				<td style="width:60px">
+					#set($likeuser = $mediaarchive.getUser($hit.get("followeruser")))
+					<a class=" ajax" 
+						href="${projectlink}/channel/subscribers/likesremoveuser.html"
+						title="[[Remove Follower]]"
+						data-targetdiv="emresultscontent" 
+						data-email='$likeuser.getEmail()'><i class="fas fa-trash"></i></a>
+					
+				</td>
+				#end
+  				</tr>
+  			#end
+  		</tbody>
+  	</table>
+  </div>
+  #end
+
+  </div>
+  
+  
+  
+</div>
+

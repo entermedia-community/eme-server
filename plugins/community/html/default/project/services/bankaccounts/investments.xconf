@@ -1,0 +1,15 @@
+<page>
+
+<path-action name="FinanceModule.loadDateRange" />
+
+<path-action name="FinanceModule.loadFinanceManager" />
+
+<path-action name="DataEditModule.loadData">
+	<property name="searchtype">bankaccount</property>
+	<property name="idname">paidfromaccount</property>
+	<property name="pageval">account</property>
+</path-action>
+
+
+</page>
+

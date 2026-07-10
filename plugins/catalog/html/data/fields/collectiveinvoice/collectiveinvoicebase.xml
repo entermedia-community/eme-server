@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+	<property id="invoicenumber" editable="false" index="true"
+		stored="true" datatype="number" viewtype="autoincrement" autoincrement="true" 
+		indextype="not_analyzed">
+		Invoice Number
+	</property>
+
+	<property id="invoicedescription" index="true" stored="true"
+		viewtype="html" editable="true">
+		Invoice Description
+	</property>
+	
+	<property id="invoicenotes" index="true" stored="true"
+		viewtype="textarea" editable="true">
+		Invoice Notes
+	</property>
+
+	<property id="collectionid" listid="librarycollection"
+		index="true" stored="true" editable="true" viewtype="list" type="list">
+		<name>
+			<language id="en"><![CDATA[Parent Collection]]></language>
+		</name>
+	</property>
+
+	<property id="productlist" index="true" keyword="false"
+		stored="true" editable="true" datatype="nested"
+		viewtype="producttable">
+		<name>
+			<language id="en"><![CDATA[Product List]]></language>
+		</name>
+		<property id="productid" index="true" keyword="true"
+			stored="true" editable="true" type="list" listid="collectiveproduct">
+		</property>
+		<property id="productquantity" index="true" stored="true"
+			editable="true" datatype="double">Quantity</property>
+		<property id="productprice" index="true" editable="true"
+			stored="true" datatype="double" type="double">
+			<name>
+				<language id="en"><![CDATA[Price]]></language>
+			</name>
+		</property>
+	</property>
+
+	<property id="paymentstatus" index="true" stored="true"
+		editable="true" type="list">Payment Status</property>
+		
+	<property id="paymentstatusreason" index="true" stored="true" editable="true">
+		Payment Status Reason
+	</property>
+
+	<property id="paymenttype" index="true" stored="true"
+		editable="true" type="list">Payment Type</property>
+
+
+	<property id="owner" index="true" listid="user" filter="true"
+		deleted="false" editable="true" stored="true" listcatalogid="system"
+		viewtype="user" keyword="true" datatype="list">
+		
+		<name>
+			<language id="en"><![CDATA[Created By]]></language>
+			<language id="es"><![CDATA[Creada por]]></language>
+		</name>
+	</property>
+
+	<property id="totalprice" index="true" editable="true"
+		stored="true" datatype="double" type="double">
+		<name>
+			<language id="en"><![CDATA[Total Price]]></language>
+		</name>
+	</property>
+	
+	<property id="currencytype" index="true" editable="true" stored="true"  datatype="list" listid="currencytype"  defaultvalue="1">
+    <name> 
+      <language id="en"><![CDATA[Currency Type]]></language>
+      <language id="es"><![CDATA[Moneda]]></language> 
+    </name> 
+  	</property>  
+
+	<property id="duedate" editable="true" stored="true"
+		type="date" index="true">
+	 <name> 
+      <language id="en"><![CDATA[Start Date]]></language>
+    </name> 
+
+	</property>
+	
+	<property id="billdate" editable="true" stored="true"
+		type="date" index="true">Old Bill Date
+	</property>
+
+	<property id="notificationsent" index="true" type="boolean"
+		keyword="false" filter="false" editable="true">
+		<name>
+			<language id="en"><![CDATA[Notification Sent]]></language>
+		</name>
+	</property>
+	
+	<property id="sentdate" editable="true" stored="true"
+		type="date" rendertype="datetime" index="true">Sent Date
+	</property>
+
+	<property id="createdon" editable="true" stored="true"
+		type="date" index="true">Created On
+	</property>
+
+	<property id="notificationoverduesent" index="true"
+		type="boolean" keyword="false" filter="false" editable="true">
+		<name>
+			<language id="en"><![CDATA[Notification Overdue Sent]]></language>
+		</name>
+	</property>
+
+	<property id="notificationpaidsent" index="true"
+		type="boolean" keyword="false" filter="false" editable="true">
+		<name>
+			<language id="en"><![CDATA[Notification Paid Sent]]></language>
+		</name>
+	</property>
+	
+	<property id="invoicepaidon" editable="true" stored="true"
+		type="date" index="true">Invoice Paid Date</property>
+	
+	<property id="isautopaid" index="true" stored="true"
+		editable="true" type="boolean">Automatic Payments</property>
+
+	<property id="sentto" index="true" stored="true" editable="true" hint="Comma-separated list">
+		<name>
+			<language id="en"><![CDATA[Notification Sent to]]></language>
+		</name>
+	</property>
+  
+  	<property id="startdate" editable="true" stored="true"
+		type="date" index="true">
+		<name>
+			<language id="en"><![CDATA[Legacy Start Date]]></language>
+		</name>
+	</property>
+
+	<property id="enddate" editable="true" stored="true"
+		type="date" index="true">
+		<name>
+			<language id="en"><![CDATA[End Date]]></language>
+		</name>
+	</property>
+
+	<property id="forcustomer" index="true" listid="user" filter="true"
+		deleted="false" editable="true" stored="true" listcatalogid="system"
+		viewtype="user" keyword="true" datatype="list">
+		<name>
+			<language id="en"><![CDATA[Customer]]></language>
+		</name>
+	</property>
+
+
+	<property id="customernote" index="true" stored="true"
+		viewtype="textarea" editable="true">
+		<name>
+			<language id="en"><![CDATA[Customer Comment]]></language>
+		</name>
+	</property>
+  
+  	<property id="isrecurring" index="true"
+		type="boolean" keyword="false" filter="false" editable="true">
+		<name>
+			<language id="en"><![CDATA[Is Recurring]]></language>
+		</name>
+	</property>
+	
+	<property id="recurringperiod" index="true" stored="true"
+		editable="true" type="list" listid="productrecurringperiod">Recurring Period</property>
+	
+	<property id="transaction" listid="transaction"
+		index="true" stored="true" editable="true" viewtype="list" type="list">
+		<name>
+			<language id="en"><![CDATA[Transaction Record]]></language>
+		</name>
+	</property>
+	
+		<property id="sent" editable="true" stored="true"
+		type="date" index="true">
+		<name>
+			<language id="en"><![CDATA[Sent Date]]></language>
+		</name>
+	</property>	
+
+    <property id="paidtoaccount" 
+    	viewtype="bankaccount" searchcomponent="bankaccount"
+     index="true" editable="true" stored="true"  datatype="list" listid="bankaccount" defaultvalue="1">
+	 <name>
+	 <language id="en" > <![CDATA[Account Balance]]> </language>
+	 </name>
+	</property>
+
+ 
+</properties>

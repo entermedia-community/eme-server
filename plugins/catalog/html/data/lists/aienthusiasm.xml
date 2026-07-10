@@ -1,0 +1,5 @@
+<properties>
+  <property id="default">Default</property>
+  <property id="more">More energy and excitement</property>
+  <property id="less">Calmer and more neutral</property>
+</properties>

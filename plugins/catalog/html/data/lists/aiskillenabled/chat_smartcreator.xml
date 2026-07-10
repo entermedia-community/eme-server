@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- using more descriptive ids for easier debugging -->
+
+<records>
+
+   <data id="chat_smartcreator_welcome" aiskill="renderLocalTemplateSkill" automationscenario="chat_smartcreator" enabled="true" processingmessage="Loading Creator Types" >
+      <name>
+         <language id="en"><![CDATA[Smart Creator Choose Type]]></language>
+      </name>
+   </data>
+
+   <data id="chat_smartcreator_make_suggestions" aiskill="smartCreatorMakeSuggestionsSkill" automationscenario="chat_smartcreator" enabled="true"  runafter="chat_smartcreator_welcome"  processingmessage="Creating Suggestions">
+      <name>
+         <language id="en"><![CDATA[Make Suggestions]]></language>
+      </name>
+   </data>
+
+
+   <data id="chat_smartcreator_parse_user_prompt" aiskill="smartCreatorParseUserPromptSkill" automationscenario="chat_smartcreator" enabled="true" runafter="chat_smartcreator_make_suggestions" processingmessage="Parsing">
+      <name>
+         <language id="en"><![CDATA[Parse User Prompt]]></language>
+      </name>
+   </data>
+
+
+   <data id="chat_smartcreator_findmemory" aiskill="smartcreator_findmemory" automationscenario="chat_smartcreator" enabled="true" runafter="chat_smartcreator_parse_user_prompt" processingmessage="Searching Memory">
+      <name>
+         <language id="en"><![CDATA[Search Memory]]></language>
+      </name>
+       <contextvalues>{"skipcategorysearch":true}</contextvalues>
+   </data>
+
+
+   <data id="chat_smartcreator_createoutline" aiskill="smartcreator_createoutline" automationscenario="chat_smartcreator" enabled="true" runafter="chat_smartcreator_findmemory" processingmessage="Creating Outline">
+      <name>
+         <language id="en"><![CDATA[Create Article Outline]]></language>
+      </name>
+   </data>
+
+   <data id="chat_smartcreator_renderoutline" aiskill="renderLocalTemplateSkill" automationscenario="chat_smartcreator" enabled="true" processingmessage="Rendering Outline" runafter="chat_smartcreator_createoutline" >
+      <name>
+         <language id="en"><![CDATA[Render Outline]]></language>
+      </name>
+   </data>
+
+   <data id="chat_smartcreator_confirmation" aiskill="chatSmartCreatorConfirmationSkill" automationscenario="chat_smartcreator" enabled="true" agenttype="eventagent" runafter="chat_smartcreator_renderoutline" processingmessage="Confirming Outline">
+      <name>
+         <language id="en"><![CDATA[Smart Creator Confirmation]]></language>
+      </name>
+   </data> 
+
+
+   <data id="chat_smartcreator_createsections" aiskill="smartcreator_createsections" automationscenario="chat_smartcreator" enabled="true" runafter="chat_smartcreator_confirmation" processingmessage="Creating Sections">
+      <name>
+         <language id="en"><![CDATA[Create Sections]]></language>
+      </name>
+   </data>
+
+   <data id="chat_smartcreator_renderfinishedoutline" aiskill="smartCreatorRenderFinishedOutlineSkill" automationscenario="chat_smartcreator" enabled="true" runafter="chat_smartcreator_createsections" processingmessage="Rendering Finished Outline">
+       <name>
+         <language id="en"><![CDATA[Render Finished Outline]]></language>
+      </name>
+   </data>
+
+
+   </records>

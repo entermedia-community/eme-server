@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="period">1h</property>
+  <property name="enabled">true</property>
+  <property name="eventname">Check Invoice</property>
+  <path-action name="Script.run">
+    <script>/${catalogid}/events/scripts/billing/checkinvoices.groovy</script>
+  </path-action>
+
+</page>

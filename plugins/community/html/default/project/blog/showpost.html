@@ -1,0 +1,169 @@
+#if(!$librarycol)
+	#set( $librarycol = $mediaarchive.getData("librarycollection",$userpost.librarycollection) )
+	$context.putPageValue("librarycol",$librarycol)
+#end
+
+#set( $community = $mediaarchive.getCachedData("communitytag",$librarycol.communitytag))
+
+#set($canviewpost = true)
+
+#ifnull($userpost)
+	#set($canviewpost = false)
+#end
+
+#if(!$user && $userpost.poststatus != "published")
+	#set($canviewpost = false)
+#end
+
+
+#if(!$canviewpost)
+	[[Post not found]].
+#end
+#if($canviewpost) 
+	
+	#if($librarycol.urlname)
+		#set($projectlink = "$!{community.externaldomain}/${librarycol.urlname}")
+	#else
+		#set($projectlink = "${communitylink}/#dash($librarycol.getName())")
+	#end
+	
+	#if($userpost.urlname)
+	  #set($bloglink = "${projectlink}/blog/${userpost.urlname}")
+	#else
+	  #set($bloglink = "${projectlink}/blog/${userpost.id}")
+	#end
+	
+	#set($postasset = $mediaarchive.getAsset($userpost.primarymedia))
+	
+	
+	<div id="$!{postasset.id}" 
+		class='blog-post #if($postasset && $postasset.previewstatus!="2") ajaxstatus #end' 
+		data-reloadspeed="2000"
+		data-oemaxlevel="2"
+		ajaxpath="$!{bloglink}" >
+		<div class="blog-list-item">
+			<div class="blog-container">
+				<div class="blog-header">
+					#if($userpost.name)
+						<h1 class="blog-title">
+							#if($userpost.getBoolean("exclusivecontent"))
+								<i class="fas fa-lock text-muted me-1" style="font-size:20px"></i>
+							#end
+							#esc($!userpost.name)
+						</h1>
+					#end
+					
+					<div class="w-100 d-flex align-items-center justify-content-between mb-3">
+									<div class="blog-credit">
+										#if($caneditcollection && $userpost.poststatus != "published")
+											#set($poststatus = $mediaarchive.getCachedData("poststatus",$userpost.poststatus))
+											<div class="badge text-bg-warning badge-sm me-2">#text($poststatus)</div>
+										#end
+										<time class="text-muted fw-normal" datetime="$!userpost.getDate('entity_date')">
+											[[Posted]]
+											#set($timestamp = $context.getAge($userpost.getDate("entity_date")))
+											#ifnull($timestamp)
+												[[today]]
+											#end
+											#ifnotnull($timestamp)
+												<span>$timestamp [[ago]]</span>
+											#end
+										</time>
+									</div>
+									#if($librarycol.collectionimage)
+										#set($asset = $mediaarchive.getAsset($librarycol.collectionimage))
+										#set( $projectlogo = $mediaarchive.asLinkToPreview($asset,"image200x200"))
+									#else
+										#set($projectlogo = "$apphome/theme/images/OI_flower.png")
+									#end
+									
+									<div class="blog-community">
+										<a href="${projectlink}" title="#text($librarycol) [[Recent Blogs]]" >
+											<img src="$projectlogo" class="blog-community-img" alt="#text($librarycol)" />
+										</a>
+										
+						
+										#if($caneditcollection)
+											<a class="emdialog ms-2 text-muted small"
+												data-width="900"
+												data-dialogid="editPostDialog"
+												data-hidefooter="true"
+												data-collectionid="${librarycol.getId()}"
+												data-id="${userpost.id}"
+												href="$projectlink/channel/edit.html"
+												title="[[Edit Post]]">
+												<i class="fas fa-edit"></i>
+											</a>
+										#end
+									</div>
+								</div>
+								
+								
+								
+								
+					<div class="d-flex align-items-center blog-author">
+						<div class="blog-avatar">
+							#set( $postuser = $userManager.getUser($userpost.owner, true))
+							$context.putPageValue("chatuser",$postuser)
+							$pages.include("${apphome}/users/icon.html",$context)
+						</div>
+						<a class="text-brand"
+							href='${apphome}/users/index.html?id=$!{postuser.getId()}'
+							title="[[View User Profile]]">
+							$postuser.getAnonNickName()
+						</a>
+					</div>
+					
+					
+					
+					#ifnotnull($postasset)
+						#set( $type = $mediaarchive.getMediaRenderType($postasset.fileformat))
+						<div class="blog-thumbnail $type">
+							
+							#set ($thumbsize = "postsize")
+							$context.putPageValue("thumbsize", $thumbsize)
+							$context.putPageValue("asset", $postasset)
+							$context.putPageValue("componenthome", "$!{apphome}/components")
+							
+							$pages.include("$!{apphome}/components/results/thumbnails/${type}.html", $context)
+						</div>
+					#end
+				</div>
+				
+				<div class="blog-body">$!userpost.maincontent</div>
+		
+				#if(!$userpost.name)
+					<div>
+						$pages.include("${apphome}/project/blog/showpostmetadata.html",$context)
+					</div>
+				#end
+		
+				<div class="blog-tags justify-content-center justify-content-md-start pt-2 py-3">
+					#set( $tags = $userpost.getValues("keywords") )
+					#if($tags && !$tags.isEmpty() )
+						#foreach( $tag in $tags )
+							<a href="${projectlink}?tag=${tag}" class="blog-tag" title="#esc($tag)">
+								#esc($tag)
+							</a>
+						#end
+					#end
+				</div>
+		
+				<div class="blog-footer py-2">
+					$context.putPageValue("userpostid", $userpost.getId())
+					$pages.include("./likebutton.html?userpostid=$userpost.getId()", $context)
+					
+					<a class="icon emdialog" data-width="900" data-hidefooter="true" data-librarycol="${librarycol.getId()}" data-userpostid="${userpost.id}" href="$apphome/project/channel/share.html">
+						<i class="fas fa-share-alt"></i>
+						<span>[[Share]]</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	
+		<div class="collapse" id="blog$!{userpost.id}">
+			$pages.include("${apphome}/project/channel/comments/comments.html",$context)
+		</div>
+	
+	</div>
+#end

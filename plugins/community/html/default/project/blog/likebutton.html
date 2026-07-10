@@ -1,0 +1,21 @@
+
+<a 
+	#if($user)
+		href="${projectlink}/blog/liketoggle.html"
+		class="blog-likes-btn icon ajax #if($likedbyme) active #end"
+	#else
+		href="/authentication/login.html"
+		class="blog-likes-btn icon #if($likedbyme) active #end"
+	#end
+	data-userpostid="${userpostid}"
+	data-userid="$context.getUserName()"
+	data-targetdiv="userpostlike${userpostid}" 
+	data-oemaxlevel="1"
+	id="userpostlike${userpostid}"
+	title="#if($userpostlikes.size() > 0) ${userpostlikes.size()} Likes #end">
+
+	<i class="#if($likedbyme) fas #else far #end fa-heart"></i>
+	<span class="ps-2">
+		${userpostlikes.size()} [[Likes]]
+	</span>
+</a>

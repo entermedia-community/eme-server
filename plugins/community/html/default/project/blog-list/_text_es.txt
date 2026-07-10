@@ -1,0 +1,10 @@
+#
+#Wed Sep 17 15:07:52 CST 2025
+Recent\ Blogs=Blogs recientes
+Create\ a\ New\ Blog=Crear un nuevo blog
+Nothing\ posted\ yet=Nada publicado todav\u00EDa
+today=hoy
+Draft\ &\ Pending\ Posts=Borradores y publicaciones pendientes
+ago=atr\u00E1s
+Posted=Al corriente
+Blogs\ tagged\ with\ =Blogs etiquetados con 

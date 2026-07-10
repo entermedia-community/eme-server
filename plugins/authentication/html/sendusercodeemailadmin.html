@@ -1,0 +1,34 @@
+<div style="background-color:#efefef; padding: 40px 0;">
+<div style="background-color:#fff; padding:0 20px 20px 20px; margin:0 auto; width:600px;">
+
+##<p></p>
+<p>
+#if(!$parentcategories.isEmpty())
+	#foreach( $parent in $parentcategories)
+		#if( ${foreach.count} > 1) / #end
+		#if($userCategory.getId() != $parent.getId())
+			$parent
+		#else
+		<span class="currentcategory">$parent</span>
+		#end		
+	#end
+
+	
+#else
+	#text($userCategory)
+#end
+</p>
+<p>[[A user needs to be created]]: $emailaddress</p>
+<div style="margin:10px; padding:15px; background-color:#f0f0f0;">
+
+	#set( $link = "$context.siteRoot$applink/views/settings/users/usermanager/user/createuser.html?email.value=$emailaddress&logincategoryid=$!userCategory.id" )
+	
+	<p>
+	<a href="#urlescape($link)">[[Create User]]</a>
+	</p>
+	
+	
+</div>
+
+</div>
+</div>

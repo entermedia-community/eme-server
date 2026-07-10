@@ -1,0 +1,14 @@
+<section class="section">
+
+    <!--Section heading-->
+    <h3 class="section-heading pt-4">[[New message received at]] $!project</h3>
+
+ 	<ul>   
+    #foreach( $key in $formfields.keySet() )
+    	#set($field = $formfields[$key])
+    	<li>$key = $field</li>
+    #end
+    </ul>
+    
+    
+</section>

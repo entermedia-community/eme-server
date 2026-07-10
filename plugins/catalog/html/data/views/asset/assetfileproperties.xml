@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties usagelabel="File"> 
+  <property id="name"/>
+  <property id="sourcepath"/>
+  
+  <property id="importstatus"/>
+  <property id="previewstatus"/>
+  
+  <property id="assetaddeddate"/>
+  <property id="assetcreationdate"/> 
+  
+  <property id="width"/>  
+  <property id="height"/>
+  <property id="length"/>
+  <property id="pages"/>    
+  
+  <property id="colorspace"/>  
+    
+</properties>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="1" exchangetousd="1" currencycode="USD" currencysymbol="$"> 
+    US Dolar
+  </data>  
+  <data id="2" exchangetousd="1"> 
+  OI Work Points
+  </data>  
+  <data id="3" exchangetousd="0"> 
+  Seeds
+  </data>  
+  <data id="4" exchangetousd="7.5" currencycode="GTQ" currencysymbol="Q"> 
+  Quetzal
+  </data>  
+  <data id="mxn" exchangetousd="17.5" currencycode="MXN" currencysymbol="$"> 
+  Mexican Peso
+  </data> 
+  <data id="6" exchangetousd="0.95" currencycode="EUR" currencysymbol="€"> 
+  Euro
+  </data> 
+  <data id="20" exchangetousd="1" currencycode="CLP" currencysymbol="$"> 
+  Chilean Peso
+  </data>
+ 
+</root>

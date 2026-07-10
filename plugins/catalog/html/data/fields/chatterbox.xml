@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+  <property id="id" index="true" internalfield="true" deleted="false" editable="true" stored="true">New
+    <name>
+      <language id="de"><![CDATA[Id]]></language>
+      <language id="en"><![CDATA[Id]]></language>
+      <language id="es"><![CDATA[Id]]></language>
+      <language id="fr"><![CDATA[Id]]></language>
+    </name>
+  </property>
+
+  <property id="date" index="true" datatype="date"  viewtype="datetime" editable="false" stored="true">
+    <name>
+      <language id="de"><![CDATA[Datum]]></language>
+      <language id="en"><![CDATA[Date]]></language>
+      <language id="es"><![CDATA[Fecha]]></language>
+      <language id="fr"><![CDATA[Date]]></language>
+    </name>
+  </property>
+
+  <property id="channel" index="true" editable="true" stored="true" indextype="not_analyzed">
+    <name>
+      <language id="en"><![CDATA[Channel]]></language>
+    </name>
+  </property>
+
+  <property id="collectionid" type="list" listid="librarycollection" index="true" editable="true" stored="true" indextype="not_analyzed">
+    <name>
+      <language id="en"><![CDATA[Project (Old)]]></language>
+    </name>
+  </property>
+
+  <property id="entityid" index="true" editable="true" stored="true">
+    <name>
+      <language id="en"><![CDATA[Entity Id]]></language>
+    </name>
+  </property>
+
+  <property id="moduleid" index="true" editable="true" isbadge="false" required="false" multilanguage="false" deleted="false" datatype="list" stored="true" listid="module">
+    <name>
+      <language id="en"><![CDATA[Module]]></language>
+    </name>
+  </property>
+
+  <property id="messagetype" index="true" editable="true" stored="true" type="list">
+    <name>
+      <language id="en"><![CDATA[Message Type]]></language>
+    </name>
+  </property>
+
+  <property id="messagestatus" index="true" editable="true" stored="true" type="list">
+    <name>
+      <language id="en"><![CDATA[Message Status]]></language>
+    </name>
+  </property>
+  <property id="chatmessagestatus" index="true" editable="true" stored="true" type="list">
+    <name>
+      <language id="en"><![CDATA[Chat Message Status]]></language>
+    </name>
+  </property>
+
+  <property id="functionname" index="true" editable="true" stored="true" indextype="not_analyzed">
+    <name>
+      <language id="en"><![CDATA[Current Function Name]]></language>
+    </name>
+  </property>
+
+    <property id="nextfunctionname" index="true" editable="true" stored="true" indextype="not_analyzed">
+    <name>
+      <language id="en"><![CDATA[Next Function Name]]></language>
+    </name>
+  </property>
+
+
+  <property id="replytoid" index="true" editable="true" stored="true" datatype="list" listid="chatterbox">
+    <name>
+      <language id="en"><![CDATA[Reply to]]></language>
+    </name>
+  </property>
+
+  <property id="message" index="true" editable="true" stored="true" viewtype="textarea">
+    <name>
+      <language id="en"><![CDATA[Message]]></language>
+    </name>
+  </property>
+
+  <property id="messageplain" index="true" editable="true" stored="true" viewtype="textarea">
+    <name>
+      <language id="en"><![CDATA[Message Plain (Ai Context)]]></language>
+    </name>
+  </property>
+
+  <property id="user" index="true" editable="false" stored="true" viewtype="user" datatype="list">
+    <name>
+      <language id="de"><![CDATA[Benutzername]]></language>
+      <language id="en"><![CDATA[User Name]]></language>
+      <language id="es"><![CDATA[Nombre de usuario]]></language>
+      <language id="fr"><![CDATA[Nom d&#39;utilisateur]]></language>
+    </name>
+  </property>
+
+  <property id="params" index="true" deleted="false" editable="true" stored="true">
+    <name>
+      <language id="en"><![CDATA[Request Parameters]]></language>
+    </name>
+  </property>
+
+
+</properties>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+
+  <property id="name"/>
+  <property id="primarymedia"/>
+
+  <property id="urlname"/>
+
+  <property id="jobtitle" />
+  <property id="entitycompany" />
+
+  <property id="longcaption" />
+
+  <property id="keywords" />
+
+  <property id="phonenumber" />
+  <property id="whatsappenabled" />
+
+</root>

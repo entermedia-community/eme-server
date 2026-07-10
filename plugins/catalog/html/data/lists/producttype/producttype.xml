@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="0"> 
+   Invoice
+  </data>  
+  <data id="1"> 
+    Donation
+  </data>  
+  <data id="2"> 
+   Downloadable
+  </data>  
+  <data id="3"> 
+   Tangible
+  </data>  
+  <data id="4"> 
+   Online Access
+  </data>  
+  <data id="5"> 
+   Rental Product
+  </data>  
+  <data id="6"> 
+   Event Registration
+  </data>  
+  <data id="7"> 
+   Classified Ad
+  </data>  
+  <data id="8"> 
+   Shipping Product
+  </data>  
+  
+ 
+</root>

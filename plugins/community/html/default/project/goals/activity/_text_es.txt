@@ -1,0 +1,17 @@
+#
+#Thu Aug 25 17:27:03 CDT 2022
+Status=Estatus
+Compl.\ Date=Fecha Terminada
+Added=Adicional
+Sessions=Sesiones
+ago=atr\u00E1s
+Modified\ on=Modificado el
+In\ Progress=En progreso
+Comp\ Date=Fecha Terminada
+Goal=Meta
+Details=Detalles
+Comp\ Sessions=Sesiones completadas
+by=por
+Sessions\ Compl.=Sesiones Comp.
+Team=Equipo
+Topic=Tema

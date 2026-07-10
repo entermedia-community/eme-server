@@ -1,0 +1,73 @@
+<records>
+
+   <data id="smartCreatorMakeSuggestionsSkill" bean="smartCreatorMakeSuggestionsSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="10">
+      <name>
+         <![CDATA[Smart Creator Make Suggestions]]>
+      </name>
+   </data>
+
+
+   <data id="smartcreator_processpendingrecords" bean="smartCreatorProcessPendingSkill" agenttype="taskagent" ordering="20">
+      <name>
+         <language id="en"><![CDATA[Smart Creator: Process Pending Records]]></language>
+      </name>
+      <llmprompt>
+         <language id="en"><![CDATA[Create a brief outline about ${data.longcaption}. 
+	         For each outline topic, create a summary with a header, and paragraphs + lists (where necessary). 
+	         Provide examples if applicable.]]></language>
+      </llmprompt>
+
+   </data>
+
+   <data id="smartcreator_findmemory" bean="smartCreatorFindMemoryFilesSkill" agenttype="taskagent" ordering="20">
+      <name>
+         <language id="en"><![CDATA[Smart Creator: Find Memory]]></language>
+      </name>
+   </data>
+
+
+   <data id="smartCreatorParseUserPromptSkill" bean="smartCreatorParseUserPromptSkill" contextbean="chatMessageContext" agenttype="taskagent" ordering="20">
+      <name>
+         <language id="en"><![CDATA[Smart Creator: Parse User Prompt]]></language>
+      </name>
+   </data>
+
+   <data id="smartcreator_createoutline" bean="smartCreatorCreateOutlineSkill" enabled="true" agenttype="taskagent" ordering="10">
+      <name>
+         <language id="en"><![CDATA[Smart Creator: Create Outline]]></language>
+      </name>
+   </data>
+
+
+   <data id="chatSmartCreatorConfirmationSkill" bean="chatSmartCreatorConfirmationSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="10">
+      <name>
+         <language id="en"><![CDATA[Smart Creator Confirmation]]></language>
+      </name>
+   </data>
+
+   <data id="smartcreator_createsections" bean="smartCreatorMakeSectionsSkill" enabled="true" agenttype="taskagent" ordering="10">
+      <name>
+         <language id="en"><![CDATA[Smart Creator: Create Sections]]></language>
+      </name>
+   </data>
+
+   <data id="smartcreator_createquestions" bean="smartCreatorCreateQuestionsSkill" enabled="true" agenttype="taskagent" ordering="10">
+      <name>
+         <language id="en"><![CDATA[Smart Creator: Create Questions]]></language>
+      </name>
+   </data>
+
+   <data id="smartCreatorRenderFinishedOutlineSkill" bean="smartCreatorRenderFinishedOutlineSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="10">
+      <name>
+         <![CDATA[Smart Creator Render Finished Outline]]>
+      </name>
+   </data>
+
+
+   <data id="smartcreator_renderasset" bean="smartCreatorRenderAssetSkill" enabled="true" agenttype="taskagent" ordering="10">
+      <name>
+         <language id="en"><![CDATA[Smart Creator: Render Html]]></language>
+      </name>
+   </data>
+
+</records>

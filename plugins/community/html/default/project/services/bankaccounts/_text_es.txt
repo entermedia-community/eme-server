@@ -1,0 +1,15 @@
+#
+#Tue Aug 30 10:49:27 CDT 2022
+Description=Descripci\u00F3n
+User=Usuario
+Reverse=Reverso
+Add\ Investment\ Or\ Disbursement=Agregar inversi\u00F3n o Desembolso
+Date=Fecha
+hits=registros
+Add\ a\ negative\ amount\ for\ disbursements=A\u00F1adir un importe negativo para los desembolsos
+Sort\ by=Ordenar por
+Investments=Inversiones
+Total=Total
+Currency=Divisa
+Search=Buscar
+Download=Descargar

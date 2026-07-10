@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- using more descriptive ids for easier debugging -->
+
+<records>
+   <data id="chat_searching" aiskill="searchingChatSkill" automationscenario="chat_searching" enabled="true" agenttype="eventagent">
+      <name>
+         <![CDATA[Handle Searching in Chat]]>
+      </name>
+   </data> 
+
+   </records>

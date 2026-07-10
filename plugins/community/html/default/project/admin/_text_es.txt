@@ -1,0 +1,5 @@
+#
+#Thu Aug 25 17:04:26 CDT 2022
+Fundraising=Donativos
+Preferences=Preferencias
+Settings=Ajustes

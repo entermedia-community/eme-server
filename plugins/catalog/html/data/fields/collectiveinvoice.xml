@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+	<property id="id" index="true" stored="true" editable="true"
+		internalfield="true"> ID</property>
+
+	<property id="name" index="true" stored="true" editable="true"  hint=" ${project} ${invoicenumber} ${invoicemonth} ${period} ${duedate} ${enddate}">
+		Invoice Name
+	</property>
+</properties>

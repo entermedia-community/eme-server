@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+  <property id="name" editable="true" stored="true" index="true">Name 
+    <name>
+      <language id="de"><![CDATA[Name]]></language>
+      <language id="en"><![CDATA[Name]]></language>
+      <language id="es"><![CDATA[Nombre]]></language>
+      <language id="fr"><![CDATA[Prénom]]></language>
+    </name>
+  </property>
+
+  <property id="date" index="true" datatype="date" editable="true" stored="true">
+    <name>
+      <language id="de"><![CDATA[Datum]]></language>
+      <language id="en"><![CDATA[Date]]></language>
+      <language id="es"><![CDATA[Fecha]]></language>
+      <language id="fr"><![CDATA[Date]]></language>
+    </name>
+  </property>
+
+  <property id="refreshdate" index="true" datatype="date" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="datetime" rendertype="datetime" required="false" multilanguage="false" highlight="false" deleted="false" autocreatefromexif="false" writenametoexif="false">Last Activity
+    <name>
+      <language id="en"><![CDATA[Last Activity]]></language>
+    </name>
+  </property>
+
+  <property id="user" index="true" editable="true" stored="true" type="list">User</property>
+
+  <property id="channeltype" index="true" editable="true" stored="true" type="list">
+    <name>
+      <language id="en"><![CDATA[Channel Type]]></language>
+    </name>
+  </property>
+
+  <property id="dataid" index="true" deleted="false" datatype="list" viewtype="text" stored="true" editable="true" multiple="true">Related Data ID</property>
+
+  <property id="searchtype" index="true" deleted="false" editable="true" stored="true" searchtype="comment">New
+    <name>
+      <language id="en"><![CDATA[searchtype]]></language>
+    </name>
+  </property>
+
+  <property id="chatapplicationid" index="true" deleted="false" editable="true" stored="true">New
+    <name>
+      <language id="en"><![CDATA[Chat Application Id]]></language>
+    </name>
+  </property>
+
+  <property id="id" index="true" internalfield="true" deleted="false" editable="true" stored="true">New
+    <name>
+      <language id="de"><![CDATA[Id]]></language>
+      <language id="en"><![CDATA[Id]]></language>
+      <language id="es"><![CDATA[Id]]></language>
+      <language id="fr"><![CDATA[Id]]></language>
+    </name>
+  </property>
+
+</properties>

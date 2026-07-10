@@ -1,0 +1,45 @@
+#set( $xmledithome = $context.getPageProperty("xmledithome"))
+#set( $readonly = "true" )
+
+##We need 3 things passed in: $searcher, $view, $data
+#if ($viewid)
+	#if( $context.getUserProfile() )
+		#set ($details = $searcher.getDetailsForView($viewid, $context.getUserProfile()))
+	#else
+		#set ($details = $searcher.getDetailsForView($viewid))
+	#end
+#end	
+
+
+
+#if(!$detailviewercolumns)
+	#set($detailviewercolumns = 2)
+#end
+#set($detailviewercolumnclass = "col-md-6")
+#if($detailviewercolumns == 1)
+	#set($detailviewercolumnclass = "col-md-12")
+#end
+
+#if( $details)
+	<div class="plaintext-details overflow-y minimal">
+	#foreach( $detail in $details )
+		$!context.putPageValue("detail",$detail)
+		#set($value = false)
+		#set( $value = $data.get($detail.getId()) )
+		#if(  $value && $value.length() > 0 )
+			<div class="plaintext-detail">
+				#set($viewtype = $detail.viewType)
+				#if($viewtype == "entity")
+					<label class="plaintextviewer-field">$detail.getText($context):</label>
+				#end
+				<div class="plaintextviewer-value">					
+					$!context.putPageValue("value",$value)
+					$context.putPageValue("showalllanguagevalues", false)
+					$!context.putPageValue("detail", $detail)
+					$pages.include("$apphome/components/xml/detailplaintext.html", $context) 
+				</div>
+			</div>
+		#end
+	#end
+	</div>
+#end

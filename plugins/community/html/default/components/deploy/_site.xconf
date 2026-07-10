@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+
+  <property name="fallbackdirectory">/community/default</property>
+  <property name="catalogid">finder/find</property>
+  <property name="applicationid">finder/find</property>
+
+</page>

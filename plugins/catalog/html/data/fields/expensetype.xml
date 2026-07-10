@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+ 
+
+  <property id="id" index="true" filter="false" internalfield="true" editable="true" stored="true" sortable="true" keyword="false">Id
+    <name> 
+      <language id="de"><![CDATA[Id]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Id]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property> 
+  
+   <property id="name" index="true" stored="true" editable="true" multilanguage="true">
+		<name>
+			<language id="en"><![CDATA[Name]]></language>
+			<language id="es"><![CDATA[Nombre]]></language>
+		</name>
+	</property>
+ 
+    <property id="iscapitalloan" index="true" stored="true" type="boolean" >
+	 <name>
+	 <language id="en" > <![CDATA[Is Capital Loan]]> </language>
+	 </name>
+	</property>
+ 
+ 
+</properties>

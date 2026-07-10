@@ -1,0 +1,35 @@
+<properties>
+  <preset id="imagexlarge" >Image Large</preset>
+  <preset id="imagepreview" >Preview Extra Large</preset>
+  <preset id="imagethumb" >Small Thumbnail</preset>
+  <preset id="imagemedium" >Image Medium</preset>
+  <preset id="imagemediumsmall" >Image Medium Small</preset>
+  <preset id="imagecrop" >Image Crop</preset>
+  <preset id="imagelarge" >Image 640</preset>
+  
+  
+  <preset id="webpimagepreview" >Webp Image Large</preset>
+  <preset id="webpimagethumb" >Webp Small Thumbnail</preset>
+  <preset id="webpimagemedium" >Webp Image Medium</preset>
+  <preset id="webpimagemediumsmall" >Webp Image Medium Small</preset>
+  <preset id="webpimagecrop" >Webp Image Crop</preset>
+  <preset id="webpimagepreviewfpo" >Webp Preview - FPO</preset>
+  <preset id="webpimagewidesscreencrop" >Image Widescreen Crop</preset>
+  
+  <preset id="webpvideoimagelarge" >Webp Video Image Medium</preset>
+  <preset id="webppreviewffmpegthumb" >Webp Video Large</preset>
+  
+  <preset id="imagethumbpng" >Small Thumbnail PNG</preset>
+  <preset id="imagewidesscreencrop" >Image Widescreen Crop</preset>
+  
+  <preset id="imagecmyk" >CMYK Crop</preset>
+  <preset id="imagepreviewfpo" >Preview - FPO</preset>
+  <preset id="cropinput" >Manual Crop</preset>
+  
+  
+  <preset id="documentlarge" >Document Large</preset>
+  <preset id="cropdocument" >Document Crop</preset>  
+  
+  <preset id="webpdocumentlarge" >Webp Document Large</preset>
+  <preset id="webpcropdocument" >Webp Document Crop</preset>
+</properties>

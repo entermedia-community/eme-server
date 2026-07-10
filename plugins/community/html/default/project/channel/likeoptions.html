@@ -1,0 +1,90 @@
+#if(!$collectionid && $librarycol)
+	#set($collectionid = $librarycol.getId())
+#end
+
+#if($collectionid)
+#set( $subscribers = $mediaarchive.query("librarycollectionlikes").exact("collectionid",$collectionid).exact("enabled", true).search($context) )
+#set( $subscriberssize = $subscribers.size())
+<div class="project-likes" id="projectlikes">
+	
+	
+	<div class="d-flex align-items-center justify-content-between">
+		<div class="project-likes-count">
+			#if($user)<a href="${projectlink}/channel/subscribers/likessearch.html" title="[[View Followers]]" class="btn btn-sm btn-light emdialog">#end
+				$subscriberssize #if($subscriberssize==1)[[Follow]] #else [[Followers]]#end
+			#if($user)</a>#end
+			</div>
+		<div>
+			#if( $user )
+				#set( $likesearcher = $mediaarchive.getSearcher("librarycollectionlikes") )
+				#set( $liked = $likesearcher.query().exact("followeruser",$user.getId()).exact("collectionid",$collectionid).exact("enabled", true).searchOne() )
+		
+				#if ($liked)
+					<form name="followproject" 
+							id="followproject" 
+							class="w-100 ajaxform"
+							data-targetdiv="projectlikes" 
+							style="display:inline-block;" 
+							action="$!{communitylink}/project/channel/subscribers/likesave.html" 
+							method="post">
+						<input type="hidden" name="oemaxlevel" value="1" />
+						<input type="hidden" name="email" value='$!user.getEmail()' />
+						<input type="hidden" name="collectionid" value="$collectionid" />
+							
+							<a href="#" class="btn btn-sm btn-secondary submitform me-auto" title="[[Unfollow this Project]]"><i class="fas fa-thumbs-up"></i> &nbsp;[[Following]]</a>
+					</form>
+							
+					#set( $onteam = $mediaarchive.query("librarycollectionusers").exact("followeruser",$user.getId()).exact("collectionid",$collectionid).search($context) )
+					#ifnull($onteam)
+						<form name="saveprojectsidebar" 
+							id="saveprojectsidebar" 
+							class="ajaxform w-100" 
+							style="display:inline-block;" 
+							data-targetdiv="subscriberssidebar"
+							data-onsuccessreload="true" 
+							action="$!{communitylink}/project/channel/subscribers/teamsave.html" method="post">
+								<input type="hidden" name="save" value="true" />
+								<input type="hidden" name="field" value="followeruser" />
+								<input type="hidden" name="followeruser.value" value="$user.getId()" />
+								<input type="hidden" name="field" value="addeddate" />
+								<input type="hidden" name="addeddate.value" value="$storeddate" />
+								<input type="hidden" name="field" value="collectionid" />
+								<input type="hidden" name="collectionid.value" value="$collectionid" />
+								<input type="hidden" name="collectionid" value="$collectionid" />
+								<input type="hidden" name="field" value="ontheteam" />
+								#if($canviewsettings)
+								<input type="hidden" name="ontheteam.value" value="true" />
+								#else
+								<input type="hidden" name="ontheteam.value" value="false" />
+								#end
+								<a href="#" class="btn btn-sm btn-secondary submitform request-join">[[Request Join Team]]</a>
+						</form>
+					#end
+				#else
+					<form name="followproject" 
+							id="followproject" 
+							class="ajaxform w-100" 
+							style="display:inline-block;" 
+							data-targetdiv="projectlikes"
+							
+							action="$!{communitylink}/project/channel/subscribers/likesave.html" 
+							method="post">
+						<input type="hidden" name="oemaxlevel" value="1" />
+						<input type="hidden" name="email" value="$!user.getEmail()" />
+						<input type="hidden" name="collectionid" value="$collectionid" />
+						
+						<a href="#" class="btn btn-sm btn-follow btn-action submitform" title="[[Follow this Project]]"><i class="fas fa-thumbs-up"></i> &nbsp;[[Follow]]</a>
+					</form>
+				#end
+				
+			#else
+				#set($loginok = "$!{projectlink}")
+				<a href="${apphome}/authentication/login.html?loginokpage=$!loginok" 
+				class="btn btn-sm btn-follow"><i class="fas fa-thumbs-up"></i> &nbsp;[[Login to Follow]]</a>
+			#end
+			</div>	
+		</div>
+</div>		
+#end
+
+

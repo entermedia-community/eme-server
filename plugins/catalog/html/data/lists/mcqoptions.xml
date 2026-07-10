@@ -1,0 +1,8 @@
+<properties>
+
+	<property id="option_a">A</property>
+	<property id="option_b">B</property>
+	<property id="option_c">C</property>
+	<property id="option_d">D</property>
+
+</properties>

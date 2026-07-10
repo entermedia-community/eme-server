@@ -1,0 +1,6 @@
+<properties>
+	<property id="cdn_prefix">CDN Prefix</property>
+	<property id="mediadbappid" value="mediadb">MediaDB Application ID</property>
+	<property id="stacked_gallery_imagesize" value="250">Stacked Gallery Image Size</property>
+	<property id="desktop_required_api_version" value="2">eMedia Desktop API Required Version</property>
+</properties>

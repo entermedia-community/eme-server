@@ -1,0 +1,4 @@
+#
+#Fri Jul 03 16:15:42 CST 2026
+Hide\ Settings\ Sidebar=Ocultar la barra lateral de configuraci\u00F3n
+Settings=Configuraci\u00F3n

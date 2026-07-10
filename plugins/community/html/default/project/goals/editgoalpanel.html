@@ -1,0 +1,116 @@
+<div id="editgoaldialog">
+#set( $categoryid = $context.getRequestParameter("categoryid"))
+#set( $userlikes = $context.getRequestParameter("userlikes"))
+#set( $hitssessionid = $context.getRequestParameter("hitssessionid"))
+#set( $goalfolder = $context.getRequestParameter("goalfolder"))
+#set( $goaltrackercolumn = $context.getRequestParamater("topic"))
+#set( $collectionid = $context.getRequestParameter("collectionid"))
+#set( $targetdiv = $context.getRequestParameter("targetdiv"))
+#set( $newgoal = $context.getRequestParameter("newgoal"))
+
+#if(!$goalfolder)
+	#set( $goalfolder = $context.findValue("goalfolder") )
+#end
+#if(!$goalfolder)
+	#set( $goalfolder = "tasks" )
+#end
+
+#set( $searcher = $mediaarchive.getSearcher("projectgoal") )
+$context.putPageValue("searcher",$searcher)
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+	#set($projectname = $mediaarchive.getData("librarycollection", $!collectionid))
+	#if ($projectname)
+		<h4 class="mb-2 text-center">
+			<a href="${projectlink}/goals/priorities" title="[[Goals]]: $projectname">Add goals to ${projectname}</a>
+		</h4>
+	#end
+
+	#if( $data.id )
+		$context.putPageValue("viewid", "projectgoalgeneral")
+		<div class="text-muted">
+			$pages.include("${apphome}/project/goals/like.html")
+		</div>
+	#else
+		$context.putPageValue("viewid", "projectgoaladdnew")
+	#end
+</div>
+
+<form name="saveproject" 
+	class ="ajaxform autocloseform showwaiting autoreloadsource" 
+	id="saveproject" 
+	method="post" 
+	#if($newgoal == "true")
+		action="${apphome}/project/goals/${goalfolder}/goalsavenew.html" 	
+		data-targetdiv="$!{targetdiv}"
+	#else
+		#if($goalfolder=="agent" || $goalfolder=="chat")
+			action="$!{apphome}/project/goals/priorities/goalsearchrowsave.html"
+			data-targetdiv="$!{targetdiv}"
+		#elseif($goalfolder=="agentcalendar")
+			action="/users/tasks/goalsave.html"  
+			data-targetdiv="$!{targetdiv}"
+		#else
+			action="$!{apphome}/project/goals/${goalfolder}/goalsave.html" 
+			data-targetdiv="$!{targetdiv}"
+		#end
+	#end
+>
+
+#if($collectionid)
+	<input type="hidden" name="collectionid" value="$!collectionid" /> 
+	<input type="hidden" name="field" value="collectionid" />
+	<input type="hidden" name="collectionid.value" value="$!collectionid" />
+	#if($caneditcollection)
+		<input type="hidden" name="save" value="true" />
+	#end
+#else
+	<input type="hidden" name="save" value="true" />
+#end
+
+
+<input type="hidden" name="field" value="lasteditedby" />
+<input type="hidden" name="lasteditedby.value" value="$user.getId()" />
+
+#if( $data.id)
+	<input type="hidden" name="id" value="$!data.id" />
+#else
+	<input type="hidden" name="field" value="owner" />
+	<input type="hidden" name="owner.value" value="$user.id" />
+	<input type="hidden" name="field" value="creationdate" />
+	<input type="hidden" name="creationdate.value" value="$storeddate" />
+#end
+<input type="hidden" name="categoryid" value="$!categoryid" />
+<input type="hidden" name="nodeID" value="$!categoryid" />
+
+<input type="hidden" name="hitssessionid" value="$!hitssessionid" />
+
+#if( !$data.id) 
+	##Dont edit existing ones
+	#if( $userlikes )
+	<input type="hidden" name="field" value="userlikes" />
+	<input type="hidden" name="userlikes.value" value="$userlikes" />
+	#else
+	<input type="hidden" name="field" value="userlikes" />
+	<input type="hidden" name="userlikes.value" value="$user.id" />
+	#end
+#end
+
+#if( $caneditcollection || !$data || $canviewsettings)
+	$pages.include("/$applicationid/components/xml/detaileditorcss.html", $context)
+	#set( $fullscreen = $context.getRequestParameter("fullscreen"))
+	#if( $fullscreen == "true")
+		<input class="btn btn-accent" type="submit" value="[[Save]]"></input><br><br>
+	#end
+
+#else
+	$pages.include("$!{apphome}/components/xml/detaileditorcss.html?detailsreadonly=true", $context)
+#end
+
+<div class="mt-3 py-3">
+<input class="btn btn-accent" type="submit" value="[[Save & Close]]"></input>
+</div>
+</form>
+
+</div>
+

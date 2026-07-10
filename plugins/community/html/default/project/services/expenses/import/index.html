@@ -1,0 +1,35 @@
+<div style="margin: 0 20px;">
+	<form id="importstuff" name="excelimport" method="post" enctype="multipart/form-data" action="${projectlink}/services/expenses/import/importfinish.html">
+
+	<h3>[[Choose CSV File]]</h3>
+	
+	<p>[[Quoted and tab delimited]]</p>
+	<input type="file" size="25" name="file">
+	<input type="hidden" name="searchtype" value="collectiveexpense"/>
+	
+	#set($collectionid = $context.getRequestParameter("collectionid"))
+	
+	<input type="hidden" name="collectionid" value="$collectionid"/>
+	<input type="hidden" name="scriptname" value="ImportCSVExpenses.groovy" />
+
+
+<p>[[Required fields:]]</p>
+
+<ul>
+<li>total: A numeric value such as 2.13</li>
+<li>currencytype: 1 or 4  [1 = USD, 4=GQT]</li>
+<li>date: any standard format</li>
+<li>collectiveproject: ID of topic</li>
+<li>expensedescription: A short description of the expense</li>
+</ul>
+<p>[[Optional fields]]</p>
+
+<ul>
+<li>id: if used then must be unique to entire system. If left blank will add new entries</li>
+<li>user: Userid of who approved the expense</li>
+</ul>
+
+
+	</form>
+</div>
+

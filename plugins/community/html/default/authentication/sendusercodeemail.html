@@ -1,0 +1,22 @@
+#ifnull($community)
+	#set($community = $communitytag)
+#end
+$context.putPageValue("community", $community)
+
+$pages.include("${apphome}/theme/emails/layout-top.html", $context)
+
+<p>[[Hello]],</p>  
+<p>[[A login code was requested for]]: $mail</p>
+<div style="margin:10px 20px; padding:10px; background-color:#f2f2f2;">
+
+
+	<p id="entermediakey" style="text-align:center; font-weight:bold; font-size:120%;">	[[Use login code]]
+	<br>$templogincode</p>
+</div>
+
+<div style="text-align:center; margin:10px 0 ;">
+	#set( $link = "$!{community.externaldomain}/authentication/loginwithcode.html?email=$!{mail}" )
+	<a href="#urlescape($link)" style="text-decoration:none;color:white;background:#3297d5;padding:8px 12px;border-radius:4px;display:inline-block;">[[Enter Login Code Here]]</a>
+</div>
+
+$pages.include("${apphome}/theme/emails/layout-bottom.html", $context)

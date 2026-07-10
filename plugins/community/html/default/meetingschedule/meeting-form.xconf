@@ -1,0 +1,11 @@
+<page>
+
+<inner-layout />
+
+<page-action name="Script.run">
+	
+	<script>./loadslots.groovy</script>
+
+</page-action>
+
+</page>

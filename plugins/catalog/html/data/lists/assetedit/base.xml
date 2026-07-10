@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+
+	<property id="share" icon="share" path="/views/modules/asset/editor/share/index.html" ordering="10">
+		<name>
+			<language id="en"><![CDATA[Share]]></language>
+		</name>
+	</property>
+
+	<property id="adjustments" icon="brush" path="/views/modules/asset/editor/adjustments/index.html" ordering="20">
+		<name>
+			<language id="en"><![CDATA[Adjustments]]></language>
+		</name>
+	</property>
+
+	<property id="closedcaptions" icon="badge-cc" path="/views/modules/asset/editor/closedcaptions/index.html" ordering="30">
+		<name>
+			<language id="en"><![CDATA[Closed Captions]]></language>
+		</name>
+	</property>
+
+	<property id="timeline" icon="play-circle" path="/views/modules/asset/editor/timeline/index.html" ordering="40">
+		<name>
+			<language id="en"><![CDATA[Timeline]]></language>
+		</name>
+	</property>
+
+</properties>

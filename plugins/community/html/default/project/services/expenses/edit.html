@@ -1,0 +1,52 @@
+
+#set($collectionid = $context.getRequestParameter("collectionid"))
+ <div style="padding:0px;">
+	###set( $xmledithome  = "$apphome/components/xml")
+	#set( $searchtype = "collectiveexpense" )
+	#set( $searcher = $mediaarchive.getSearcher($searchtype) )
+	$context.putPageValue("searcher",$searcher)
+	
+	#set( $id  = $context.getRequestParameter("id"))
+	#set($data = $mediaarchive.getData($searchtype, $id))
+	<form name="saveproject" 
+			id="saveproject" 
+			action="$apphome/project/services/expenses/addsave.html" 
+			method="post"
+			class="ajaxform autocloseform force-validate-inputs"
+			data-targetdivinner="collectivesettingscontent"
+			data-oemaxlevel="1"
+			>
+	
+	<input type="hidden" name="save" value="true" />
+	<input type="hidden" name="searchtype" value="$searchtype" />
+	
+	<input type="hidden" name="field" value="id" />
+	<input type="hidden" name="id.value" value="$!id" />
+	
+		<input type="hidden" name="field" value="collectionid" />
+	<input type="hidden" name="collectionid.value" value="$collectionid" />
+	<input type="hidden" name="collectionid" value="$collectionid" />
+	
+#if( $canviewsettings)		
+	$context.putPageValue("viewid", "collectiveexpenseadminedit")
+#else
+	$context.putPageValue("viewid", "collectiveexpensegeneral")
+#end	
+	$context.putPageValue("data", $data)
+#if( $caneditcollection ||  $canviewsettings)	 
+	$pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
+#else	
+	$pages.include("/$applicationid/components/xml/detaileditor4.html?detailsreadonly=true", $context)
+#end	
+	<div style="padding:20px 0 0;">
+#if( $caneditcollection ||  $canviewsettings)
+	<a class="submitform btn btn-sm btn-primary">[[Save]]</a>
+	<a href="$apphome/project/services/expenses/delete.html?id=$!id&collectionid=$!collectionid&searchtype=$searchtype&catalogid=$searcher.catalogId&oemaxlevel=1" 
+		class="btn btn-sm btn-danger closemodal ajax " data-targetdivinner="collectivesettingscontent" data-confirm="[[Confirm Delete Expense?]]" 
+		style="margin-left:5px;">[[Delete]]</a>
+	#end
+	<a class="closemodal btn btn-sm btn-secondary" style="margin-left:10px;">[[Cancel]]</a> 
+	</div>
+</form>
+
+</div>

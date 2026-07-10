@@ -1,0 +1,35 @@
+##Exising ones 
+##No existing programs found.
+
+ <div style="padding:0px;">
+	
+	#set( $xmledithome  = "$apphome/components/xml")
+	#set( $searchtype = "collectiveexpense" )
+	#set( $searcher = $mediaarchive.getSearcher($searchtype) )
+	$context.putPageValue("searcher",$searcher)
+	<form name="saveproject" 
+		id="saveproject" 
+		action="$apphome/project/services/expenses/addsave.html" 
+		method="post"
+		class="ajaxform autocloseform"
+		data-targetdivinner="collectivesettingscontent"
+		data-oemaxlevel="1">
+
+	<input type="hidden" name="save" value="true" />
+	<input type="hidden" name="field" value="owner" />
+	<input type="hidden" name="owner.value" value="$user.getId()" />
+	
+	<input type="hidden" name="field" value="collectionid" />
+	<input type="hidden" name="collectionid.value" value="$librarycol.getId()" />
+	<input type="hidden" name="collectionid" value="$librarycol.getId()" />
+	
+	
+	$context.putPageValue("viewid", "collectiveexpenseaddnew")
+	#set( $data = $searcher.createNewData() )
+	$data.setValue("date",$now)
+	
+	$context.putPageValue("data", $data)
+	
+	$pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
+</form>
+</div>

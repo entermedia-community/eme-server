@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+	<property id="module">Module</property>
+	<property id="catalogsettings">Catalog Settings</property>
+	<property id="html">Html</property>
+	<property id="table">Supporting Table</property>
+</properties>

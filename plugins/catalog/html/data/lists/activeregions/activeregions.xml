@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="3" linkhome="https://cincinnati.tierra-sagrada.org" ordering="1"> 
+    <name> 
+      <language id="en"><![CDATA[Cincinnati - USA]]></language> 
+    </name>
+  </data>  
+  <data id="4" linkhome="https://san-miguel-de-allende.tierra-sagrada.org" ordering="2"> 
+    <name> 
+      <language id="en"><![CDATA[San Miguel De Allende - Mexico]]></language> 
+    </name> 
+  </data>  
+  <data id="2" linkhome="https://zapallar.tierra-sagrada.org" ordering="3"> 
+    <name> 
+      <language id="en"><![CDATA[Zapallar - Chile]]></language> 
+    </name> 
+  </data>  
+  <data id="1" linkhome="https://san-marcos.tierra-sagrada.org" ordering="4">
+    <name> 
+      <language id="en"><![CDATA[San Marcos La Laguna - Guatemala]]></language> 
+    </name> 
+  </data>  
+</root>

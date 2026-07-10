@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+  <data id="0">Owner</data>
+  <data id="1">Accountant</data>
+  <data id="2">Client Consulting Developer</data>
+  <data id="3">Customer Service</data>
+  <data id="4">Designer</data>
+  <data id="5">Scheduler</data>
+  <data id="6">Data Entry</data>
+  <data id="7">Flutter Developer</data>
+  <data id="8">HTML Developer</data>
+  <data id="9">Marketing Strategist</data>
+  <data id="10">Product Manager</data>
+  <data id="11">Reseller Sales Agent</data>
+  <data id="12">Online Sales Agent</data>
+  <data id="13">Sales Strategist</data>
+  <data id="14">Server administrator</data>
+  <data id="15">Trainer</data>
+  <data id="16">Video Editor</data>
+  <data id="17">Web Programmer</data>
+  <data id="18">ElectronJS Developer</data>
+  <data id="19">SEO Marketing</data>
+  <data id="20">Senior Consultant</data>
+  <data id="21">SEO Marketing</data>
+  <data id="22">Sales Associate</data>
+  <data id="23">Security Consultant</data>
+  <data id="24">Testing Engineer</data>
+</root>

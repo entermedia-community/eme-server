@@ -1,0 +1,4 @@
+#ifnull($chatterboxhome)
+#set($chatterboxhome = $content.chatterboxhome)
+#end
+$pages.include("${chatterboxhome}/message.html", $context)				

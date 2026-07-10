@@ -1,0 +1,17 @@
+#
+#Wed Sep 17 15:01:34 CST 2025
+Testimonials=Testimonios
+Referrals=Referencias
+Store=Almacenar
+View\ Members=Ver miembros
+Contact=Contacto
+Team\ Circle=C\u00EDrculo de equipo
+Chat=Charlar
+Finances=Finanzas
+Follow\ Us=S\u00EDganos
+Goals=Objetivos
+Files=Archivos
+Blog=Blog
+Project\ Files=Archivos del proyecto
+Visit\ Us=Vis\u00EDtanos
+Settings=Ajustes

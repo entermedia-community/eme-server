@@ -1,0 +1,73 @@
+#set($collectionid = $librarycol.getId())
+
+<div class="d-flex justify-content-between mb-2">
+	<h2>[[Online Donation]]</h2>
+	<div>
+	#if($hits && !$hits.isEmpty() ) <a onclick="$('#donationsearchform').toggle()" class="btn btn-sm btn-secondary"><i class="fa fa-search"></i> [[Search Donations]]</a>#end
+	</div>
+</div>
+#if($hits && !$hits.isEmpty() ) 
+	<form  id="donationsform" 
+		class="autosubmit  ajaxform" 
+		data-targetdiv="donationsreport" 
+		method="post" 
+		action="${projectlink}/services/donations/results.html">
+		<input type="hidden" name="oemaxlevel" value="1" />
+		
+		#set( $searcher = $mediaarchive.getSearcher("transaction") )
+		$context.putPageValue("searcher",$searcher)
+		#set ($details = $searcher.getDetailsForView("transaction/onlinedonationsearch", $userprofile))
+		$context.putPageValue("viewid","transactiononlinedonationsearch")
+		<input type="hidden" name="searchtype" value="transaction" />
+
+		<input type="hidden" name="collectionid" value="$collectionid" />
+		
+		<input type="hidden" name="field" value="collectionid" />
+		<input type="hidden" name="collectionid.value" value="$collectionid" />
+		<input type="hidden" name="operation" value="exact" />
+		
+		<input type="hidden" name="field" value="isdonation" />
+		<input type="hidden" name="isdonation.value" value="true" />
+		<input type="hidden" name="operation" value="exact" />
+
+		<div  id="donationsearchform" class="row inlinesearch" style="display:none; padding:20px 0; margin:20px 10px; background-color: #f0f0f0;" >
+			$context.putPageValue("autocomplete","off")
+			#foreach( $detail in $details)
+				<div class="col-md-4">
+						$context.putPageValue("detail", $detail)
+						$pages.include("/${applicationid}/components/advancedsearch/detaileditinline.html", $context)
+				</div>
+				#if( $counter == 3)
+					</div>
+					<div  class="row" >
+				#end	
+			#end
+		</div>	
+
+		#ifnull( $donations)
+		    #set( $donations = $mediaarchive.query("transaction").exact("collectionid",$collectionid).exact("isdonation","true").sort("paymentdateDown").search($context))
+		    $context.putPageValue("donations",$donations)
+		#end
+	   <div >
+	   		
+	   		<div style="float:right;  text-align:right; width:300px; margin:0 0 10px 0;">
+			<label>[[Sort by]]</label>
+			<div style="width:200px; display:inline-block;">
+			<select class="select2 	form-control-sm" name="sortby" >
+				#set ($details = $searcher.getDetailsForView("transaction/onlinedonationsort", $userprofile))
+				#foreach( $detail in $details)
+					<option value="$detail.getId()Down">$context.getText($detail)</option>
+					<option value="$detail.getId()Up">$context.getText($detail) [[Reverse]]</option>
+				#end
+			</select>
+			</div>
+			</div>
+			<div class="clearfix"></div>
+	   </div>
+   </form>
+   #end
+	$pages.include("$apphome/project/services/donations/results.html",$context)
+	
+	
+
+

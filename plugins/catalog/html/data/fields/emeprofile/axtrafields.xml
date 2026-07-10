@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+  <property id="displayname" index="true" editable="true" stored="true">New 
+    <name>
+      <language id="en"><![CDATA[Display Name]]></language>
+    </name>
+  </property>
+
+  <property id="urlname" index="true" editable="true" stored="true">New 
+    <name>
+      <language id="en"><![CDATA[URL Name]]></language>
+    </name>
+  </property>
+
+  <property id="phonenumber" index="true" editable="true" stored="true">New 
+    <name>
+      <language id="en"><![CDATA[Phone Number]]></language>
+    </name>
+  </property>
+
+  <property id="whatsappenabled" index="true" editable="true" stored="true" type="boolean">New 
+    <name>
+      <language id="en"><![CDATA[WhatsApp Enabled]]></language>
+    </name>
+  </property>
+
+  <property id="jobtitle" index="true" editable="true" stored="true">New 
+    <name>
+      <language id="en"><![CDATA[Job Title]]></language>
+    </name>
+  </property>
+
+  <property id="entitycompany" index="true" editable="true" stored="true" datatype="list">New 
+    <name>
+      <language id="en"><![CDATA[Company]]></language>
+    </name>
+  </property>
+
+</properties>

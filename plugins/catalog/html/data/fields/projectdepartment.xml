@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="name" editable="true" index="true" stored="true"   >Category Name 
+    <name> 
+      <language id="de"><![CDATA[Kategoriename]]></language>  
+      <language id="en"><![CDATA[Category Name]]></language>  
+      <language id="es"><![CDATA[Nombre]]></language>  
+      <language id="fr"><![CDATA[Catégorie]]></language> 
+    </name> 
+  </property>  
+  <property id="id" editable="true" index="true" stored="true"   >Category Id 
+    <name> 
+      <language id="de"><![CDATA[Kategorie ID]]></language>  
+      <language id="en"><![CDATA[Category Id]]></language>  
+      <language id="es"><![CDATA[Categoria ID]]></language>  
+      <language id="fr"><![CDATA[Id catégorie]]></language> 
+    </name> 
+  </property>  
+  <property id="shortdescription" editable="true" index="true" stored="true"   >Short Description 
+    <name> 
+      <language id="de"><![CDATA[kurze Beschreibung]]></language>  
+      <language id="en"><![CDATA[Short Description]]></language>  
+      <language id="es"><![CDATA[Descripción breve]]></language>  
+      <language id="fr"><![CDATA[Brève description]]></language> 
+    </name> 
+  </property>  
+  <property id="creationdate" index="true" stored="true" editable="true"  type="date" datatype="date"  >Created Date 
+    <name> 
+      <language id="de"><![CDATA[Erstellungsdatum]]></language>  
+      <language id="en"><![CDATA[Created Date]]></language>  
+      <language id="es"><![CDATA[Fecha de creación]]></language>  
+      <language id="fr"><![CDATA[Date de création]]></language> 
+    </name> 
+  </property>  
+  <property id="viewusers" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="user" listcatalogid="system"    type="list">Users 
+    <name> 
+      <language id="de"><![CDATA[Benutzer]]></language>  
+      <language id="en"><![CDATA[Users]]></language>  
+      <language id="es"><![CDATA[usuarios]]></language>  
+      <language id="fr"><![CDATA[Utilisateurs]]></language> 
+    </name> 
+  </property>  
+  <property id="viewgroups" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="group" listcatalogid="system"    type="list">Groups 
+    <name> 
+      <language id="de"><![CDATA[Gruppen]]></language>  
+      <language id="en"><![CDATA[Groups]]></language>  
+      <language id="es"><![CDATA[grupos]]></language>  
+      <language id="fr"><![CDATA[Groupes]]></language> 
+    </name> 
+  </property>  
+  <property id="viewroles" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="settingsgroup"    type="list">Roles
+    <name>
+      <language id="de"><![CDATA[Rollen]]></language>
+      <language id="en"><![CDATA[Roles]]></language>
+      <language id="es"><![CDATA[Roles]]></language>
+      <language id="fr"><![CDATA[Rôles]]></language>
+    </name>
+  </property> 
+
+ 
+  <property id="goalpoints" editable="true" index="true" stored="true" type="number" viewtype="text" > 
+    <name> 
+      <language id="en"><![CDATA[Points]]></language>
+    </name> 
+  </property>  
+
+   
+ 
+   
+
+</properties>

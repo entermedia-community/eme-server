@@ -1,0 +1,184 @@
+#set($paypalclientid = $mediaarchive.getCatalogSettingValue("paypalclientid"))
+				<div class="container card donatecard" style="margin-top: 25px">
+
+					<div class="card-block" style="padding: 00px 21px;margin-top: 25px">
+
+						<form	action="$applink/collective/donate/paypaldonatefinish.html"
+								method="post" 
+								id="paypalpayment-form" 
+								class="form ajaxform"
+								data-targetdiv="application">
+								
+							<input type="hidden" name="oemaxlevel" value="3" />
+							<input type="hidden" name="collectionid" value="$!librarycol.id" />
+							
+							<input type="hidden" name="field" value="paymentemail" />
+							<input type="hidden" name="paymentemail.value" id="paypalemail"/>
+							<input type="hidden" name="field" value="name" />
+							<input type="hidden" name="name.value" id="paypalname"/>
+							
+							<input type="hidden" name="firstName.value" id="firstname"/>
+							<input type="hidden" name="lastName.value" id="lastname"/>
+
+							<input type="hidden" name="field" value="authorizationid" />
+							<input type="hidden" name="authorizationid.value" id="paypalauthorization"/>
+						
+							<div style="text-align: right;">
+							<img src="$applink/theme/icons/PayPal.svg" />
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6">
+								
+									<div class="form-group">
+										<label for="staticEmail">[[Amount]]:</label>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text">$</div>
+											</div>
+											<input type="hidden" name="field" value="totalprice" /> 
+											
+											<input type="text" class="form-control"
+												name="totalprice.value" id="paypaldonationamount">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+																	<div class="form-group">
+										<label for="staticEmail">[[Donation Type]]:</label> 
+										<select class="form-control" name="frequency" id="paypalfrequency">
+											<option value="">[[Once]]</option>
+											<option value="weekly">[[Weekly]]</option>
+											<option value="monthly">[[Monthly]]</option>
+											<option value="yearly">[[Yearly]]</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<!-- 
+		             	<div class="row"><div class="col">
+		             	<div class="form-group">
+		   					<label for="staticEmail">[[Card Info]]:</label>
+		   			 		<div class="form-control">
+								<div id="card-element" style="width: 100%">
+								</div>      
+					    	</div>
+		   				</div>
+		             	</div></div>
+ -->
+
+							<div id="card-errors" class="donateformerror" role="alert"></div>
+
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="donate-secure " style="margin: 30px 0;">
+										<i class="fas fa-lock"></i> [[Secure payment]]
+									</div>
+
+								</div>
+								<div class="col-md-6">
+									##TODO: get from catalog settings
+									<script
+										src='https://www.paypal.com/sdk/js?client-id=$!paypalclientid&disable-funding=credit,card&intent=capture'></script>
+										
+									<div style="max-width: 300px; float:rightX; margin: 30px 0px;">
+										<div id="paypal-button-container"></div>
+									</div>
+
+								</div>
+							</div>
+
+							<input type="hidden" name="field" value="collectionid" /> 
+							<input type="hidden" name="collectionid.value" value="$librarycol.getId()" />
+							<input type="hidden" name="collectionid" value="$librarycol.getId()" />
+							<input	type="hidden" name="field" value="userid" /> 
+							<input	type="hidden" name="userid.value" value="$!user.getId()" />
+							<input	type="hidden" name="isdonation" value="true" />
+							<input type="hidden" name="field" value="currencytype" />
+							<input type="hidden" name="currencytype.value" value="1"/>
+						
+							<input type="hidden" name="field" value="incometype" />
+							<input type="hidden" name="incometype.value" value="1"/>
+
+						</form>
+					</div>
+				</div>
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+ 
+$(document).ready(function() {
+	  
+    // This function sets up the details of the transaction, including the amount and line item details.
+    
+    //$("#paypalpayment-form").validate();
+    //ok?
+    if (typeof paypal != "undefined") 
+    {
+	 paypal.Buttons({
+		    createOrder: function(data, actions) 
+		    {
+//https://developer.paypal.com/docs/checkout/integration-features/confirmation-page/
+//https://stackoverflow.com/questions/54640821/specific-line-items-in-paypal-checkout
+		      var amount = $("#paypaldonationamount").val();
+		    	
+		      return actions.order.create({
+		    	  purchase_units: [{
+		                amount: {
+				            value: amount,
+				            currency_code: 'USD',
+		                    breakdown: {
+		                        item_total: {value: amount, currency_code: 'USD'}
+		                    }
+		                },
+		                items: [{
+		                	 name: '$librarycol',
+		                    unit_amount: {value: amount, currency_code: 'USD'},
+		                    quantity: '1',
+		                    sku: '$librarycol.getId()'
+		                }]
+		         }]		    	 
+		    	,
+		        application_context: {
+                    'shipping_preference': 'NO_SHIPPING',
+                    "brand_name":"$librarycol.getName()",
+                }
+		      });
+		    },
+		    onApprove: function(data, actions) {
+
+		      // Authorize the transaction
+		      actions.order.capture().then(function(authorization) {
+
+		        // Get the authorization id
+		        //var authorizationID = authorization.purchase_units[0]		          .payments.authorizations[0].id
+		        var transactionid = authorization.id;
+		        
+		        $("#paypalauthorization").val(transactionid);
+
+		        var first = authorization.payer.name.given_name;
+		        var last = authorization.payer.name.surname;
+		        $("#paypalname").val(first + " " + last);
+		        $("#firstname").val(first);
+		        $("#lastname").val(last);
+		        
+		        var email = authorization.payer.email_address;
+		        $("#paypalemail").val(email);
+		        
+		        //$("#paypalpayment-form").submit();
+		        $("#paypalpayment-form").trigger("submit");
+		        // Call your server to validate and capture the transaction
+//		        console.log("Got data back");
+//		        console.log(authorization);
+//		        console.log(data);
+//		        console.log(actions);
+		      });
+		    }
+		  }).render('#paypal-button-container');
+    }
+}); //ready
+
+  
+</script>
+				

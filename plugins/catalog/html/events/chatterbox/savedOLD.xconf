@@ -1,0 +1,8 @@
+<page>
+	<property name="eventname">Saved Chat</property>	
+	<path-action name="Script.run" allowduplicates="true" >
+		<script>
+			/${catalogid}/events/scripts/chatterbox/saved.groovy
+		</script>
+	</path-action>
+</page>

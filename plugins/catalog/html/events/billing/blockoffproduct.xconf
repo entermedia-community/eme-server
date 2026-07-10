@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="enabled">true</property>
+  <property name="eventname">Block off Rental from Invoices</property>
+  <path-action name="Script.run">
+    <script>/${catalogid}/events/scripts/billing/blockoffproduct.groovy</script>
+  </path-action>
+
+</page>

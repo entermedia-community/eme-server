@@ -1,0 +1,27 @@
+package llm
+
+import org.entermediadb.ai.informatics.InformaticsProcessorManager
+import org.entermediadb.asset.Asset
+import org.entermediadb.asset.MediaArchive
+import org.openedit.WebPageRequest
+
+public void addMetadataWithAI(){
+
+	WebPageRequest inReq = context;
+	MediaArchive archive = context.getPageValue("mediaarchive");
+	InformaticsProcessorManager informaticsManager = archive.getBean("informaticsProcessorManager");
+	
+	String assetid = inReq.getRequestParameter("assetid");
+	Asset asset = archive.getAsset(assetid);
+	if (asset != null)
+	{
+		asset.setValue("llmerror", false);
+		archive.saveAsset(asset);
+		log.info("Processing individual asset:" + asset.getName());
+		informaticsManager.processAsset(log, asset);
+		inReq.putPageValue("asset", asset);
+	}
+	//informaticsManager.scanMetadataWithAIEntity(log);
+}
+
+addMetadataWithAI();

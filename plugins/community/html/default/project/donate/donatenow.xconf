@@ -1,0 +1,15 @@
+<page>
+    
+ 	<script id="stripe" src="https://js.stripe.com/basil/stripe.js"/>
+    
+    <property name="autocreatetempuser">true</property>
+    
+    <page-action name="PaymentModule.getPaymentProcessor" />
+    
+    <page-action name="PaymentModule.createCheckoutUser" />
+    
+	<permission name="view">
+		<boolean value="true" />
+	</permission>
+	
+</page>

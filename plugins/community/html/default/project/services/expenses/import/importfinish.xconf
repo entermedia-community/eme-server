@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+	<path-action name="Page.uploadFile"/>
+	<property name="path" >/WEB-INF/temp/importing/${catalogid}/uploaded.csv</property>
+	<property name="importpath" >/WEB-INF/temp/importing/${catalogid}/uploaded.csv</property>
+	<property name="dataroot" >/${applicationid}/collective/services/expenses</property>
+	
+	<path-action name="DataImportModule.importDataWithScript"/>
+
+	<path-action name="ProjectModule.loadCollection"></path-action>
+    <path-action name="Admin.loadPermissions"/>
+
+</page>

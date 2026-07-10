@@ -1,0 +1,30 @@
+
+<root>
+  <data id="transaction">
+    <name><![CDATA[Finance: Online Donation]]></name>
+  </data>
+  <data id="collectiveinvoice">
+    <name><![CDATA[Finance: Invoices]]></name>
+  </data>
+  <data id="collectiveexpense">
+    <name><![CDATA[Finance: Expenses]]></name>
+  </data>
+  <data id="collectiveincome">
+    <name><![CDATA[Finance: Cash Income]]></name>
+  </data>
+    <data id="collectiveinvestment">
+    <name><![CDATA[]]>Finance: Investment Shares</name>
+  </data>
+  
+    <data id="collectivereimbursement">
+    <name><![CDATA[]]>Finance: Reimbursements</name>
+  </data>
+
+  
+    <data id="entityproduct" showonsearch="true" securityenabled="false" ordering="3" modulerendertype="entity"  showonnav="false" moduleicon="product"> 
+    <name><![CDATA[Entity: Products]]></name> 
+  </data>  
+ 
+  
+  
+</root>

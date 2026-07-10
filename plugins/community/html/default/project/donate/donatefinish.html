@@ -1,0 +1,12 @@
+#if($paymenterror)
+	<div class="alert alert-danger">[[An error occurred during the process. Please try again or contact a team member for assistance.]]</div>
+	$pages.include("${apphome}/project/donate/donatenow.html",$context)
+#else
+
+	<div class="contentcolumn p-4 text-center" >
+		<h2>[[Donation received, Thank You!]]</h2>
+		<p>[[You will get an email with your receipt. Thank you]].</p>
+	</div>
+
+#end
+

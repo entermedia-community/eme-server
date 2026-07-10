@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="asset_processing" posx="998.407787011291" posy="1830.1219353593447"> 
+    <name/> 
+  </data>  
+  <data id="chat_smartcreator" posx="1678.6232736857326" posy="2187.044989215333"> 
+    <name/> 
+  </data>  
+  <data id="chat_searching" posx="1862.435262781696" posy="2026.5657754220038"> 
+    <name/> 
+  </data>  
+  <data id="chat_questions" posx="2018.8133498055631" posy="1841.0085454073098"> 
+    <name/> 
+  </data>  
+  <data id="email" posx="1266.7373910107153" posy="2374.9469567419637"> 
+    <name/> 
+  </data>  
+  <data id="chat_detection" posx="1522.1769502804211" posy="1954.279234108336"> 
+    <name/> 
+  </data>  
+  <data id="asset_hotfolder_scanning" posx="899.5185091834117" posy="1605.1640823978778"> 
+    <name/> 
+  </data>  
+  <data id="publishing" posx="2326.3163734156547" posy="2299.368057548755"> 
+    <name/> 
+  </data>  
+  <data id="informatics_translate" posx="1364.1733153498487" posy="1615.3809350432512"> 
+    <name/> 
+  </data>  
+  <data id="smartcreator_publish" posx="2644.579010142183" posy="1616.0003328469231"> 
+    <name/> 
+  </data>  
+  <data id="informatics" posx="1252.4844814519054" posy="1895.293630390418"> 
+    <name/> 
+  </data>  
+  <data id="smartcreator_auto_entitytutorial" posx="2259.7368085286" posy="1577.263524318323"> 
+    <name/> 
+  </data>  
+  <data id="smartcreator_auto_entityarticle" posx="2495.6315541298345" posy="1866.3158186707824"> 
+    <name/> 
+  </data>  
+  <data id="customerservicelabel" posx="1202.3163734156547" posy="2209.894190856363">
+    <name/>
+  </data>
+  <data id="publishlabel" posx="2256.6848470230634" posy="2080.2100927388765">
+    <name/>
+  </data>
+  <data id="contentcreationlabel" posx="2404.473728006174" posy="1406.5264661545311">
+    <name/>
+  </data>
+  <data id="chatlabel" posx="1745.8236242959163" posy="1694.2170088205112">
+    <name/>
+  </data>
+  <data id="importinglabel" posx="1141.1033816425122" posy="1428.9512077294685">
+    <name/>
+  </data>
+</root>

@@ -1,0 +1,22 @@
+<div id="editdataform">
+#set( $searcher = $mediaarchive.getSearcher("librarycollectionusers") )
+$context.putPageValue("searcher",$searcher)
+$context.putPageValue("viewid", "librarycollectionusersgeneral")
+$context.putPageValue("data", $data)
+<form name="dialogform" 
+	id="useraccountform"
+	class="ajaxform autocloseform"
+	data-targetdiv="subscriberssidebar"
+	action="$page.getDirectory()/save.html" 
+	method="post"
+	>
+	<input type="hidden" name="save" value="true" />
+	<input type="hidden" name="id" value="$!data.getId()" />
+	<input type="hidden" name="collectionid" value="$!librarycol.getId()" />
+	 
+	$pages.include("${apphome}/components/xml/detaileditorcss.html", $context)
+	
+	##delete?
+
+</form>
+</div>

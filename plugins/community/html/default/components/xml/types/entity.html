@@ -1,0 +1,81 @@
+
+$context.putPageValue("detail",$detail)
+
+#if( !$values && $data )
+	#set($values = $data.getValues($detail.id) )
+#end
+#if( !$values && $value )
+	#set($values = [$value] )
+#end
+#set($entity_module = $detail.getListId())
+#set($searchhome = "$applink/views/modules/$!{entity_module}/results/default")
+#set($ismulti = $detail.isMultiValue())
+
+
+<div id="entitypicker${detail.id}" class="entitylistcontainer" data-ismulti="$!{ismulti}">
+	<ul class="entity-value-list">
+		#foreach( $type in $values )
+			#set( $row = false )
+			#set( $row = $mediaarchive.getCachedData($entity_module, $type ))
+			
+		    #if( $row )
+				#set($namefield = $mediaarchive.getSearcher($entity_module).getDetail("name"))
+				#set($name = $searcherManager.getValue($row, $namefield, $context.getLocale()))
+			    #set($entityid = $row.id)
+				#set($edithome = "$applink/views/modules/$!{entity_module}/editors/default")
+				#set($link = "${edithome}/tabs/index.html?entityid=$entityid&hitssessionid=$!hits.sessionId")
+				
+				#if($entity_module == "searchcategory")
+					#set($edithome = "$apphome/views/modules/$!{entity_module}/editors/listsearchcategoriesresults")
+					#set($link = "${edithome}/index.html?searchcategoryid=$entityid")
+				#end
+			    <li>
+			    <a href="$link" 
+			    	class="emdialog" 
+			    	data-noesc="true" 
+			    	data-entityid="$!row.getId()"
+			    	title="#text($name)">#text($name)</a>  
+			    	<a class="removeentityfromfield entity-value-list-remove"  href="#" title="[[Remove]] #text($name)"><i class="bi bi-x"></i></a>
+			    	<input type="hidden" name="${detail.id}.value" value="$!row.getId()" />
+			    </li>
+		    #end 
+		#end
+	</ul>
+	
+	
+	<input type="hidden" 
+		name="${detail.id}.size" 
+		value="$!{values.size()}" 
+		data-entitypicker="entitypicker${detail.id}" 
+		data-entityid="$!{data.id}"
+		class="entity-value-list-count #if($detail.isRequired()) validatehidden entityRequired #end"
+	/>	
+</div>		
+
+	
+	#set($pickmoduleid = $detail.getListId())
+	
+	#set($pickerurl= "$applink/views/modules/$!{pickmoduleid}/editors/pickerforfield/index.html")
+	#set($pickmodule = $mediaarchive.getCachedData("module", $pickmoduleid ))
+	#set($label = "[[Choose]]")
+	#if($ismulti)
+		#set($label = "[[Add]] #text($pickmodule)")
+	#end 
+	
+	#set($id = $data.id)	
+	#ifnull($id)
+		#set($id = $asset.id)
+	#end
+	<a href="$pickerurl" 
+		class="emdialog btn btn-secondary"
+		data-dialogid="dialogpicker$!{entity_module}"
+		data-width="1200"
+		data-pickertargetfield="${detail.id}"
+		data-entityid="$!{id}"
+		data-entitymoduleid="${module.id}"
+		data-hidefooter="true"
+		title="[[Add]] #text($pickmodule)"><i class="bi bi-plus-lg me-1"></i> $label</a>
+
+	
+	
+	

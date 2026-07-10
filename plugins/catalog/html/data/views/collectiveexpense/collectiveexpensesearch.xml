@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+	<property id="collectiveproject" />
+	<property id="date"  />
+	<property id="expensetype" />
+	<property id="ispaid" />
+    <property id="reimbursedstatus" />
+	<property id="reimburseuser" viewtype="user" />  
+ 	<property id="paidfromaccount" />
+ 	<property id="expensedescription" />
+ 	
+ 	
+  
+</properties>

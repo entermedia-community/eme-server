@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="faceprofilegroupassets" renderexternalid="faceprofilegroup"   rendertable="faceprofilegroup" ordering="1699640353296" rendertype="tabfaceprofileassets" systemdefined="false" moduleid="faceprofilegroup">
+    <name><![CDATA[Files]]></name>
+  </property> 
+  
+    <data id="faceprofilegrouplightboxes"  deleted="true" moduleid="faceprofilegroup"> 
+    <name><![CDATA[Files]]></name> 
+  </data>  
+
+  
+</properties>

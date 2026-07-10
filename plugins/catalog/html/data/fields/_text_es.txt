@@ -1,0 +1,10 @@
+#
+#Wed Apr 15 14:35:32 CST 2020
+Status=Estatus
+Portrait\ Photo=Foto de perfil
+Email=Email
+Web\ Site=Sitio web
+Banner\ Photo=Banner
+Instagram=Instagram
+Topic=Tema
+Facebook=Facebook

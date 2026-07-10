@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher"> 
+ 
+
+  <property id="id" index="true" filter="false" internalfield="true" editable="true" stored="true" sortable="true" keyword="false">Id
+    <name> 
+      <language id="de"><![CDATA[Id]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Id]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property> 
+   <property id="owner" index="true" listid="user" filter="true" deleted="false" editable="true" stored="true" listcatalogid="system" viewtype="user" keyword="true" datatype="list">New
+    <name>
+      <language id="de"><![CDATA[Owner]]></language>
+      <language id="en"><![CDATA[Owner]]></language>
+      <language id="es"><![CDATA[Propietario]]></language>
+      <language id="fr"><![CDATA[Propriétaire]]></language>
+    </name>
+  </property>
+ 
+   <property id="name" index="true" stored="true" editable="true" multilanguage="true">
+		<name>
+			<language id="en"><![CDATA[Bank Name]]></language>
+			<language id="es"><![CDATA[Banco]]></language>
+		</name>
+	</property>
+
+      <property id="currencytype" index="true" editable="true" stored="true"  datatype="list" listid="currencytype" defaultvalue="1">
+    <name> 
+      <language id="en"><![CDATA[Currency Type]]></language> 
+      <language id="es"><![CDATA[Moneda]]></language>
+    </name> 
+  </property>  
+    <property id="collectionid" index="true" filter="false" editable="false" stored="true" 
+    sortable="true" type="list" viewtype="multiselect" keyword="false" listid="librarycollection">
+    <name>
+      <language id="de"><![CDATA[Sammlung ID]]></language>
+      <language id="en"><![CDATA[Collection Id]]></language>
+      <language id="es"><![CDATA[colección Id]]></language>
+      <language id="fr"><![CDATA[Id Collection]]></language>
+    </name>
+  </property> 
+  <property id="user" index="true" filter="false" deleted="false" editable="false" stored="true" viewtype="user" sortable="true" keyword="false" datatype="list">New
+    <name>
+      <language id="de"><![CDATA[Benutzername]]></language>
+      <language id="en"><![CDATA[User Name]]></language>
+      <language id="es"><![CDATA[Nombre de usuario]]></language>
+      <language id="fr"><![CDATA[Nom d&#39;utilisateur]]></language>
+    </name>
+  </property>
+ 
+  <property id="viewusers" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="user" internalfield="true" type="list">
+    <name>
+      <language id="en"><![CDATA[Users]]></language>
+    </name>
+  </property>
+  <property id="viewgroups" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="group" internalfield="true" type="list">
+    <name>
+      <language id="en"><![CDATA[Groups]]></language>
+    </name>
+  </property>
+
+  <property id="viewroles" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="settingsgroup" internalfield="true" type="list">
+    <name>
+      <language id="en"><![CDATA[Roles]]></language>
+    </name>
+  </property>
+  <property id="securityenabled" editable="true" internalfield="true" index="true" stored="true" type="boolean" securityfield="rootcategory">
+    <name>
+      <language id="en"><![CDATA[Security Enabled]]></language>
+    </name>
+  </property>
+  
+</properties>

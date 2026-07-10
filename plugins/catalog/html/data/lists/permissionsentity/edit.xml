@@ -1,0 +1,65 @@
+<permissions name="General Permissions">
+	<permission id="share" multiedit="false" permissionentitytype="general" ordering="255" caption="Share Link"> 
+    <name><![CDATA[Share Link]]></name> 
+  </permission>
+  <permission id="publishinggallery" multiedit="false" permissionentitytype="general" ordering="257" caption="Allow Publishing Gallery"> 
+    <name><![CDATA[Allow Publish Gallery]]></name> 
+  </permission>
+   <permission id="view_files" multiedit="false" permissionentitytype="general" ordering="231" caption="View Files"> 
+    <name><![CDATA[View Files]]></name> 
+  </permission>   
+
+  <permission id="delete" permissionentitytype="general" multiedit="false" ordering="220" description="Delete existing" caption="Delete existing entities"> 
+    <name><![CDATA[Delete]]></name> 
+  </permission>  
+  <permission id="edit" permissionentitytype="general" multiedit="false" ordering="210" description="Edit existing" caption="Edit existing entities"> 
+    <name><![CDATA[Edit]]></name> 
+  </permission>  
+  <permission id="create" permissionentitytype="general" multiedit="false" ordering="200" description="Create new" caption="Create entities"> 
+    <name><![CDATA[Create]]></name> 
+  </permission>  
+  <permission id="assign_files" permissionentitytype="general" multiedit="false" ordering="235" caption="Assign existing files"> 
+    <name><![CDATA[Assign Existing Files]]></name> 
+  </permission>  
+  <permission id="assign_folders" permissionentitytype="general" caption="Assign existing folders" ordering="237" multiedit="false"> 
+    <name><![CDATA[Assign Existing Folders]]></name> 
+  </permission>  
+  <permission id="view" permissionentitytype="general" multiedit="false" ordering="100" caption="View Details">
+    <name><![CDATA[View Details]]></name>
+  </permission> 
+  
+    <permission id="viewerpermissions" permissionentitytype="general" multiedit="false" ordering="100" caption="Record Permissions">
+    <name><![CDATA[Permissions]]></name>
+  </permission> 
+
+
+   <permission id="view_assetworkflow" multiedit="false" permissionentitytype="general" ordering="531" caption="View Files"> 
+    <name><![CDATA[View Asset Workflow]]></name> 
+  </permission> 
+   <permission id="createwithai" permissionentitytype="general" multiedit="false" ordering="210" description="Edit existing" caption="Build new Entities with AI"> 
+    Build new Entities with AI
+  </permission>
+   <permission id="createassetswithai" permissionentitytype="general" multiedit="false" ordering="210" description="Edit existing" caption="Build new assets with AI for use in Entity"> 
+   Create new Assets with AI
+  </permission>  
+  
+  
+   <permission id="chat_send_messages" multiedit="false" permissionentitytype="general" ordering="631" caption="Chat - Send Messages"> 
+    <name><![CDATA[Chat Send Messages]]></name> 
+  </permission> 
+  
+  <permission id="chat_edit_messages" multiedit="false" permissionentitytype="general" ordering="631" caption="Chat - Edit Messages"> 
+    <name><![CDATA[Chat Edit Own Messages]]></name> 
+  </permission> 
+  
+     <permission id="chat_message_reactions" multiedit="false" permissionentitytype="general" ordering="631" caption="Chat - Message Reactions"> 
+    <name><![CDATA[Chat Send Reactions to Messages]]></name> 
+  </permission>
+  
+  <permission id="chat_add_attachments" multiedit="false" permissionentitytype="general" ordering="631" caption="Chat - Add Attachments"> 
+    <name><![CDATA[Chat Add Attachments]]></name> 
+  </permission>
+     
+</permissions>
+
+	

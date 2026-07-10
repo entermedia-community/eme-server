@@ -1,0 +1,86 @@
+<div class="account-dashboard">
+  <div class="account-header">
+    <h2 class="account-owner">#text( $accountuser )</h2>
+    <div class="balance-display">
+      <span class="balance-label">[[Available Balance]]</span>
+    </div>
+	<table>
+		#set($ustotal = 0)
+		#if( $totals.size() == 1)
+			#set($currencyid = $totals.keySet().iterator().next())
+			#set($currency = $mediaarchive.getCachedData("currencytype", $currencyid))
+			<tr>
+				<td>[[Total]]</td>
+				<td></td>
+				<td class="text-right">
+					#if( $currencyid != "1" )
+						#set($subtotal = $totals.get($currencyid))
+						#set($convertedtotal = $financeManager.inDollars($currencyid,$subtotal))
+						$!{currency.currencysymbol}$!context.doubleToMoney($!subtotal, 2) 
+						$!{currency.currencycode}
+					#end	
+				</td>
+				<td class="text-right">( $$!context.doubleToMoney($!convertedtotal, 2) 
+					 #text($!mediaarchive.getCachedData("currencytype", "1")) )</td>	
+			</tr>
+			#set($ustotal = $convertedtotal)
+		#else
+			#foreach($currencyid in $totals.keySet())
+				#set($currency = $mediaarchive.getCachedData("currencytype", $currencyid))
+				<tr class="table-row-subtotals">
+					<td></td>
+					
+					<td class="text-right">
+					[[Sub Total]] #if($currency.currencycode)<span class="currencysmall">(${currency.currencycode})</span>#end
+					</td>
+					<td class="text-right">
+						
+						#set($subtotal = $totals.get($currencyid))
+						#set($convertedtotal = $financeManager.inDollars($currencyid,$subtotal))
+						#set($ustotal = $mathutil.addition($ustotal, $convertedtotal) )
+						
+						#if ($currencyid != "1")
+							$!{currency.currencysymbol}$!context.doubleToMoney($!subtotal, 2) 
+							$!{currency.currencycode}
+						#end 
+							
+					</td>
+					##always USD
+					<td class="text-right" >$$!context.doubleToMoney($!convertedtotal, 2) #text($!mediaarchive.getCachedData("currencytype", "1"))</td>
+				</tr>
+			#end
+			<tr>
+				<td>[[Total]]</td>
+				<td></td>
+				<td></td>
+				<td class="text-right">$$!context.doubleToMoney($!ustotal, 2) #text($!mediaarchive.getCachedData("currencytype", "1"))</td>	
+			</tr>
+		#end
+		</table>	
+  </div>
+
+  <div class="action-buttons">
+    <a href="deposit.html" class="action-btn secondary" id="deposit">
+      <span class="btn-icon">🏦</span>
+      <span class="btn-text">[[Deposit To Myself]]</span>
+    </a>
+	<a href="deposit.html" class="action-btn secondary" id="deposit">
+	  <span class="btn-icon">🏦</span>
+	  <span class="btn-text">[[Deposit To Someone]]</span>
+	</a>
+    <a href="cashwithdraw.html" class="action-btn secondary" id="withdrawcash">
+      <span class="btn-icon">💵</span>
+      <span class="btn-text">[[Withdraw Cash]]</span>
+    </a>
+    <a href="changepin.html" class="action-btn tertiary" id="changepin">
+      <span class="btn-icon">🔐</span>
+      <span class="btn-text">[[Change Pin]]</span>
+    </a>
+    <a href="history.html" class="action-btn tertiary" id="history">
+      <span class="btn-icon">📜</span>
+      <span class="btn-text">[[History]]</span>
+    </a>
+  </div>
+</div>
+
+<link rel="stylesheet" href="style.css">

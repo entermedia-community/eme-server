@@ -1,0 +1,27 @@
+#
+#Fri Jul 03 17:31:34 CST 2026
+Add=A\u00F1adir
+Add\ New=A\u00F1adir nuevo
+Add\ a\ Language=A\u00F1adir un idioma
+Browse=Explorar
+Choose=Elige
+Creates\ Translations\ for\ Missing\ Languages=Crea traducciones para los idiomas que faltan
+Enter\ a\ Custom\ Range=Introduzca una Serie personalizada
+Missing\ Languages=Idiomas faltantes
+New=Nuevo
+No\ asset\ selected=No activo seleccionado
+No\ values\ found=No se encontraron valores
+Over=encima
+Overwrite\ All=Sobrescribir todo
+Remove=Eliminar
+Select=Seleccionar
+Translate=Traducir
+Translating...=Traduciendo...
+Unassign\ this\ asset=Desasignar este activo
+Upload=Subir
+Use\ AI=Usar IA
+Use\ AI\ to\ generate\ image=Utilizar la IA para generar im\u00E1genes
+Wrong\ format=Formato incorrecto
+from=desde
+limit\ reached=L\u00EDmite alcanzado
+to=a

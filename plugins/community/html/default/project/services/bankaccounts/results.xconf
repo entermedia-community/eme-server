@@ -1,0 +1,9 @@
+<page>
+
+  <path-action name="DataEditModule.searchFields" >
+		<property name="searchtype">bankaccount</property>
+		<property name="hitsname">hits</property>
+		
+  </path-action>
+
+</page>

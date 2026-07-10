@@ -1,0 +1,77 @@
+<div id="goalrow${goal.id}" class="d-flex flex-column goalrow shadow-sm goalstatus$!{goal.projectstatus} goallevel$!{goal.ticketlevel} rounded">
+	
+	#if($goal.deliverydate)
+		<div class="px-3 pt-3">
+			<span class="duedate"><i class="fas fa-exclamation-triangle me-1"></i> [[Due on]]: $goal.deliverydate.substring(0, 10)</span>
+		</div>
+	#end
+	#if($caneditcollection)
+		<div class="d-flex align-items-center justify-content-between py-2 px-3 border-bottom gap-2">
+			<div class="flex-grow-1">
+				<a href="${apphome}/project/goals/editgoalpanel.html?id=${goal.id}&collectionid=$goal.collectionid&goalfolder=agent&targetdiv=goalrow${goal.id}" 
+					title="[[Edit Goal]]" 
+					class="emdialog"
+					data-hidefooter="true"
+					data-width="900">
+					#if( $goal.ticketnumber )
+						<b class="me-1"style="font-family: monospace;">#${goal.ticketnumber}</b>
+					#else
+						<i class="fa fa-caret-right"></i>
+					#end
+					<span>$goal.name</span>
+				</a>
+			</div>
+			<div class="d-flex align-items-center justify-content-between" style="min-width: 42px;">
+				<a href="${apphome}/project/goals/editgoalpanel.html?id=${goal.id}&collectionid=$goal.collectionid&goalfolder=agent&targetdiv=goalrow${goal.id}" 
+					title="[[Edit Goal]]" 
+					class="emdialog text-primary me-2"
+					data-hidefooter="true"
+					data-width="900">
+					<i class="bi bi-pencil-square"></i>
+				</a>
+				<a href="${apphome}/project/goals/goaldelete.html?id=$goal.id" 
+					data-targetdiv="$target" 
+					data-confirm="Sure you want to delete?"
+					data-oemaxlevel="1"
+					data-goalid="$goal.id"
+					class="ajax text-danger">
+					<i class="bi bi-trash"></i>
+				</a>
+			</div>
+		</div>
+	#end
+
+	#if($goal.details)
+		<div class="p-2 mx-3 px-3 my-3 bg-light rounded" style="border: 1px solid #efefef;">
+			$!url_util.escapeMessage($goal.details )
+		</div>
+	#end
+
+	#if( $goal.response)
+		<div class="bg-light p-2 rounded ms-4">
+			<i>
+				#esc($goal.response)
+			</i>
+		</div>
+	#end
+
+	$pages.include("${apphome}/project/goals/search/goaltasks.html?indialog=true",$context)
+	
+	<div class="d-flex align-items-center justify-content-between px-3 pb-2">
+		<small class="d-flex flex-column text-muted">
+			<span class="text-muted me-2">
+				[[Created]] $!goal.getAge() [[ago]] [[by]] <strong>$!mediaarchive.getUser($goal.owner).getAnonNickName()</strong>
+			</span>
+		</small>
+		#set($tasktype = $!context.getText($!mediaarchive.getCachedData("tickettype",$goal.tickettype)))
+		#ifnotnull($tasktype)
+			<span class="d-flex align-items-center">
+				<span class="me-2">Ticket Type:</span>
+				<span class="badge text-bg-secondary">
+					$tasktype
+				</span>
+			</span>
+		#end
+	</div>
+	
+</div>

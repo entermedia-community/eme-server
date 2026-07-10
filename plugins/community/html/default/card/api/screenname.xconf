@@ -1,0 +1,5 @@
+<page>
+
+	<path-action name="BankAccountModule.loadScreenName" alltypes="true"/>
+
+</page>

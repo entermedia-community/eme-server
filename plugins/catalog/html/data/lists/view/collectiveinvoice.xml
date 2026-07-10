@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="collectiveinvoiceorder5" 
+  	moduleid="collectiveinvoice" systemdefined="true" byassettype="false">Rental Reserve</property>
+  	
+<property id="collectiveinvoiceinvoiceadd5" 
+  	moduleid="collectiveinvoice" systemdefined="true" >Add Reservation</property>  
+
+
+<property id="collectiveinvoiceinvoiceadd5team" 
+  	moduleid="collectiveinvoice" systemdefined="true" >Add Reservation Team</property>  
+
+	<property id="collectiveinvoiceinvoiceview5" 
+  	moduleid="collectiveinvoice" systemdefined="true" >View Reservation</property>  
+
+<property id="collectiveinvoiceinvoiceview5team" 
+  	moduleid="collectiveinvoice" systemdefined="true" >View Reservation Team</property>  
+  	  	  
+</properties>

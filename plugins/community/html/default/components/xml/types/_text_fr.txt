@@ -1,0 +1,13 @@
+#
+#Thu Apr 27 13:21:22 CDT 2017
+Past\ year=Ann\u00E9e derni\u00E8re
+Before\ Date=Avant le
+Equals=\u00C9gal
+Past\ month=Dernier mois
+Past\ 24\ hours=Derni\u00E8res 24 heures
+Past\ week=Semaine derni\u00E8re
+After\ Date=Apr\u00E8s le
+Enter\ a\ Custom\ Range=Entrez une plage personnalis\u00E9e
+Between=Entre
+to=\u00E0
+Over=Plus de

@@ -1,0 +1,12 @@
+#
+#Thu Aug 25 17:44:10 CDT 2022
+Status=Estatus
+Ticket=Ticket
+Save\ &\ Close=Guardar y Cerrar
+Extended\ Support=Soporte Extendido
+Open\ Tickets=Tickets Abiertos
+Search=B\u00FAsqueda
+Completed=Finalizado
+Time=Tiempo
+Save=Guardar
+Make\ Priority=Priorizar

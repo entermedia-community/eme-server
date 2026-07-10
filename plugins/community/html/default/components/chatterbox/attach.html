@@ -1,0 +1,79 @@
+#ifnull($chatterboxhome)
+#set($chatterboxhome = $page.chatterboxhome)
+#end
+#set($moduleid = $module.getId())
+#ifnull($moduleid)
+#set($moduleid = $page.module) 
+#end
+#if(!$chat)
+	#set($chatid = $context.getRequestParameter("messageid"))
+	#set($chat = $mediaarchive.getData("chatterbox",$chatid))
+#end
+#set($caneditgoal = false)
+
+#if($user && ( $canviewsettings || $caneditcollection))
+	#set($caneditgoal = true)
+#end
+
+#if(!$detail)
+	#set( $detail = $mediaarchive.getSearcher("chatterbox").getDetail("attachedassets") )
+	$context.putPageValue("detail",$detail)
+#end
+#if( $attachedassets)
+	#set($attachedasset = $attachedassets[0])
+	#set($attechedchatassetid = $attachedasset.assetid)
+	$context.putPageValue("val", $attechedchatassetid)
+#end
+
+<div class="message-attach-box">
+	<div class="d-flex align-items-center justify-content-between mb-2">
+		<div><strong>[[Attachments]]</strong></div>
+		#set($allowclose = $context.getRequestParameter("allowclose"))
+		#if($allowclose)
+			<button class="btn " title="[[Cancel Attachment]]" id="closeattachfileonchat">
+				<i class="fas fa-times text-muted"></i>
+			</button>
+		#end
+	</div>
+	
+
+	<form name="attach${chat.id}" 
+		method="post" 
+		enctype="multipart/form-data" 
+		action="${chatterboxhome}/attachmentupload.html" 
+		class="ajaxform autosubmit chatattachasset closeattachbox" 
+		data-targetdiv="chatter-message-$!{chat.id}"
+		data-includeeditcontext="true" 
+		data-onsuccess="hideAttachFile">
+	
+		##<input type="hidden" name="searchtype" value="chatterbox" />
+
+		<input type="hidden" name="id" value="$!chat.id" />
+		
+		<input type="hidden" name="moduleid" value="$!moduleid" />
+		
+		#set($entityid = $context.getRequestParameter("entityid"))
+		<input type="hidden" name="entityid" value="$!entityid" />
+		<input type="hidden" name="collectionid" value="$!entityid" />  ##legacy
+		
+		<input type="hidden" name="channel" value="$!currentchannel.id" />
+		
+		<input type="hidden" name="messageid" value="$!chat.id" />
+		<input type="hidden" name="messageids" value="$!chat.id" />
+		<input type="hidden" name="assetid" class="pickedassetid" value="" id="chatattachment" />
+		<!-- <input type="hidden" name="collectionid" value="$collectionid" /> -->
+
+	
+		#ifnotnull($attachedasset)
+			<input type="hidden" name="attachedassetid" value="$!{attachedasset.id}" />
+		#end
+	
+	
+	
+	$pages.include("${apphome}/views/modules/${moduleid}/editors/assetattacher/index.html", $context)
+
+	</form>
+
+</div>
+
+

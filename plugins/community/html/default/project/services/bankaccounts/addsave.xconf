@@ -1,0 +1,27 @@
+<page>
+
+	<path-action name="AssetEditModule.handleUploads"/>
+	<path-action name="DataEditModule.saveData"/>
+	<path-action name="ProjectModule.loadCollection"></path-action>
+    <path-action name="Admin.loadPermissions"/>
+	<path-action name="DataPermissionModule.loadCustomModulePermissions">
+		<property name="parameterid">collectionid</property>
+		<property name="parametertype">librarycollection</property>
+		<property name="parentparameterid">library</property>
+	</path-action>
+	<path-action name="DataPermissionModule.loadCustomModulePermissions" allowduplicates="true">
+		<property name="module">asset</property>
+		<property name="parameterid">collectionid</property>
+		<property name="parametertype">librarycollection</property>
+		<property name="parentparameterid">library</property>
+		<property name="parentparametertype">library</property>
+	</path-action>
+
+<!--<path-action name="PaymentModule.createProductService"/ -->
+<!--
+  <path-action name="Script.run">
+    <script>/${catalogid}/events/scripts/billing/checkinvoices.groovy</script>
+  </path-action>
+  
+ -->
+</page>

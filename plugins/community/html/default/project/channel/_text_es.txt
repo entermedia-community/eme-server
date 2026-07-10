@@ -1,0 +1,37 @@
+#
+#Mon Apr 21 12:44:28 CST 2025
+All=Todos
+Description=Descripci\u00F3n
+Cancel=Cancelar
+Edit\ Post=Editar post
+For\ Team\ Only=Solo para equipo
+ago=
+Upload\ Complete=Carga completa
+Download\ Media=Descargar medios
+Private\ Post,\ Team\ Only=Publicaci\u00F3n privada, solo equipo
+Request\ Join\ Team=Solicitar unirse al equipo
+Like=Como
+Follow=Seguir
+by=por
+Unfollow\ this\ Project=Dejar de seguir este proyecto
+View\ Post=Ver publicacion
+Download=Descargar
+Post\ Title=T\u00EDtulo de la entrada
+Choose\ Files=Seleccionar archivos
+All\ Posts=Todos los mensajes
+Topics=Topicos
+Or\ drag\ files\ here=O arrastre archivos aqu\u00ED
+Post=Enviar
+Edit\ Topics=Editar temas
+Report\ Content=Reportar contenido
+Following=Siguiente
+loading=cargando
+Followers=Seguidores
+Edit\ Project\ Intro=Editar introducci\u00F3n del proyecto
+Or\ Add\ By\ URL=O agregar por URL
+Share\ Post=Compartir post
+Post\ Now=Publicar ahora
+Published=Publicado hace
+Add\ a\ Topic=A\u00F1adir un tema
+Follow\ this\ Project=Sigue este proyecto
+Login\ to\ Follow=Iniciar sesi\u00F3n para seguir

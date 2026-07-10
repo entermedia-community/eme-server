@@ -1,0 +1,85 @@
+#set($detailid = $detail.id )
+#if( !$detailid)
+	#set( $detailid = $context.getRequestParameter("detailid"))
+#end	
+#set($idcount = $context.getRequestParameter("idcount"))
+#if(!$idcount)
+	#set($idcount = "")
+#end
+
+#set($value = $context.getRequestParameter('assetid'))
+
+#if($value && $value != "")
+	#set( $foundrow = $mediaarchive.getAsset($value)  )
+#end
+
+#if( $foundrow )
+	#set( $rootid = $hits.sessionId )
+	#set( $hit = $foundrow)
+	$context.putPageValue("hit", $hit)
+	#set( $rendertype = $mediaarchive.getMediaRenderType($hit.fileformat))
+	#if(!$rendertype || $rendertype =="rendertype")
+		#set( $rendertype = "mime" )
+	#elseif( $rendertype == "video")
+		#set( $rendertype = "videothumbnail" )
+	#end
+	
+	#if( $hit.previewstatus == "mime" || $alwaysmime)
+			#set( $rendertype = "mime" )
+	#end
+		
+		
+	$context.putPageValue("type", $rendertype)
+	
+	#set($searchhome = "$!{apphome}/views/modules/asset/results/default")
+	$!context.putPageValue("searchhome", $searchhome)
+	
+	
+		
+	#if($rendertype == "audio")
+		#if($hit.getValue("length"))
+			#set($length = $!mediaarchive.formatMinutesAndSeconds($hit.getValue("length")))
+		#end
+		$context.putPageValue("length", $length )
+     	<div class="emthumbimage emthumbaudio emcrop assetdraggable" data-assetid="${foundrow.id}" >
+
+	   		$pages.include("$!{searchhome}/thumbnails/${rendertype}.html", $context)
+
+		</div>       
+		<div class="previewassetname">
+			#if($noassetlink)
+				$!foundrow.name
+			#else
+				<a class="stackedplayer " 
+					data-assetid="$foundrow.id" href="#" title="[[Open]]: #esc($!{foundrow.name})#if($length) ($length) #end" >
+					<i class="bi bi-box-arrow-up-right ns me-1"></i> $!foundrow.name</a>
+			#end
+			
+		</div>
+	#else
+		#if($noassetlink)
+			 <div class="emthumbimage emcrop" data-assetid="${foundrow.id}" >
+				#if( ($hit.previewstatus != "2" && $hit.previewstatus != "exif" && $hit.previewstatus != "mime" && $hit.previewstatus != "1" && $hit.previewstatus != "generated") && !$mediaarchive.isCatalogSettingTrue("realtimethumbs"))
+			   	 	$pages.include("$!{searchhome}/convertqueue/previewstatus.html?assetid=$!{hit.id}&prefixid=field$!{detailid}",$context)
+			   	#else
+			   		$pages.include("$!{searchhome}/thumbnails/${rendertype}.html", $context)
+			   	#end
+			</div>
+			 
+		#else
+		<a href="#"
+			class="stackedplayer" 
+			data-assetid="$foundrow.id" 
+			title="[[Open]]: #esc($!{foundrow.name})#if($length) ($length) #end" >
+	     	<div class="emthumbimage emcrop assetdraggable" data-assetid="${foundrow.id}" >
+				#if( ($hit.previewstatus != "2" && $hit.previewstatus != "exif" && $hit.previewstatus != "mime" && $hit.previewstatus != "1" && $hit.previewstatus != "generated") && !$mediaarchive.isCatalogSettingTrue("realtimethumbs"))
+			   	 	$pages.include("$!{searchhome}/convertqueue/previewstatus.html?assetid=$!{hit.id}&prefixid=field$!{detailid}",$context)
+			   	#else
+			   		$pages.include("$!{searchhome}/thumbnails/${rendertype}.html", $context)
+			   	#end
+			</div>       
+		</a>
+		#end
+	#end
+
+#end			

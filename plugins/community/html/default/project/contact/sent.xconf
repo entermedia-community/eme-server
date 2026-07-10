@@ -1,0 +1,6 @@
+<page>
+	<path-action name="User.checkQuestion" />
+	<path-action name="Email.sendEmailtoProject" />
+	<property name="emaillayout">/${collectivehome}/project/contact/contacttemplate.html</property>
+	<property name="subjectprefix">Web Contact</property>
+</page>

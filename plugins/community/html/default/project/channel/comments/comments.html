@@ -1,0 +1,59 @@
+<div class="blog-comments">
+	<div class="py-2 my-2">
+		<h5 class="m-0 text-center text-brand">[[Comments]]</h5>
+	</div>
+
+	#foreach( $comment in $comments)
+		#set($commentuser = $comment.getUser())
+		#set($userlink = "${apphome}/users/${commentuser.getId()}/${commentuser.getAnonNickName()}.html")
+		<div class="blog-comment">
+			<div class="blog-credit">
+				<div class="blog-avatar">
+					#set( $postuser = $userManager.getUser($upload.owner, true))
+					$context.putPageValue("chatuser",$postuser)
+					$pages.include("${apphome}/users/icon.html",$context)
+				</div>
+				<a class="text-brand" href='#urlescape("${apphome}/users/${postuser.getId()}/${postuser.getAnonNickName()}.html")'>
+					${comment.getUserLabel()}
+				</a>
+				<span class="d-inline-block mx-2">
+					&middot;
+				</span>
+				<small class="text-muted">
+					$context.getAge($comment.getDate()) [[ago]] 
+				</small>
+			</div>
+			<div class="blog-comment-content">
+				<span class="comment-body">#esc($comment.commenttext)</span> 
+					#if( $comment.canEdit($user) )
+						#if ( $comment.isVisible() )
+							#set ( $actionText = "Unpublish" )
+						#else
+							#set ( $actionText = "Publish" )
+						#end
+						[<a href="$bloghome/useradmin/publishcomment.html?entryId=${entry.id}&commentId=${comment.id}&origURL=$content.path">$actionText</a>]
+						[<a href="$bloghome/useradmin/deletecomment.html?entryId=${entry.id}&commentId=${comment.id}&origURL=$content.path">[[Delete]]</a>]
+					#end
+			</div>
+		</div>						
+	#end
+
+	#if ($user)
+		#if($comments.size() > 0) <hr> #end
+		#set( $userimageurl = $mediaarchive.asLinkToUserProfile($user) )
+		#if(!$userimageurl)
+			#set( $userimageurl = "$apphome/theme/images/user.svg" )
+		#end
+		<div class="d-flex align-items-start">
+			<a class="mt-1 me-1 comment-avatar" href='#urlescape("${apphome}/users/${postuser.getId()}/${postuser.getAnonNickName()}.html")'>
+				<img src="$userimageurl" class="blog-avatar-img" alt="[[Comment as]] $user" />
+			</a>
+			<textarea type="text" name="commenttext" data-useruploadid="$upload.id" data-collectionid="$librarycol.id" class="commentadder blog-comments-input" placeholder="[[Write a comment]]" autoComplete="off" rows="3"></textarea>
+		</div>
+	#else
+		#set($loginok = "$apphome/project/channel/${librarycol.id}/${librarycol.name}.html")
+		<a href="${communitylink}/authentication/login.html?loginokpage=$!loginok" class="btn btn-sm btn-brand py-1 text-white mx-auto my-2">
+			[[Login to comment]]
+		</a>
+	#end
+</div>

@@ -1,0 +1,10 @@
+#
+#Thu Apr 27 13:15:16 CDT 2017
+New=Nouveau
+404\ on\ view=404 en vue
+Edit=modifier
+No\ details\ available\ for\ this\ view.\ \ Please\ configure\ your\ view\ settings.=Pas de d\u00E9tails disponibles pour cette vue. Veuillez configurer les r\u00E9glages de la vue.
+add\ new=Ajouter nouveau
+Add\ New=Ajouter nouveau
+required=requis
+Add\ New\ $detail=Ajouter un nouveau d\u00E9tail $

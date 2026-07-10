@@ -1,0 +1,5 @@
+#
+#Fri Jul 03 17:14:32 CST 2026
+Data\ Entity\ Manager=Administrador de entidades de datos
+Hide\ Search\ Sidebar=Ocultar la barra lateral de b\u00FAsqueda
+Properties=Propiedades

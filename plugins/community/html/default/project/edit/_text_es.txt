@@ -1,0 +1,6 @@
+#
+#Thu Aug 25 17:04:26 CDT 2022
+Delete=Borrar
+Cancel=Cancelar
+Are\ you\ sure=Est\u00E1 seguro
+Save=Guardar

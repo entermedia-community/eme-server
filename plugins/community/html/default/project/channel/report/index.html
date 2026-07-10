@@ -1,0 +1,33 @@
+<div id="reportingform" class="cardx mx-auto" style="margin:0 40px 10px 40px;text-align:left;">
+  <div class="card-block" style="padding:20px;">
+
+#set( $searcher = $mediaarchive.getSearcher("userupload") )
+$context.putPageValue("searcher",$searcher)
+
+<form name="saveproject" id="saveproject" class="ajaxform" data-oemaxlevel="1" data-targetdiv="reportingform"
+	 action="$apphome/project/channel/report/save.html" method="post">
+
+<input type="hidden" name="save" value="true" />
+<input type="hidden" name="searchtype" value="userupload" />
+<input type="hidden" name="id" value="$data.id" />
+<input type="hidden" name="uploadid" value="$data.id" />
+<input type="hidden" name="collectionid" value="$librarycol.id" />
+
+<input type="hidden" name="field" value="reportedby" />
+
+#if( $data.containsValue("reportedby",$user.id) )
+	<p>You have reported this content</p>
+	<input class="btn btn-sm btn-primary" type="submit" value="[[Unreport]]" style="margin-right: 10px;" />
+	<input type="hidden" name="reportedby.remove" value="$user.id" />
+
+#else
+
+	<p>[[Are you sure you want to report this content]]?</p>
+	<input class="btn btn-sm btn-primary" type="submit" value="[[Report]]" style="margin-right: 10px;" />
+	<input type="hidden" name="reportedby.add" value="$user.id" />
+
+#end
+</form>
+
+  </div>
+</div>

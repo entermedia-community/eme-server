@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+	<property id="name" />
+	<property id="productdescription" />
+	<property id="producttype" />
+	<property id="currencytype" />
+	<property id="productprice" />
+	<property id="searchcategory" />
+</properties>

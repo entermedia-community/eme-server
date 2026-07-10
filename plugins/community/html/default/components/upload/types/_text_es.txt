@@ -1,0 +1,17 @@
+#
+#Fri Jul 03 17:11:33 CST 2026
+Add\ File\ Details=A\u00F1adir detalles del archivo
+Choose\ Files=Seleccionar archivos
+Choose\ Folder=Seleccionar carpeta
+Clear\ All=Borrar todo
+Complete=Completado
+Create\ media\ assets\ from\ a\ URL\ or\ Embed\ code=Crear activos multimedia desde una URL o c\u00F3digo de inserci\u00F3n
+Drop\ files\ here=Arrastra y suelta los archivos aqu\u00ED.
+Edit\ Fields=Editar campos
+Files\ Complete.\ Choose\ More\ Files.=Archivos completos. Elegir m\u00E1s archivos.
+Remove\ from\ Queue=Eliminar de la cola
+Start\ Uploading=Inicio de la subida
+Uploading\ to=Subir a
+Uploading...=Subiendo...
+View\ Files=Ver archivos
+or\ Add\ By\ URL=o A\u00F1adir por URL

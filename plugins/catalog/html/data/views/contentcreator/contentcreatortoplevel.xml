@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <properties>
+ 
+    <property id="aitarget" note="What Subject to create">
+    </property>
+      
+    <property id="aicontentlist" note="What topics should be covered"> Contains
+	    <name>
+	      <language id="en"><![CDATA[Contains]]></language>
+	    </name>
+	 </property>
+
+  	<property id="aiexamples"  />  
+ 
+</properties>

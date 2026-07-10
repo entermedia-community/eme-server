@@ -1,0 +1,12 @@
+#if( !$upload )
+	#set( $upload = $showupload)
+#end
+$context.putPageValue("upload",$upload)
+$context.putPageValue("assetidpostfix","modalview")
+
+<div style="max-width: 720px;margin:auto; position:relative;">
+	<div class="feed-showpost-dialog">
+		$pages.include("$apphome/project/channel/showpost.html", $context)
+	</div>
+</div>
+

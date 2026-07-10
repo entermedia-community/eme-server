@@ -1,0 +1,17 @@
+<records>
+
+
+<data id="questionsMakeSuggestionsSkill" bean="questionsMakeSuggestionsSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="10">
+      <name>
+         <![CDATA[Questions Make Suggestions]]>
+      </name>
+   </data>
+
+<data id="questionsAskSkill" bean="questionsAskSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="10">
+      <name>
+         <![CDATA[Questions Ask]]>
+      </name>
+   </data>
+
+
+</records>

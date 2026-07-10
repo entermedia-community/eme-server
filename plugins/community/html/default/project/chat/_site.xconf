@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+	<property name="title">Chat</property>
+	<property name="virtual">true</property>
+	<property name="collectivesection">community</property>
+	
+	<property name="fullwidth">true</property>
+	
+	<inner-layout>/${applicationid}/project/chat/chatlayout.html</inner-layout>
+	
+	<style id="tasks" href="/${applicationid}/project/goals/goals.css" />
+
+    <script id="goals" src="/${applicationid}/project/goals/goals.js"/>
+
+	<script id="chatterbox" src="/${applicationid}/components/chatterbox/chatterbox.js" /> 
+	<style id="chatterbox" href="/${applicationid}/components/chatterbox/chatterbox.css" />
+	<script id="twemoji" src="/${applicationid}/components/javascript/twemoji/twemoji.js" defer="true" />
+	<script id="simplelightbox" src="/${applicationid}/components/javascript/simpleLightbox/simple-lightbox.jquery.min.js" />
+	
+	<property name="module">librarycollection</property>
+	
+	<path-action name="MediaArchiveModule.loadModule" />
+	
+	<path-action name="ProjectModule.loadCollection" />
+	
+	<path-action name="OiModule.loadCommunityCategory" />
+	
+	<page-action name="ProjectModule.loadChatChannel"/>
+
+	<property name="chatterboxhome">/${applicationid}/project/chat/chatterbox</property>
+	<property name="chatterboxgoalsenabled">true</property>
+
+	<path-action name="Admin.loadPermissions"/>
+	
+	<path-action name="Admin.loadPermissionFinder" />
+	
+  	<path-action name="Admin.allowViewing"/>
+
+	<permission name="editcollection">
+		<or>
+			<action name="ProjectModule.canEditCollection" />
+			<action name="ProjectModule.isOnTeam" />			
+		</or>
+	</permission>
+	
+
+</page>

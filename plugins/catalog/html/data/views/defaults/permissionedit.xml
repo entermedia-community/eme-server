@@ -1,0 +1,7 @@
+
+<root>
+
+  <property id="viewerusers"/>  
+  <property id="viewergroups"/>  
+  <property id="viewerroles"/>
+</root>

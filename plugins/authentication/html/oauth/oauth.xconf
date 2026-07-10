@@ -1,0 +1,10 @@
+<page>
+<path-action name="OauthModule.redirectToHost"/>
+
+<property name="prompt">login consent</property>
+
+<property name="requestedpermissions">
+openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
+</property>
+
+</page>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+
+
+
+  <data id="modulegoaltaskaddrole" uploadfile="false" httpmethod="POST" docsection="modulegoaltask" 
+  url="/site/mediadb/services/module/goaltask/taskroleadd.json">
+    <samplerequest><![CDATA[{
+     "collectionid":"AYsBS3Pov6dNtFqL3zN5", "taskid":"AY023-oVzQHA2GtlHt5r", "collectiverole": "13","roleuserid": "admin" 
+     }]]></samplerequest>  
+    <name><![CDATA[Task Role Add]]></name> 
+  </data>  
+
+  <data id="modulegoaltaskloadrole" uploadfile="false" httpmethod="POST" docsection="modulegoaltask" 
+  url="/site/mediadb/services/module/goaltask/taskloadrole.json">
+    <samplerequest><![CDATA[{
+     "collectionid":"AYsBS3Pov6dNtFqL3zN5", "taskid":"AY023-oVzQHA2GtlHt5r", "collectiverole": "13","roleuserid": "admin" 
+     }]]></samplerequest>  
+    <name><![CDATA[Task Role Load Role Details]]></name> 
+  </data>  
+
+
+  <data id="modulegoaltaskrolesave" uploadfile="false" httpmethod="POST" docsection="modulegoaltask" 
+  url="/site/mediadb/services/module/goaltask/tasksaverole.json">
+    <samplerequest><![CDATA[{
+     "collectionid":"AYsBS3Pov6dNtFqL3zN5",
+      "taskid":"AY023-oVzQHA2GtlHt5r", "collectiverole": "13","roleuserid": "admin"
+      ,"name":"Some note" 
+     }]]></samplerequest>  
+    <name><![CDATA[Task Role Save Details]]></name> 
+  </data>  
+
+
+  <data id="modulegoaltaskdeleterole" uploadfile="false" httpmethod="POST" docsection="modulegoaltask" 
+  url="/site/mediadb/services/module/goaltask/taskroledelete.json">
+    <samplerequest><![CDATA[{
+     "collectionid":"AYsBS3Pov6dNtFqL3zN5", "taskid":"AY023-oVzQHA2GtlHt5r", "collectiverole": "13","roleuserid": "admin" 
+     }]]></samplerequest>  
+    <name><![CDATA[Task Role Delete]]></name> 
+  </data>  
+
+
+  <data id="modulegoaltaskrolelistaddone" uploadfile="false" httpmethod="POST" docsection="modulegoaltask" 
+  url="/site/mediadb/services/module/goaltask/rolelistaddone.json">
+    <samplerequest><![CDATA[{
+     "collectionid":"AYsBS3Pov6dNtFqL3zN5", "taskid":"AY023-oVzQHA2GtlHt5r", "collectiverole": "13","roleuserid": "admin" 
+     }]]></samplerequest>  
+    <name><![CDATA[Task Role Action Add To a Task]]></name> 
+  </data>  
+
+
+  <data id="modulegoaltaskrolelistremove" uploadfile="false" httpmethod="POST" docsection="modulegoaltask" 
+  url="/site/mediadb/services/module/goaltask/taskdeleteroleaction.json">
+    <samplerequest><![CDATA[{
+     "roleactionid":"AYsBS3Pov6dNtFqL3zN5"  
+     }]]></samplerequest>  
+    <name><![CDATA[Task Role Action Remove from Task]]></name> 
+  </data>  
+
+			
+</root>

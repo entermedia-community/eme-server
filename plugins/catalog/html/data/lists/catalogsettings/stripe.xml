@@ -1,0 +1,20 @@
+<properties>
+ <data id="stripe_test_private_key" value="sk_test_XXX"> 
+    <name><![CDATA[Stripe Test Private Key]]></name> 
+  </data>  
+  <data id="stripe_test_publishable_key" value="pk_test_XXX"> 
+    <name><![CDATA[Stripe Test Publishable Key]]></name> 
+  </data>  
+  <data id="productionmode" value="false"> 
+    <name><![CDATA[Production Stripe Mode (true/false)]]></name> 
+  </data>  
+  <data id="stripe_private_key" value=""> 
+    <name><![CDATA[Strip Live Private Key]]></name> 
+  </data>  
+  <data id="stripe_publishable_key" value=" ">
+    <name><![CDATA[Stripe Live Publishable Key]]></name>
+  </data>
+
+
+
+</properties>

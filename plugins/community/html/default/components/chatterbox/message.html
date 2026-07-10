@@ -1,0 +1,162 @@
+#ifnull($chatterboxhome)
+	#set($chatterboxhome = "${edithome}/chatterbox")
+#end
+$context.putPageValue("chatterboxhome", $chatterboxhome)
+
+#set($goalsenabled = $content.isPropertyTrue("chatterboxgoalsenabled",false))
+$context.putPageValue("goalsenabled", $goalsenabled)
+
+#if($goalsenabled)
+	#set( $goalfolder = $context.getRequestParameter("goalfolder"))
+	#if(!$goalfolder)
+		#set( $goalfolder = $context.getPageValue("goalfolder") )
+	#end
+	
+	#if(!$goalfolder)
+		#set( $goalfolder = "search" )
+	#end
+	
+	#set($goal = $goalsinmessages.get($chat.id))
+	$context.putPageValue("goal", $goal)
+#end
+
+#set($chatuser = $mediaarchive.getUser($chat.user) ) 
+#set($attachedassets = $attachmentspermessage.get($chat.id))
+#set($otherassets = $messageidwithassets.get($chat.id))
+
+#set($messagetype = "${chatterboxhome}/types/${chat.messagetype}.html")
+
+#if($chat.messagetype && $pages.doesExist($messagetype))
+	$pages.include($messagetype, $context)
+#else
+#set($messagetime = $chat.getDate("date"))
+<div id="chatter-message-$!{chat.id}" 
+	class="msg-bubble"
+	data-createdat="$messagetime.getTime()" 
+	data-messagetype="$!{chat.messagetype}"
+	data-functionname="$!{chat.functionname}"
+	data-nextfunctionname="$!{chat.nextfunctionname}"
+	>
+	<div class="chatterbox-chat" role="alert" >
+		<div class="chat-icon">
+			#if ($chat.user == "agent")
+				#set( $userimageurl = "${chatterboxhome}/images/aiagent.svg" )
+				<a href="#" title="$chatuser.getAnonNickName()" class="msg-avt">
+					<img src="${userimageurl}" class="img-fluid">
+				</a>
+			#else
+				#set( $userimageurl = $mediaarchive.asLinkToUserProfile($chatuser))
+				#ifnull($userimageurl) #set( $userimageurl = "${chatterboxhome}/images/user.svg" ) #end
+				<a href="#esc($userlink)" title="$chatuser.getAnonNickName()" class="msg-avt">
+					<img src="${userimageurl}" class="img-fluid">
+				</a>
+			#end
+		</div>
+		
+		$pages.include("${chatterboxhome}/message-menu.html",$context)
+		
+		<div class="chat-msg">
+			<div class="chat-author">
+				#if ($chat.user == "agent")
+					<strong>EME #text($entity)</strong>
+				#else
+					<a href="#esc($userlink)" title="$context.getDateTime($chat.date)">
+						<strong>$chatuser.getAnonNickName()</strong>
+					</a>
+				#end
+			<span class="chat-timestamp">$context.getDateTime($chat.date)</span>
+			</div>
+			
+			<div class="msg-body #if($chat.user == $user.id) me #end" style=" #if($attachedassets) min-height: 110px; #end">
+				
+			
+				
+			##Attachments
+	
+			#if($otherassets)
+				$context.putPageValue("otherassets", $otherassets)
+				$context.putPageValue("chat", $chat)
+				$pages.include("${chatterboxhome}/listassets.html",$context)
+			#end
+			
+	
+				
+			#ifnotnull($chat.replytoid)
+				#if ($chat.user != "agent")
+					#set( $otherchat = $mediaarchive.getCachedData("chatterbox",$chat.replytoid))
+					#set( $otherchatuser = $mediaarchive.getUser($otherchat.user) )
+					<div class="chatterboxreplyto">
+						<a href="#esc($userlink)" title="$context.getDateTime($otherchat.date)">
+							<strong>$otherchatuser.getAnonNickName()</strong>
+						</a>
+						<div>
+							$url_util.escapeMessage($otherchat.message)
+						</div>
+					</div>
+				#end
+			#end
+			
+				#if($caneditcollection && $goal)
+					$context.putPageValue("chat",$chat)
+					$context.putPageValue("goal",$goal)
+					$pages.include("${chatterboxhome}/goalrow.html",$context)
+				#else
+				
+					#ifnotnull($chat.message)
+						#if($chat.user == "agent")
+							<div class="msg-body-content">$chat.message</div>
+						#else
+							<div class="msg-body-content">$url_util.escapeMessage($chat.message)</div>
+						#end
+					#end
+
+				#end
+			</div>
+			#set( $reactions = $reactionspermessage.get($chat.id) )
+			#if(!$reactions.isEmpty())
+				#set($thumbs_ups = [])
+				#set($thumbs_downs = [])
+				#set($laughs = [])
+				#set($cheeses = [])
+	
+				#foreach($code in $reactions)
+					#if($code.getName().toLowerCase() == "1f44d") 
+						#set($x = $thumbs_ups.add($code))
+					#end
+					#if($code.getName().toLowerCase() == "1f44e") 
+						#set($x =$thumbs_downs.add($code))
+					#end
+					#if($code.getName().toLowerCase() == "1f600") 
+						#set($x =$laughs.add($code))
+					#end
+					#if($code.getName().toLowerCase() == "1f601") 
+						#set($x =$cheeses.add($code))
+					#end
+				#end 
+	
+				#set($emotes = [$thumbs_ups,$thumbs_downs,$laughs,$cheeses])
+				
+				#set($range = [0..3])
+				
+				<div class="d-flex align-items-center mt-1">
+					#foreach($emote in $emotes) 
+						#if($emote.size() > 0)
+							#set($title = "")
+							#foreach($em in $emote)
+								#set($title = "$title$mediaarchive.getUser($em.user)")
+								#if(!$foreach.last)
+									#set($title = "$title, ")
+								#end
+							#end
+						<span class="badge d-flex align-items-center bg-light me-1 me-1 rounded-pill" role="button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="$title">
+							$emote.size()
+							<span class="badge text-dark px-1 emote" role="img">&#x$emote.get(0)</span> 
+						</span>
+						#end
+					#end
+				</div>
+			#end
+		</div> 
+	</div>
+</div>
+#end

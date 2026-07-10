@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+  <property id="collectiveproject" required="true" index="true" stored="true" editable="true" type="list" datatype="list" viewtype="collectionproject" searchcomponent="collectionproject">
+    <name>
+      <language id="en"><![CDATA[Topic]]></language>
+    </name>
+  </property>
+
+  <property id="exclusivecontent" index="true" stored="true" editable="true" type="boolean">
+    <name>
+      <language id="en"><![CDATA[Team Only]]></language>
+    </name>
+  </property>
+
+  <property id="reportedby" index="true" viewtype="user" type="list" datatype="multi" listid="user" keyword="true" stored="true" editable="true">
+    <name>
+      <language id="en"><![CDATA[Reported By]]></language>
+    </name>
+  </property>
+
+  <property id="totalfilesize" index="true" stored="true" editable="true" datatype="number" viewtype="filesize">
+    <name>
+      <language id="en"><![CDATA[Total File Size]]></language>
+    </name>
+  </property>
+
+  <property id="urlname" index="true" stored="true" editable="true" keyword="true">
+    <name>
+      <language id="en"><![CDATA[URL]]></language>
+    </name>
+  </property>
+  
+  
+  <property id="entitymoduleid" editable="true" index="true" type="list" stored="true" sortable="true">
+    <name>
+      <language id="en"><![CDATA[Module]]></language>
+    </name>
+  </property>
+
+  <property id="entityid" editable="true" index="true" type="list" stored="true" sortable="true">
+    <name>
+      <language id="en"><![CDATA[Entity]]></language>
+    </name>
+  </property>
+
+  <property id="creatorstatus" editable="true" index="true" stored="true" type="list" filter="true" sortable="true">
+    <name>
+      <language id="en"><![CDATA[Creator Status]]></language>
+    </name>
+  </property>
+
+  <property id="librarycollection" required="true" index="true" stored="true" editable="true" type="list" viewtype="autocomplete" listid="librarycollection" datatype="list">Library 
+    <name>
+      <language id="en"><![CDATA[Library Collection]]></language>
+    </name>
+  </property>
+
+
+
+
+</properties>

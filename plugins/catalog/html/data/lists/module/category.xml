@@ -1,0 +1,7 @@
+<properties>
+  
+  <data id="category" showonsearch="false" securityenabled="false"  isentity="false" ordering="60" modulerendertype="category" moduleresultsview="gallery" moduleicon="category">
+    <name><![CDATA[Folders]]></name>
+  </data>
+    
+</properties>

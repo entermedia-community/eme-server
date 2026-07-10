@@ -1,0 +1,127 @@
+#ifnull($task)
+	#set( $taskid = $context.getRequestParameter("taskid"))
+	#if( $taskid)
+		#set( $task = $mediaarchive.getData("goaltask",$taskid) )
+	#end
+#end
+
+#set($collectionid = $context.getRequestParameter("collectionid"))
+
+#set($target = $context.getRequestParameter("targetdiv"))
+
+<div id="taskrow#eid($task.getId())" class="taskgoaledit mt-1 rounded" >
+	<div class="taskage" scope="row">$!task.getAge()</div>
+  	<form id="taskeditform" class="ajaxform" data-targetdiv="$target" data-oemaxlevel="1" action="${apphome}/project/goals/task/tasksave.html">
+  		<div class="card-task-body changetaskstatus" data-taskid="$!task.id">
+	    	<input type="hidden" name="goalid" value="$selectedgoal.id" />
+	    	<input type="hidden" name="onlyopen" value="false" />
+	    	<input type="hidden" name="taskid" value="$!task.id" />
+	    	<input type="hidden" name="collectionid" value="$collectionid" />
+
+			<div style="margin-bottom:10px;">
+  				<textarea id="commenttext" class="form-control grabfocus" name="comment" placeholder="[[Task Comment/Description]]" required>$!task.comment</textarea>
+  			</div>
+
+			#set( $selectedstatus = $task.taskstatus)
+			#if( !$selectedstatus )
+				#set( $selectedstatus = "0")	
+			#end
+			<div class="d-flex flex-column">
+				
+				<div class="d-flex flex-row">
+					<span><i class="fas fa-check-square me-2" style="width:20px"></i></span> 
+					<div class="mb-2">
+						#set( $options = $mediaarchive.getList("taskstatus"))
+						<select  name="taskstatus" class="form-control" style="width:300px;" >
+							<option value=""></option>
+							
+							#foreach( $option in $options)
+								#set($taskstatus = $mediaarchive.getCachedData("taskstatus", $option.id))
+								<option value="$option.id" #if( $selectedstatus == $option.id) selected #end >
+									#text($taskstatus)
+								</option>
+							#end
+						</select> 
+					</div>
+				</div>		
+				<div class="d-flex flex-row m-1">
+					<span><i class="fas fa-tags me-2" style="width:20px"></i></span>
+					<div style="min-width:300px;">
+						#set( $searcher = $mediaarchive.getSearcher("collectiverole") )
+						$context.putPageValue("searcher",$searcher)	
+						#set( $detail = $searcher.getDetail("name") )
+						
+						$context.putPageValue("detail",$detail)
+						$context.putPageValue("values", $task.getValues("keywords"))	
+						$context.putPageValue("data",$task)	
+						
+						$pages.include("${page.xmledithome}/types/tageditor.html", $context)
+					</div>
+				</div>
+				<div class="d-flex flex-row m-1">
+					<span><i class="fas fa-user me-2" style="width:20px"></i></span>
+					## change completedby field to staff field? 
+					#set( $completedby = $task.completedby)
+					#if( !$completedby )
+						#set( $completedby = $user.id)	
+					#end
+					<div style="min-width:300px;">
+					<select class="form-control form-control-sm"  name="completedby">
+						<option value=""></option>
+						#set( $team = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",true).search($context) )
+						#foreach( $hit in $team)
+							#set( $followeruser = $mediaarchive.getUser($hit.followeruser) )
+							#if( $followeruser)
+							<option value="$hit.followeruser" #if( $completedby == $hit.followeruser) selected #end>$followeruser.getName()</option>
+							#end
+						#end
+					</select>
+					</div>
+				</div>
+				#set( $hits = $mediaarchive.query("projectdepartment").all().sort("name").search($context) )
+				<div class="d-flex flex-row m-1">
+					<span><i class="fas fa-hammer me-2" style="width:20px"></i></span>
+					<div style="width:300px;">
+						<select id="selectedcategories" name="projectdepartment" class="selectautosubmit listautocomplete form-control select2">
+						<option value=""></option>
+						#set( $projectdepartment = $task.projectdepartment)
+						#foreach( $hit in $hits)
+							<option #if ($projectdepartment && $projectdepartment == $hit.id) selected #end value="$hit.id">$hit ($!hit.goalpoints)</option>
+						#end
+						</select>
+					</div>
+				</div>	
+				</div>
+			<div class="pt-3">
+  				<input id="submitbutton" 
+  					type="submit" 
+  					form="taskeditform" 
+  					value="[[Save]]" 
+  					name="submitbutton" 
+  					class="btn btn-xs btn-primary ml-1">
+		
+				#if( $task.id && $caneditcollection )
+					<a class="btn btn-xs btn-danger ml-1 ajax" 
+					 data-confirm="[[Are you sure?]]"
+					data-targetdiv="goalrow#eid($selectedgoal.id)" title="[[Remove task]]"
+					href="${apphome}/project/goals/taskdelete.html?collectionid=$!collectionid&goalid=$selectedgoal.id&taskid=$task.id">
+					[[Delete]]</a> 
+    			#end
+    	
+				##set( $targetdiv = "tasklist#eid($selectedgoal.id)")
+				#set( $cancellink = "${apphome}/project/goals/search/goaltasks.html?collectionid=$collectionid&goalid=$selectedgoal.id")
+				<a href="$cancellink" 
+					data-focuson="$task.id" 
+					id="task$task.getId()" 
+					class="btn btn-xs btn-secondary taskedit-$!{task.taskstatus} ajax" 
+					data-targetdiv="$target" 
+					data-oemaxlevel="1" 
+					title="[[Cancel]] $!tree.getCategoryPath()" >
+				[[Cancel]]</a>
+			</div>
+		</div>		
+		<div class="taskstatus goalstatus-$!task.taskstatus"></div>
+	</form>
+	<div class="clearfix"></div>		
+</div>
+			

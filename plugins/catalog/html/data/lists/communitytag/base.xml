@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+
+ <data id="default" primaryimagepath="/theme/images/logos/oilogo.svg" externaldomain="" 
+  > 
+    <name> 
+      <language id="en"><![CDATA[EME Server]]></language> 
+    </name>
+    <caption><![CDATA[Non-profit foundation]]></caption>
+    
+    <summary>
+EME Server supports a new collaborative economic model for a digital age. The model is an online communication platform where sponsors monitor the ongoing social and ecological impact of their donations.
+
+Projects hosted on EME Server use accountability and transparency to provide measurable, verifiable outcomes for donations received.  
+    </summary>
+   
+  </data>    
+  
+</root>

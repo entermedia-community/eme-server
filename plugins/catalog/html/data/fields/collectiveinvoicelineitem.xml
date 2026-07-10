@@ -1,0 +1,15 @@
+<properties>
+
+	<property id="productid" index="true" keyword="true"
+		stored="true" editable="true" type="list" listid="collectiveproduct">Product
+	</property>
+	<property id="productquantity" index="true" stored="true"
+		editable="true" datatype="double">Quantity</property>
+	<property id="productprice" index="true" editable="true"
+		stored="true" datatype="double" type="double">
+		<name>
+			<language id="en"><![CDATA[Price]]></language>
+		</name>
+	</property>
+	
+</properties>

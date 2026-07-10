@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+	<property id="id" index="true" stored="true" editable="true"
+		internalfield="true">ID</property>
+
+
+	<property id="name" index="true" stored="true" editable="true" multilanguage="false">
+		<name>
+			<language id="en"><![CDATA[Product Name]]></language>
+			<language id="es"><![CDATA[Nombre del Proyecto]]></language>
+		</name>
+	</property>
+
+	<property id="urlname" index="true" stored="true" editable="true" >
+		<name>
+			<language id="en"><![CDATA[URL Name]]></language>
+		</name>
+	</property>
+
+
+	<property id="productdescription" index="true" stored="true"
+		viewtype="html" editable="true" hint="Allowed variables: ${project} ${invoicenumber} ${invoicemonth} ${period} ${duedate} ${enddate}">
+		<name>
+			<language id="de"><![CDATA[Projektbeschreibung]]></language>
+			<language id="en"><![CDATA[Description]]></language>
+			<language id="es"><![CDATA[Descripción del Proyecto]]></language>
+			<language id="fr"><![CDATA[Description du projet]]></language>
+		</name>
+	</property>
+
+	<property id="producttags" viewtype="tageditor"
+		defaultoperation="andgroup" index="true" stored="true" editable="true"
+		indextype="analyzed" analyzer="tags">Tags
+	</property>
+
+
+	<property id="collectionid" listid="librarycollection"
+		index="true" stored="true" editable="true" viewtype="list" type="list">
+		<name>
+			<language id="en"><![CDATA[Parent Collection]]></language>
+		</name>
+	</property>
+
+	<property id="productattachment" listid="asset" index="true"
+		stored="true" editable="true" viewtype="asset" type="list"		
+		sourcepath="${data.uploadsourcepath}/${formattedyear}/${filename}">
+		<name>
+			<language id="en"><![CDATA[Attachment]]></language>
+		</name>
+	</property>
+
+	<!-- <property id="productprice" datatype="double" editable="true" stored="true"> -->
+	<property id="productprice" index="true" editable="true"
+		stored="true" datatype="double" type="double" required="true">
+		<name>
+			<language id="en"><![CDATA[Price]]></language>
+		</name>
+	</property>
+	
+	<property id="currencytype" index="true" editable="true" stored="true"  datatype="list" listid="currencytype"  required="true"  defaultvalue="1">
+    <name> 
+      <language id="en"><![CDATA[Currency Type]]></language> 
+      <language id="es"><![CDATA[Moneda]]></language>
+    </name> 
+  </property>  
+ 
+    <property id="incometype" index="true" editable="true" stored="true"  datatype="list" listid="incometype">
+    <name> 
+      <language id="en"><![CDATA[Income Type]]></language> 
+    </name> 
+  </property>   
+
+	<property id="discount" index="true" editable="true"
+		stored="true" datatype="double" type="double">
+		<name>
+			<language id="en"><![CDATA[Discount]]></language>
+		</name>
+	</property>
+
+	<property id="createdon" editable="true" stored="true"
+		type="date" index="true">Creation Date
+	</property>
+	
+	<property id="nextbillon" editable="true" stored="true"
+		type="date" index="true">Next Bill Date
+	</property>
+
+
+	<!-- <property id="featured" index="true" type="boolean" keyword="false" 
+		filter="false" editable="true" > <name> <language id="en"><![CDATA[Featured]]></language> 
+		</name> </property> -->
+
+	<property id="producttype" index="true" stored="true"
+		editable="true" type="list">Product Type</property>
+
+	<property id="recurring" index="true" stored="true"
+		editable="true" type="boolean">Is Recurring Payment</property>
+
+	<property id="recurringperiod" index="true" stored="true"
+		editable="true" type="list" listid="productrecurringperiod">Recurring Period</property>
+
+	<property id="billingday" index="true" stored="true"
+		editable="true" type="number" rendertype="monthday">Billing Day</property>
+
+	<property id="sessioncount" index="true" stored="true"
+		editable="true" type="number">Session Count</property>
+
+
+	<property id="owner" index="true" listid="user" filter="true"
+		deleted="false" editable="true" stored="true" listcatalogid="system"
+		viewtype="user" keyword="true" datatype="list">
+		<name>
+			<language id="de"><![CDATA[Owner]]></language>
+			<language id="en"><![CDATA[Owner]]></language>
+			<language id="es"><![CDATA[Propietario]]></language>
+			<language id="fr"><![CDATA[Propriétaire]]></language>
+		</name>
+	</property>
+
+	<property id="lastgeneratedinvoicedate" editable="true"
+		stored="true" type="date" index="true">Last Generated Invoice Date
+	</property>
+
+	<property id="billingstatus" index="true"
+		internalfield="false" isbadge="false" required="false"
+		listid="product_billing_status" multilanguage="false"
+		highlight="false" deleted="false" stored="true"
+		autocreatefromexif="false" writenametoexif="false"
+		searchcomponent="list" editable="true" datatype="list" filter="false"
+		keyword="false">
+		<name>
+			<language id="en"><![CDATA[Billing Status]]></language>
+		</name>
+	</property>
+
+	<property id="isautopaid" index="true" stored="true"
+		editable="true" type="boolean">Automatic Payments</property>
+
+  <property id="primaryimage" index="true" stored="true" editable="true" type="list" viewtype="asset" listid="asset" internalfield="false"
+  	 datatype="list" sourcepath="/uploads/${data.collectionid}/products/${formattedyear}/${shortguid}">
+   	<name>
+   		<language id="en"><![CDATA[Primary Attachment]]></language>
+   	</name>
+   </property>
+   
+       <property id="uploadsourcepath"  index="true" type="list" viewtype="category" listid="category" stored="true" note="Auto populated"  editable="false" >
+    <name>
+      <language id="en"><![CDATA[Base Path]]></language>
+    </name>
+  </property> 
+   
+   
+    <property id="uploadcategory"  index="true" type="list" viewtype="category" listid="category" stored="true" note="Auto populated"  editable="false" >
+    <name>
+      <language id="en"><![CDATA[Image Category]]></language>
+    </name>
+  </property> 
+   
+   		
+	<property id="sentto" index="true" stored="true" editable="true">
+		<name>
+			<language id="en"><![CDATA[Notification Sent to]]></language>
+		</name>
+	</property>
+		
+
+
+</properties>

@@ -1,0 +1,84 @@
+
+
+#if(!$mediaarchive.isCatalogSettingTrue("productionmode"))
+	<div class="alert alert-warning">
+		[[Test card: 4242 4242 4242 4242, any expiration date. Add your keys to catalog settings and switch to production mode to take credit cards]].
+	</div>
+#end
+
+<div class="card donatecard pb-3">
+		#if($mediaarchive.isCatalogSettingTrue("productionmode"))
+			#set($publishkey = $mediaarchive.getCatalogSettingValue("stripe_publishable_key"))
+		#else
+			#set($publishkey = $mediaarchive.getCatalogSettingValue("stripe_test_publishable_key"))
+		#end
+		<form action="${apphome}/project/donate/donatefinish.html"
+			method="post" 
+			id="payment-form" 
+			class="form ajaxform stripepaymentform" 
+			data-targetdiv="donationcontainer"
+			data-stripepublishkey="$!publishkey">
+			
+			<input type="hidden" name="oemaxlevel" value="3" />
+			<input type="hidden" name="collectionid" value="$!librarycol.id" />
+
+			<div class="form-group">
+				<div class="d-flex align-items-center justify-content-between mb-1">
+					<label class="input-label m-0 text-secondary">Card number</label>
+					<i class="fas fa-credit-card text-secondary"></i>
+				</div>
+				<div id="card-element" style="width: 100%">
+					<input type="text" class="form-control" name="cardNumber" placeholder="**** **** **** ***" required>
+				</div>
+			</div>
+
+			<div class="d-flex gap-2">
+				<div class="form-group flex-grow-1">
+					<label class="input-label m-0 text-secondary" for="donationamount">[[Donation Amount]]</label>
+					<div class="input-group input-group-merge">
+						<div class="input-group-prepend">
+							<div class="input-group-text">
+								<i class="fas fa-dollar-sign"></i>
+							</div>
+						</div>
+						<input type="number" class="form-control" name="totalprice.value" id="donationamount">
+					</div>
+				</div>
+	
+				<div class="form-group flex-grow-1">
+					<label for="donationfrequency" class="input-label m-0 text-secondary">[[Donation Frequency]]:</label>
+					<select class="form-control" name="frequency" id="donationfrequency">
+						<option value="">[[Once]]</option>
+						<option value="monthly">[[Monthly]]</option>	
+					</select>
+				</div>
+			</div>
+
+			<div id="card-errors" class="donateformerror" role="alert"></div>
+
+			<div class="d-flex justify-content-center">
+				<a href="#" class="btn btn-donate" id="donatecheckout">
+					<i class="fas fa-credit-card mr-1"></i> [[Donate]]
+				</a> 
+			</div>
+			<p class="mt-1 mb-0 text-center text-muted small">
+				<i class="fas fa-lock"></i> [[Secure payment]]
+			</p>
+
+			<input  type="hidden" name="field" value="collectionid" /> 
+			<input	type="hidden" name="collectionid.value"	value="$!librarycol.getId()" /> 
+			<input  type="hidden" name="collectionid" value="$!librarycol.getId()" /> 
+			<input	type="hidden" name="field" value="totalprice" /> 
+			<input	type="hidden" name="field" value="userid" /> 
+			<input	type="hidden" name="userid.value" value="$!user.getId()" />
+			<input	type="hidden" name="isdonation" value="true" />
+			
+			<input type="hidden" name="field" value="currencytype" />
+			<input type="hidden" name="currencytype.value" value="1"/>
+			
+			<input type="hidden" name="field" value="incometype" />
+			<input type="hidden" name="incometype.value" value="1"/>
+		</form>
+</div>
+
+				

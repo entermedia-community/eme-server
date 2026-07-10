@@ -1,0 +1,48 @@
+<data>
+  <data id="localrender">
+    <name>
+      <![CDATA[Local Rendering]]>
+    </name>
+  </data>
+  <data id="vision">
+    <name>
+      <![CDATA[Vision]]>
+    </name>
+  </data>
+  <data id="thinking">
+    <name>
+      <![CDATA[Thinking]]>
+    </name>
+  </data>
+  <data id="createimage">
+    <name>
+      <![CDATA[Create Image]]>
+    </name>
+  </data>
+  <data id="embedding">
+    <name>
+      <![CDATA[Embedding]]>
+    </name>
+  </data>
+  <data id="translate">
+    <name>
+      <![CDATA[Translate]]>
+    </name>
+  </data>
+  <data id="transcribe">
+    <name>
+      <![CDATA[Transcribe]]>
+    </name>
+  </data>
+  <data id="vectorize">
+    <name>
+      <![CDATA[Vectorize]]>
+    </name>
+  </data>
+  <data id="facedetect">
+    <name>
+      <![CDATA[Face Detect]]>
+    </name>
+  </data>
+  
+</data>

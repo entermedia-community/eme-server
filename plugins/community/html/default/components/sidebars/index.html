@@ -1,0 +1,58 @@
+#set($moduleid = $module.getId())
+#set($title = $mediaarchive.getCatalogSettingValue("sitetitle")) 
+#set($section = $context.getRequestParameter("sitetitle"))
+
+#set( $sidebarwidth = $userprofile.get("sidebarwidth"))
+#if(!$sidebarwidth || $sidebarwidth=='' || $sidebarwidth=='undefined')
+  #set($sidebarwidth = 300)
+#end
+
+##Open specific sidebar from URL only if sidebars open
+#set($forcedsidebarcomponent = $context.getRequestParameter("sidebarcomponent"))
+#if($forcedsidebarcomponent == "none")
+  #set( $sidebarcomponent = $forcedsidebarcomponent )
+#else
+
+  #ifnull($forcedsidebarcomponent)
+    #set($forcedsidebarcomponent = $context.getRequestParameter("sidebarcomponent.value"))
+  #end
+
+  #ifnull($forcedsidebarcomponent)
+    #set($forcedsidebarcomponent = $content.sidebarcomponent)
+  #end
+
+  #ifnotnull($forcedsidebarcomponent)
+    #set( $sidebarcomponent = $forcedsidebarcomponent )
+  #end
+
+  #ifnull($sidebarcomponent)
+    #set( $sidebarcomponent = $userprofile.get("sidebarcomponent"))
+  #end
+
+  ##very first time
+  #if( !$sidebarcomponent && $modulehits.isEmpty() )
+  #set( $sidebarcomponent = "guide" )
+  #end
+#end
+
+
+#if($sidebarcomponent == "localdrives")
+  #ifnull($desktop)
+  #set( $sidebarcomponent = "")
+  #end
+#end
+
+$context.putPageValue("sidebarcomponent", $sidebarcomponent)
+
+
+
+<div id="col-sidebars" 
+	class="col-sidebars-sticky sidebarcontent setpagetitle mbl-hidden"
+	data-sidebarwidth="$!sidebarwidth"
+	#ifnotnull( $section ) data-setpagetitle="#text($section) - $title" #end 
+	#ifnull( $section ) data-setpagetitle="$title" #end 
+	data-url="$applink/components/sidebars/index.html">
+
+	$pages.include("${apphome}/components/sidebars/togglers.html", $context)
+	$pages.include("${apphome}/components/sidebars/content.html", $context)
+</div>

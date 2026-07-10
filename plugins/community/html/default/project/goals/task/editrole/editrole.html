@@ -1,0 +1,118 @@
+<div id="viewrole" class="">
+
+#set( $taskid = $context.getRequestParameter("taskid") )
+#set( $collectiverole = $context.getRequestParameter("collectiverole") )
+#set( $roleuserid = $context.getRequestParameter("roleuserid") )
+
+#set($collectionid = $librarycol.id)
+
+#set( $goalManager = $mediaarchive.getBean("goalManager") )
+
+#set( $task = $mediaarchive.getCachedData("goaltask", $taskid) )
+
+<form name="saverole" 
+	id="saverole"
+	data-targetdiv="goalrow#eid($task.projectgoal)"
+	class="ajaxform autocloseform" 
+	data-oemaxlevel="1"
+	action="$projectlink/goals/task/editrole/saverole.html"
+	method="post">
+	
+<input type="hidden" name="save" value="true" />
+<input type="hidden" name="taskid" value="$taskid" />
+<input type="hidden" name="collectiverole" value="$collectiverole" />
+<input type="hidden" name="collectionid" value="$collectionid" />
+
+#set( $taskrole = $goalManager.findRole($task,$collectiverole,$roleuserid) )
+
+<section>
+  <div class="editrow">
+    <div class="editname">[[Notes]]</div>
+    <div class="editval"><textarea name="name" style="width:100%;height:160px" class="form-control form-control-sm" >$!taskrole.name</textarea></div>
+  </div>
+
+  <div class="editrow">
+    <div class="editname">[[Role User]]</div>
+    <div class="editval">
+	<select class="form-control form-control-sm"  name="roleuserid">
+		<option value=""></option>
+		#set( $team = $mediaarchive.query("librarycollectionusers").exact("collectionid",$librarycol.getId()).exact("ontheteam",true).search($context) )
+		#foreach( $hit in $team)
+			#set( $followeruser = $mediaarchive.getUser($hit.followeruser) )
+			#if( $followeruser)
+			<option value="$hit.followeruser" #if( $!taskrole.roleuserid == $hit.followeruser) selected #end>$followeruser.getName()</option>
+			#end
+		#end
+	</select>
+
+		    
+    </div>
+  </div>
+
+</section>
+
+
+
+
+#set( $actions = $goalManager.listActions($taskid,$collectiverole,$roleuserid) )
+#if($actions.size()>0)
+<div class="mt-4">
+<h4>[[Action Log]]</h4>
+<table class="table table-hover table-striped">
+	<thead>
+		<tr>
+			<th>[[Count]]</th>
+			<th>[[Date]]</th>
+			<th>[[Added by]]</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		#foreach( $action in $actions)
+		<tr>
+			<td>$foreach.count</td>
+			<td>#datetime($action.date)</td>
+			<td>$!action.owner</td>
+			<td>	 <a class="ajax btn btn-xs btn-secondary"
+		data-oemaxlevel="1"
+		data-targetdiv="viewrole"
+		data-taskid = "$taskid"
+		data-collectionid = "$collectionid"
+		data-collectiverole = "$collectiverole"
+		data-roleuserid = "$roleuserid"
+		style="margin: 0px 0 0 10px;" 
+		data-confirm="[[Are you sure]]?" 
+		href="$projectlink/goals/task/editrole/deleteaction.html?id=$action.id&collectionid=$librarycol.id" 
+    >[[Delete Action]]</a></td>
+		</tr>
+		#end
+	</tbody>
+</table>
+
+
+
+</div>
+#end
+
+<div class="my-3">
+	<a class="btn btn-sm btn-primary submitform">[[Save]]</a>
+    <a class="ajax btn btn-sm btn-danger closedialog"
+   		data-oemaxlevel="1"
+		data-targetdiv="goalrow#eid($task.projectgoal)"
+		data-goalid = "$task.projectgoal"
+		data-taskid = "$taskid"
+		data-collectionid = "$collectionid"
+		data-closedialog = "true"
+		data-collectiverole = "$collectiverole"
+		data-roleuserid = "$roleuserid"
+		
+		data-confirm="[[Are you sure]]?" 
+		href="$projectlink/goals/task/editrole/deleterole.html?collectionid=$librarycol.id" 
+	>[[Delete Role]]</a>
+	</div>
+
+</form>
+</div>
+
+
+  

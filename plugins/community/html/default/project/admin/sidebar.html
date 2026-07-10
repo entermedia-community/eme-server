@@ -1,0 +1,54 @@
+#set($collectionid = $context.getRequestParameter("collectionid"))
+#set($collectiveadminsection = $content.collectiveadminsection)
+
+#if(!$collectiveadminsection)
+  #set($collectiveadminsection = "settings")
+#end
+
+#if($librarycol.get("collectiontype") == "5")
+  #set($isproposal = "true")
+#end
+
+
+<div class="project-sidebar-menu">
+  <h3>[[Settings]]</h3>
+  <ul class="auto-active-container"> 
+    <li class="#if($collectiveadminsection == "general") current #end">
+      <a href="${projectlink}/edit/general.html?collectionid=$collectionid"
+        class="ajax auto-active-link" data-targetdivinner="collectivesettingscontent" data-oemaxlevel="1">
+        [[General]]
+      </a>
+    </li>
+    <li>
+    <a href="${projectlink}/edit/vision.html?collectionid=$!collectionid"
+        class="ajax auto-active-link" data-targetdivinner="collectivesettingscontent" data-oemaxlevel="1">
+        [[Vision]]
+      </a>
+    </li>
+    <li>
+      <a href="${projectlink}/edit/testimonials.html?collectionid=$!collectionid"
+        class="ajax auto-active-link" data-targetdivinner="collectivesettingscontent" data-oemaxlevel="1">
+        [[Testimonials]]
+      </a>
+    </li>
+    <li>
+      <a href="${projectlink}/edit/invoice-template.html?collectionid=$!collectionid"
+        class="ajax auto-active-link" data-targetdivinner="collectivesettingscontent" data-oemaxlevel="1">
+        [[Invoice Template]]
+      </a>
+      </li>
+	  <li>
+	        <a href="${projectlink}/edit/payments.html?collectionid=$!collectionid"
+	          class="ajax auto-active-link" data-targetdivinner="collectivesettingscontent" data-oemaxlevel="1">
+	          [[Payment Methods]]
+	        </a>
+	      </li>
+	  <li>
+      <a href="${projectlink}/edit/fundraising.html?collectionid=$!collectionid"
+        class="ajax auto-active-link" data-targetdivinner="collectivesettingscontent" data-oemaxlevel="1">
+        [[Fundraising]]
+      </a>
+    </li>
+  </ul>
+</div>
+         

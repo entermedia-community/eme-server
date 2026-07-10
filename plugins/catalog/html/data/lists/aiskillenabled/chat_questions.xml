@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- using more descriptive ids for easier debugging -->
+
+<records>
+
+ 
+   <data id="chat_questions_welcome" aiskill="questionsSkill" automationscenario="chat_questions" enabled="true" agenttype="eventagent"  processingmessage="Thinking">
+      <name>
+         <![CDATA[Handle Questions in Chat]]>
+      </name>
+   </data>
+
+
+   <data id="question_create_suggestions" aiskill="questionsMakeSuggestionsSkill" automationscenario="chat_questions" enabled="true" runafter="chat_questions_welcome" processingmessage="Creating Suggestions">
+      <name>
+         <![CDATA[Create Suggestions]]>
+      </name>
+   </data>
+
+   <data id="question_ask" aiskill="questionsAskSkill" automationscenario="chat_questions" enabled="true" runafter="question_create_suggestions" processingmessage="Answering Question">
+      <name>
+         <![CDATA[Answer Question]]>
+      </name>
+   </data>
+
+   </records>

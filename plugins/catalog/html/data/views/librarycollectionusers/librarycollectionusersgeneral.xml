@@ -1,0 +1,6 @@
+<root>
+  
+  <property id="followeruser"/>
+  <property id="ontheteam" >Team Member</property>
+    <property id="teamroles" />
+</root>

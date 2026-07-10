@@ -1,0 +1,13 @@
+<properties beanname="">
+  
+  <property id="name" />
+  
+  <property id="subheading" />
+
+  <property id="logoasset" />
+  <property id="logowidth" />
+  <property id="logoheight" />
+
+  <property id="headercolor" />
+  
+</properties>

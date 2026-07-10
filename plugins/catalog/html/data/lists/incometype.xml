@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="1">
+    <name> 
+      <language id="en"><![CDATA[Bank Transfer]]></language> 
+    </name> 
+  </data>  
+  <data id="2"> 
+    <name> 
+      <language id="en"><![CDATA[Other Donation]]></language> 
+    </name> 
+  </data>  
+  <data id="3"> 
+    <name> 
+      <language id="en"><![CDATA[Wages]]></language> 
+    </name>
+  </data>  
+  <data id="4"> 
+    <name> 
+      <language id="en"><![CDATA[Paypal/Venmo/Online]]></language> 
+    </name> 
+  </data>  
+  <data id="5"> 
+    <name> 
+      <language id="en"><![CDATA[Cash Payment]]></language> 
+    </name> 
+  </data>  
+  <data id="6"> 
+    <name> 
+      <language id="en"><![CDATA[Invoice]]></language> 
+    </name> 
+  </data>  
+  <data id="7"> 
+    <name> 
+      <language id="en"><![CDATA[Work Points Payment]]></language> 
+    </name> 
+  </data>  
+  <data id="8" iscapitalloan="true"> 
+    <name> 
+      <language id="en"><![CDATA[Capital: Capital Investment]]></language> 
+    </name> 
+  </data>  
+  <data id="9" iscapitalloan="true"> 
+    <name> 
+      <language id="en"><![CDATA[Capital: Receive Loan]]></language> 
+    </name> 
+  </data>  
+  <data id="AX-oWIv0qFnpF58wgkLE"> 
+    <name> 
+      <language id="en"><![CDATA[Rent]]></language> 
+    </name> 
+  </data>  
+  <data id="AYAZtSrMI1NvzXHWb6L8"> 
+    <name> 
+      <language id="en"><![CDATA[Product Sales]]></language> 
+    </name> 
+  </data>  
+</root>

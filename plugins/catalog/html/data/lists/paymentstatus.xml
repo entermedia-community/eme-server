@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<data id="sendinvoice">
+	    <name> 
+      <language id="en"><![CDATA[Sending Invoice]]></language> 
+      <language id="es"><![CDATA[Enviando Factura]]></language>
+    </name> 
+    </data>
+	<data id="pending">
+	<name> 
+      <language id="en"><![CDATA[Pending]]></language> 
+      <language id="es"><![CDATA[Pendiente]]></language>
+    </name>
+    </data>
+	<data id="invoiced">
+		<name> 
+      <language id="en"><![CDATA[Invoiced]]></language> 
+      <language id="es"><![CDATA[Facturada]]></language>
+    </name>
+	</data>
+	<data id="paid">
+		<name> 
+      <language id="en"><![CDATA[Paid]]></language> 
+      <language id="es"><![CDATA[Pagada]]></language>
+    </name>
+	</data>
+	<data id="autopayfailed">
+		<name> 
+      <language id="en"><![CDATA[Auto Payment Failed]]></language> 
+      <language id="es"><![CDATA[Falló Cargo Automático]]></language>
+    </name>
+	</data>
+	<data id="canceled">
+		<name> 
+      <language id="en"><![CDATA[Canceled]]></language> 
+      <language id="es"><![CDATA[Cancelada]]></language>
+    </name>
+	</data>	
+	<data id="completed">
+		<name> 
+      <language id="en"><![CDATA[Completed]]></language> 
+      <language id="es"><![CDATA[Completada]]></language>
+    </name>
+	</data>
+	<data id="error">
+		<name> 
+      <language id="en"><![CDATA[Error]]></language> 
+      <language id="es"><![CDATA[Error]]></language>
+    </name>
+	</data>
+</root>

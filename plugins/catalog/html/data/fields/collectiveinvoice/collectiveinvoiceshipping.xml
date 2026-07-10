@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+
+	<property id="shippingdestination" editable="false" index="true" stored="true" type="list" >
+		<name>
+			<language id="en"><![CDATA[Ship to]]></language>
+		</name>
+	</property>
+ 
+</properties>

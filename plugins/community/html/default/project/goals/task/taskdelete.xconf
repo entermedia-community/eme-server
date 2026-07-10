@@ -1,0 +1,11 @@
+<page>
+
+	<path-action name="DataEditModule.deleteData">
+	
+		<property name="searchtype">goaltask</property>
+	
+	</path-action> 
+	
+
+	<inner-layout />
+</page>

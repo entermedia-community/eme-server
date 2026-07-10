@@ -1,0 +1,42 @@
+<div class="embedlink p-2">
+
+
+	#set( $mediadbappid = $mediaarchive.getMediaDbId() )
+	#set( $userpostid = $context.getRequestParameter("userpostid"))
+	
+	#set( $userpost = $mediaarchive.getCachedData("userpost",$userpostid))
+
+	#set( $librarycol = $context.getRequestParameter("librarycol"))
+	#set( $librarycol = $mediaarchive.getCachedData("librarycollection",$librarycol) )
+
+	
+	#set($thumburl = $mediaarchive.asLinkToPreview($asset,"image1200x628.jpg") )
+	
+	
+	#set( $community = $mediaarchive.getCachedData("communitytag", $librarycol.communitytag))
+
+	#if($librarycol.urlname)
+		#set($projectlink = "$!{community.externaldomain}/${librarycol.urlname}")
+	#else
+		#set($projectlink = "${communitylink}/#dash($librarycol.getName())")
+	#end
+
+	#if($userpost.urlname)
+	  #set($bloglink = "${projectlink}/blog/${userpost.urlname}")
+	#else
+	  #set($bloglink = "${projectlink}/blog/${userpost.id}")
+	#end
+
+	##<h3>$userpost.name</h3>
+	
+		
+<div class="sharepostlink py-2">#urlescape($bloglink)</div>
+<a href="#" class="copytoclipboard btn btn-sm btn-primary me-2" data-targetdiv="userpostsharecopied" data-copytext="copyuserpostlink" title="[[Copy to Clipboard]]"><i class="far fa-copy"></i> [[Copy Link]]</a>
+<input style="position:absolute; top:-1000px;" id="copyuserpostlink" value="#urlescape($bloglink)">
+
+
+<a href="#urlescape($bloglink)" target="_blank" class="btn btn-sm btn-secondary">[[Preview]]</a>
+
+<div id="userpostsharecopied" class="alert alert-save" style="display:none;">[[Link copied to clipboard]]</div>
+
+</div>

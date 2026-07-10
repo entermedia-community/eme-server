@@ -1,0 +1,125 @@
+#set( $usersidebarhidden = $userprofile.get("usersidebarhidden"))
+#if (!$usersidebarhidden)
+  #set( $usersidebarhidden = 'false')
+#end
+
+#if($communitytag)
+  #if($communitytag.primaryimagepathwide)
+    #set($headerbg = "$applink${communitytag.primaryimagepathwide}")
+  #end
+#end
+
+#set($homelink = "${communitylink}/home/proposals/index.html")
+
+#set ($action = $content.collectivesection)
+#if( $communitytag)
+<nav class="navbar sticky-top navbar-expand community-nav #ifnotnull($navbgdark) bg-black #end ">
+  <div class="container">
+    <a href="$!{communitytag.externaldomain}">
+      <img src="${apphome}${communitytag.primaryimagepath}" class="me-3" style="height:50px;width: auto;" />
+    </a>
+    <a href="$!{communitytag.externaldomain}"> 
+      <h3 class="text-white my-1 me-3">
+        #text($communitytag)
+      </h3>
+    </a>
+    <div class="d-flex align-items-center justify-content-center ms-auto">
+      <ul class="nav nav-underline">
+		  <li class="nav-item">
+				$pages.include("${apphome}/components/quicksearch/navbar.html")
+			</li>
+        <li class="nav-item  #if($action == 'community') active #end">
+                <a class="nav-link" href="$!{communitytag.externaldomain}">[[Home]]</a>
+        </li>
+        <li class="nav-item #if($action == 'blog') active #end">
+          <a class="nav-link" href="$!{communitylink}/blogs">[[Blog]]</a>
+        </li>
+        <li class="nav-item #if($action == 'projects') active #end">
+          <a class="nav-link" href="$!{communitylink}/projects">[[Projects]]</a>
+        </li>
+        ##<li class="nav-item #if($action == 'people') active #end">
+        ## <a class="nav-link" href="$!{communitylink}/events/">[[Events]]</a>
+        ##</li>
+        ##<li class="nav-item #if($action == 'people') active #end">
+        ##  <a class="nav-link" href="$!{communitylink}/people/">[[People]]</a>
+        ##</li>
+        #ifnull($user)
+          <li class="nav-item">
+            <a class="nav-link #if($content.oisection == 'login') active #end" 
+            	href="$!{communitylink}/authentication/login.html"
+            	title="[[Login or Register]]">
+              [[Login]] / [[Register]] <i class="ml-1 fs-small fas fa-user"></i>
+            </a>
+          </li> 
+          #end
+          #ifnotnull($user)
+          <li class="nav-item">
+            <a class="nav-link" href="$!{communitylink}/authentication/logout.html" title="[[Logout]] ($user)">
+              <i class="ml-1 fs-small fas fa-sign-out-alt"></i>
+            </a>
+          </li>
+          #end
+      </ul>
+    </div>
+  </div>
+</nav>
+
+#else
+  <nav class="navbar sticky-top navbar-expand-lg" id="superNav">
+    <div class="container flex-nowrap"> 
+      <a class="navbar-brand"  href="${communitylink}/index.html" title="Open Institute">
+        <img src="$!{communitytag.externaldomain}/theme/images/oi-logo-w.png" alt="Open Institute" class="me-2" />
+      </a>
+      $pages.include("$apphome/components/quicksearch/navbar.html")	
+      <div class="d-flex"> 
+        <button class="d-block d-md-none navbar-toggler" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#drawerMenu" aria-controls="drawerMenu">
+          <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="d-none d-md-flex flex-grow-1 align-items-center">
+          <div class="navbar-nav flex-row gap-2">
+            <a class="lnk nav-link" href="${communitylink}/about/index.html">[[About]]</a>
+            <a class="lnk nav-link" href="${communitylink}/contact/contact.html">[[Contact]]</a>
+            #if(!$user) 
+              <a class="lnk nav-link" href="${communitylink}/authentication/login.html" title="[[Login]]">
+                [[Login]] <i class="fas fa-sign-in-alt ms-1"></i>
+              </a>
+            #end
+            <div class="dropdown nav-item">
+              #set( $currentlang = $mediaarchive.getData("locale",$context.language) )
+              <a class="dropdown-toggle nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                #if($currentlang)$currentlang.id #else $context.language#end
+              </a>
+              <ul class="dropdown-menu dropdown-menu-md-end">
+                #set( $localesearcher = $mediaarchive.getSearcher("locale") )
+                #set( $languages = $localesearcher.query().match("enabled", "true").search($context) )
+                #foreach( $lang in $languages)
+                <li class="dropdown-item">
+                  <a href="$home$apphome/components/languages/changelanguage.html?newlang=locale_$lang.id&origURL=#urlescape($context.getPathUrl())">$lang</a>
+                </li>
+                #end
+              </ul>
+            </div>
+            #if($user)
+              <a class="lnk nav-link" href="${communitylink}/authentication/logout.html" title="[[Logout]]">
+                <i class="fas fa-sign-out-alt"></i>
+              </a>
+            #end
+          </div>
+        </div>
+        <div class="offcanvas offcanvas-end d-flex d-md-none" tabindex="-1" id="drawerMenu"
+          aria-labelledby="drawerMenuLabel">
+          <div class="offcanvas-header">
+            <a href="/" class="me-4">
+              <img src="${communitylink}/theme/images/oi-logo-w.png" class="me-2" />
+            </a>
+            <button type="button" class="btn text-white" data-bs-dismiss="offcanvas" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="offcanvas-body"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+#end

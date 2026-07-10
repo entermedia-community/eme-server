@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties  beanname="dataSearcher"> 
+ 
+
+  <property id="id" index="true" filter="false" internalfield="true" editable="true" stored="true" sortable="true" keyword="false">Id
+    <name> 
+      <language id="de"><![CDATA[Id]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Id]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property> 
+    <property id="date" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="true" filter="false" multilanguage="false" deleted="false" datatype="date" autocreatefromexif="false" keyword="false" writenametoexif="false">New
+    <name>
+      <language id="en"><![CDATA[Date]]></language>
+    </name>
+  </property> 
+  
+    <property id="remoteuser" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="list" rendertype="list" required="false" filter="false" multilanguage="false" deleted="false" datatype="list" autocreatefromexif="false" keyword="false" writenametoexif="false">New
+    <name> 
+      <language id="en"><![CDATA[Remote User]]></language> 
+    </name> 
+  </property>  
+
+    <property id="ipaddress" index="true" editable="true" stored="true">
+    <name> 
+      <language id="en"><![CDATA[IP Address]]></language> 
+    </name> 
+  </property>
+  
+   <property id="referralurl" index="true" editable="true" stored="true">
+    <name> 
+      <language id="en"><![CDATA[Referral URL]]></language> 
+    </name> 
+  </property>    
+  
+  <property id="referralcode" index="true" editable="true" stored="true">
+    <name> 
+      <language id="en"><![CDATA[Referral Code]]></language> 
+    </name> 
+  </property>
+  
+    <property id="path" index="true" editable="true" stored="true">
+    <name> 
+      <language id="en"><![CDATA[Path]]></language> 
+    </name> 
+  </property>
+  
+    <property id="firsttrakedlink" required="true" 
+ 	index="true" stored="true" editable="true"  type="list" listid="collectivelinktracker" datatype="list"
+ 	 > 
+    <name> 
+      <language id="en"><![CDATA[First Page Link]]></language>  
+    </name> 
+  </property> 
+  
+    <property id="collectiveproject" required="true" 
+ 	index="true" stored="true" editable="true"  type="list"  datatype="list"
+ 	viewtype="collectionproject" searchcomponent="collectionproject" > 
+    <name> 
+      <language id="en"><![CDATA[Topic]]></language>  
+    </name> 
+  </property> 
+  
+      <property id="collectionid" index="true" filter="false" editable="true" stored="true" sortable="true" type="list" keyword="false" listid="librarycollection">
+    <name>
+      <language id="en"><![CDATA[Collection Id]]></language>
+    </name>
+  </property> 
+  
+
+  
+</properties>

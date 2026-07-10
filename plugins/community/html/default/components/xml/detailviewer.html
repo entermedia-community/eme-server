@@ -1,0 +1,8 @@
+#set( $xmledithome = $context.getPageProperty("xmledithome"))
+#set( $readonly = "true" )
+
+#ifnotnull($details)
+<div class="row g-0">
+$pages.include("$apphome/components/xml/detailviewersection.html", $context)
+</div>
+#end

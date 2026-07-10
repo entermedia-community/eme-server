@@ -1,0 +1,176 @@
+#set ($searchtype = $context.getRequestParameter('searchtype')) ##product
+#set ($fieldname = $context.getRequestParameter('fieldname')) ##lastmodified
+#set ($view = $context.getRequestParameter('view')) 
+
+<div class="row h-100 g-0">
+	<div class="col-7 h-100">
+	<div  style="padding:10px;">
+   	<div id="${detail.id}_map" align style="width: 100%; height:460px; margin-bottom: 15px;"></div>
+   	<p class="text-muted">[[Search for a location, drag the icon to the correct place and click the save button. Double left-click to zoom in, double right-click to zoom out]].</p>
+   	</div>
+   </div>
+	<div class="col-5">
+		<div class="assetpanel-editor">
+			<div class="tab-details h-100">
+			      <div style="padding: 10px 10px;">
+			        <input type="text" size="60" id="${detail.id}_address" class="form-control form-control-sm" placeholder="[[Search address or location]]"  />
+			        <input class="btn btn-sm  btn-accent" type="button" id="${detail.id}_search" value="[[Search]]"  />
+			      </div>
+			
+				   #set($latandlong = $data.getValue($detail.getId()))
+				   #set( $lat = $latandlong.getLatitude() )
+				   #set( $lng = $latandlong.getLongitude() )
+				   #set($icon = $mediaarchive.getData("geoicon", $data.geoicon))
+				   
+				   #set($latlng = "")
+				   #if ($lat && $lat != "" && $lng && $lng != "")
+				   	#set($latlng = "$lat,$lng")
+				   #end
+				   <h4>[[Position]]</h4>
+				   <div style="padding: 0 10px">
+					   	<label class="">[[Latitude, Longitude]]:</label>
+						<div class="emfield-default">
+							<input type="text" 
+									id="${detail.id}_latandlong" 
+									class="form-control" size="40" 
+									name="${detail.id}.value" 
+									value="$!latlng"/>
+						 </div>
+				   </div>
+				   #if( $caneditasset )
+			    		<div style="padding:10px 10px;">
+			    			<input class="btn  btn-sm btn-accent" type="submit" 
+			    				value="[[Save Values]]"/>
+			    		</div>
+		    		#end	
+			   </div>
+		   </div>
+	   </div>
+</div>
+   
+<script type="text/javascript">
+
+function getLatLngFromString(ll) {
+	if (typeof google !== 'undefined' && google.maps)
+	{
+	    var latlng = ll.split(/, ?/);
+	    return new google.maps.LatLng(parseFloat(latlng[0]), parseFloat(latlng[1]));
+	} 
+}
+
+
+
+
+initialize = async function() {
+	let map;
+	let geocoder;
+	let marker;
+
+	var parentheight = $(".assetpanel-geomap").height();
+	if (typeof parentheight !== 'undefined') {
+		var mapheight = (jQuery(".assetpanel-geomap").height()-110);
+		jQuery('#${detail.id}_map').height(mapheight);
+	}
+	#if($latandlong)
+	 var centerloc = getLatLngFromString('$lat,$lng');
+	#else
+	 var centerloc = getLatLngFromString('$mediaarchive.getCatalogSettingValue("startinglatlong")');
+	#end
+	
+	
+	map = new google.maps.Map(jQuery('#${detail.id}_map')[0], {
+	    #if( $latandlong )
+	    zoom: 8
+	    #else
+	    zoom: 2
+	    #end,
+	    center:centerloc,
+	    mapTypeControl: true,
+	    mapTypeControlOptions: {
+	      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+	      mapTypeIds: ['roadmap', 'terrain']
+	    }
+	  });
+	
+	  marker = new google.maps.Marker({
+			position: getLatLngFromString('$lat,$lng'),
+			draggable: true, 
+			bounds: true,
+	        map: map,
+		    #if($icon)
+			icon: '$icon.url',
+			#end
+	        title: '$asset.getName()'
+	     });
+	     
+	     
+	   google.maps.event.addListener(marker, 'dragend', function(event)
+		    {
+		    	console.log(marker.getPosition());
+	            jQuery('#${detail.id}_latandlong').val(marker.getPosition().lat()+ "," + marker.getPosition().lng());
+		});
+		
+		geocoder = new google.maps.Geocoder();
+	
+	
+		jQuery('#${detail.id}_search').click(function(){
+			var addressfield = $("#${detail.id}_address");
+			if (addressfield.val() != null && addressfield.val() != "")
+			{
+				geocode(map, marker, geocoder, { address: addressfield.val() });
+			}
+		});
+		
+		jQuery('#${detail.id}_address').keydown(function(e) {
+			if (e.keyCode == 13) {
+				e.preventDefault();
+				geocode(map, marker, geocoder, { address: $(this).val() });
+				
+			}
+		});
+		
+		
+}
+
+
+function geocode(map, marker, geocoder, request) {
+  
+  geocoder
+    .geocode(request)
+    .then((result) => {
+      const { results } = result;
+	  clear(marker);
+      map.setCenter(results[0].geometry.location);
+      marker.setPosition(results[0].geometry.location);
+      marker.setMap(map);
+      //mapDiv.style.display = "block";
+      //mapDiv.innerText = JSON.stringify(result, null, 2);
+	  var location = results[0].geometry.location;
+	  jQuery('#${detail.id}_latandlong').val(location.lat() + "," + location.lng());
+      return results;
+    })
+    .catch((e) => {
+      alert("Geocode was not successful for the following reason: " + e);
+    });
+	
+}
+
+function clear(marker) {
+  marker.setMap(null);
+}
+
+
+$(document).ready(function () {
+	if (typeof google !== 'undefined' && google.maps)
+	{
+		initialize(); //Onload?
+	}
+});
+
+$(window).resize(function() {
+	if (typeof google !== 'undefined' && typeof map !== 'undefined') {
+  		google.maps.event.trigger(map, "resize");
+	}
+});
+
+</script>

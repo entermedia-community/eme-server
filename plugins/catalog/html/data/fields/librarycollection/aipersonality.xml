@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <property id="aibasetone" editable="true" index="true" stored="true" datatype="list" listid="aibasetone" type="list">Base Style and Tone 
+    <name>
+      <language id="de"><![CDATA[Grundstil und Ton]]></language>
+      <language id="en"><![CDATA[Base Style and Tone]]></language>
+      <language id="es"><![CDATA[Estilo y tono base]]></language>
+      <language id="fr"><![CDATA[Style et ton de base]]></language>
+    </name>
+  </property>
+
+  <property id="aiwarmth" editable="true" index="true" stored="true" datatype="list" listid="aiwarmth" type="list">Warmth 
+    <name>
+      <language id="de"><![CDATA[Wärme]]></language>
+      <language id="en"><![CDATA[Warmth]]></language>
+      <language id="es"><![CDATA[Calidez]]></language>
+      <language id="fr"><![CDATA[Chaleur]]></language>
+    </name>
+  </property>
+
+  <property id="aienthusiasm" editable="true" index="true" stored="true" datatype="list" listid="aienthusiasm" type="list">Enthusiasm 
+    <name>
+      <language id="de"><![CDATA[Begeisterung]]></language>
+      <language id="en"><![CDATA[Enthusiasm]]></language>
+      <language id="es"><![CDATA[Entusiasmo]]></language>
+      <language id="fr"><![CDATA[Enthousiasme]]></language>
+    </name>
+  </property>
+
+  <property id="aiemojiusage" editable="true" index="true" stored="true" datatype="list" listid="aiemojiusage" type="list">Emoji Usage 
+    <name>
+      <language id="de"><![CDATA[Emoji-Verwendung]]></language>
+      <language id="en"><![CDATA[Emoji Usage]]></language>
+      <language id="es"><![CDATA[Uso de emojis]]></language>
+      <language id="fr"><![CDATA[Utilisation des emojis]]></language>
+    </name>
+  </property>
+
+  <property id="ailistusage" editable="true" index="true" stored="true" datatype="list" listid="ailistusage" type="list">List Usage 
+    <name>
+      <language id="de"><![CDATA[Listenverwendung]]></language>
+      <language id="en"><![CDATA[List Usage]]></language>
+      <language id="es"><![CDATA[Uso de listas]]></language>
+      <language id="fr"><![CDATA[Utilisation des listes]]></language>
+    </name>
+  </property>
+
+</properties>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher"> 
+ 
+ <property id="collectiveproject" required="true" 
+ 	index="true" stored="true" editable="true"  type="list"  datatype="list"
+ 	viewtype="collectionproject" searchcomponent="collectionproject" > 
+    <name> 
+      <language id="en"><![CDATA[Topic]]></language>  
+    </name> 
+  </property> 
+
+   	<property id="collectiveproduct" 
+		index="true" stored="true" editable="true" viewtype="list" type="list">
+		<name>
+			<language id="en"><![CDATA[Store Product]]></language>
+		</name>
+	</property>
+
+</properties>

@@ -1,0 +1,31 @@
+##opens an entity
+#set($entityid = $context.getRequestParameter('entityid'))
+#ifnull($entityid)
+#set($entityid = $openentityid)
+#end
+#ifnotnull($entityid)
+	##validate Entity
+	
+	#set($entity = $mediaarchive.getCachedData($module.getId(), $entityid))
+	#set($entitymoduleviewid = $context.getRequestParameter('entitymoduleviewid'))
+	
+	#ifnotnull($entity)	
+	<span class="autoopen no-toast"
+		data-dialogid="entitydialog"
+		data-entityid="$entityid" 
+		data-entitymoduleviewid="$!{entitymoduleviewid}" 
+		data-url="${apphome}/views/modules/${module.getId()}/editors/default/tabs/index.html"></span>
+	#end
+#end
+
+##opens an asset (only assets module?)
+#set($assetid = $context.getRequestParameter('assetid'))
+#set($opentab = $context.getRequestParameter('opentab'))
+#ifnotnull($assetid)
+<span class="autoopen no-toast"
+	data-assetid="$assetid" 
+	data-opentab="$!{opentab}" 
+	data-dialogid="mediaviewer"
+	data-edithome=""
+	data-url="${apphome}/views/modules/asset/mediaviewer/fullscreen/currentasset.html"></span>
+#end

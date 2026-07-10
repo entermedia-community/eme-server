@@ -1,0 +1,41 @@
+#set( $searcher = $mediaarchive.getSearcher("userpost") )
+$context.putPageValue("searcher",$searcher)
+$context.putPageValue("viewid", "userpostaddnew")
+
+<form name="savecommunityblog" 
+	id="savecommunityblog"
+	class="userpostform force-validate-inputs"
+	enctype="multipart/form-data"  
+	action="$apphome/project/channel/save.html" 
+	method="post">
+
+	<input type="hidden" name="save" value="true" />
+
+	<input type="hidden" name="field" value="librarycollection" />
+	<input type="hidden" name="librarycollection.value" value="$librarycol.id" />
+
+	<input type="hidden" name="field" value="poststatus" />
+	<input type="hidden" id="poststatus" name="poststatus.value" value="draft" />
+
+	##<input type="hidden" name="field" value="sourcepath" />
+	##<input type="hidden" id="poststatus" name="sourcepath.value" value="User Post/$!{librarycol.name}" />
+
+	<input type="hidden" name="collectionid" value="$librarycol.id" />
+
+	<input type="hidden" name="entitymoduleid" value="userpost" />
+
+	<input type="hidden" name="field" value="entitysourcetype" />
+	<input type="hidden" name="entitysourcetype.value" value="userpost" />
+	
+
+	$pages.include("/$applicationid/components/xml/detaileditorcss.html", $context)
+	
+	<div class="d-flex justify-content-between mt-4" style="margin-bottom: calc(1rem - 6px);">
+		<div class="d-flex">
+			<button class="btn btn-sm btn-primary me-3" id="savePublish" type="button" data-poststatus="readytopublish">[[Publish]]</button>
+			<button class="btn btn-sm btn-light me-3" id="saveDraft" type="button" data-poststatus="draft">[[Save as Draft]]</button>
+		</div>
+		<button class="btn btn-sm btn-secondary closemodal" data-dismiss="modal">[[Cancel]]</button>
+	</div>
+</form>
+

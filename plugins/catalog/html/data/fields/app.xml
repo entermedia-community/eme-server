@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="folderSearcher"> 
+  <property id="id" editable="true" stored="true" index="true">ID 
+    <name> 
+      <language id="de"><![CDATA[Ich würde]]></language>  
+      <language id="en"><![CDATA[ID]]></language>  
+      <language id="es"><![CDATA[identificación]]></language>  
+      <language id="fr"><![CDATA[ID]]></language> 
+    </name> 
+  </property>  
+  <property id="name" editable="true" stored="true" index="true">Name 
+    <name> 
+      <language id="de"><![CDATA[Name]]></language>  
+      <language id="en"><![CDATA[Name]]></language>  
+      <language id="es"><![CDATA[Nombre]]></language>  
+      <language id="fr"><![CDATA[Prénom]]></language> 
+    </name> 
+  </property>  
+  <property id="deploypath" editable="true" stored="true" index="true">Deploy Path
+    <name>
+      <language id="de"><![CDATA[bereitstellen Weg]]></language>
+      <language id="en"><![CDATA[Deploy Path]]></language>
+      <language id="es"><![CDATA[Ruta de montación]]></language>
+      <language id="fr"><![CDATA[Chemin de déploiement]]></language>
+    </name>
+  </property> 
+  
+    <property id="url" editable="true" stored="true" index="true">
+    <name>
+      <language id="en"><![CDATA[App Url]]></language>
+    </name>
+  </property> 
+  
+  <property id="ordering" type="number" editable="true" index="true" stored="true">Ordering
+    <name>
+      <language id="de"><![CDATA[Bestellung]]></language>
+      <language id="en"><![CDATA[Ordering]]></language>
+      <language id="es"><![CDATA[Ordenando]]></language>
+      <language id="fr"><![CDATA[Commande]]></language>
+    </name>
+  </property>
+
+
+  <property id="securityenabled" editable="true" internalfield="true" index="true" stored="true" type="boolean" > 
+    <name> 
+      <language id="en"><![CDATA[Security Enabled]]></language>  
+    </name> 
+  </property> 
+  
+  <property id="viewusers" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="user"     type="list">Users 
+    <name> 
+      <language id="de"><![CDATA[Benutzer]]></language>  
+      <language id="en"><![CDATA[Users]]></language>  
+      <language id="es"><![CDATA[usuarios]]></language>  
+      <language id="fr"><![CDATA[Utilisateurs]]></language> 
+    </name> 
+  </property>  
+  <property id="viewgroups" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="group"    type="list">Groups 
+    <name> 
+      <language id="de"><![CDATA[Gruppen]]></language>  
+      <language id="en"><![CDATA[Groups]]></language>  
+      <language id="es"><![CDATA[grupos]]></language>  
+      <language id="fr"><![CDATA[Groupes]]></language> 
+    </name> 
+  </property>  
+  <property id="viewroles" editable="true" index="true" stored="true" viewtype="multiselect" datatype="list" listid="settingsgroup"    type="list">Roles
+    <name>
+      <language id="de"><![CDATA[Rollen]]></language>
+      <language id="en"><![CDATA[Roles]]></language>
+      <language id="es"><![CDATA[Roles]]></language>
+      <language id="fr"><![CDATA[Rôles]]></language>
+    </name>
+  </property> 
+</properties>

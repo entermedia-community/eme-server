@@ -1,0 +1,12 @@
+<properties usagelabel="Active and completed conversions">
+	
+	<property id="submitteddate"/>
+	<property id="presetid"  />
+	<property id="status"/>
+	<property id="completed"/>
+	<property id="generatedoutputfile"  />
+	<property id="outputextension"  />
+	<property id="errordetails"/>
+	<property id="ordering"/>
+	
+</properties>

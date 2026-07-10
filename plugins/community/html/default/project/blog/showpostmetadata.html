@@ -1,0 +1,40 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="feedcard-author text-left">[[Published]] 
+		$context.getAge($upload.getDate("entity_date")) [[ago]]  [[by]]
+		#set( $postuser = $userManager.getUser($upload.owner, true)) 
+		<a class="" href='#urlescape("${apphome}/users/${postuser.getId()}/${postuser.getAnonNickName()}.html")'>$postuser.getAnonNickName()</a> |  
+		<a  class="emdialog feed-icon"  data-width="900" data-hidefooter="true" data-librarycol="${librarycol.getId()}" data-uploadid="${upload.id}" 
+    	 		href="$apphome/project/channel/share.html?collectionid=${librarycol.getId()}&showupload=$upload.id" title="[[Share Post]]"><i class="fas fa-share-alt"></i></a>
+    	 
+    	 	<a class="channelviewer  feed-icon"  data-librarycol="${librarycol.getId()}" data-uploadid="${upload.id}" 
+    	 		href="$apphome/project/channel/show/${librarycol.getId()}/index.html?showupload=${upload.id}" title="[[View Post]]"><i class="far fa-window-maximize"></i></a>
+		#if( $user )
+    	 	<a class="emdialog feed-icon" data-width="900" data-hidefooter="true"  data-collectionid="${librarycol.getId()}" data-uploadid="${upload.id}" 
+    	 		href="$apphome/project/channel/report/index.html?uploadid=${upload.id}" title="[[Report Content]]"><i class="far fa-flag"></i></a>
+    	#end	 
+		</div>
+		
+	</div>
+	<div class="col-md-6">
+		#if( $caneditcollection )
+			<a  class="emdialog  feed-icon float-right" style="margin-right:10px;" data-hidefooter="true" data-collectionid="${librarycol.getId()}" data-uploadid="${upload.id}" 
+    	 			href="$apphome/project/channel/editupload/edit.html" title="[[Edit Post]]" ><i class="fas fa-ellipsis-v"></i></a>
+		#end
+	#if(!$collectivehomepage)
+		#if($content.collectivesection !="channel")
+			#set($asset = false )
+			#if($librarycol.assetportrait)
+				#set($asset = $mediaarchive.getAsset($librarycol.assetportrait))
+				#set($link = $mediaarchive.asLinkToPreview($asset,"image200x200"))
+			#end
+
+		#end
+		#set($collurl = "$apphome/project/channel/"+$librarycol.id+"/"+$librarycol.getWebName()+".html")
+		##	<div class="feedcard-collective">
+		##		<a href="$collurl" class="collectivetag" title="$!librarycol.getName()">$!librarycol.getName()</a>
+		##		## #if( $asset) <img src="$link" style='height:30px;'/>#end 
+		##	</div>
+	#end
+   </div>
+</div>

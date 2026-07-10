@@ -1,0 +1,62 @@
+<div class="chat-msg-listattachments">
+$context.putPageValue("thumbsize", "small")
+#if($otherassets.size() > 1)
+	$context.putPageValue("thumbsize", "crop")
+#end
+
+
+
+#set($convertpreset = $mediaarchive.getCachedData("convertpreset", "largeimage" ) )
+#ifnull($convertpreset)
+	#set($convertpreset = $mediaarchive.getCachedData("convertpreset", "webplargeimage" ) )
+#end
+$context.putPageValue("convertpreset", $convertpreset)
+
+
+#foreach($entry in $otherassets)
+	$context.putPageValue("value", $entry.id)
+	#set($rendertype = $mediaarchive.getMediaRenderType($entry.fileformat))
+	#if(!$rendertype || $type =="rendertype")
+		#set( $rendertype = "mime" )
+	#end
+	
+	$context.putPageValue("rendertype", $rendertype)
+	
+	<div id="${entry.id}-preview" 
+		class="chat-msg-attachments-asset position-relative asset-rendertype-${rendertype}">
+		$context.putPageValue("asset", $entry)
+		
+		
+		#set($searchhome = "${apphome}/views/modules/asset/results/chatterbox")
+		$context.putPageValue("searchhome", $searchhome) 
+		
+		#if($caneditcollection)
+			$context.putPageValue("download_enabled", "true")
+		#end 
+		#if($canviewsettings)
+			$context.putPageValue("assetlink_enabled", "true")
+		#end
+		
+		$pages.include("${searchhome}/thumbnails/${rendertype}.html?assetid=${entry.id}", $context)
+ 
+		#if($chat.user == $user.id || $caneditcollection)
+		<a href="${chatterboxhome}/attachmentremove.html" 
+			class="removefieldassetvalue confirm ajax"
+			title="[[Remove This Asset]]" 
+			data-targetdiv="chatter-message-${chat.id}"
+			data-assetid="${entry.id}"
+			data-messageid="${chat.id}"
+			data-id="${chat.id}"
+			data-confirm="[[Remove the attachment?]]"
+			#ifnotnull($entity)data-entityid="$!entity.id"#end
+			#ifnotnull($collectionid)data-collectionid="$!collectionid"#end  
+			><i class="bi bi-x-lg ns"></i></a>
+		#end
+
+		<a href="#" class="downloadfieldassetvalue">
+			<i class="bi bi-arrow-down ns"></i>
+		</a> 
+	</div>
+#end
+</div>
+

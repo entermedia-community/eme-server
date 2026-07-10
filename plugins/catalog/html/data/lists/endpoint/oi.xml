@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+
+  <data id="modulelibrarycollectionfeed" uploadfile="false" httpmethod="POST" docsection="modulelibrarycollection" url="/site/mediadb/services/feed/channelfeed.json"> 
+    <samplerequest><![CDATA[{ "collectionid": "AX7gTBpbekpQ63X1oUTz","page": "1", "hitsperpage":"10", "query": { "terms":[{ "field": "description", "operator": "freeform", "value": "test" }] } }]]></samplerequest>  
+    <name><![CDATA[Project Feed]]></name> 
+  </data>  
+  <data id="moduleuseruploadfinish" uploadfile="false" httpmethod="POST" docsection="moduleuserupload" url="/site/mediadb/services/module/userupload/uploadfinish.json"> 
+    <samplerequest><![CDATA[{ "librarycollection": "AYGOFauOefS9P58F9LdN",
+    "sourcepath":"Collections/ProjectABC/Topic123/2022/12-23_32/",
+    "title":"Test Title","longdescription":"More text",
+    "usertags":["one","two"], 
+    "collectiveproject":"AYGOFazsefS9P58F9LdQ","exclusivecontent":"false"}]]></samplerequest>
+    <name><![CDATA[Feed Upload Finish]]></name> 
+  </data>  
+
+  <data id="moduleuseruploadreport" uploadfile="false" httpmethod="POST" docsection="moduleuserupload" url="/site/mediadb/services/module/userupload/report.json"> 
+    <samplerequest><![CDATA[{ 
+    "id":"Ardcw23wf34232s",
+    "reportedby.add":"admin",
+    "reportedby.remove":"admin"
+    }
+    ]]>
+    </samplerequest>
+    <name><![CDATA[Report Content]]></name> 
+  </data>  
+
+  <data id="modulelibrarycollectioncreate" uploadfile="false" httpmethod="POST" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/create"> 
+    <samplerequest><![CDATA[{ "name": "JSON Projects Test" }]]></samplerequest>  
+    <name><![CDATA[Create a new Project]]></name> 
+  </data>  
+  <data id="modulelibrarycollectiondelete" uploadfile="false" httpmethod="DELETE" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/data/101"> 
+    <name><![CDATA[Delete Data]]></name> 
+  </data>  
+  <data id="modulelibrarycollectionretrieve" uploadfile="false" httpmethod="GET" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/data/101"> 
+    <name><![CDATA[Load Data ]]></name> 
+  </data>  
+  <data id="modulelibrarycollectionsearch" uploadfile="false" httpmethod="POST" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/search"> 
+    <samplerequest><![CDATA[{ "page": "1", "hitsperpage":"20", "query": { "terms":[{ "field": "id", "operator": "matches", "value": "*" }] } }]]></samplerequest>  
+    <name><![CDATA[Search for Projects]]></name> 
+  </data>  
+  <data id="modulelibrarycollectionupdate" uploadfile="false" httpmethod="PUT" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/data/101"> 
+    <samplerequest><![CDATA[{ "name": "JSON NAME CHANGE" }]]></samplerequest>  
+    <name><![CDATA[Update Data]]></name> 
+  </data>  
+
+  <data id="modulelibrarycollectionsearchassets" uploadfile="false" httpmethod="PUT" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/searchassets"> 
+    <samplerequest><![CDATA[{ "collectionid": "AX7gTBpbekpQ63X1oUTz" }]]></samplerequest>  
+    <name><![CDATA[Search Assets]]></name> 
+  </data>  
+
+  <data id="modulelibrarycollectionviewprojects" uploadfile="false" httpmethod="GET" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/viewprojects"> 
+    <name><![CDATA[View Projects Of User]]></name> 
+  </data>  
+
+  <data id="modulelibrarycollectionviewmessages" uploadfile="false" httpmethod="PUT" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/viewmessages"> 
+    <samplerequest><![CDATA[{ "collectionid": "AX7gTBpbekpQ63X1oUTz" }]]></samplerequest>  
+    <name><![CDATA[View Messages For Project]]></name> 
+  </data>  
+
+  <data id="modulelibrarycollectionviewtopmessages" uploadfile="false" httpmethod="PUT" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/viewtopmessages"> 
+    <samplerequest><![CDATA[{ "userid": "admin" }]]></samplerequest>  
+    <name><![CDATA[View Top Messages By Project]]></name> 
+  </data>  
+
+
+  <data id="modulelibrarycollectionsavemessage" uploadfile="false" httpmethod="PUT" docsection="modulelibrarycollection" url="/site/mediadb/services/module/librarycollection/messagesave"> 
+    <samplerequest><![CDATA[{  "collectionid": "AX7gTBpbekpQ63X1oUTz", "channel":"AX7gTB36ekpQ63X1oUT4", "message":"Hello world!" }]]></samplerequest>  
+    <name><![CDATA[Message Save]]></name> 
+  </data>  
+
+
+  <data id="moduleuserretrieve" uploadfile="false" httpmethod="GET" docsection="moduleuser" url="/site/mediadb/services/module/user/data/admin">      
+    <name><![CDATA[Load User Profile]]></name> 
+  </data>  
+
+  <data id="moduleprojectgoalmytasks" uploadfile="false" httpmethod="POST" docsection="moduleprojectgoal" url="/site/mediadb/services/module/projectgoal/mytasks.json?userid=admin">      
+    <samplerequest><![CDATA[{  "userid": "admin" }]]></samplerequest>  
+    <name><![CDATA[My Tasks]]></name> 
+  </data>  
+
+  <data id="moduleuserprofileblock" uploadfile="false" httpmethod="POST" docsection="moduleuserprofile" url="/site/mediadb/services/module/userprofile/block.json">
+    <samplerequest><![CDATA[{  "field": "blockedusers","profilepreference.value":"101" }]]></samplerequest>  
+    <name><![CDATA[Toggle Block]]></name> 
+  </data>  
+
+  <data id="moduleuserprofiledeleteall" uploadfile="false" httpmethod="POST" docsection="moduleuserprofile" url="/site/mediadb/services/module/userprofile/deleteall.json">
+    <samplerequest><![CDATA[{  "userid": "101" }]]></samplerequest>  
+    <name><![CDATA[Delete All User Data]]></name> 
+  </data>  
+
+  <data id="modulecollectiveexpensecreatewithupload" filefieldstoupload="receiptattachment"
+   httpmethod="POST" docsection="modulecollectiveexpense" url="/site/mediadb/services/module/collectiveexpense/create.json"> 
+    <samplerequest><![CDATA[{ 
+    "collectionid": "AYGOFauOefS9P58F9LdN",
+    "name":"Exmple REST Expense",
+    "expensedescription":"More text",
+    "currencytype":"1",
+    "total":"1.23",
+    "collectiveproject":"AYGOFazsefS9P58F9LdQ"
+    }]]></samplerequest>
+    <name><![CDATA[Create With Attachment]]></name> 
+  </data>  
+  <data id="modulechatterboxreactioncreate" uploadfile="false" httpmethod="POST" docsection="modulechatterboxreaction" 
+  url="/site/mediadb/services/module/chatterboxreaction/create"> 
+    <samplerequest><![CDATA[{
+  "name": "1f600",
+"messageid":"AYepPiqjMR3Z0acSZT2L",
+"user":"admin"
+}]]></samplerequest>  
+    <name><![CDATA[Create a new Reaction]]></name> 
+  </data>  
+
+  <data id="modulelibrarycollectionreaction" uploadfile="false" httpmethod="POST" docsection="modulelibrarycollection" 
+  url="/site/mediadb/services/module/librarycollection/messagereaction.json">
+    <samplerequest><![CDATA[{ "messageid":"321122", "reactioncharacter": "1F44D","userid": "admin" }]]></samplerequest>  
+    <name><![CDATA[Toggle Emoticon]]></name> 
+  </data>  
+
+
+
+
+</root>

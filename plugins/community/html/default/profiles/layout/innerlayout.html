@@ -1,0 +1,23 @@
+#set($collectivesection = $content.collectivesection)
+
+<section class="mainsection mainsection-project" id="projectmainsection">
+	<div class="container pt-3">
+		## $pages.include("${apphome}/project/layout/project-header.html",$context)
+		<div class="community-layout"> 
+	
+			<div id="maincontent" class="main-content bg-white shadow-sm">
+					$pages.includeContent()	
+			</div>
+			
+			#if($collectivesection != "settings" && $collectivesection != "finances")
+			<div class="sidebar-right">
+				
+				$pages.include("${apphome}/project/layout/sidebar-right.html",$context)
+				
+			</div>
+			#end
+			<div id="community-drawer-mask" class="community-drawer-close" role="button" style="display: none;"></div>
+		</div>
+	</div>
+</section>
+

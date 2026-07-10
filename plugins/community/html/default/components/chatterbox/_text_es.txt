@@ -1,0 +1,19 @@
+#
+#Fri Jul 03 16:16:55 CST 2026
+Attachments=Archivos adjuntos
+Cancel\ Reply=Cancelar respuesta
+Edit\ Message=Editar mensaje
+Emoji=Emoji
+Flag\ as\ Goal=Marcar como gol
+Make\ Agenda=Hacer agenda
+Make\ Priority\ Actions=Realice las acciones prioritarias
+Message=Mensaje
+Next=Pr\u00F3ximo
+Page=P\u00E1gina
+Previous=Anterior
+Processing=Tratamiento
+Remove\ This\ Asset=Eliminar este activo
+Reply=Responder
+Replying\ to=Respondiendo a
+Send=Enviar
+of=de

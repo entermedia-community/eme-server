@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+    <data ordering="10" id="base001" showonall="true" >
+   <name>
+      <language id="en"><![CDATA[Published]]></language>
+    </name>
+  </data> 
+
+   
+  <data ordering="30" id="base002" showonall="true" moduleicon="transparency">
+   <name>
+      <language id="en"><![CDATA[In Progress]]></language>
+    </name>
+  </data>
+
+  
+  <data ordering="40" id="base003" showonall="true"  moduleicon="heart-half">
+   <name>
+      <language id="en"><![CDATA[Select Media]]></language>
+    </name>
+  </data>  
+
+    
+</root>

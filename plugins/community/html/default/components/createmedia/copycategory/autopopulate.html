@@ -1,0 +1,84 @@
+<div id="autopopulate">
+#set($id = $context.getRequestParameter("id"))
+
+<div class="p-2"><strong>[[Searching for]]: $id</strong></div>
+<ul id="cat-list" class="list-group list-group-striped list-group-hover autopopulate-list">
+
+			<li class="d-flex collectionBox  " >
+							
+				
+				#if($foundcategories || $assets)			
+				<div class="">
+					<input type="checkbox" id="select-all" class="select-all me-2" />
+					<label for="select-all">[[Select All]]</label>  
+				</div>
+				#else
+					[[No results]]
+				#end
+			</li>
+
+
+		#foreach($categoryid in $foundcategories)
+			#set($category  = $mediaarchive.getCategory($categoryid))
+
+			<li id="auto-${categoryid}" class="d-flex collectionBox" data-nodeid="$categoryid" data-categoryname="$category.getName()">
+				
+				<div class="me-2">
+					<input type="checkbox" id="categoryvalues" class="collection-list" name="categoryid" value="$categoryid" />
+				</div>
+				<a class="category ajax" 
+					title="$category.getCategoryPath()" 
+					data-targetdiv="applicationcontent"
+					data-oemaxlevel="5"
+					data-scrolltocat="true"
+					data-updateurl="true"
+					data-closedialog="true"
+					href="$home$apphome/views/modules/asset/editors/viewfilescategory/${category.id}/#dash($category).html" >$category.getCategoryPath() </a>
+			</li>
+	#end
+
+#foreach($asset in $assets)
+	<li id="auto-${asset.id}" class="d-flex collectionBox">
+
+		#set ($mimeicon = $mediaarchive.getMimeTypeIcon($asset.fileformat))
+				
+			<div class="me-2">
+				<input type="checkbox" id="assetvalues" class="collection-list" name="assetid" value="$asset.id" />
+			</div>
+
+			<div class="me-1">
+	
+				<i class="bi bi-$!{mimeicon} module-icon" style="font-size:1em;line-height:1;opacity:0.85;"></i>
+			</div>
+			<div>
+				<a class="stackedplayer" data-assetid="$asset.id"title="$asset.name" href="#" >
+					$asset.sourcepath $asset.name
+				</a>
+			</div>	
+			
+			#if($candownload && $canquickdownload)
+										
+				#set($dlink =  "$!{applink}/views/modules/asset/activity/downloadassets.html")
+			   	<a href="$dlink" class="emdialog ms-auto me-1" data-dialogid="downloaddialog"  data-assetid="$asset.id" data-hidefooter="true" title="[[Download]] $!asset.name">
+				<i class="bi bi-cloud-arrow-down bi2"></i></a>
+						    
+			#end
+
+				
+			</li>
+		#end	
+</ul>
+<div class="clearfix"></div>
+</div>
+   
+   <script type="text/javascript">
+   jQuery("#select-all").on("click", function () {
+		if(jQuery(this).is(":checked")){
+			jQuery(".collection-list").prop('checked', true);
+		} else{
+			jQuery(".collection-list").prop('checked', false);
+		}
+	   
+	} );
+   
+   </script>

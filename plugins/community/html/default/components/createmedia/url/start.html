@@ -1,0 +1,52 @@
+<div id="urlimport">
+<div class="tabheader">[[Add Remote Media]]</div>
+<div class="mt-4 px-3 w-80 d-flex flex-column">
+	#set( $categoryid = $context.getRequestParameter("categoryid") )
+	
+	#ifnotnull($asset)
+	<a href="#" class="stackedplayer btn btn-cta" style="max-width:250px;" data-assetid="$asset.id">[[Media Imported]]:  $asset.getName()</a>
+	
+	<hr />
+	<h3>[[Import Another]]</h3>
+	#end
+	
+	<p>
+		[[Fetch an external asset by its publicly accessible URL or embed code (may not be protected by a login)]].
+		
+	</p>
+
+	<form  method="post" class="ajaxform" data-targetdiv="urlimport" action="$home$apphome/components/createmedia/url/createnew.html">
+		
+		<input type="hidden" name="categoryid" value="$categoryid"/>
+		<input type="hidden" name="category.value" value="$categoryid"/>
+		
+		<div id="eml-tab-green-container" class="clearfix">
+			<div class="inner-content">
+				<div class="mb-2">
+					<span class="emdatafield">
+							[[Media URL Address]]:
+					</span>
+					<div id="detail_embeddedurl" class="emdatafieldvalue ">
+						<div class="emfield-textarea">
+							<textarea name="externalmediainput" id="externalmediainput" class="form-control required" placeholder="[[Enter URL]]" type="text" value="" rows="1"></textarea>
+						</div>
+						<span class="detail-note">[[URL to external asset or YouTube/Vimeo link]]<span></span></span>
+					</div>
+				</div>
+				
+				$context.putPageValue("searcher",$mediaarchive.getAssetSearcher() )	
+				$context.putPageValue("viewid","assetcreatenewurl")	
+				$pages.include("/$applicationid/components/xml/detaileditorcss.html", $context)
+			
+				<div class="w-100 ">
+					<button class="btn btn-cta upload-btn" type="submit" id="finishbutton">
+						<i class="bi bi-box-arrow-in-down rr me-1" ></i>
+						[[Import URL]]
+					</button>
+				</div>
+				<div id="addedcomplete"></div>
+			</div>
+		</div>
+	</form>
+</div>
+</div>

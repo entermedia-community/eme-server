@@ -1,0 +1,9 @@
+#ifnotnull($value)
+#set($dmax = 150)
+#if( $value.length() > $dmax)
+	<span class="trim-text" data-max="$dmax" style="white-space: pre-wrap; ">#esc($value)</span>
+	<button class="see-more-btn see-more" data-seemore="(...[[see more]])" data-seeless="(...[[see less]])"></button>
+#else
+	#escarea($!value)	
+#end
+#end

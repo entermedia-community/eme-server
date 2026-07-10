@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher"> 
+  <property id="id" index="true" stored="true" editable="true" internalfield="true"  >Id 
+    <name> 
+      <language id="de"><![CDATA[Ich würde]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Carné de identidad]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property>  
+  <property id="name" index="true" stored="true" editable="true" keyword="true"  rendermask="${samplecount}" > 
+    <name> 
+      <language id="en"><![CDATA[Name]]></language>  
+    </name> 
+  </property>  
+  <property id="creationdate" index="true" stored="true" editable="true"  type="date" datatype="date" >
+    <name> 
+      <language id="de"><![CDATA[Erstellungsdatum]]></language>  
+      <language id="en"><![CDATA[Created Date]]></language>  
+      <language id="es"><![CDATA[Fecha de creación]]></language>  
+      <language id="fr"><![CDATA[Date de création]]></language> 
+    </name> 
+  </property>  
+
+  <property id="primaryimage" index="true" stored="true" editable="true" type="list" viewtype="faceprofilebox" listid="asset" internalfield="false" datatype="list" sourcepath="entities/${id}">
+   	<name>
+   		<language id="en"><![CDATA[Primary Image]]></language>
+   	</name>
+   </property>
+
+  <property id="automatictagging"  index="true" datatype="boolean"  editable="true" >
+    <name> 
+      <language id="en"><![CDATA[Automaticaly Tagged]]></language>  
+    </name> 
+  </property>  
+  
+  <property id="taggedby" index="true" viewtype="user" type="list" listcatalogid="system" listid="user" filter="true"  keyword="true" stored="true" editable="true" >Owner 
+    <name> 
+      <language id="en"><![CDATA[Tagged By]]></language>  
+    </name> 
+  </property> 
+
+  <property id="notes" editable="true" index="true" stored="true"> 
+    <name> 
+      <language id="de"><![CDATA[Notizen]]></language>  
+      <language id="en"><![CDATA[Notes]]></language>  
+      <language id="es"><![CDATA[notas]]></language>  
+      <language id="fr"><![CDATA[Remarques]]></language> 
+    </name> 
+  </property>  
+
+ 	<property id="entitysourcetype" index="true" stored="true" type="list" listid="module"  editable="true" keyword="true" filter="true">
+	  <name>
+	    <language id="en" > <![CDATA[Entity Source Type]]> </language>
+	  </name>
+	</property>
+
+  <property id="facecounter"  editable="false" index="true" stored="true" datatype="number" autoincrement="true" indextype="not_analyzed" >
+    <name>
+      <language id="en"><![CDATA[Profile Id]]></language>
+    </name>
+  </property> 
+
+  <property id="samplecount"  editable="false" index="true" stored="true" datatype="number" indextype="not_analyzed" >
+    <name>
+      <language id="en"><![CDATA[Counter]]></language>
+    </name>
+  </property> 
+  
+   <property id="hitscount"  editable="false" index="true" stored="true" datatype="number" indextype="not_analyzed" >
+    <name>
+      <language id="en"><![CDATA[Hits Counter]]></language>
+    </name>
+  </property> 
+  
+   	<property id="faceprofilestatus" index="true" stored="true" type="list" viewtype="multiselect"  listid="faceprofilestatus"  editable="true">
+	  <name>
+	    <language id="en" ><![CDATA[Profile Status]]></language>
+	  </name>
+	</property>
+
+  <property id="description" defaultoperation="freeform" index="true"   stored="true"  editable="false">All Fields 
+    <name> 
+      <language id="de"><![CDATA[All Fields]]></language>  
+      <language id="en"><![CDATA[All Fields]]></language>  
+      <language id="es"><![CDATA[Todos]]></language>  
+      <language id="fr"><![CDATA[Tous les champs]]></language> 
+    </name> 
+  </property> 
+  
+   <property id="keywords" viewtype="tageditor" keyword="true" defaultoperation="andgroup" index="true" stored="true" 
+  		editable="true"  filter="true"  >Tags 
+    <name> 
+      <language id="de"><![CDATA[Tags]]></language>  
+      <language id="en"><![CDATA[Tags]]></language>  
+      <language id="es"><![CDATA[Etiquetas]]></language>  
+      <language id="fr"><![CDATA[Tags]]></language> 
+    </name> 
+  </property>  
+  
+    <property id="entity_date" index="true" stored="true" editable="true" keyword="true" datatype="date" viewtype="date">  <!-- not really a filter -->
+	  <name>
+	    <language id="en" > <![CDATA[Date]]> </language>
+	  </name>
+	</property>
+
+	<property id="entityresourceURL" index="true" stored="true" editable="true" keyword="true">
+	  <name>
+	    <language id="en" > <![CDATA[resourceURL]]> </language>
+	  </name>
+	</property>
+	
+	<property id="entityperson" index="true" stored="true" editable="true" keyword="true" datatype="list" rendertype="entity">
+	  <name>
+	    <language id="en" > <![CDATA[Person]]> </language>
+	  </name>
+	</property>
+ 
+</properties>

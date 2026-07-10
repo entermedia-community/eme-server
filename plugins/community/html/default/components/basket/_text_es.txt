@@ -1,0 +1,7 @@
+#
+#Fri Jul 03 16:15:46 CST 2026
+Cart\ is\ Empty=El carrito est\u00E1 vac\u00EDo
+Pending\ Orders=\u00D3rdenes pendientes
+asset=activo
+assets=Activos
+in\ Cart=En el carrito

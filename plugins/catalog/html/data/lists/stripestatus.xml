@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="disabled"> 
+    <name> 
+      <language id="en"><![CDATA[Not Enabled]]></language> 
+    </name> 
+  </data>  
+  <data id="live"> 
+    <name> 
+      <language id="en"><![CDATA[Live - Production Mode]]></language> 
+    </name> 
+  </data>  
+  <data id="global"> 
+    <name> 
+      <language id="en"><![CDATA[Global Settings]]></language>
+    </name> 
+  </data>  
+    
+</root>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  
+  <property id="invoicelogo"/>
+  
+  <property id="invoicebusinessinfo"/>
+
+  <property id="invoiceemailheader"/>  
+  <property id="invoiceemailfooter"/>
+  
+   <property id="invoicepaidemail"/>
+   
+ 
+</properties>

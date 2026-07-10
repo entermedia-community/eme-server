@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+	<inner-layout>/${applicationid}/project/layout/innerlayout.html</inner-layout>
+	<property name="collectivesection">blog</property>
+	<path-action name="ProjectModule.loadCollection"></path-action>
+	<property name="module">librarycollection</property>
+
+	<property name="menu_referrals">false</property>
+	<property name="menu_files">true</property>
+	<property name="menu_store">false</property>
+
+	<page-loader loader="projectLoader" />
+
+	<script id="stripe" src="https://js.stripe.com/basil/stripe.js" />
+
+	<script id="dragdrop" src="/${applicationid}/components/javascript/emedia/dragdrop.js" defer="true" />
+	<style id="tasks" href="/${applicationid}/theme/styles/pages/results.css" />
+
+</page>

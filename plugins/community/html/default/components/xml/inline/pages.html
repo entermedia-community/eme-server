@@ -1,0 +1,42 @@
+#if( $hits && $hits.getTotalPages() >  1  )
+#set($thispage = $hits.getPage())
+
+<nav aria-label="Page navigation example" class="table-pagination">
+  <ul class="pagination">
+			#if( $hits.prevPage() )
+				<li class="page-item" ><a class="page-link changepage" data-page="$hits.prevPage()" href="#" title="Previous ( alt p enter)" accesskey="p" > < </a></li>
+			#end
+			#set( $befores = $hits.linksBefore() )					
+			#if($befores.size()!=0)
+			  #if($befores.get(0)>1)
+				<li class="page-item"><a  class="page-link changepage" href="#" >1</a></li>	
+			    <li class="page-item">...</li>
+			   #end
+			#end
+			#set( $afters = $hits.linksAfter() )
+			#foreach( $before in $befores )
+				<li class="page-item"><a  class="page-link changepage" href="#" data-page="$before" >$before</a></li>		
+			#end
+			<li class="page-item" ><a  class="page-link active changepage" href="#" data-page="$thispage" >$!thispage</a></li>
+			#foreach( $after in $afters )
+				<li class="page-item"><a  class="page-link changepage" href="#"  data-page="$after">$after</a></li>		
+			#end
+			#set($size=${afters.size()})
+			#set( $size = $size - 1 )
+			#if($size>0  )
+				#if ($afters.get($size)< $hits.getTotalPages() )
+					<li class="page-item">...</li>
+					#if($hits.size() < 9999)
+                                         <li class="page-item" ><a class="page-link changepage"  data-page="$hits.getTotalPages()" >$hits.getTotalPages()</a></li>	
+                                        #end
+				#end
+			#end
+			#if ( $hits.nextPage() )
+				<li class="page-item" ><a  class="page-link changepage" data-page="$hits.nextPage()" title="Next (alt n enter)" accesskey="n">></a></li>
+			#end
+		</ul>
+</nav>
+
+#end
+
+

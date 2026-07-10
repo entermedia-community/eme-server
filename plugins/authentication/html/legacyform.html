@@ -1,0 +1,102 @@
+#set($loginokpage = $context.getRequestParameter("loginokpage") )
+#if(!$loginokpage)
+	#set($loginokpage = $context.findValue("loginokpage") )
+#end 
+#if(!$loginokpage)
+	#set($loginokpage = $context.getSessionValue("fullOriginalEntryPage") )
+#end 
+$context.putSessionValue("fullOriginalEntryPage", $!loginokpage)
+
+#set($targetdiv = $context.getRequestParameter("targetdiv") )
+#if(!$targetdiv)
+	#set($targetdiv = $context.findValue("targetdiv") )
+#end
+
+#set($providers = $mediaarchive.query("oauthprovider").exact("enabled","true").search())
+#set( $allowguestregistration = $context.findValue("allowguestregistration") )
+
+#set($allowloginbyemail = $mediaarchive.getCatalogSettingValue("allowloginbyemail") )
+
+
+<div id="ajaxlogincontainer">
+	<div class="loginbox card">
+		<div id="ajaxloginstep1" class="step">
+			<div class="step-dots">
+				<div class="dot active"></div>
+				<div class="dot"></div>
+			</div>
+      <a class="ajax d-block mb-3" href="$!{home}${content.loginroot}/loginform.html" data-targetdiv="ajaxlogincontainer">
+				<i class="fas fa-chevron-left me-1"></i>
+				[[Back]]
+			</a>
+			#if( $allowguestregistration == "true")
+				<h1>[[Sign in / Sign up]]</h1>
+			#else
+				<h1>[[Sign in]]</h1>
+			#end
+			
+			<p class="subtitle">
+				#set($customloginmessage = $mediaarchive.getCatalogSettingValue("customloginmessage") )
+				#ifnotnull($customloginmessage)
+					$customloginmessage
+				#end
+				#ifnull($customloginmessage)
+					Enter your email and we'll send a one-time code.
+				#end
+			</p>
+			
+			<form action="$home$content.loginroot/login.html" id="login" name="login"  method="POST" onsubmit="return confirmPassword(this);" rel="nofollow">
+				#ifnotnull( $userCategory)
+					<input type="hidden" name="categoryid" value="$!userCategory.id" />
+				#end
+				
+				<label for="loginemail">[[Email or Username]]</label>
+				<input
+					id="loginemail"
+					type="text"
+					name="accountname"
+					placeholder="[[Enter your email address or username]]"
+					class="form-control required grabfocus mb-3"
+					autocomplete="username"
+				/>
+
+        <label for="password">[[Password]]</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          placeholder="[[Enter your password]]"
+          class="form-control required"
+          autocomplete="current-password"
+        />
+
+        #if($mediaarchive.isCatalogSettingTrue("twofactorauthentication"))
+          <label for="googleauth">[[Two Factor Authenticator Code]]</label>
+          <input type="hidden" name="field" value="googlekeystring"/> 
+          <input 
+            id="googleauth"
+            type="text"
+            name="googlekeystring.value"
+            class="form-control required"
+            placeholder="[[Enter your two factor authenticator code]]"
+          /> 
+          <a href="$home$content.loginroot/getkey.html" class="my-1 d-block">[[If you haven't yet generated a two factor key, click here]]</a>
+        #end
+
+				#set( $error = $context.getPageValue("oe-exception") )
+				#if ( $error ) 
+					<div class="alert alert-danger w-100 mt-3 mb-0 p-2" role="alert">
+						<i class="fas fa-exclamation-triangle me-1"></i>
+						$error
+					</div>
+					$context.removeSessionValue("oe-exception")
+				#end
+
+				<button class="btn-primary mt-3" id="nextBtn" type="submit">Next</button>
+				<input type="hidden" name="subject" value="[[Your Login Info]]"/>
+			</form>
+		</div>
+    $pages.include("$home$content.loginroot/sociallogin.html", $context)
+    $pages.include("$home$content.loginroot/loginhelp.html", $context)
+	</div>
+</div>

@@ -1,0 +1,5 @@
+<page>
+	<page-action name="Script.run">
+		<script>./save.groovy</script>
+	</page-action>
+</page>

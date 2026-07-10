@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties >
+	<property id="paymentdate"  />
+	<property id="expensedescription" />
+	<property id="currencytype" />
+	<property id="total" />
+	<property id="receiptattachment" />
+	<property id="user" />
+   	<property id="ispaid" />
+   	<property id="paymentdescription" />  
+	<property id="paidfromaccount" />
+   	<property id="reimburseuser" />  
+      <property id="reimbursedate" /> 
+  
+  
+</properties>

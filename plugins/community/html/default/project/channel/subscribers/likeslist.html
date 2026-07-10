@@ -1,0 +1,43 @@
+#set( $searcher = $mediaarchive.getSearcher("librarycollectionlikes") )
+#set( $subs = $searcher.query().exact("collectionid",$librarycol.getId()).hitsPerPage(30).search($context))
+<div id="collectiveteamlist"> 
+	#if( $subs.isEmpty()) 
+		<p>[[No Likes yet]]</p>
+	#else
+	<table class="table table-striped table-hover table-subscribers">
+   		<thead>
+			<tr class="tableheader">
+				<th>[[User]]</th>
+				<th>[[Added]]</th>
+				<th></th>
+			</tr>
+   		</thead>
+		  #foreach( $hit in $subs)
+		    	#set( $followeruser = $mediaarchive.getUser($hit.followeruser) )
+		  		#if($followeruser)
+			        <tr>
+						
+					    #set( $userlink = "${communitylink}/users/index.html?id=$followeruser.id")
+						#set( $userimageurl = $mediaarchive.asLinkToUserProfile($followeruser) )
+						#if(!$userimageurl)
+							#set( $userimageurl = "${communitylink}/theme/images/user.svg" )
+						#end
+			        	<td>
+							<a href="#esc($userlink)" title="$!followeruser.getAnonNickName()  $!followeruser.getEmail()">
+							<img src="${userimageurl}"  alt="$!followeruser.getAnonNickName()  $!followeruser.getEmail()" class="img-fluid align-middle usericon"> <span class="username">$followeruser.getAnonNickName()</span>
+							</a>
+						</td> 
+			        	<td><span class="usernote">#if ($hit.getValue("addeddate")) $context.getDateTime( $hit.getValue("addeddate") )</span> #end</td>
+			        	
+			       		
+			        	<td class="text-right">
+							#if( $caneditcollection )
+							
+			        		#end
+			        	</td>        	
+			        </tr>
+		  #end
+		  #end
+	  </table>
+#end
+</div>

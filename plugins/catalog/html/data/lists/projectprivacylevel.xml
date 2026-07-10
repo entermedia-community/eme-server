@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="community"> 
+    Community
+  </data>  
+  <data id="commercial"> 
+  Commercial
+  </data>  
+ 
+</root>

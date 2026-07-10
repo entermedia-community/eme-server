@@ -1,0 +1,200 @@
+#ifnull($query)
+	#set( $query = "")
+#end
+
+#set( $query = $url_util.decode($query) )
+
+#set( $moduleid = $context.getRequestParameter("moduleid") )
+
+#set( $url = "$applink/views/modules/asset/index.html")
+
+#set($ajax = $context.getRequestParameter("ajax")) 
+
+#ifnull($hits)
+	#set($hits = $organizedResults.getEntityHits() )
+#end
+
+
+#if($organizedResults.isEmpty())
+	<div class="text-secondary py-3 text-center">
+		[[No exact match found for]]: <strong>$query</strong>
+	</div>
+#end
+
+$pages.include("./preview.html", $context)
+
+#foreach($module in $organizedResults.getModules() )
+	#if($module.id != "asset")
+		
+		##Blockfind picker
+		#if($picker && $picker.isPickerEnabled("entity", $module.id))
+			$context.putPageValue("pickerenabled", true)
+		#end
+			
+		#set($hits = $organizedResults.getByType($module.id,$context))
+		#ifnotnull($hits)
+			$context.putPageValue("module", $module)
+			$context.putPageValue("moduleid", $module.id)
+			
+			##Blockfind picker
+			$context.putPageValue("pickerenabled", false)
+			#if($picker && $picker.isPickerEnabled("entity", $module.id))
+				$context.putPageValue("pickerenabled", true)
+			#end
+		
+			#set($moduleicon = "grid")
+			#if ($module.moduleicon)
+				#set($moduleicon = $module.moduleicon)
+			#end
+						
+			#set($entityurl = "$!siteroot$apphome/views/modules/$!{module.id}/index.html?$!{module.id}page=1&field=description&operation=freeform&description.value=$query")
+				
+			<div class="mb-4">
+				
+				<div class="mt-2 qsresultsEntity d-flex align-items-center">
+					<i class="bi bi-$moduleicon module-icon"></i>
+					<span class="qsresultsEntitytext">#text($module)</span>
+	
+					#set( $count = $organizedResults.getCount($module)) 
+					#if($count > 10)
+					<span class="mx-1">&middot;</span> 
+					<a href="$entityurl" 
+						class="ajax qsresultsEntityall btn btn-sm btn-accent" 
+						data-targetdiv="applicationcontent" 
+						data-oemaxlevel="3" 
+						data-updateurl="true" 
+						title="[[View]] $count: #text($module)">
+						<span class="qsresultsEntitytext">
+							[[View]] $count
+						</span>
+					</a>
+					#end
+				</div>
+	
+				
+					$context.putPageValue("rendermoduleid", $module.id)
+										
+					$hits.setHitsPerPage(10)
+					$context.putPageValue("hits", $hits)
+					
+					$context.putPageValue("searchresults", true)
+					$context.putPageValue("searchhome", "$apphome/views/modules/${module.id}/results/default")
+				
+				<div class="emgridflex">  	
+					<div id="galleryimg-entitiy" 
+						class='emgrid #if($section != "favorites")emgridlimited#end entitiescontainer emgridquickresults' 
+						style="width:100%"
+						data-fixedwidth="180" 
+						data-cellpadding="10"
+						data-entityrenderurl="$!{siteroot}$apphome/views/modules/${module.id}/editors/default/tabs/gridcell.html"
+						data-rendertype="$!rendertype">
+						#set($detail = $mediaarchive.getSearcher($module.id).getDetail("primarymedia"))
+						#set($viewtype = "primarymediafolder")
+						$context.putPageValue("viewtype", $viewtype)
+						#foreach( $hit in $hits.getPageOfHits() )
+							$context.putPageValue("hit", $hit)
+							#set($rendertype = $module.modulerendertype)
+							#if (!$rendertype)
+								#set($rendertype = "entity")
+							#end
+							<div class="emgridcell emgridcellqs emgridcell-$rendertype activelistcontainer #if($selectedid == $hit.getId() || $topselectedid == $hit.getId()) active #end">
+								
+								$pages.include("$apphome/views/modules/$!{module.id}/components/xml/detailreadonly.html", $context)
+							
+								#set($highlight =  $hits.highlight($hit, "description", 20, true))
+								#if($highlight)
+								<div class="gridcellhighlight">$highlight</div>
+								#end
+							</div>
+						#end
+					</div>
+				</div>
+			</div>
+		#end
+	#end
+#end
+
+#if($organizedResults.getAssetResults() )
+	
+	#set($hits = $organizedResults.getAssetResults() )
+
+	#set($module = $mediaarchive.getCachedData("module","asset"))
+
+	#set($moduleicon = "grid")
+	#if ($module.moduleicon)
+		#set($moduleicon = $module.moduleicon)
+	#end
+
+	#set($edithome = "$apphome/views/modules/asset/editors/quicksearch")
+	
+	#if($query == "")
+		#set( $query = "*")
+	#end
+	#set($entityurl = "${edithome}/index.html?search=$!query")
+	
+	
+	##Blockfind picker
+	#if($picker && $picker.isPickerEnabled("asset", $module.id))
+		$context.putPageValue("pickerenabled", true)
+	#end
+
+
+	#set( $count = $hits.size())
+	<div class="mt-2 qsresultsEntity d-flex align-items-center">
+		<i class="bi bi-$!{moduleicon} module-icon" style="font-size:0.9em;line-height:1;opacity:0.85;"></i> 
+		#if($suggestedassets)
+		<span class="qsresultsEntitytext">Recent #text($module)</span>
+		#else
+		<span class="qsresultsEntitytext">#text($module)</span>
+		#end
+
+		#if($count > 10)
+		<span class="mx-1">&middot;</span>
+		#ifnotnull($suggestedassets)
+			#set($entityurl = "$apphome/views/modules/asset/editors/viewfilescategory/index/All.html")
+			<a href="$entityurl" 
+					class="ajax btn btn-sm btn-accent"
+					data-targetdiv="applicationcontent" 
+					data-oemaxlayout="3"
+					data-assetclearfilters=true
+					data-updateurl="true" 
+					title="[[View]] $count: #text($module)">
+					<span class="qsresultsEntitytext">[[View]] $count</span>
+				</a>
+		#end
+		#ifnull($suggestedassets)
+			<a href="$entityurl" 
+				class="ajax qsresultsEntityall btn btn-sm btn-accent"
+				data-targetdiv="applicationcontent" 
+				data-oemaxlayout="3"
+				data-updateurl="true" 
+				title="[[View]] $count: #text($module)">
+				<span class="qsresultsEntitytext">[[View]] $count</span>
+			</a>
+		#end
+		#end
+	</div>
+	
+	<div class="masonry-grid" 
+		data-maxheight="200" 
+		data-cellpadding="10"
+		data-makebox="true"
+		data-visibleposition="$!hits.getStartingPosition()">
+		#set($count = 0)
+		
+		#foreach( $hit in $hits.getPageOfHits() )
+			#if($count < 30)
+				$context.putPageValue("hit", $hit)
+				$pages.include("${searchhome}/types/media.html", $context)
+				#set($count = $count +1)
+			#end
+		#end
+
+		#if($hit.getPageOfHits().size() == 0)
+			$pages.stream("$!{searchhome}/empty.html", $context)
+		#end
+	</div>
+#end
+
+<div id="semanticLoading"></div>
+<div id="semanticMatches" class="mt-3 mx-1"></div>

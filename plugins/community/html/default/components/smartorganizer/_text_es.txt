@@ -1,0 +1,26 @@
+#
+#Fri Jul 03 17:19:56 CST 2026
+Add\ Label=A\u00F1adir etiqueta
+Add\ Labels=A\u00F1adir etiquetas
+Close\ Dialog=Cerrar el di\u00E1logo
+Create\ New\ Folder=Crear una nueva carpeta
+Delete=Eliminar
+Editing\ Fields=Edici\u00F3n de campos
+Export=Exportar
+Folder\ description=Descripci\u00F3n de la carpeta
+Import=Importaci\u00F3n
+Import\ Existing\ Templates=Importar plantillas existentes
+Move\ Down\ (Ctrl\ +\ Scroll\ Down)=Mueva hacia abajo (Ctrl + Despl\u00E1cese hacia abajo)
+Move\ Left\ (Ctrl\ +\ Shift\ +\ Scroll\ Up)=Mueva a la izquierda (Ctrl + Shift + Despl\u00E1cese hacia arriba)
+Move\ Right\ (Ctrl\ +\ Shift\ +\ Scroll\ Down)=Mueva a la derecha (Ctrl + Shift + Despl\u00E1cese hacia abajo)
+Move\ Up\ (Ctrl\ +\ Scroll\ Up)=Subir (Ctrl + Desplazar hacia arriba)
+New\ Folder=Nueva carpeta
+Press=Prensa
+Saved\ Versions=Versiones guardadas
+Search\ Fields=Campos de b\u00FAsqueda
+Settings=Configuraci\u00F3n
+Smart\ Folder=Carpeta inteligente
+Smart\ Organizer=Organizador inteligente
+Template\ Name=Nombre de la plantilla
+Templates=Plantillas
+to\ delete\ the\ selected\ folder.=para eliminar la carpeta seleccionada.

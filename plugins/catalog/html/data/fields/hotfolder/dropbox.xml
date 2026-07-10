@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  
+  <property id="dropboxnamespace" editable="true" index="true" stored="true">Namespace ID</property>  
+  <property id="dropboxuser" editable="true" index="true" type="list" listid="hotfoldertypes" stored="true">Act as Account ID
+  </property>  
+  
+ 
+</properties>

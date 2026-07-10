@@ -1,0 +1,14 @@
+ 
+$context.putPageValue("showchannel",true)
+ #if( $userpost.isEmpty() )
+	<p class="text-center text-muted my-5">
+		[[Nothing posted yet]]
+	</p>
+ #else
+	<div class="blog-list-container">
+		#foreach( $userpost in $userpost.getPageOfHits())
+			$context.putPageValue("userpost",$userpost)
+			$pages.include("${apphome}/project/blog-list/blog-item.html",$context)
+		#end
+	</div>
+#end
