@@ -1,18 +1,22 @@
-# eme-server-minsur
+# eme-server
+
+Clone server
+git clone -b main --depth 1 https://github.com/entermedia-community/eme-server.git  eme-server-myserver
+
+Fork server and then add upstream and fetch:
+cd eme-server-myserver
+git remote add upstream https://github.com/entermedia-community/eme-server.git
+git fetch upstream
+
+Init submodules:
+git submodule update --init --recursive --depth 1
 
 
-How to clone eMe testu-server into a running eme-lib instance.
 
+Submodules
 
+-eme-lib 
+--git submodule add -b main  https://github.com/entermedia-community/eme-lib.git eme-lib
 
-cd testu-clientname/
-
-#Save git credentials
-git config --global credential.helper store
-
-git init
-git remote add origin https://github.com/entermedia-community/eme-server-minsur.git
-git fetch
-git reset --hard origin/main
-git branch --set-upstream-to=origin/main master
-git pull
+-eme-plugin 
+--git submodule add -b main  https://github.com/entermedia-community/eme_plugin_app.git
