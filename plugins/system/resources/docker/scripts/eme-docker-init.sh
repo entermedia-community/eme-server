@@ -27,7 +27,7 @@ fi
 
 # Setup
 DOCKERPROJECT=entermediadb
-DOCKERIMAGE=eme-lib
+DOCKERIMAGE=eme-server
 BRANCH=latest
 DOCKERNETWORKBASE=172.18.0
 ENDPOINTBASE=/media/emsites
