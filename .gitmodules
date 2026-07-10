@@ -1,0 +1,4 @@
+[submodule "eme-lib"]
+	path = eme-lib
+	url = https://github.com/entermedia-community/eme-lib.git
+	branch = main
