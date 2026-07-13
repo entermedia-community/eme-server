@@ -242,8 +242,27 @@ case "$CMD" in
     echo "Tomcat process $catalinapid exited"
     ;;
 
+    update)
+        SERVERHOME="$2"
+
+        if [ ! -d "$SERVERHOME/.git" ]; then
+                echo "ERROR: $SERVERHOME is not a git repository."
+                exit 1
+        fi
+
+        cd "$SERVERHOME"
+        CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+        echo "**** Updating $SERVERHOME (branch: $CURRENT_BRANCH)"
+        git fetch origin
+        git pull --ff-only origin "$CURRENT_BRANCH"
+        git submodule sync --recursive
+        git submodule update --init --recursive --depth 1
+        echo "Update complete."
+        ;;
+
   *)
-        echo "Usage: eme.sh [version | dockerstart <server-path> | start [server-path]]" >&2
+        echo "Usage: eme.sh [version | update [server-path] | dockerstart <server-path> | start [server-path]]" >&2
     exit 1
     ;;
 esac

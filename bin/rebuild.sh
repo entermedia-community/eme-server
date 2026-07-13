@@ -1,2 +1,7 @@
-. ../.env
-sudo bash /media/emsites/eme-local/bin/eme-docker-init.sh $INSTANCE$NODENUMBER
+#!/bin/bash
+
+set -a
+source ../.env
+set +a
+
+sudo bash ../eme-docker-init.sh ${SITE} ${NODENUMBER}
