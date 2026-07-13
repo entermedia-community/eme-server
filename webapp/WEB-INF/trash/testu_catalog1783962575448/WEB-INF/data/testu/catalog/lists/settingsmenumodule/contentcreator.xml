@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="contentcreatormodulefields" menulevel="toplevel" moduleid="contentcreator" parentid="contentcreatorviews" path="/views/settings/modules/contentcreator/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="contentcreatorviews" moduleid="contentcreator" parentid="contentcreatorviews" path="/views/settings/modules/contentcreator/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="contentcreatorsystemviews" moduleid="contentcreator" parentid="contentcreatorviews" path="/views/settings/modules/contentcreator/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="contentcreatormodulepermissions" menulevel="toplevel" moduleid="contentcreator" parentid="contentcreator" path="/views/settings/modules/contentcreator/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

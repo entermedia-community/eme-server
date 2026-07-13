@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="categorymodulefields" menulevel="toplevel" moduleid="category" parentid="categoryviews" path="/views/settings/modules/category/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="categoryviews" moduleid="category" parentid="categoryviews" path="/views/settings/modules/category/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="categorysystemviews" moduleid="category" parentid="categoryviews" path="/views/settings/modules/category/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="categorymodulepermissions" menulevel="toplevel" moduleid="category" parentid="category" path="/views/settings/modules/category/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

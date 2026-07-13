@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="projectdepartmentmodulefields" menulevel="toplevel" moduleid="projectdepartment" parentid="projectdepartmentviews" path="/views/settings/modules/projectdepartment/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="projectdepartmentviews" moduleid="projectdepartment" parentid="projectdepartmentviews" path="/views/settings/modules/projectdepartment/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="projectdepartmentsystemviews" moduleid="projectdepartment" parentid="projectdepartmentviews" path="/views/settings/modules/projectdepartment/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="projectdepartmentmodulepermissions" menulevel="toplevel" moduleid="projectdepartment" parentid="projectdepartment" path="/views/settings/modules/projectdepartment/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

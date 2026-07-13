@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="librarymodulefields" menulevel="toplevel" moduleid="library" parentid="libraryviews" path="/views/settings/modules/library/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="libraryviews" moduleid="library" parentid="libraryviews" path="/views/settings/modules/library/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="librarysystemviews" moduleid="library" parentid="libraryviews" path="/views/settings/modules/library/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="librarymodulepermissions" menulevel="toplevel" moduleid="library" parentid="library" path="/views/settings/modules/library/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

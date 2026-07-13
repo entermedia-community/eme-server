@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+  <property id="entitytopic" index="true" datatype="list" editable="true" stored="true" viewtype="entity">New
+    <name>
+      <language id="en"><![CDATA[Topics]]></language>
+    </name>
+  </property>
+</properties>

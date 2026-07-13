@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="chatterboxattachmentmodulefields" menulevel="toplevel" moduleid="chatterboxattachment" parentid="chatterboxattachmentviews" path="/views/settings/modules/chatterboxattachment/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="chatterboxattachmentviews" moduleid="chatterboxattachment" parentid="chatterboxattachmentviews" path="/views/settings/modules/chatterboxattachment/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="chatterboxattachmentsystemviews" moduleid="chatterboxattachment" parentid="chatterboxattachmentviews" path="/views/settings/modules/chatterboxattachment/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="chatterboxattachmentmodulepermissions" menulevel="toplevel" moduleid="chatterboxattachment" parentid="chatterboxattachment" path="/views/settings/modules/chatterboxattachment/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

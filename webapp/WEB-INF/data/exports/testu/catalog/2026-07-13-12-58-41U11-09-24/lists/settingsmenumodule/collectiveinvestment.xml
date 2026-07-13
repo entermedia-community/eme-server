@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="collectiveinvestmentmodulefields" menulevel="toplevel" moduleid="collectiveinvestment" parentid="collectiveinvestmentviews" path="/views/settings/modules/collectiveinvestment/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="collectiveinvestmentviews" moduleid="collectiveinvestment" parentid="collectiveinvestmentviews" path="/views/settings/modules/collectiveinvestment/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="collectiveinvestmentsystemviews" moduleid="collectiveinvestment" parentid="collectiveinvestmentviews" path="/views/settings/modules/collectiveinvestment/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="collectiveinvestmentmodulepermissions" menulevel="toplevel" moduleid="collectiveinvestment" parentid="collectiveinvestment" path="/views/settings/modules/collectiveinvestment/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

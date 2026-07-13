@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="collectiveincomemodulefields" menulevel="toplevel" moduleid="collectiveincome" parentid="collectiveincomeviews" path="/views/settings/modules/collectiveincome/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="collectiveincomeviews" moduleid="collectiveincome" parentid="collectiveincomeviews" path="/views/settings/modules/collectiveincome/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="collectiveincomesystemviews" moduleid="collectiveincome" parentid="collectiveincomeviews" path="/views/settings/modules/collectiveincome/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="collectiveincomemodulepermissions" menulevel="toplevel" moduleid="collectiveincome" parentid="collectiveincome" path="/views/settings/modules/collectiveincome/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

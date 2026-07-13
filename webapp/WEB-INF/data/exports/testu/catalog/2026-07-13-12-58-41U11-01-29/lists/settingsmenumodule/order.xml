@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="ordermodulefields" menulevel="toplevel" moduleid="order" parentid="orderviews" path="/views/settings/modules/order/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="orderviews" moduleid="order" parentid="orderviews" path="/views/settings/modules/order/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="ordersystemviews" moduleid="order" parentid="orderviews" path="/views/settings/modules/order/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="ordermodulepermissions" menulevel="toplevel" moduleid="order" parentid="order" path="/views/settings/modules/order/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

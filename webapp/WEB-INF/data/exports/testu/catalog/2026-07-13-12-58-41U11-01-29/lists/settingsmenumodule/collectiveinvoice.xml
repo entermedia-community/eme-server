@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="collectiveinvoicemodulefields" menulevel="toplevel" moduleid="collectiveinvoice" parentid="collectiveinvoiceviews" path="/views/settings/modules/collectiveinvoice/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="collectiveinvoiceviews" moduleid="collectiveinvoice" parentid="collectiveinvoiceviews" path="/views/settings/modules/collectiveinvoice/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="collectiveinvoicesystemviews" moduleid="collectiveinvoice" parentid="collectiveinvoiceviews" path="/views/settings/modules/collectiveinvoice/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="collectiveinvoicemodulepermissions" menulevel="toplevel" moduleid="collectiveinvoice" parentid="collectiveinvoice" path="/views/settings/modules/collectiveinvoice/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>
