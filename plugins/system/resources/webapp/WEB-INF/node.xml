@@ -1,4 +1,0 @@
-<node>
-    <property id="cluster.name">entermedia-testcluster</property>
-    <property id="node.name">singlenode</property>
-</node>
