@@ -79,7 +79,8 @@ case "$CMD" in
         git submodule update --init --recursive --depth 1
         #git fetch upstream 
         #git merge upstream/main
-    fi    
+    fi  
+    
     #check ownership of target, if not owned by current user, change ownership to current user
     #if [ "$(stat -c '%u:%g' "$SERVERHOME")" != "$USERID:$GROUPID" ]; then
     #    echo "Changing ownership of $SERVERHOME to $USERID:$GROUPID"

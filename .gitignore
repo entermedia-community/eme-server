@@ -1,4 +1,4 @@
-/bin/
+/build/
 tomcat/logs
 webapp/WEB-INF/data/catalog/generated/
 webapp/WEB-INF/data/catalog/originals/

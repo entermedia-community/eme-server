@@ -130,5 +130,5 @@
 	<classpathentry exported="true" kind="lib" path="tomcat/lib/tomcat-util-scan.jar"/>
 	<classpathentry exported="true" kind="lib" path="tomcat/lib/tomcat-websocket.jar"/>
 	<classpathentry exported="true" kind="lib" path="tomcat/lib/websocket-api.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="build"/>
 </classpath>
