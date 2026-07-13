@@ -224,10 +224,11 @@ case "$CMD" in
     fi  
 
     # Java @argfile does not expand shell variables, so expand them here
+    mkdir -p "$SERVERHOME/tomcat/work"
     EXPANDED_ARGS=$( mktemp $SERVERHOME/tomcat/work/tomcat-args.XXXXXX)
     sudo chmod 600 "$EXPANDED_ARGS"
     trap " rm -f $EXPANDED_ARGS" EXIT
-     sed -e "s|\$SERVERHOME|$SERVERHOME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
+    sed -e "s|\$SERVERHOME|$SERVERHOME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
 
     JAVA="$JAVA_HOME/bin/java"
 
