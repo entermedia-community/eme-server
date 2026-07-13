@@ -30,7 +30,7 @@ DOCKERPROJECT=entermediadb
 DOCKERIMAGE=eme-server
 BRANCH=latest
 DOCKERNETWORKBASE=172.18.0
-ENDPOINTBASE=/media/emsites
+SERVERHOMEBASE=/media/emsites
 SITE=$1
 NODENUMBER=$2
 
@@ -49,7 +49,7 @@ ALREADY=$(docker ps -aq --filter name=$INSTANCE)
 
 IP_ADDR="$DOCKERNETWORKBASE.$NODENUMBER"
 
-ENDPOINT=$ENDPOINTBASE/$SITE
+SERVERHOME=$SERVERHOMEBASE/$SITE
 
 # Create entermedia user if needed
 if [[ ! $(id -u entermedia 2> /dev/null) ]]; then
@@ -67,16 +67,16 @@ fi
 # TODO: support upgrading, start, stop and removing
 
 # Initialize site root
-if [[ ! -d $ENDPOINT/webapp ]]; then
-	mkdir -p ${ENDPOINT}/{webapp,data,bin,elastic}
-	chown -R entermedia:entermedia ${ENDPOINT}
+if [[ ! -d $SERVERHOME/webapp ]]; then
+	mkdir -p ${SERVERHOME}/{webapp,data,bin,elastic}
+	chown -R entermedia:entermedia ${SERVERHOME}
 	rm -rf "/tmp/$NODENUMBER"  2>/dev/null
 	mkdir -p "/tmp/$NODENUMBER"
 	chown entermedia:entermedia "/tmp/$NODENUMBER"
 fi
 
 # Create custom scripts
-SCRIPTROOT=${ENDPOINT}/bin
+SCRIPTROOT=${SERVERHOME}/bin
 
 echo "sudo docker start $INSTANCE" > ${SCRIPTROOT}/start.sh
 echo "sudo docker stop -t 60 $INSTANCE" > ${SCRIPTROOT}/stop.sh
@@ -114,9 +114,9 @@ docker run -t -d \
 	-e GROUPID=$GROUPID \
 	-e CLIENT_NAME=$SITE \
 	-e INSTANCE_PORT=$NODENUMBER \
-	-v ${ENDPOINT}/:/usr/share/eme-server \
+	-v ${SERVERHOME}/:/home/entermedia/eme-server \
 	$DOCKERPROJECT/$DOCKERIMAGE:$BRANCH \
-	/usr/bin/eme dockerstart /usr/share/eme-server
+	/usr/bin/eme dockerstart /home/entermedia/eme-server
 
 # Fix /etc/resolv.conf to independently reflect Cloudflare and Google DNS
 
@@ -130,3 +130,4 @@ echo ""
 echo "Node is running: curl http://$IP_ADDR:8080 in $SCRIPTROOT"
 echo ""
 echo "- Run ${SCRIPTROOT}/logs.sh to view logs"
+ 

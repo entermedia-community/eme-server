@@ -12,14 +12,6 @@ if [ "$CMD" = "version" ]; then
     exit 0
 fi
 
-APPNAME="$2"
-
-if [ -z "$APPNAME" ]; then
-    echo "No target path specified. Specify full path target."
-    exit 1
-fi
-
-
 
 # Resolve EMELIB: prefer sibling eme-lib, then env var, then system default
 
@@ -92,78 +84,83 @@ case "$CMD" in
     else
         GROUPID="$USERID"
     fi
-    echo "**** Starting server from: $APPNAME"
 
-    if [ ! -d "$APPNAME" ]; then
-        #sudo mkdir -p "$APPNAME"
-        git clone -b main --depth 1  https://github.com/entermedia-community/eme-server.git $APPNAME
-        cd "$APPNAME"
+    SERVERHOME="$2"
+
+    echo "**** Starting server from: $SERVERHOME"
+
+    if [ ! -d "$SERVERHOME" ]; then
+        #get parent directory of SERVERHOME
+        PARENTDIR="$(dirname "$SERVERHOME")"
+        sudo mkdir -p "$PARENTDIR"
+        sudo chown "$USERID:$GROUPID" "$PARENTDIR"
+        cd "$PARENTDIR"
+
+        git clone -b main --depth 1  https://github.com/entermedia-community/eme-server.git $SERVERHOME
+        cd "$SERVERHOME"
         git remote add upstream https://github.com/entermedia-community/eme-server.git
+        git submodule update --init --recursive --depth 1
         #git fetch upstream 
         #git merge upstream/main
     fi    
     #check ownership of target, if not owned by current user, change ownership to current user
-    if [ "$(stat -c '%u:%g' "$APPNAME")" != "$USERID:$GROUPID" ]; then
-        echo "Changing ownership of $APPNAME to $USERID:$GROUPID"
-        sudo chown "$USERID:$GROUPID" "$APPNAME"
-    fi  
+    #if [ "$(stat -c '%u:%g' "$SERVERHOME")" != "$USERID:$GROUPID" ]; then
+    #    echo "Changing ownership of $SERVERHOME to $USERID:$GROUPID"
+    #    sudo chown "$USERID:$GROUPID" "$SERVERHOME"
+    #fi  
 
-    APPNAME="$(cd "$APPNAME" && pwd)"
-   
-    if [ ! -d "$APPNAME/plugins/finder" ]; then 
-        git submodule update --init --recursive --depth 1
-    fi
+    cd "$SERVERHOME"
 
     #Compile the eme-lib if it has not been compiled yet
-    ./compile.sh
+    $SERVERHOME/plugins/system/resources/bin/compile.sh
     
     #$USER is the user running the container
 
-    if [ ! -d "$APPNAME/tomcat" ]; then
+    if [ ! -d "$SERVERHOME/tomcat" ]; then
         # Copy tomcat conf and webapp templates from eme-lib deploy
         # Create directory structure
-        mkdir -p "$APPNAME/tomcat" "$APPNAME/tomcat/conf" "$APPNAME/tomcat/logs" "$APPNAME/tomcat/webapps" "$APPNAME/tomcat/work"
-        cp -rn "$EMELIB/tomcat/conf/." "$APPNAME/tomcat/conf/" 2>/dev/null || true
-        cp -rpn "$EMELIB/tomcat/bin" "$APPNAME/tomcat/" 2>/dev/null || true
-        echo "export CATALINA_BASE=\"$APPNAME/tomcat\"" >>"$APPNAME/tomcat/bin/setenv.sh"
-        sudo chown -R $USERID:$GROUPID "$APPNAME/tomcat" 
-        #chmod 755 "$APPNAME/tomcat/bin/*.sh"
+        mkdir -p "$SERVERHOME/tomcat" "$SERVERHOME/tomcat/conf" "$SERVERHOME/tomcat/logs" "$SERVERHOME/tomcat/webapps" "$SERVERHOME/tomcat/work"
+        cp -rn "$EMELIB/tomcat/conf/." "$SERVERHOME/tomcat/conf/" 2>/dev/null || true
+        cp -rpn "$EMELIB/tomcat/bin" "$SERVERHOME/tomcat/" 2>/dev/null || true
+        echo "export CATALINA_BASE=\"$SERVERHOME/tomcat\"" >>"$SERVERHOME/tomcat/bin/setenv.sh"
+        sudo chown -R $USERID:$GROUPID "$SERVERHOME/tomcat" 
+        #chmod 755 "$SERVERHOME/tomcat/bin/*.sh"
     fi
 
 
-    #if [ ! -L "$APPNAME/webapp/_site.xconf" ]; then
-    #    mkdir -p "$APPNAME/webapp/WEB-INF/"
-    #    ln -nsf "$(get_relative_emelib 2)/resources/webapp/_site.xconf" "$APPNAME/webapp/_site.xconf"
-    #    sudo chown -R $USERID:$GROUPID "$APPNAME/webapp"
+    #if [ ! -L "$SERVERHOME/webapp/_site.xconf" ]; then
+    #    mkdir -p "$SERVERHOME/webapp/WEB-INF/"
+    #    ln -nsf "$(get_relative_emelib 2)/resources/webapp/_site.xconf" "$SERVERHOME/webapp/_site.xconf"
+    #    sudo chown -R $USERID:$GROUPID "$SERVERHOME/webapp"
     #fi
 
-    if [ ! -f "$APPNAME/webapp/WEB-INF/web.xml" ]; then
-          cp -rp "$EMELIB/resources/webapp/WEB-INF/web.xml" "$APPNAME/webapp/WEB-INF/web.xml"
+    if [ ! -f "$SERVERHOME/webapp/WEB-INF/web.xml" ]; then
+          cp -rp "$EMELIB/resources/webapp/WEB-INF/web.xml" "$SERVERHOME/webapp/WEB-INF/web.xml"
     fi
 
-    if [ ! -f "$APPNAME/webapp/WEB-INF/node.xml" ]; then
-          cp -rp "$EMELIB/resources/webapp/WEB-INF/node.xml" "$APPNAME/webapp/WEB-INF/node.xml"
+    if [ ! -f "$SERVERHOME/webapp/WEB-INF/node.xml" ]; then
+          cp -rp "$EMELIB/resources/webapp/WEB-INF/node.xml" "$SERVERHOME/webapp/WEB-INF/node.xml"
     fi
 
-   # if [ ! -L "$APPNAME/webapp/WEB-INF/bin" ]; then
-   #     ln -nsf "$(get_relative_emelib 3)/resources/webapp/WEB-INF/bin" "$APPNAME/webapp/WEB-INF/bin"
+   # if [ ! -L "$SERVERHOME/webapp/WEB-INF/bin" ]; then
+   #     ln -nsf "$(get_relative_emelib 3)/resources/webapp/WEB-INF/bin" "$SERVERHOME/webapp/WEB-INF/bin"
    # fi
 
- #   sudo chown ${USERID}:${GROUPID} "$APPNAME/webapp/"
-    if [ ! -L "$APPNAME/data" ]; then
+ #   sudo chown ${USERID}:${GROUPID} "$SERVERHOME/webapp/"
+    if [ ! -L "$SERVERHOME/data" ]; then
         mkdir -p "./webapp/WEB-INF/data"
         ln -nsf "./webapp/WEB-INF/data" "./data" 
-        sudo chown -R $USERID:$GROUPID "$APPNAME/data"
+        sudo chown -R $USERID:$GROUPID "$SERVERHOME/data"
     fi
 
-    if [ ! -d "$APPNAME/data/system" ]; then
-         #mkdir -p "$APPNAME/webapp/WEB-INF/data/system/"
-         cp -rp "$EMELIB/plugins/system/defaultdata" "$APPNAME/webapp/WEB-INF/data/system"
-         sudo chown -R $USERID:$GROUPID "$APPNAME/webapp/WEB-INF/data/system/"
+    if [ ! -d "$SERVERHOME/data/system" ]; then
+         #mkdir -p "$SERVERHOME/webapp/WEB-INF/data/system/"
+         cp -rp "$EMELIB/plugins/system/defaultdata" "$SERVERHOME/webapp/WEB-INF/data/system"
+         sudo chown -R $USERID:$GROUPID "$SERVERHOME/webapp/WEB-INF/data/system/"
     fi
 
     # symbolically link users plugins to webapp first!
-    for plugin in "$APPNAME/plugins"/*/; do
+    for plugin in "$SERVERHOME/plugins"/*/; do
         pluginname="$(basename "$plugin")"
         if [ -d "${plugin}html" ]; then
             if [ ! -L "../webapp/$pluginname" ]; then
@@ -180,12 +177,12 @@ case "$CMD" in
 
     #    if [ -d "${plugin}html" ]; then
     #        ##if its an invalid symbolic link then remove it and create a new one
-    #        echo "Adding plugin: $APPNAME/webapp/$pluginname"
-    #        if [ -L "$APPNAME/webapp/$pluginname" ]; then
-    #            echo "Removing invalid symbolic link: $APPNAME/webapp/$pluginname"
-    #            rm "$APPNAME/webapp/$pluginname"
+    #        echo "Adding plugin: $SERVERHOME/webapp/$pluginname"
+    #        if [ -L "$SERVERHOME/webapp/$pluginname" ]; then
+    #            echo "Removing invalid symbolic link: $SERVERHOME/webapp/$pluginname"
+    #            rm "$SERVERHOME/webapp/$pluginname"
     #        fi
-    #        ln -nsf "$(get_relative_emelib 2)/plugins/${pluginname}/html"  "$APPNAME/webapp/$pluginname"
+    #        ln -nsf "$(get_relative_emelib 2)/plugins/${pluginname}/html"  "$SERVERHOME/webapp/$pluginname"
     #    fi
     #done
 
@@ -195,20 +192,20 @@ case "$CMD" in
 
     # Write VSCode configs
 
-    mkdir -p "$APPNAME/.vscode"
-    sed -e "s|\$JAVA_HOME|$JAVA_HOME|g" "$EMELIB/resources/editor-configs/settings.json" > "$APPNAME/.vscode/settings.json"
+    mkdir -p "$SERVERHOME/.vscode"
+    sed -e "s|\$JAVA_HOME|$JAVA_HOME|g" "$EMELIB/resources/editor-configs/settings.json" > "$SERVERHOME/.vscode/settings.json"
 
-    sed -e "s|\$EMSERVER_NAME|$EMSERVER_NAME|g" "$EMELIB/resources/editor-configs/launch.json" > "$APPNAME/.vscode/launch.json"
-    printf "// Do not edit this file unless you know what you are doing\n" | cat - "$APPNAME/.vscode/launch.json" > "$APPNAME/.vscode/temp" && mv "$APPNAME/.vscode/temp" "$APPNAME/.vscode/launch.json"
+    sed -e "s|\$EMSERVER_NAME|$EMSERVER_NAME|g" "$EMELIB/resources/editor-configs/launch.json" > "$SERVERHOME/.vscode/launch.json"
+    printf "// Do not edit this file unless you know what you are doing\n" | cat - "$SERVERHOME/.vscode/launch.json" > "$SERVERHOME/.vscode/temp" && mv "$SERVERHOME/.vscode/temp" "$SERVERHOME/.vscode/launch.json"
 
-    cp "$EMELIB/resources/editor-configs/formatter.xml" "$APPNAME/formatter.xml"
+    cp "$EMELIB/resources/editor-configs/formatter.xml" "$SERVERHOME/formatter.xml"
 
-    sed -e "s|\$EMELIB|$EMELIB|g" -e "s|\$EMSERVER|$EMSERVER|g" "$EMELIB/resources/editor-configs/eme.code-workspace" > "$APPNAME/$EMSERVER_NAME.code-workspace"
+    sed -e "s|\$EMELIB|$EMELIB|g" -e "s|\$EMSERVER|$EMSERVER|g" "$EMELIB/resources/editor-configs/eme.code-workspace" > "$SERVERHOME/$EMSERVER_NAME.code-workspace"
 
     if command -v code >/dev/null 2>&1; then
-        code "$APPNAME/$EMSERVER_NAME.code-workspace" && echo "Launching VS Code, press F5 to start your server" && exit 0
+        code "$SERVERHOME/$EMSERVER_NAME.code-workspace" && echo "Launching VS Code, press F5 to start your server" && exit 0
     else
-        echo "VS Code 'code' command not found. Open $APPNAME/$EMSERVER_NAME.code-workspace manually."
+        echo "VS Code 'code' command not found. Open $SERVERHOME/$EMSERVER_NAME.code-workspace manually."
     fi
 
 
@@ -229,10 +226,10 @@ case "$CMD" in
     fi  
 
     # Java @argfile does not expand shell variables, so expand them here
-    EXPANDED_ARGS=$( mktemp $APPNAME/tomcat/work/tomcat-args.XXXXXX)
+    EXPANDED_ARGS=$( mktemp $SERVERHOME/tomcat/work/tomcat-args.XXXXXX)
     sudo chmod 600 "$EXPANDED_ARGS"
     trap " rm -f $EXPANDED_ARGS" EXIT
-     sed -e "s|\$EMELIB|$EMELIB|g" -e "s|\$EMSERVER|$EMSERVER|g" -e "s|\$APPNAME|$APPNAME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
+     sed -e "s|\$EMELIB|$EMELIB|g" -e "s|\$EMSERVER|$EMSERVER|g" -e "s|\$SERVERHOME|$SERVERHOME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
 
     JAVA="$JAVA_HOME/bin/java"
 
@@ -242,7 +239,7 @@ case "$CMD" in
     #  "$JAVA" "@$EXPANDED_ARGS" org.apache.catalina.startup.Bootstrap start 
 
     
-    CATALINA_BASE="$APPNAME/tomcat"
+    CATALINA_BASE="$SERVERHOME/tomcat"
     export CATALINA_BASE
     #SIGTERM-handler
     term_handler() {
@@ -252,7 +249,7 @@ case "$CMD" in
         if [[ ! -z $pid ]]; then
             if [ $pid -ne 0 ]; then
                 echo "Deployment shutdown start"
-                 sh -c "$APPNAME/tomcat/bin/catalina.sh stop"
+                 sh -c "$SERVERHOME/tomcat/bin/catalina.sh stop"
                 kill -SIGTERM "$catalinapid"
                 while [ -e /proc/$pid ]; do
                     printf .
