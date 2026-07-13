@@ -1,5 +1,9 @@
 #!/bin/bash +x
-. ../.env
+
+set -a
+source ../.env
+set +a
+
 IP=http://$IP_ADDR:9200
 
 

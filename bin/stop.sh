@@ -1,1 +1,7 @@
-sudo docker stop -t 60 eme-local106
+#!/bin/bash
+
+set -a
+source ../.env
+set +a
+
+sudo docker stop -t 60 ${INSTANCE}
