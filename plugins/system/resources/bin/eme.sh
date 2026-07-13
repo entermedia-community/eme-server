@@ -12,29 +12,6 @@ if [ "$CMD" = "version" ]; then
     exit 0
 fi
 
-
-# Resolve EMELIB: prefer sibling eme-lib, then env var, then system default
-
-function get_relative_emelib {
-    local levels=$1
-    local relative_path=""      
-    for ((i=0; i<levels; i++)); do
-        relative_path="../$relative_path"
-    done
-    relative_path="${relative_path}eme-lib"
-    echo "$relative_path"
-}
-
-EMELIB="/"
-
-if [ -d "$EMELIB" ]; then
-    export EMELIB
-else
-    echo "ERROR: Cannot find eme-lib. $EMELIB" >&2
-  #  exit 1
-fi
-
-
 ##JAVA_HOME is not set throw an error if JAVA_HOME is not set
 if [ -z "$JAVA_HOME" ]; then
     #checi if there is a jre path
@@ -89,15 +66,15 @@ case "$CMD" in
 
     echo "**** Starting server from: $SERVERHOME"
 
-    if [ ! -d "$SERVERHOME/webapp/_site.xconf" ]; then
-        #get parent directory of SERVERHOME
-        PARENTDIR="$(dirname "$SERVERHOME")"
-        sudo mkdir -p "$PARENTDIR"
-        sudo chown "$USERID:$GROUPID" "$PARENTDIR"
-        cd "$PARENTDIR"
-
-        git clone -b main --depth 1  https://github.com/entermedia-community/eme-server.git $SERVERHOME
+    if [ ! -d "$SERVERHOME/.git" ]; then
+        sudo mkdir -p "$SERVERHOME"
+        sudo chown "$USERID:$GROUPID" "$SERVERHOME"
         cd "$SERVERHOME"
+        git init
+        git remote add origin -b main --depth 1  https://github.com/entermedia-community/eme-server.git
+        git pull origin main --depth 1
+        #git clone -b main --depth 1  https://github.com/entermedia-community/eme-server.git $SERVERHOME
+        #cd "$SERVERHOME"
         git remote add upstream https://github.com/entermedia-community/eme-server.git
         git submodule update --init --recursive --depth 1
         #git fetch upstream 
@@ -120,31 +97,12 @@ case "$CMD" in
         # Copy tomcat conf and webapp templates from eme-lib deploy
         # Create directory structure
         mkdir -p "$SERVERHOME/tomcat" "$SERVERHOME/tomcat/conf" "$SERVERHOME/tomcat/logs" "$SERVERHOME/tomcat/webapps" "$SERVERHOME/tomcat/work"
-        cp -rn "$EMELIB/tomcat/conf/." "$SERVERHOME/tomcat/conf/" 2>/dev/null || true
-        cp -rpn "$EMELIB/tomcat/bin" "$SERVERHOME/tomcat/" 2>/dev/null || true
+        #cp -rn "$EMELIB/tomcat/conf/." "$SERVERHOME/tomcat/conf/" 2>/dev/null || true
+        #cp -rpn "$EMELIB/tomcat/bin" "$SERVERHOME/tomcat/" 2>/dev/null || true
         echo "export CATALINA_BASE=\"$SERVERHOME/tomcat\"" >>"$SERVERHOME/tomcat/bin/setenv.sh"
         sudo chown -R $USERID:$GROUPID "$SERVERHOME/tomcat" 
         #chmod 755 "$SERVERHOME/tomcat/bin/*.sh"
     fi
-
-
-    #if [ ! -L "$SERVERHOME/webapp/_site.xconf" ]; then
-    #    mkdir -p "$SERVERHOME/webapp/WEB-INF/"
-    #    ln -nsf "$(get_relative_emelib 2)/resources/webapp/_site.xconf" "$SERVERHOME/webapp/_site.xconf"
-    #    sudo chown -R $USERID:$GROUPID "$SERVERHOME/webapp"
-    #fi
-
-    if [ ! -f "$SERVERHOME/webapp/WEB-INF/web.xml" ]; then
-          cp -rp "$EMELIB/resources/webapp/WEB-INF/web.xml" "$SERVERHOME/webapp/WEB-INF/web.xml"
-    fi
-
-    if [ ! -f "$SERVERHOME/webapp/WEB-INF/node.xml" ]; then
-          cp -rp "$EMELIB/resources/webapp/WEB-INF/node.xml" "$SERVERHOME/webapp/WEB-INF/node.xml"
-    fi
-
-   # if [ ! -L "$SERVERHOME/webapp/WEB-INF/bin" ]; then
-   #     ln -nsf "$(get_relative_emelib 3)/resources/webapp/WEB-INF/bin" "$SERVERHOME/webapp/WEB-INF/bin"
-   # fi
 
  #   sudo chown ${USERID}:${GROUPID} "$SERVERHOME/webapp/"
     if [ ! -L "$SERVERHOME/data" ]; then
