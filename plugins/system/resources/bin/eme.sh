@@ -19,8 +19,7 @@ if [ -z "$APPNAME" ]; then
     exit 1
 fi
 
-mkdir -p "$APPNAME"
-cd  "$APPNAME"
+
 
 # Resolve EMELIB: prefer sibling eme-lib, then env var, then system default
 
