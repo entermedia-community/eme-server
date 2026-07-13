@@ -89,7 +89,7 @@ case "$CMD" in
 
     echo "**** Starting server from: $SERVERHOME"
 
-    if [ ! -d "$SERVERHOME" ]; then
+    if [ ! -d "$SERVERHOME/webapp/_site.xconf" ]; then
         #get parent directory of SERVERHOME
         PARENTDIR="$(dirname "$SERVERHOME")"
         sudo mkdir -p "$PARENTDIR"
