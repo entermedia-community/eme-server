@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="communitytagmodulefields" menulevel="toplevel" moduleid="communitytag" parentid="communitytagviews" path="/views/settings/modules/communitytag/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="communitytagviews" moduleid="communitytag" parentid="communitytagviews" path="/views/settings/modules/communitytag/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="communitytagsystemviews" moduleid="communitytag" parentid="communitytagviews" path="/views/settings/modules/communitytag/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="communitytagmodulepermissions" menulevel="toplevel" moduleid="communitytag" parentid="communitytag" path="/views/settings/modules/communitytag/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

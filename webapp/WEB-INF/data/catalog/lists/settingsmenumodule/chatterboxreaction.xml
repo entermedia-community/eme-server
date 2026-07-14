@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="chatterboxreactionmodulefields" menulevel="toplevel" moduleid="chatterboxreaction" parentid="chatterboxreactionviews" path="/views/settings/modules/chatterboxreaction/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="chatterboxreactionviews" moduleid="chatterboxreaction" parentid="chatterboxreactionviews" path="/views/settings/modules/chatterboxreaction/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="chatterboxreactionsystemviews" moduleid="chatterboxreaction" parentid="chatterboxreactionviews" path="/views/settings/modules/chatterboxreaction/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="chatterboxreactionmodulepermissions" menulevel="toplevel" moduleid="chatterboxreaction" parentid="chatterboxreaction" path="/views/settings/modules/chatterboxreaction/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

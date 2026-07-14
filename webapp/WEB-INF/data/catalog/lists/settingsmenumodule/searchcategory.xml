@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="searchcategorymodulefields" menulevel="toplevel" moduleid="searchcategory" parentid="searchcategoryviews" path="/views/settings/modules/searchcategory/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="searchcategoryviews" moduleid="searchcategory" parentid="searchcategoryviews" path="/views/settings/modules/searchcategory/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="searchcategorysystemviews" moduleid="searchcategory" parentid="searchcategoryviews" path="/views/settings/modules/searchcategory/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="searchcategorymodulepermissions" menulevel="toplevel" moduleid="searchcategory" parentid="searchcategory" path="/views/settings/modules/searchcategory/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

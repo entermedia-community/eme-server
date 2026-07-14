@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="componentrenderversionmodulefields" menulevel="toplevel" moduleid="componentrenderversion" parentid="componentrenderversionviews" path="/views/settings/modules/componentrenderversion/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="componentrenderversionviews" moduleid="componentrenderversion" parentid="componentrenderversionviews" path="/views/settings/modules/componentrenderversion/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="componentrenderversionsystemviews" moduleid="componentrenderversion" parentid="componentrenderversionviews" path="/views/settings/modules/componentrenderversion/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="componentrenderversionmodulepermissions" menulevel="toplevel" moduleid="componentrenderversion" parentid="componentrenderversion" path="/views/settings/modules/componentrenderversion/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <property id="tutorial" index="true" stored="true" editable="true" type="list" listid="entitytutorial">
+    <name>
+      <language id="en">Tutorial</language>
+    </name>
+  </property>
+  <property id="assignedto" type="list" datatype="list" listid="user" index="true" stored="true" editable="true">
+    <name>
+      <language id="en">Assigned To</language>
+    </name>
+  </property>
+</properties>

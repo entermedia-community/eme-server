@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="userpostmodulefields" menulevel="toplevel" moduleid="userpost" parentid="userpostviews" path="/views/settings/modules/userpost/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="userpostviews" moduleid="userpost" parentid="userpostviews" path="/views/settings/modules/userpost/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="userpostsystemviews" moduleid="userpost" parentid="userpostviews" path="/views/settings/modules/userpost/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="userpostmodulepermissions" menulevel="toplevel" moduleid="userpost" parentid="userpost" path="/views/settings/modules/userpost/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>
