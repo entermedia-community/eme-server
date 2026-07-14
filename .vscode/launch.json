@@ -144,13 +144,7 @@
 			"name": "Attach to Tomcat",
 			"request": "attach",
 			"hostName": "localhost",
-			"port": 43599,
-			"sourceRoots": [
-				"${workspaceFolder:eme-server-minsur}/plugins/system/code",
-				"${workspaceFolder:eme-server-minsur}/plugins/openedit/code",
-				"${workspaceFolder:eme-server-minsur}/plugins/finder/code",
-				"${workspaceFolder:eme-server-minsur}/plugins/community/code"
-			]
+			"port": 43599
 		}
 	]
 }

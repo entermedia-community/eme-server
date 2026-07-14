@@ -121,11 +121,11 @@
   <data id="contentcreator" showonsearch="false" securityenabled="false" ordering="300" moduleresultsview="table" semanticenabled="false" autocreateentities="false" isentity="true" enableuploading="false" moduleicon="magic"> 
     <name><![CDATA[Content Creator]]></name> 
   </data>  
-  <data id="desktopsyncfolder" showonsearch="false" securityenabled="false" ordering="300" moduleresultsview="table" semanticenabled="false" autocreateentities="false" isentity="false" enableuploading="false" moduleicon="folder-check"> 
-    <name><![CDATA[Remote Desktop Sync Folders]]></name> 
+  <data id="desktopsyncfolder" showonsearch="false" securityenabled="false" ordering="300" moduleresultsview="table" semanticenabled="false" autocreateentities="false" isentity="false" enableuploading="false" moduleicon="folder-check">
+    <name><![CDATA[Remote Desktop Sync Folders]]></name>
   </data>  
-  <data id="entitytopic" showonsearch="true" securityenabled="false" ordering="0" semanticenabled="false" autocreateentities="false" isentity="true" enableuploading="true" moduleicon="grid-fill">
-    <name><![CDATA[Topics]]></name>
+  <data id="entitytopic" showonsearch="true" securityenabled="false" ordering="0" semanticenabled="false" autocreateentities="false" isentity="true" enableuploading="true" moduleicon="grid-fill"> 
+    <name><![CDATA[Topics]]></name> 
   </data>  
   <data id="entitytutorial" showonsearch="true" securityenabled="false" ordering="0" semanticenabled="false" autocreateentities="false" isentity="true" enableuploading="true" moduleicon="mortarboard-fill"> 
     <name><![CDATA[Tutorials]]></name> 
