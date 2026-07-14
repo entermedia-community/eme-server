@@ -6,7 +6,11 @@ webapp/WEB-INF/elastic/
 webapp/WEB-INF/tmp/
 webapp/WEB-INF/temp/
 webapp/WEB-INF/trash/
+webapp/WEB-INF/data/exports/
 .DS_Store
-webapp/WEB-INF/data/catalog/lists/
-webapp/WEB-INF/data/catalog/assets/
-webapp/WEB-INF/data/testu/catalog/lists/
+
+
+## For pushing to upstream, ignore the following files:
+#README.md
+#.vscode/
+#/webapp/WEB-INF/data/repos
