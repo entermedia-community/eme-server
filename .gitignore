@@ -7,3 +7,6 @@ webapp/WEB-INF/tmp/
 webapp/WEB-INF/temp/
 webapp/WEB-INF/trash/
 .DS_Store
+webapp/WEB-INF/data/catalog/lists/
+webapp/WEB-INF/data/catalog/assets/
+webapp/WEB-INF/data/testu/catalog/lists/
