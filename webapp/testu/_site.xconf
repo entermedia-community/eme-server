@@ -3,5 +3,5 @@
 <page>
   <property name="siteid">testu</property>
   <property name="fallbackdirectory">/finder</property>
-  <property name="catalogid">testu/catalog</property>
+  <property name="catalogid">testu/catalog</property> 
 </page>
