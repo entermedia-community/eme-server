@@ -1,7 +1,8 @@
 #!/bin/bash +x
 
 set -a
-source ../.env
+SCRIPT_DIR=$(dirname "$0")
+source "$SCRIPT_DIR/../.env"
 set +a
 
 IP=http://$IP_ADDR:9200

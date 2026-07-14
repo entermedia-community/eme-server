@@ -1,7 +1,8 @@
 #!/bin/bash
 
 set -a
-source ../.env
+SCRIPT_DIR=$(dirname "$0")
+source "$SCRIPT_DIR/../.env"
 set +a
 
-sudo bash ../eme-docker-init.sh ${SITE} ${NODENUMBER}
+sudo bash "$SCRIPT_DIR/../eme-docker-init.sh" ${SITE} ${NODENUMBER}
