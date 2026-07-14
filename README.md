@@ -1,23 +1,15 @@
 # eme-server
 
--Initializing Project
 
-Add Modules:
-git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-lib.git plugins/eme-lib
+Instsructions for initializing Project Only (New Client)
+---
+Add SubModules:
 git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-finder.git plugins/finder
-
 ---
 
--Deploy an instance
-
-Fork server and then add upstream and fetch:
-cd eme-server-myserver
-git init
-git config --global init.defaultBranch main
-git remote add upstream https://github.com/entermedia-community/eme-server.git
-git fetch upstream
-git merge upstream/main
-
-Init submodules:
-
-`git submodule update --init --recursive --depth 1`
+Deleting Submodules
+---
+git submodule deinit -f plugins/eme-lib
+git rm --cached -r plugins/eme-lib
+*Manually delete Plugin entry in .gitmodules
+---
