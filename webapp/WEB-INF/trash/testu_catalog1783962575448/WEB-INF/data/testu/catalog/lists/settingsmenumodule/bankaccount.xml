@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="bankaccountmodulefields" menulevel="toplevel" moduleid="bankaccount" parentid="bankaccountviews" path="/views/settings/modules/bankaccount/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="bankaccountviews" moduleid="bankaccount" parentid="bankaccountviews" path="/views/settings/modules/bankaccount/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="bankaccountsystemviews" moduleid="bankaccount" parentid="bankaccountviews" path="/views/settings/modules/bankaccount/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="bankaccountmodulepermissions" menulevel="toplevel" moduleid="bankaccount" parentid="bankaccount" path="/views/settings/modules/bankaccount/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

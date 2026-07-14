@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<page>
-  <property name="siteid">testu</property>
-  <property name="fallbackdirectory">/finder</property>
-  <property name="catalogid">testu/catalog</property> 
-</page>

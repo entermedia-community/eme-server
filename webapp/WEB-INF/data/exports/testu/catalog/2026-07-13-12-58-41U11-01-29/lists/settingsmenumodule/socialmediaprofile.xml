@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="socialmediaprofilemodulefields" menulevel="toplevel" moduleid="socialmediaprofile" parentid="socialmediaprofileviews" path="/views/settings/modules/socialmediaprofile/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="socialmediaprofileviews" moduleid="socialmediaprofile" parentid="socialmediaprofileviews" path="/views/settings/modules/socialmediaprofile/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="socialmediaprofilesystemviews" moduleid="socialmediaprofile" parentid="socialmediaprofileviews" path="/views/settings/modules/socialmediaprofile/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="socialmediaprofilemodulepermissions" menulevel="toplevel" moduleid="socialmediaprofile" parentid="socialmediaprofile" path="/views/settings/modules/socialmediaprofile/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

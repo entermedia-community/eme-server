@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="collectiveexpensemodulefields" menulevel="toplevel" moduleid="collectiveexpense" parentid="collectiveexpenseviews" path="/views/settings/modules/collectiveexpense/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="collectiveexpenseviews" moduleid="collectiveexpense" parentid="collectiveexpenseviews" path="/views/settings/modules/collectiveexpense/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="collectiveexpensesystemviews" moduleid="collectiveexpense" parentid="collectiveexpenseviews" path="/views/settings/modules/collectiveexpense/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="collectiveexpensemodulepermissions" menulevel="toplevel" moduleid="collectiveexpense" parentid="collectiveexpense" path="/views/settings/modules/collectiveexpense/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

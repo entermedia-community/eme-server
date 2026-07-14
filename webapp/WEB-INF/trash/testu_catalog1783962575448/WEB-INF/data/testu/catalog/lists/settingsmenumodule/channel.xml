@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="channelmodulefields" menulevel="toplevel" moduleid="channel" parentid="channelviews" path="/views/settings/modules/channel/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="channelviews" moduleid="channel" parentid="channelviews" path="/views/settings/modules/channel/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="channelsystemviews" moduleid="channel" parentid="channelviews" path="/views/settings/modules/channel/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="channelmodulepermissions" menulevel="toplevel" moduleid="channel" parentid="channel" path="/views/settings/modules/channel/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

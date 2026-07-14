@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<page>
-  <property name="siteid">testu</property>
-  <property name="fallbackdirectory">/mediadb</property>
-  <property name="catalogid">testu/catalog</property>
-  <property name="applicationid">testu/mediadb</property>
-  <property name="communitytag">minsur</property>
-</page>

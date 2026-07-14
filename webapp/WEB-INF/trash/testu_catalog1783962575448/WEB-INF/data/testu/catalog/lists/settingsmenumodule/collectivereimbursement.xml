@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="collectivereimbursementmodulefields" menulevel="toplevel" moduleid="collectivereimbursement" parentid="collectivereimbursementviews" path="/views/settings/modules/collectivereimbursement/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="collectivereimbursementviews" moduleid="collectivereimbursement" parentid="collectivereimbursementviews" path="/views/settings/modules/collectivereimbursement/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="collectivereimbursementsystemviews" moduleid="collectivereimbursement" parentid="collectivereimbursementviews" path="/views/settings/modules/collectivereimbursement/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="collectivereimbursementmodulepermissions" menulevel="toplevel" moduleid="collectivereimbursement" parentid="collectivereimbursement" path="/views/settings/modules/collectivereimbursement/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

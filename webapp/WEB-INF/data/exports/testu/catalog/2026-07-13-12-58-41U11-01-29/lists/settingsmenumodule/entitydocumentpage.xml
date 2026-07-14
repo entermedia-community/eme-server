@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="entitydocumentpagemodulefields" menulevel="toplevel" moduleid="entitydocumentpage" parentid="entitydocumentpageviews" path="/views/settings/modules/entitydocumentpage/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="entitydocumentpageviews" moduleid="entitydocumentpage" parentid="entitydocumentpageviews" path="/views/settings/modules/entitydocumentpage/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="entitydocumentpagesystemviews" moduleid="entitydocumentpage" parentid="entitydocumentpageviews" path="/views/settings/modules/entitydocumentpage/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="entitydocumentpagemodulepermissions" menulevel="toplevel" moduleid="entitydocumentpage" parentid="entitydocumentpage" path="/views/settings/modules/entitydocumentpage/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>

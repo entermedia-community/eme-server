@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<root> 
-  <data id="llamat" aiservertype="thinking" connectionbean="llamaOpenAiConnection" ordering="320" modelname="Qwen3-14B-Q4_K_S.gguf" monitorspeed="true" serverpathprefix="/v1" serverroot="https://llamat.emediaworkspace.com" serverapikey="demo">
-    <name><![CDATA[AI: Entity Classification Server]]></name>
-  </data> 
-</root>

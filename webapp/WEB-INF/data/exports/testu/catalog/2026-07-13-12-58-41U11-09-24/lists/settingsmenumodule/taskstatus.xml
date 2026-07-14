@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="taskstatusmodulefields" menulevel="toplevel" moduleid="taskstatus" parentid="taskstatusviews" path="/views/settings/modules/taskstatus/metadata/properties/index.html" ordering="20">Fields Setup</property>  
-  <property id="taskstatusviews" moduleid="taskstatus" parentid="taskstatusviews" path="/views/settings/modules/taskstatus/metadata/views/index.html" ordering="120">Edit Views</property>  
-  <property id="taskstatussystemviews" moduleid="taskstatus" parentid="taskstatusviews" path="/views/settings/modules/taskstatus/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
-  <property id="taskstatusmodulepermissions" menulevel="toplevel" moduleid="taskstatus" parentid="taskstatus" path="/views/settings/modules/taskstatus/permissions/enabled.html" ordering="20">Permissions</property> 
-</properties>
