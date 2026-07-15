@@ -90,3 +90,7 @@ In case you want to contribute changes to eme-server, cherry pick changes to you
     *Resolve conflicts, may need to add useremail/username 
     git pull origin main
     ```
+
+
+## Usefull git configuration
+git config --global pull.ff onl
