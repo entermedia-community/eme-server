@@ -41,7 +41,17 @@ Instructions to run a single eme-server, fork and init a new eme-server-client a
     ```
     git submodule update --init --recursive --depth 1
     ```
-6. Create *toupstream* branch and keep always in-sync with eme-server. Work in the main version any customization you may have for your own server.
+6. For pull eme-server changes use git rebase
+    ```
+    *Be sure to have pull fast-forward config properly
+    git config pull.rebase true
+    git config --global pull.ff only
+
+    *Then pull changes from upstream and rebase
+    git fetch upstream
+    git rebase upstream/main
+    ```
+
 
 ### Make Pull Requests
 In case you want to contribute changes to eme-server, cherry pick changes to your *toupstream* branch and start a pull request procedure in github.
@@ -93,4 +103,5 @@ In case you want to contribute changes to eme-server, cherry pick changes to you
 
 
 ## Usefull git configuration
-git config --global pull.ff onl
+git config --global pull.ff only
+git rebase upstream/main
