@@ -7,4 +7,11 @@
 	path = plugins/app
 	url = https://github.com/entermedia-community/eme_plugin_app.git
 	branch = main
-
+[submodule "plugins/community"]
+	path = plugins/community
+	url = https://github.com/entermedia-community/eme-plugin-community.git
+	branch = main
+[submodule "plugins/system"]
+	path = plugins/system
+	url = https://github.com/entermedia-community/eme-plugin-system.git
+	branch = main
