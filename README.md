@@ -8,17 +8,6 @@ Instructions to run a single eme-server, fork and init a new eme-server-client a
 1. `curl -o eme-docker-init.sh -jL https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/plugins/system/resources/docker/scripts/eme-docker-init.sh`
 2. `sudo bash ./eme-docker-init.sh eme-server-myserver 100`
 
-## Custom eme-server-CLIENT instance
-
-1. Install eme-server Docker instance (Prev. Instructions)
-
-2. ```
-    cd eme-server-myserver
-    git remote set-url origin https://github.com/entermedia-community/eme-server-minsur.git
-    git fetch
-    *Resolve conflicts, may need to add useremail/username 
-    git pull origin main
-    ```
 
 ## Setup Client development environment
 
@@ -90,3 +79,14 @@ In case you want to contribute changes to eme-server, cherry pick changes to you
     ```
 3. Manually delete Plugin entry in .gitmodules
 
+## Custom eme-server-client instance install
+
+1. Install a base eme-server Docker instance (Instructions in top)
+
+2. ```
+    cd eme-server-myserver
+    git remote set-url origin https://github.com/entermedia-community/eme-server-myserver.git
+    git fetch
+    *Resolve conflicts, may need to add useremail/username 
+    git pull origin main
+    ```
