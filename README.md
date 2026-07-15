@@ -1,72 +1,92 @@
+
 # eme-server
 
-<h2>Single eme-server instance docker Install Instructions</h2>
+Instructions to run a single eme-server, fork and init a new eme-server-client and instructions for setup Develoment environments to work with eme-server and eme-plugins.
 
-<h3>Install eme-server instance</h3>
+## Single eme-server instance docker Install
 
-1. <pre>curl -o eme-docker-init.sh -jL https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/plugins/system/resources/docker/scripts/eme-docker-init.sh</pre>
-2. <pre>sudo bash ./eme-docker-init.sh eme-server-myserver 100</pre>
+1. `curl -o eme-docker-init.sh -jL https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/plugins/system/resources/docker/scripts/eme-docker-init.sh`
+2. `sudo bash ./eme-docker-init.sh eme-server-myserver 100`
 
+## Custom eme-server-CLIENT instance
 
+1. Install eme-server Docker instance (Prev. Instructions)
 
-
-<h3>Launch eme-server-CLIENT</h3>
-
-1. Install eme-server instance (Previous Instructions)
-
-2. <pre>cd eme-server-myserver
+2. ```
+    cd eme-server-myserver
     git remote set-url origin https://github.com/entermedia-community/eme-server-minsur.git
     git fetch
     *Resolve conflicts, may need to add useremail/username 
-    git pull origin main</pre>
+    git pull origin main
+    ```
 
-&nbsp;
----
-&nbsp;
-
-<h2>Development Instructions</h2>
+## Setup Client development environment
 
 1. Fork server
-    Existing:
-        <pre>cd eme-server-myserver
-        git init</pre>
-    Or clone:
-        <pre>git clone git clone https://github.com/entermedia-community/eme-server-myserver.git
-        cd eme-server-myserver</pre>
+    ##### Existing project:
+    ```
+    cd eme-server-myserver
+    git init
+    ```
+    ##### Or clone new:
+    ```
+    git clone git clone https://github.com/entermedia-community/eme-server-myserver.git
+    cd eme-server-myserver
+    ```
 
 2. Set local default branch
-    <pre>git config --global init.defaultBranch main
+   ```
+   git config --global init.defaultBranch main
+   ```
 
-3. Add Upstream
-    <pre>git remote add upstream https://github.com/entermedia-community/eme-server.git</pre>
+3. Add *eme-server* upstream
+    ```
+    git remote add upstream https://github.com/entermedia-community/eme-server.git
+    ```
 4. Fetch & Merge
-    <pre>git fetch upstream
-    git merge upstream/main</pre>
+    ```
+    git fetch upstream
+    git merge upstream/main
+    ```
 5. Update Submodules
-    <pre>git submodule update --init --recursive --depth 1</pre>
+    ```
+    git submodule update --init --recursive --depth 1
+    ```
+6. Create *toupstream* branch and keep always in-sync with eme-server. Work in the main version any customization you may have for your own server.
 
+### Make Pull Requests
+In case you want to contribute changes to eme-server, cherry pick changes to your *toupstream* branch and start a pull request procedure in github.
 
+### Add SubModules
 
-<h3>Instructions for initializing Project Only (New Client)</h3>
+1. Add submodule with specific destination path
+    ```
+    git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-finder.git plugins/finder
 
-<Strong>Add SubModules</strong>
+    git submodule add -b main --depth 1 https://github.com/entermedia-community/eme_plugin_app.git plugins/app
 
-<pre>git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-finder.git plugins/finder
+    git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-community.git plugins/community
 
-git submodule add -b main --depth 1 https://github.com/entermedia-community/eme_plugin_app.git plugins/app
+    git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-system.git plugins/system
+    ```
+2. Init and update submodules
+    ```
+    git submodule update --init --recursive --depth 1
+    ```
+3. Checkin changes
+    ```
+    git add * && git commit -m "Plugins Added" && git push
+    ```
 
-git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-community.git plugins/community
+### Deleting Submodules
 
-git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-system.git plugins/system
-</pre>
-
-<Strong>Deleting Submodules</Strong>
-
-1. <pre>git submodule deinit -f plugins/eme-lib</pre>
-2. <pre>git rm --cached -r plugins/eme-lib</pre>
+1. Deinit submodules
+    ```
+    git submodule deinit -f plugins/eme-lib
+    ```
+2. Remove folders with git
+    ```
+    git rm --cached -r plugins/eme-lib
+    ```
 3. Manually delete Plugin entry in .gitmodules
 
-
-<h3>Add Plugins</h3>
-
-<pre>git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-NEWPLUGIN.git plugins/NEWPLUGIN</pre>
