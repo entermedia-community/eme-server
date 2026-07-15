@@ -13,6 +13,7 @@
 	"java.project.outputPath": "build",
 
 	"git.rebaseWhenPulling": true,
-	"git.rebaseWhenSync": true
+	"git.rebaseWhenSync": true,
+	"git.autoStash": true
 }
 
