@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+  <property id="user" index="true" stored="true" editable="true" type="list" listid="user">
+    <name>
+      <language id="en">User</language>
+    </name>
+  </property>
+
+  <property id="entitytutorial" type="list" listid="entitytutorial" index="true" stored="true" editable="true">
+    <name>
+      <language id="en">Tutorials</language>
+    </name>
+  </property>
+
+  <property id="beginnerprogress" index="true" stored="true" editable="true" datatype="number">
+    <name>
+      <language id="en">Beginner Progress</language>
+    </name>
+  </property>
+
+  <property id="competentprogress" index="true" stored="true" editable="true" datatype="number">
+    <name>
+      <language id="en">Competent Progress</language>
+    </name>
+  </property>
+
+  <property id="expertprogress" index="true" stored="true" editable="true" datatype="number">
+    <name>
+      <language id="en">Expert Progress</language>
+    </name>
+  </property>
+
+  <property id="efficiency" index="true" stored="true" editable="true" type="list" listid="efficiency">
+    <name>
+      <language id="en">Efficiency</language>
+    </name>
+  </property>
+
+  <property id="answersforgotten" index="true" stored="true" editable="true" datatype="number">
+    <name>
+      <language id="en">Answers Forgotten</language>
+    </name>
+  </property>
+
+  <property id="lastreviewed" index="true" stored="true" editable="true" type="date">
+    <name>
+      <language id="en">Last Reviewed</language>
+    </name>
+  </property>
+</properties>

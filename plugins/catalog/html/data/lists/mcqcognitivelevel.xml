@@ -1,8 +1,7 @@
 <properties>
 
-	<property id="easy">Easy</property>
-	<property id="medium">Medium</property>
-	<property id="hard">Hard</property>
-	<property id="advanced">Advanced</property>
+	<property id="beginner">Beginner</property>
+	<property id="competent">Competent</property>
+	<property id="expert">Expert</property>
 
 </properties>

@@ -1,4 +1,4 @@
 <page>
-  <path-action name="TutorialModule.getTopicTutorials" />
+  <path-action name="TopicModule.getTopicTutorials" />
 </page>
 

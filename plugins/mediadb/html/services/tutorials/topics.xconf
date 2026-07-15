@@ -1,4 +1,4 @@
 <page>
-  <path-action name="TutorialModule.getUserTopics" />
+  <path-action name="TopicModule.getUserTopics" />
 </page>
 
