@@ -20,3 +20,4 @@ webapp/WEB-INF/data/site/catalog/originals/
 #README.md
 #.vscode/
 #/webapp/WEB-INF/data/repos
+.DS_Store
