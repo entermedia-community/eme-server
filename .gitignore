@@ -1,14 +1,20 @@
 /build/
 tomcat/logs
+tomcat/work
 webapp/WEB-INF/data/catalog/generated/
 webapp/WEB-INF/data/catalog/originals/
+webapp/WEB-INF/data/catalog/lists/
 webapp/WEB-INF/elastic/
 webapp/WEB-INF/tmp/
 webapp/WEB-INF/temp/
 webapp/WEB-INF/trash/
+webapp/WEB-INF/data/repos/
 webapp/WEB-INF/data/exports/
 .DS_Store
 
+webapp/WEB-INF/data/site/catalog/lists/
+webapp/WEB-INF/data/site/catalog/generated/
+webapp/WEB-INF/data/site/catalog/originals/
 
 ## For pushing to upstream, ignore the following files:
 #README.md
