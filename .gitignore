@@ -15,3 +15,4 @@ webapp/WEB-INF/data/repos
 #README.md
 #.vscode/
 #/webapp/WEB-INF/data/repos
+.DS_Store
