@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data deploypath="/site/mediadb" id="AZ9rUMZ1mlKNVevm2k4H"> 
+    <name> 
+      <language id="en"><![CDATA[mediadb]]></language> 
+    </name> 
+  </data>  
+  <data deploypath="/site/find" id="AZ9rUMaAmlKNVevm2k4I">
+    <name>
+      <language id="en"><![CDATA[find]]></language>
+    </name>
+  </data>
+</root>

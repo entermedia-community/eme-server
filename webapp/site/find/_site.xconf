@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <property name="siteid">site</property>
+  <property name="siteid">testu</property>
   <property name="themeid">theme</property>
   <property name="fallbackdirectory">/finder/find</property>
   <property name="catalogid">site/catalog</property>

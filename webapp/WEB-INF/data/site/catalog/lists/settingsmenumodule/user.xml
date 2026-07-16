@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="usermodulefields" menulevel="toplevel" moduleid="user" parentid="userviews" path="/views/settings/modules/user/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="userviews" moduleid="user" parentid="userviews" path="/views/settings/modules/user/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="usersystemviews" moduleid="user" parentid="userviews" path="/views/settings/modules/user/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="usermodulepermissions" menulevel="toplevel" moduleid="user" parentid="user" path="/views/settings/modules/user/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

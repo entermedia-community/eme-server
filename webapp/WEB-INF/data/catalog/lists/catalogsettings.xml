@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <root> 
-  <data id="collection_chat_notification_lastsent" value="2026-07-15 17:37:36 -0600">
+  <data id="collection_chat_notification_lastsent" value="2026-07-16 08:27:36 -0600">
     <name><![CDATA[Chat Notification Last Sent]]></name>
   </data>  
-  <data id="collectives_notification_lastsent" value="2026-07-15 16:46:55 -0600"> 
-    <name> 
-      <language id="en"><![CDATA[Projects Notification Last Sent]]></language> 
-    </name> 
+  <data id="collectives_notification_lastsent" value="2026-07-16 07:37:36 -0600"> 
+    <name><![CDATA[Projects Notification Last Sent]]></name> 
   </data> 
 </root>

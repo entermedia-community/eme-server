@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="entityarticlemodulefields" menulevel="toplevel" moduleid="entityarticle" parentid="entityarticleviews" path="/views/settings/modules/entityarticle/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="entityarticleviews" moduleid="entityarticle" parentid="entityarticleviews" path="/views/settings/modules/entityarticle/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="entityarticlesystemviews" moduleid="entityarticle" parentid="entityarticleviews" path="/views/settings/modules/entityarticle/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="entityarticlemodulepermissions" menulevel="toplevel" moduleid="entityarticle" parentid="entityarticle" path="/views/settings/modules/entityarticle/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

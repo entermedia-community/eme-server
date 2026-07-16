@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="goaltaskmodulefields" menulevel="toplevel" moduleid="goaltask" parentid="goaltaskviews" path="/views/settings/modules/goaltask/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="goaltaskviews" moduleid="goaltask" parentid="goaltaskviews" path="/views/settings/modules/goaltask/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="goaltasksystemviews" moduleid="goaltask" parentid="goaltaskviews" path="/views/settings/modules/goaltask/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="goaltaskmodulepermissions" menulevel="toplevel" moduleid="goaltask" parentid="goaltask" path="/views/settings/modules/goaltask/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>

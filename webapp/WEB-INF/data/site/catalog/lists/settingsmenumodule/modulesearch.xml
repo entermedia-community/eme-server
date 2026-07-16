@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="modulesearchmodulefields" menulevel="toplevel" moduleid="modulesearch" parentid="modulesearchviews" path="/views/settings/modules/modulesearch/metadata/properties/index.html" ordering="20">Fields Setup</property>  
+  <property id="modulesearchviews" moduleid="modulesearch" parentid="modulesearchviews" path="/views/settings/modules/modulesearch/metadata/views/index.html" ordering="120">Edit Views</property>  
+  <property id="modulesearchsystemviews" moduleid="modulesearch" parentid="modulesearchviews" path="/views/settings/modules/modulesearch/metadata/viewssystem/index.html" ordering="150">Application Views</property>  
+  <property id="modulesearchmodulepermissions" menulevel="toplevel" moduleid="modulesearch" parentid="modulesearch" path="/views/settings/modules/modulesearch/permissions/enabled.html" ordering="20">Permissions</property> 
+</properties>
