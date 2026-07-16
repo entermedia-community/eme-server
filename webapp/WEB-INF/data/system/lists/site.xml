@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 
-<root>
-  <data id="site" catalogid="site/catalog" rootpath="/site">
+<root> 
+  <data id="site" catalogid="site/catalog" domains="localhost.com" rootpath="/site">
     <name><![CDATA[Minsur]]></name>
-  </data>
+  </data> 
 </root>
