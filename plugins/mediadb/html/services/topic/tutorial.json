@@ -32,7 +32,8 @@
               "contenttype": "$!componentcontent.componenttype",
               "contentrole": "$!componentcontent.contentrole"
               #if($componentcontent.assetid)
-                ,"asset": "$siteroot$mediaarchive.asLinkToPreview($componentcontent.assetid, 'image200x200')"
+                ,"assetthumbnail": "$siteroot$mediaarchive.asLinkToPreview($componentcontent.assetid, 'image200x200')"
+                ,"asseturl": "$siteroot$mediaarchive.asLinkToPreview($componentcontent.assetid, 'image3000x3000')"
               #end
               #if($componentcontent.questionid)
                 #set($question = $mediaarchive.getData("entityquestion", $componentcontent.questionid))

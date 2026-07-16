@@ -5,7 +5,7 @@
       <language id="en">Tutorial</language>
     </name>
   </property>
-  <property id="assignedto" type="list" datatype="list" listid="user" index="true" stored="true" editable="true">
+  <property id="assignedto" viewtype="multiselect" type="list" datatype="list" listid="user" index="true" stored="true" editable="true">
     <name>
       <language id="en">Assigned To</language>
     </name>
