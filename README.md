@@ -112,3 +112,11 @@ In case you want to contribute changes to eme-server, cherry pick changes to you
 ## Usefull git configuration
 git config --global pull.ff only
 git rebase upstream/main
+
+git fetch upstream
+git stash
+git rebase upstream/main
+git stash pop
+git submodule foreach 'git fetch origin'
+git submodule foreach 'git checkout main'
+git submodule foreach 'git pull origin main'
