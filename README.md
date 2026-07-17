@@ -3,42 +3,49 @@
 
 Instructions to run a single eme-server, fork and init a new eme-server-client and instructions for setup Develoment environments to work with eme-server and eme-plugins.
 
-## Single eme-server instance docker Install
+## Developer Intallation
 
-1. `curl -o eme-docker-init.sh -jL https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/plugins/system/resources/docker/scripts/eme-docker-init.sh`
-2. `sudo bash ./eme-docker-init.sh eme-server-myserver 100`
+1. Fork server to make your changes
 
-
-## Setup Client development environment
-
-1. Fork server
-    ##### Existing project:
+    ##### Save your changes to github by forking our base eme-server project
     ```
-    cd eme-server-myserver
-    git init
-    ```
-    ##### Or clone new:
-    ```
-    git clone git clone https://github.com/entermedia-community/eme-server-myserver.git
-    cd eme-server-myserver
-    ```
-
-2. Set local default branch
-   ```
-   git config --global init.defaultBranch main
-   ```
-
-3. Add *eme-server* upstream
-    ```
+    git clone https://github.com/entermedia-community/eme-server.git MyEmEServer
+    cd MyEmEServer
     git remote add upstream https://github.com/entermedia-community/eme-server.git
+    git config --global init.defaultBranch main
+    git submodule update --init --recursive --depth 1 --remote
+
+    ##make some local changes that you dont want to commit yet
+
+    ##Upgrade the base code to see latest changes
+    git fetch upstream
+    git stash
+    git rebase upstream/main
+    git pull --rebase origin main
+    git stash pop
+
+    git submodule foreach 'git stash -u'
+    git submodule foreach 'git pull origin main'
+    git submodule foreach 'git stash pop'
+
+# 1. Force every submodule to check out its configured branch
+
+# 2. Pull down the latest updates for those branches
+git submodule update --remote
+
+    git submodule update --init --recursive --depth 1 --remote
+    git push https://github.com/YourAccunt/MyEmEServer
     ```
-4. Fetch & Merge
+
+2. Launch Development Tools
+    ```
+    curl -L get-eme.eme.world | bash -s -- developer $HOME/git/MyEmEServer
+    ```
+
+4. Update the base code from time to time
     ```
     git fetch upstream
     git merge upstream/main
-    ```
-5. Update Submodules
-    ```
     git submodule update --init --recursive --depth 1
     ```
 6. For pull eme-server changes use git rebase
