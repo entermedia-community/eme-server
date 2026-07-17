@@ -1,0 +1,9 @@
+[user.dart](file;file:///Users/hi/Projects/entermedia/testu_cl/lib/models/user.dart) create a user model based on data schema below:
+"user": {
+  "id": "$user.id",
+  "firstname": "$user.firstname",
+  "lastname": "$user.lastname",
+  "screenname": "$user.screenname",
+  "assetportrait": "$siteroot$mediaarchive.asLinkToPreview('$user.assetportrait', 'image200x200')",
+  "email": "$user.email"
+}
