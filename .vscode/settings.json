@@ -13,6 +13,10 @@
 	"java.project.outputPath": "build",
 
 	"git.rebaseWhenPulling": true,
+<<<<<<< HEAD
 	"git.rebaseWhenSync": true,
 	"git.autoStash": true
+=======
+	"git.rebaseWhenSync": true
+>>>>>>> f9b2690d (Git settings)
 }
