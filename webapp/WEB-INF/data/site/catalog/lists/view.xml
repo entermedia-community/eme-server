@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <data id="entitytopicentityasset" renderexternalid="entitytopic" rendertable="entityasset" ordering="1784240899841" systemdefined="false" rendertype="entitysubmodules" moduleid="entitytopic"> 
+    <name><![CDATA[Sources]]></name> 
+  </data>  
+  <data id="entitytopicentitytutorial" renderexternalid="entitytopic" rendertable="entitytutorial" ordering="1784240899883" systemdefined="false" rendertype="entitysubmodules" moduleid="entitytopic">
+    <name><![CDATA[Tutorials]]></name>
+  </data>
+</root>
