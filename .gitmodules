@@ -11,3 +11,7 @@
 	path = plugins/system
 	url = https://github.com/entermedia-community/eme-plugin-system.git
 	branch = main
+[submodule "plugins/profile"]
+	path = plugins/profile
+	url = https://github.com/entermedia-community/eme-plugin-profile.git
+	branch = main

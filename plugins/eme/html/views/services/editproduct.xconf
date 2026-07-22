@@ -1,9 +1,0 @@
-<page>
-
-  <path-action name="DataEditModule.loadData" allowduplicates="true">
-    <pageval>emeprofile</pageval>
-    <searchtype>emeprofile</searchtype>
-  </path-action>
-  <inner-layout>/${applicationid}/theme/layouts/dialoglayout.html</inner-layout>
-
-</page>
