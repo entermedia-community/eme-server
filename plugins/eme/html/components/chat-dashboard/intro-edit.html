@@ -1,7 +1,13 @@
-<form name="emeprofileform" id="emeprofileform" class="ajaxform autocloseform" action="/${applicationid}/components/chat-dashboard/intro-save.html" method="post">
+<form name="emeprofileform" 
+	id="emeprofileform" 
+	class="modal-dialog-form ajaxform autocloseform" 
+	action="/${applicationid}/components/chat-dashboard/intro-save.html" 
+	method="post"
+	>
 
 	<input type="hidden" name="save" value="true" />
-  <input type="hidden" name="id" value="$emeprofile.id" />
+  	
+	<input type="hidden" name="id" value="$emeprofile.id" />
 
 	<input type="hidden" name="searchtype" value="emeprofile" />
 
@@ -9,9 +15,9 @@
 	<input type="hidden" name="owner.value" value="$user.getId()" />
 
 
-  #set( $searcher = $mediaarchive.getSearcher("emeprofile") )
-  $context.putPageValue("searcher", $searcher)
-	$context.putPageValue("viewid", "emeprofilegeneral")
-  $context.putPageValue("data", $emeprofile)
-	$pages.include("/$applicationid/components/xml/detaileditorcss.html", $context)
+	#set( $searcher = $mediaarchive.getSearcher("emeprofile") )
+	$context.putPageValue("searcher", $searcher)
+		$context.putPageValue("viewid", "emeprofilegeneral")
+	$context.putPageValue("data", $emeprofile)
+		$pages.include("/$applicationid/components/xml/detaileditorcss.html", $context)
 </form>

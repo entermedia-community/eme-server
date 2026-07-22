@@ -1,0 +1,104 @@
+
+#set($entity = $hit)
+#set($entityid = $hit.id)
+#if($rendermoduleid)
+	#set($moduleid = $rendermoduleid)
+#else
+	#set($moduleid = $module.id)
+#end
+
+#if($moduleid == "modulesearch")
+	#set($moduleid = $hit.entitysourcetype)
+#end
+
+$context.putPageValue("data", $hit) 
+
+#set($previewurl = "/${hit.urlname}/chat/index.html")
+ <div class="emfolder-wrapper compact emgrid-type-$!moduleid entitycontainer entity$!moduleid$!entityid" 
+	id="emgridentity$!moduleid$!entityid"
+	data-id="${entityid}"
+	data-moduleid="$!{moduleid}"
+	data-rendertype="entity">
+
+	<a id="clickid${entityid}"  
+		href="$!{previewurl}" 
+		class=""
+		
+		data-updateurl="true"
+		
+		title="#text($!entity)">
+
+		##look for primaryimage
+		#set( $primarymediafield = $entity.primarymedia )
+		
+		#if($primarymediafield)
+			#set( $primarymediatemp = $mediaarchive.getCachedAsset($entity.primarymedia))
+				#ifnotnull($primarymediatemp)
+					#set($rendertype = $mediaarchive.getMediaRenderType($primarymediatemp.fileformat))
+					#if($rendertype != 'audio')				
+						#set($primarymedia = $primarymediatemp)
+					#end
+			#end
+		#end
+		
+		#ifnull($primarymedia)
+			#set( $primarymediafield = $entity.primaryimage )
+			#if($primarymediafield)
+				#ifnotnull($entity.primaryimage)
+						#set( $primarymediatemp = $mediaarchive.getCachedAsset($entity.primaryimage))
+						#set($rendertype = $mediaarchive.getMediaRenderType($primarymediatemp.fileformat))
+						#if($rendertype != 'audio')
+							#set($primarymedia = $primarymediatemp)
+						#end
+				#end
+			#end
+		#end	
+		
+		$context.putPageValue("type", $rendertype)
+	   	#set($link = "$!siteroot$applink/views/modules/$!topmodule.getId()/index.html")
+		#if( $parentmodule == $module)
+			#set($link = "$link?entityid=$!entity.getId()&entitytype=$!moduleid&topentityid=$!entity.getId()")
+		#else
+			#set($link = "$link?entityid=$!entity.getId()&entitytype=$!moduleid&topentityid=$!topentityid")
+		#end
+		#set($moduleicon = "grid")
+		#if ($module.moduleicon)
+			#set($moduleicon = $module.moduleicon)
+		#end
+		<div 
+			class="emfolder-inner assetdropentity drop-over" 
+			id="attachedmedia$entityid" 
+			data-moduleid="$!{moduleid}" 
+			data-entityid="$!{entityid}" 
+			data-assetsshown="$!assetsshown"
+			data-attachedmediaurl="$!siteroot${searchhome}/types/entityfolder.html"
+			data-targetdiv="emgridentity$!moduleid$!entityid">
+			<div class="emfolder-icon">
+				#if($primarymedia)
+					$context.putPageValue("thumbsize", "crop" )
+					$context.putPageValue("hit", $primarymedia) 
+					$context.putPageValue("asset", $primarymedia)
+					
+					$!context.putPageValue("searchhome", "$apphome/views/modules/asset/results/default")
+					$pages.include("$apphome/views/modules/asset/results/default/thumbnails/small.html",$context)
+			  #else
+					<i class="bi bi-$moduleicon module-icon"></i> 
+			  #end
+			</div>
+			<div class="emfolder-text">
+				<i class="bi bi-$moduleicon module-icon"></i>
+				<span>#text($!entity)</span>
+			</div>
+			#if($pickerenabled)
+				<div class="pickfromiframe entity" 
+					data-entityid="${entityid}" 
+					data-moduleid="${moduleid}"
+					#if($primarymedia) data-primarymedia="$primarymedia.getId()" #end
+					title="[[Pick]]: #text($entity)"
+					>
+					<i class="bi bi-check-lg"></i>
+				</div>
+			#end
+		</div>
+	</a>
+</div>

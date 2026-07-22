@@ -57,6 +57,8 @@
 
   <property name="themeid">theme</property>
   <path-action name="ThemeModule.loadCurrentTheme" />
+
+  <path-action name="FinderModule.loadEmeProfile" />
   
   <path-action name="FinderModule.loadTopMenu" />
 
@@ -115,13 +117,17 @@
   <script src="/${applicationid}/components/javascript/emedia/emtree.js" id="emtree"/>
   <script defer="true" src="/${applicationid}/components/javascript/fabric.min.js" id="fabric"/>
   <style id="app-com-css" href="/${applicationid}/theme/styles/theme-community.css"/>
-  <style id="app-css" href="/${applicationid}/theme/styles/theme.css"/>
+
+  <style id="finder-css" href="/finder/find/theme/styles/theme.css"/>
+
+  <style id="eme-css" href="/${applicationid}/theme/styles/theme.css"/>
+
   <style id="mediaplayer" href="/${applicationid}/theme/styles/pages/mediaplayer.css"/>
   <script defer="true" src="/${applicationid}/components/javascript/jquery.html5_upload.js" id="html5_upload"/>
   <script defer="true" src="/${applicationid}/components/javascript/emedia/upload.js" id="upload"/>
   <script defer="true" src="/${applicationid}/components/javascript/emedia/quicksearch.js" id="quicksearch"/>
   <script src="/${applicationid}/components/javascript/emedia/results.js" id="results"/>
-  <style id="results-css" href="/${applicationid}/theme/styles/pages/results.css"/>
+  <style id="results-css" href="/${applicationid}/theme/styles/pages/results.css" />
   <style id="dropdown-css" href="/${applicationid}/theme/styles/dropdown.css"/>
   <script src="/${applicationid}/components/javascript/emedia/brick.js" id="jquerybrick"/>
   <script src="/${applicationid}/components/javascript/emedia/brickvertical.js" id="jquerybrickvertical"/>
@@ -153,7 +159,7 @@
     <userprofile name="viewhomelink" value="true"/>
   </permission>
   <permission name="viewquicksearchheader">
-    <boolean value="true"/>
+    <boolean value="false"/>
   </permission>
   <permission name="editassettags">
     <userprofile name="editassettags" value="true"/>

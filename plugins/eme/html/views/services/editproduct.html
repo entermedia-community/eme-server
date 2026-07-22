@@ -4,7 +4,7 @@
 	#set( $collectiveproduct = $mediaarchive.query("collectiveproduct").exact("id", $collectiveproductid).exact("emeprofile", $emeprofileid).searchOne() )
 #end
 
-<form name="emeprofileform" id="emeprofileform" class="ajaxform autocloseform" action="/${applicationid}/components/chat-dashboard/intro-save.html" method="post">
+<form name="emeprofileform" id="emeprofileform" class="modal-dialog-form ajaxform autocloseform" action="/${applicationid}/components/chat-dashboard/intro-save.html" method="post">
 
 	<input type="hidden" name="save" value="true" />
 

@@ -24,13 +24,14 @@
 			#set($theme = $mediaarchive.getCachedData("theme", $themeid))
 			
 			#ifnotnull($emeprofile)
-				<a class="personal-brand text-decoration-none d-flex align-items-center" href="$homeurl" title="$text($emeprofile)" style="height: var(--themed-logo-height);">
-					EME #text($emeprofile)
+				<a class="personal-brand text-decoration-none d-flex align-items-center" href="$homeurl" title="#text($emeprofile)" style="height: var(--themed-logo-height);">
+					#text($emeprofile)
 				</a>
+				<i class="bi bi-chevron-right text-muted mx-2" style="font-size:1rem;"></i>
 			#end
 			
 			#ifnull($user)
-				<a class="personal-brand text-decoration-none d-flex align-items-center" href="$homeurl" title="[[EME]]" style="height: var(--themed-logo-height);">
+				<a class="personal-brand text-decoration-none d-flex align-items-center" href="$homeurl" title="EME" style="height: var(--themed-logo-height);">
 					#ifnotnull($category)
 						#set( $assetid = $category.findValue("headercategoryimage") )
 						#ifnotnull($assetid)
@@ -41,7 +42,7 @@
 					#end
 
 					#ifnull($logourl)
-						#set( $logourl = "$!{siteroot}$themeprefix/$themeid/logo.png")
+						#set( $logourl = "$!{siteroot}/$themeid/logo.png")
 						
 						#set($theme = $mediaarchive.getCachedData("theme", $themeid))
 						#set($logowidth = $theme.logowidth)
@@ -50,19 +51,14 @@
 					#ifnotnull($logourl)
 						<img src="$logourl" alt="[[EME]]" style="height: 52px; width: auto;object-fit:contain;" class="me-2">
 					#end
-					#set($sitetitle = $mediaarchive.getCatalogSettingValue("sitetitle"))
-					$sitetitle
+					##set($sitetitle = $mediaarchive.getCatalogSettingValue("sitetitle"))
+					##$sitetitle
 				</a>
 			#end
 			
-			#if($module.id != "modulesearch")
-				##<i class="bi bi-chevron-right text-muted mx-2" style="font-size:1rem;"></i>
-				<span class="top-breadcrumb">
-					#text($module)
-				</span>
-			#end
+
 			#ifnotnull($librarycol)
-				<i class="bi bi-chevron-right text-muted mx-2" style="font-size:1rem;"></i>
+				
 				<span class="top-breadcrumb">
 					#text($librarycol)
 				</span>

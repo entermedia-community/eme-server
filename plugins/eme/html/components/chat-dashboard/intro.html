@@ -1,4 +1,4 @@
-
+#ifnotnull($emeprofile)
 <section class="eme-chat-hero">
   <div class="container p-5 mt-4">
     <div class="row g-5">
@@ -11,7 +11,7 @@
 
       <div class="col">
         <p class="text-uppercase fw-semibold mb-1" style="color:#3884fd;letter-spacing:.12em;font-size:.8rem;">
-          EME Portfolio
+          [[Portfolio]]
         </p>
         <h1 class="display-5 fw-bold mb-1">
           ${emeprofile.name}
@@ -55,13 +55,13 @@
             </a>
             #if($user.id == $emeprofile.owner)
               <a href="$apphome/components/chat-dashboard/intro-edit.html" data-id="$emeprofile.id" class="emdialog btn btn-lg btn-accent py-2 px-3">
-                <i class="bi bi-pencil-square me-1"></i> Edit Profile
+                <i class="bi bi-pencil-square me-1"></i> [[Edit Profile]]
               </a>
             #end
           #end
           #ifnull($user)
             <a href="$apphome/authentication/ajaxlogin.html" class="btn btn-lg btn-accent py-2 px-3">
-              <i class="bi bi-chat me-1"></i> Say Hello
+              <i class="bi bi-chat me-1"></i> [[Say Hello]]
             </a>
           #end
         </div>
@@ -72,6 +72,8 @@
 </section>
 
 
-$pages.include("/${applicationid}/views/services/products.html", $context)
+##$pages.include("/${applicationid}/views/services/products.html", $context)
+$pages.include("/${applicationid}/components/chat-dashboard-search/search.html", $context)
 
+#end
 

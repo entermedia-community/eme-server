@@ -19,29 +19,46 @@
   <div class="sidebar-scroll mt-1">
 
     <div class="pb-2">
-      <a href="$applink/views/dashboard" 
+      <a href="/profiles/${emeprofile.urlname}" 
         class="ajax file-row" 
-        data-oemaxlevel="1"
-        title="[[Dashboard]]">
-        <i class="bi bi-grid ns f-icon"></i>
-        <span class="f-name">[[Dashboard]]</span>
+        data-targetdiv="applicationstructure"
+        data-oemaxlevel="3"
+        data-updateurl="true"
+        title="#text($emeprofile) [[Profile]]">
+        #set( $userimageurl = $mediaarchive.asLinkToUserProfile($user) )
+					
+					#if(!$userimageurl)
+						#set( $userimageurl = "$!apphome/theme/images/user.svg" )
+					#end 
+          <img  src="${userimageurl}" title="$!followeruser.getAnonNickName()" width="30px" height="30px" class="me-2" style="border-radius:8px;">
+        <span class="f-name">#text($emeprofile) [[Profile]]</span>
       </a>
     </div>
-
+  
+    
     <div class="pb-2">
-      $pages.include("./sidebar-emechat.html", $context)
+      #ifnotnull($librarycol)
+          #set($entitymodule = $librarycol)
+          #set($moduleid = "librarycollection")
+          
+          $pages.include("./sidebar-data-project.html", $context)
+      #end
+
+      #ifnull($moduleid)
+        #set($entitymodule = $emeprofile)
+        #set($moduleid = "emeprofile")
+        $context.putPageValue("moduleid", $moduleid)
+        $pages.include("./sidebar-data-emeprofile.html", $context)
+      #end
+      
     </div>
+
+  ##  <div class="pb-2">
+  ##    $pages.include("./sidebar-services.html", $context)
+  ##  </div>
 
     <div class="pb-2">
       $pages.include("./sidebar-teamchat.html", $context)
-    </div>
-    
-    <div class="pb-2">
-      $pages.include("./sidebar-data.html", $context)
-    </div>
-
-    <div class="pb-2">
-      $pages.include("./sidebar-services.html", $context)
     </div>
 
     $pages.include("./sidebar-admin.html", $context)

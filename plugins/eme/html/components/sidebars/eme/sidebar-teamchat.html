@@ -1,7 +1,8 @@
+#if(!$messages.isEmpty())
 <div class="sidebar-section-btn"
   style="background-color: #f4f4f6;">
   <span class="d-flex align-items-center gap-2">
-    <i class="bi bi-clock-history sect-icon"></i>[[Team Chats]]
+    <i class="bi bi-clock-history sect-icon"></i>[[Agent Chat]]
   </span>
 </div>
 
@@ -29,12 +30,12 @@
         #end
         #ifnull($otherperson)
           #if($project.assetportrait)
-          #set($asset = $mediaarchive.getAsset($project.assetportrait))
-          #set($link = $mediaarchive.asLinkToPreview($asset,"image200x200"))
+            #set($asset = $mediaarchive.getAsset($project.assetportrait))
+            #set($link = $mediaarchive.asLinkToPreview($asset,"image200x200"))
           #else
-          #set($link = "${apphome}/theme/images/OI_flower.png")
+            #set($link = "${apphome}/theme/images/OI_flower.png")
           #end
-          <img class="session-thumb" src="$link" alt="[[Project]] ${project}">
+          <img class="session-thumb" src="${link}" alt="[[Project]] ${project}" />
         #end
         <div class="flex-grow-1">
           
@@ -73,3 +74,4 @@
     <p class="px-2 py-2" style="font-size:0.81rem; color:#9ca3af;">[[No team chat found!]]</p>
   #end
 </div>
+#end

@@ -1,35 +1,17 @@
-#ifnotnull($emeprofile)
-  #set($entitymodule = $emeprofile)
-  #set($moduleid = "emeprofile")
-#end
-#ifnull($entitymodule)
-  #ifnotnull($librarycol)
-    #set($entitymodule = $librarycol)
-    #set($moduleid = "librarycollection")
-  #end
-#end
-
 <div class="sidebar-section-btn" style="background-color: #f2f2f2;">
   <span class="d-flex align-items-center gap-2">
-    #ifnotnull($librarycol)
-      <i class="bi bi-folder2-open sect-icon"></i> #text($librarycol)
-    #end
-    #ifnotnull($emeprofile)
-      <i class="bi bi-person-circle sect-icon"></i> #text($emeprofile)'s Data
-    #end
+
+ <i class="bi bi-person-circle sect-icon"></i> #text($emeprofile)'s Data
+
   </span> 
 </div>
 
 <div class="py-2" id="sbFilesBody">
-  #set($enttiyviews = $mediaarchive.query("view").exact("moduleid", $moduleid).exact("systemdefined","false").sort("orderingUp").named("view").search($context) )
-  
+  #set($enttiyviews = $mediaarchive.query("view").exact("moduleid", "emeprofile").exact("systemdefined","false").sort("orderingUp").named("view").search($context) )
+    
   #foreach($entityview in $enttiyviews)
-
     #set( $viewdata = $mediaarchive.getCachedData("view", $entityview.id))
-
-    
     #set($viewmodule = $mediaarchive.query("module").exact("id", $viewdata.rendertable).searchOne())
-    
 
     #ifnotnull($viewmodule.moduleicon)
       #set($moduleicon = $viewmodule.moduleicon)
@@ -46,8 +28,7 @@
     #set($rendertype = $viewdata.rendertype)
 
     <a 
-    ## href="$apphome/views/modules/${module.id}/editors/listentities/tabs/rendertypes/${rendertype}.html"  
-    href="$urlname/modules/${module.id}/${rendertype}"  
+    href="/profiles/${emeprofile.urlname}/data/${entityview.id}"  
       class="ajax activelistener file-row #if( $topmenuselected == $entityview.getId()) active#end" 
       data-targetdivinner="applicationcontent"
       data-updateurl="true"
@@ -55,11 +36,14 @@
       data-entitymoduleviewid="$entityview.id"
       data-entitymoduleid="$entityview.moduleid"
       data-oemaxlevel="2"
-      data-entityid="$librarycol.id"
+      data-entityid="$!{emeprofile.id}"
       title="[[View]] $entityview.name">
       <i class="bi bi-${moduleicon} module-icon f-icon"></i>
       <span class="f-name">#text($entityview)</span>
     </a>
   #end
+
+
+
 
 </div>
