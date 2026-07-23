@@ -3,20 +3,16 @@
 		"**/index.min.js": true,
 		"**/indexdefer.min.css": true
 	},
-	"java.jdt.ls.java.home": "/usr/lib/jvm/jre",
+	"java.jdt.ls.java.home": "/usr/lib/jvm/default-java",
 	"java.configuration.runtimes": [
-		{
-			"name": "JavaSE",
-			"path": "/usr/lib/jvm/jre"
+		{		
+			"name": "JavaSE-21",
+			"path": "/usr/lib/jvm/default-java",
+			"default": true
 		}
 	],
-	"java.project.outputPath": "build",
-
 	"git.rebaseWhenPulling": true,
-<<<<<<< HEAD
 	"git.rebaseWhenSync": true,
 	"git.autoStash": true
-=======
-	"git.rebaseWhenSync": true
->>>>>>> f9b2690d (Git settings)
 }
+
