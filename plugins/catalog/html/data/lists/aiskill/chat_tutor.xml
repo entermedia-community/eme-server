@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- using more descriptive ids for easier debugging -->
+
+<records>
+
+   <data id="adaptiveTutorialWelcomeSkill" bean="adaptiveTutorialWelcomeSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="10">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat Welcome]]></language>
+      </name>
+   </data>
+
+   <data id="adaptiveTutorialContinueSkill" bean="adaptiveTutorialContinueSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="20">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat Continue]]></language>
+      </name>
+   </data>
+
+   <data id="adaptiveTutorialAnswerSkill" bean="adaptiveTutorialAnswerSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="30">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat Answer]]></language>
+      </name>
+   </data>
+
+   <data id="adaptiveTutorialUserCommentSkill" bean="adaptiveTutorialUserCommentSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="50">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat User Comment]]></language>
+      </name>
+   </data>
+
+   <data id="adaptiveTutorialEndSkill" bean="adaptiveTutorialEndSkill" contextbean="chatMessageContext" agenttype="remoteagent" ordering="60">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat End]]></language>
+      </name>
+   </data>
+
+
+</records>

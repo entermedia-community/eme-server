@@ -26,6 +26,16 @@
       <language id="en"><![CDATA[Option (D)]]></language>
     </name>
   </property>
+  <property id="option_e" index="true" editable="true" stored="true" viewtype="text">Option (E) 
+    <name>
+      <language id="en"><![CDATA[Option (E)]]></language>
+    </name>
+  </property>
+  <property id="option_f" index="true" editable="true" stored="true" viewtype="text">Option (F) 
+    <name>
+      <language id="en"><![CDATA[Option (F)]]></language>
+    </name>
+  </property>
   <property id="correctoption" type="list" listid="mcqoptions" index="true" editable="true" stored="true">Correct Option
     <name>
       <language id="en"><![CDATA[Correct Option]]></language>

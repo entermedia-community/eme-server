@@ -1,16 +1,4 @@
 
-[submodule "plugins/finder"]
-	path = plugins/finder
-	url = https://github.com/entermedia-community/eme-plugin-finder.git
-	branch = main
-[submodule "plugins/community"]
-	path = plugins/community
-	url = https://github.com/entermedia-community/eme-plugin-community.git
-	branch = main
-[submodule "plugins/system"]
-	path = plugins/system
-	url = https://github.com/entermedia-community/eme-plugin-system.git
-	branch = main
 [submodule "plugins/profile"]
 	path = plugins/profile
 	url = https://github.com/entermedia-community/eme-plugin-profile.git
