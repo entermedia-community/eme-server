@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+
+  <data id="minsur" primaryimagepath="/theme/logo.ong" externaldomain="http://localhost.com:8080">
+    <name>
+      <language id="en"><![CDATA[Minsur]]></language>
+    </name>
+    <caption><![CDATA[NMinsur]]></caption>
+
+    <summary>
+Minsur EME Server 
+    </summary>
+
+  </data>
+
+</root>

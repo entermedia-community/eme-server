@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- using more descriptive ids for easier debugging -->
+
+<records>
+
+   <data id="chat_tutor_welcome" aiskill="adaptiveTutorialWelcomeSkill" automationscenario="chat_tutor" enabled="true" processingmessage="Loading...">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat Welcome]]></language>
+      </name>
+   </data>
+
+   <data id="chat_tutor_continue" aiskill="adaptiveTutorialContinueSkill" automationscenario="chat_tutor" enabled="true" processingmessage="Loading...">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat Continue]]></language>
+      </name>
+   </data>
+
+   <data id="chat_tutor_answer" aiskill="adaptiveTutorialAnswerSkill" automationscenario="chat_tutor" enabled="true" processingmessage="Loading...">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat Answer]]></language>
+      </name>
+   </data>
+
+   <data id="chat_tutor_usercomment" aiskill="adaptiveTutorialUserCommentSkill" automationscenario="chat_tutor" enabled="true" processingmessage="Loading...">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat User Comment]]></language>
+      </name>
+   </data>
+
+   <data id="chat_tutor_end" aiskill="adaptiveTutorialEndSkill" automationscenario="chat_tutor" enabled="true" processingmessage="Loading...">
+      <name>
+         <language id="en"><![CDATA[Tutor Chat End]]></language>
+      </name>
+   </data>
+
+</records>

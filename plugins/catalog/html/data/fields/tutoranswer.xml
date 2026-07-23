@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties beanname="dataSearcher">
+
+  <property id="selectedoption" type="list" listid="mcqoptions" index="true" editable="true" stored="true">Selected Option
+    <name>
+      <language id="en"><![CDATA[Selected Option]]></language>
+    </name>
+  </property>
+
+  <property id="answerconfidence" type="list" listid="answerconfidence" index="true" editable="true" stored="true">Confidence
+    <name>
+      <language id="en"><![CDATA[Confidence]]></language>
+    </name>
+  </property>
+
+  <property id="entityquestion" type="list" listid="entityquestion" index="true" editable="true" stored="true">Entity Question
+    <name>
+      <language id="en"><![CDATA[Entity Question]]></language>
+    </name>
+  </property>
+
+  <property id="channel" type="list" listid="channel" index="true" editable="true" stored="true">Channel
+    <name>
+      <language id="en"><![CDATA[Channel]]></language>
+    </name>
+  </property>
+
+  <property id="datecreated" type="date" index="true" editable="true" stored="true">Date Created
+    <name>
+      <language id="en"><![CDATA[Date Created]]></language>
+    </name>
+  </property>
+
+  <property id="user" type="list" listid="user" index="true" editable="true" stored="true">User
+    <name>
+      <language id="en"><![CDATA[User]]></language>
+    </name>
+  </property>
+
+
+</properties>

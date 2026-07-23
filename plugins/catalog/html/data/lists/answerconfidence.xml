@@ -1,0 +1,6 @@
+<properties>
+  <property id="noidea">No Idea</property>
+  <property id="notsure">Not Sure</property>
+  <property id="mostlysure">Mostly Sure</property>
+  <property id="confident">Confident</property>
+</properties>

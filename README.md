@@ -72,6 +72,8 @@ In case you want to contribute changes to eme-server, cherry pick changes to you
     git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-community.git plugins/community
 
     git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-system.git plugins/system
+
+    git submodule add -b main --depth 1 https://github.com/entermedia-community/eme-plugin-profile.git plugins/profile
     ```
 2. Init and update submodules
     ```

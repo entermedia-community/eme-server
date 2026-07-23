@@ -7,21 +7,27 @@
     </name>
   </data>
 
-  <data id="chat_questions" ordering="50" scenarioicon="broadcast" enabled="true" isvisible="true"  chatenabled="true" connectedtop="chatlabel">
+  <data id="chat_questions" ordering="50" scenarioicon="broadcast" enabled="true" isvisible="true" chatenabled="true" connectedtop="chatlabel">
     <name>
       <language id="en"><![CDATA[Question Chat]]></language>
     </name>
   </data>
 
-<data id="chat_searching" ordering="50" scenarioicon="broadcast" enabled="true"  chatenabled="true" isvisible="true" connectedtop="chatlabel">
+  <data id="chat_searching" ordering="50" scenarioicon="broadcast" enabled="true" chatenabled="true" isvisible="true" connectedtop="chatlabel">
     <name>
       <language id="en"><![CDATA[Search Chat]]></language>
     </name>
   </data>
 
-<data id="chat_smartcreator" ordering="50" scenarioicon="broadcast" enabled="true" isvisible="true" chatenabled="true" connectedtop="chatlabel">
+  <data id="chat_smartcreator" ordering="50" scenarioicon="broadcast" enabled="true" isvisible="true" chatenabled="true" connectedtop="chatlabel">
     <name>
       <language id="en"><![CDATA[Smart Creator]]></language>
+    </name>
+  </data>
+
+  <data id="chat_tutor" ordering="50" scenarioicon="broadcast" enabled="true" isvisible="true" chatenabled="true" connectedtop="chatlabel">
+    <name>
+      <language id="en"><![CDATA[Tutor Chat]]></language>
     </name>
   </data>
 

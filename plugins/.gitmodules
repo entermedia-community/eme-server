@@ -1,8 +1,0 @@
-[submodule "plugins/app"]
-	update = merge
-[submodule "plugins/community"]
-	update = merge
-[submodule "plugins/system"]
-	update = merge
-[submodule "plugins/finder"]
-	update = merge
