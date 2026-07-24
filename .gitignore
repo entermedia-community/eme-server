@@ -1,4 +1,5 @@
 .DS_Store
+.env
 /build/
 tomcat/logs
 webapp/WEB-INF/data/catalog/generated/
