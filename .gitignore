@@ -1,14 +1,20 @@
+.DS_Store
 /build/
 tomcat/logs
-tomcat/work
+webapp/WEB-INF/data/catalog/generated/
+webapp/WEB-INF/data/catalog/originals/
+webapp/WEB-INF/data/catalog/lists/
+webapp/WEB-INF/data/system/lists/
 webapp/WEB-INF/elastic/
 webapp/WEB-INF/tmp/
 webapp/WEB-INF/temp/
 webapp/WEB-INF/trash/
-webapp/WEB-INF/data/
-.DS_Store
+webapp/WEB-INF/data/exports/
+webapp/WEB-INF/data/repos
 
+#Site Catalogs
 webapp/WEB-INF/data/site/catalog/lists/
-webapp/WEB-INF/data/site/catalog/generated/
+webapp/WEB-INF/data/site/catalog/fields/
 webapp/WEB-INF/data/site/catalog/originals/
-webapp/WEB-INF/data/catalog/lists/
+webapp/WEB-INF/data/site/catalog/generated/
+webapp/WEB-INF/data/site/catalog/assets/
