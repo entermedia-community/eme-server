@@ -3,6 +3,7 @@
 tomcat/logs
 webapp/WEB-INF/data/catalog/generated/
 webapp/WEB-INF/data/catalog/originals/
+webapp/WEB-INF/data/catalog/fields/
 webapp/WEB-INF/data/catalog/lists/
 webapp/WEB-INF/data/system/lists/
 webapp/WEB-INF/elastic/
@@ -18,3 +19,4 @@ webapp/WEB-INF/data/site/catalog/fields/
 webapp/WEB-INF/data/site/catalog/originals/
 webapp/WEB-INF/data/site/catalog/generated/
 webapp/WEB-INF/data/site/catalog/assets/
+!webapp/WEB-INF/data/site/catalog/lists/smartorganizer.xml
