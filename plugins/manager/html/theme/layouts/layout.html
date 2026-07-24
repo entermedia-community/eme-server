@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>EnterMedia Manager</title>
+	<title>eMedia Manager</title>
 	<meta name="keywords" content="$!content.keywords"/>
 	<meta name="description" content="$!content.caption"/>
 	<meta http-equiv="imagetoolbar" contet="no" />
@@ -12,12 +12,13 @@
   	<link rel="Shortcut Icon" type="image/x-icon" href="$home$apphome/theme/images/em-favicon.ico" />
   
   
-$pages.include("/${applicationid}/theme/layouts/includes.html", $context)
+	$pages.include("/${applicationid}/theme/layouts/includes.html", $context)
 
 	
 </head>
-<body id="embody" showadmintoolbar="$canshowadmintoolbar" >
-		$pages.includeContent()
+<body id="embody" showadmintoolbar="$!{canshowadmintoolbar}" >
+		
+	$pages.includeContent()
 	
 </body>
 </html>
