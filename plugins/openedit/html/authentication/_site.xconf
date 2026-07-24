@@ -4,7 +4,7 @@
   </permission>
   <property name="sectiontitle">Authentication</property>
   <inner-layout>/${applicationid}/theme/layouts/largearea.html</inner-layout>
-  <property name="fallbackdirectory">/authentication</property>
+  <property name="fallbackdirectory">/community/authentication</property>
   <property name="loginroot">/${applicationid}/authentication</property>
     <property name="shownav">false</property>
 </page>
