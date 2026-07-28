@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<property name="section">htmledit</property>
+	
+ 	 <script id="ckeditor" src="/${applicationid}/components/html/ckeditor/ckeditor.js" />
+
+	
+</page>

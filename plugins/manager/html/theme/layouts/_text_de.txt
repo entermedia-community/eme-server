@@ -1,0 +1,24 @@
+#Fri Sep 21 13:32:18 EDT 2018
+Share=Teilen
+Powered\ by\ EnterMedia=Powered by EnterMedia
+Manager=Manager
+closed=geschlossen
+There\ was\ a\ problem\ completing\ this\ request=Es gab ein Problem beim Abschluss dieser Anfrage
+Related\ Media=verwandte Medien
+My\ Account=mein Konto
+Selected\ Media=ausgewählte Medien
+open=geöffnet
+Media=Medien
+Applications=Anwendungen
+Attachments=Anhänge
+System\ Settings=Systemeinstellungen
+Annotations=Anmerkungen
+Language=Sprache
+Logout=Logout
+Asset\ is\ missing=Datei fehlt
+Dashboard=Instrumententafel
+Login=Einloggen
+Settings=Einstellungen
+Add\ Media=Medien hinzufügen
+Approvals=Zulassungen
+

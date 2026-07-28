@@ -1,0 +1,14 @@
+#
+#Fri Jul 03 17:08:11 CST 2026
+Cache\ Mode=Modo de cach\u00E9
+Clear\ Page\ Cache=Borrar cach\u00E9 de p\u00E1gina
+Debug\ Mode=Modo de depuraci\u00F3n
+Edit\ Mode=Modo de edici\u00F3n
+File\ Manager=File Manager
+Home=Home
+Live\ Mode=Modo directo
+Logout=Cerrar sesi\u00F3n
+No\ Cache\ Mode=Modo sin cach\u00E9
+Post\ Edit\ Mode=Modo de edici\u00F3n posterior
+Preview\ Mode=Modo de previsualizaci\u00F3n
+filemanager=filemanager

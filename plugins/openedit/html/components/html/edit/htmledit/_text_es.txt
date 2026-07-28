@@ -1,0 +1,4 @@
+#
+#Mon Oct 10 12:27:07 EDT 2016
+Your\ changes\ are\ not\ saved=Los cambios no se guardan
+Save\ changes=Guardar cambios

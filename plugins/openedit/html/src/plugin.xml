@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans projectname="openedit" depends="entermedia">
+
+	<bean id="velocity" class="org.entermediadb.asset.generators.ToolbarGenerator" >
+		<property name="headerPath"><value>/openedit/components/html/toolbar.html</value></property>
+		<property name="footerPath"><value>/openedit/components/html/footer.html</value></property>
+		<property name="pageManager"><ref bean="pageManager"/></property>
+		<property name="wraps"><ref bean="velocityGenerator"/></property>
+	</bean>
+
+	<bean id="wiki" class="org.entermediadb.asset.generators.ToolbarGenerator" >
+		<property name="headerPath"><value>/openedit/components/html/toolbar.html</value></property>
+		<property name="footerPath"><value>/openedit/components/html/footer.html</value></property>
+		<property name="pageManager"><ref bean="pageManager"/></property>
+		<property name="wraps"><ref bean="wikiGenerator"/></property>
+	</bean>
+
+	<bean id="admintoolbarGenerator"  class="org.openedit.generators.VelocityGenerator" >
+		<property name="rootDirectory"><ref bean="root" /></property>
+		<property name="openEditEngine"><ref bean="OpenEditEngine" /></property>
+	</bean>
+
+
+
+	<bean id="blockingAdmintoolbarGenerator" class="org.entermediadb.asset.generators.AdminToolBarGenerator" >
+			<property name="headerPath"><value>/openedit/components/toolbar/admintoolbarselector.html</value></property>
+			<property name="search"><value>&lt;body</value></property>
+			<property name="pageManager"><ref bean="pageManager"/></property>
+			<property name="moduleManager"><ref bean="moduleManager"/></property>
+			<property name="wraps"><ref bean="velocityGenerator"/></property>
+		</bean>
+
+	<bean id="testPageLoad"  class="org.openedit.TestPageLoad" >
+	</bean>
+
+	<bean id="TestModule"  class="org.openedit.modules.TestModule" >
+	</bean>
+
+</beans>

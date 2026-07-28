@@ -1,0 +1,27 @@
+#if ( !$browser.isNarrow() )
+	#if( $pages.canView("/openedit/_site.xconf") )
+	<div id="openedit" data-home="$home" style="background: red;">
+		#set ( $path = $context.getRequestParameter( "path" ) )
+		<a
+			id="oeselector"
+			style="
+				width: 12px;
+				height: 12px;
+				position: fixed;
+				z-index: 99999;
+				top: 2px;
+				right: 2px; 
+				border: none;
+				border-radius: 6px;
+				display: block;
+				background-color: transparent;
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAnFBMVEUAAACAgICqqqqAgICIiIiHh4eKioqJiYmJiYmJiYmHh4eIiIiHh4eIiIiGhoaIiIiKioqJiYmHh4eHh4eHh4eIiIiHh4eIiIiJiYmJiYmIiIiHh4eIiIiHh4eJiYmHh4eHh4eIiIiIiIiHh4eIiIiJiYmIiIiIiIiIiIiIiIiHh4eIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIj///8AD2GVAAAAMnRSTlMAAgMODxEYQUNFRkdISUpLTF9gYnV2d3h9f4GCg4SIkZOhsrO2t7m6vL3AwcnK5OX29xCJQcIAAAABYktHRDM31XxeAAAAm0lEQVQY022P2xKBUABFVycihMghXdwLudT+/4/zIGPMWI97Zt8AMFAWYGiZNulCitJm3ApztcwBCGaVbn3X9Y+qZiMwjbR7eAArqTaQak98dgCOSoClephLDODLQim54D0za20ilRStsMnzfCsVYL+WgSyQ6fAJPSn9qY2l2oFRWOnud7qDk67h8N90mNTrSIrWdfC567zvOwAvxw4UQS01TOoAAAAASUVORK5CYII=);
+				background-repeat: no-repeat;
+				background-position: center center;
+				filter: drop-shadow(0 0 1px #111);
+			"
+			href="$home/openedit/components/toolbar/plugintoolbar.html?origURL=$!path&path=$!path"
+		></a>
+	</div>
+	#end
+#end

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+
+	<property name="fallbackdirectory">/finder/find</property> 
+	<property name="catalogid">system</property>
+	<property name="siteid">manager</property>
+	<property name="applicationid">manager</property>
+	<property name="findroot">/finder/blockfind</property>
+
+	<permission name="view">
+		<user />
+	</permission>
+
+</page>

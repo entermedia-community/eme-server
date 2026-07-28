@@ -1,0 +1,26 @@
+<page>
+
+	
+	
+	<inner-layout>/${applicationid}/services/module/asset/players/collections/layout.html</inner-layout>
+
+    
+	<!-- permissions for embeding 
+	    
+    <permission name="view">
+	<or>
+		<boolean value="true" />
+		<user />
+		<referer value="https://CLIENT-DOMIAN.COM/*" />
+		<referer value="https://www.CLIENT-DOMAIN.net/*" />
+		<referer value="https://CLIENT.entermediadb.net/*" />
+	</or>
+	</permission>
+    -->
+	 
+	 
+	 
+	 
+	 
+
+</page>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<user enabled="true">
+  <user-name>agent</user-name>
+  <password>DES:rDpdaQNtmOQ47RMMVoR5Tg==</password>
+  <creation-date>1237057734887</creation-date>
+  <properties>
+    <property name="lastName" value="Guide"/>
+    <property name="enabled" value="true"/>
+    <property name="searchtype" value="categories"/>
+    <property name="screenname" value="AI Guide"/>
+    <property name="email" value=""/>
+    <property name="firstName" value="AI"/>
+  </properties>
+</user>

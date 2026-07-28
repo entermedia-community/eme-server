@@ -1,0 +1,13 @@
+{
+	"search.exclude": {
+		"**/index.min.js": true,
+		"**/indexdefer.min.css": true
+	},
+	"java.jdt.ls.java.home": "$JAVA_HOME",
+	"java.configuration.runtimes": [
+		{
+			"name": "JavaSE",
+			"path": "$JAVA_HOME"
+		}
+	]
+}

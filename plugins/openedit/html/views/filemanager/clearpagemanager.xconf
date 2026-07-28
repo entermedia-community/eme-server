@@ -1,0 +1,8 @@
+<page>
+
+<path-action name="Page.clearCache" />
+
+<path-action name="Admin.redirectToOriginal" />
+
+
+</page>

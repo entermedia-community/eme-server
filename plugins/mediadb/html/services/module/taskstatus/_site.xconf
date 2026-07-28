@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="fallbackdirectory">/mediadb/services/module/default</property>
+  <property name="module">taskstatus</property>
+  <property name="searchtype">taskstatus</property>
+  <property name="fallbackprop">/mediadb/services/module/taskstatus</property>
+</page>

@@ -1,0 +1,27 @@
+#set ($status = "ok")
+{
+ "response":{
+     "status":"$status"
+ },
+ "sessionid":"$!attachments.sessionId",
+ "page":"$!attachments.page",
+ "pages":"$!attachments.totalPages",
+ "totalsize":"$!attachments.size()",
+ "primaryfile":"$!asset.getMediaName()",
+ "id":"$!asset.id",
+ "attachments":[
+  #foreach( $hit in $attachments )
+	#if( ${foreach.count} != 1), #end 
+	{ 
+		"id":"$hit.id" ,
+		"name":"$hit.name" ,		
+		"sourcepath":"$!hit.sourcepath" ,
+		"folder":"$!hit.folder",
+	 	"parentsourcepath":"$!hit.parentsourcepath"
+	 	#if( $isprimary )
+	 	, "primaryfile":"true"
+	 	#end
+	}
+#end
+	]
+}

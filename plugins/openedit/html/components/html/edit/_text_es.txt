@@ -1,0 +1,17 @@
+#
+#Mon Oct 10 12:27:06 EDT 2016
+Scripts=Guiones
+Delete\ File=Borrar archivo
+Move\ or\ Rename\ File=Mover o cambiar el nombre de archivo
+Styles=estilos
+Preview=Avance
+Download\ File=Descargar archivo
+Copy\ file=Copiar archivo
+Properties=propiedades
+Editor=Editor
+SEO=SEO
+Delete\ file=Borrar archivo
+Copy\ File=Copiar archivo
+Move\ and\ rename\ file=Mover y cambiar el nombre de archivo
+Raw=Crudo
+Versions=versiones

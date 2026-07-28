@@ -1,0 +1,15 @@
+#
+#Tue Jan 26 15:03:18 EST 2016
+Settings=Param\u00E8tres
+Pending\ Approval=Validation en attente
+Editing\ across\ $asset.size()\ records=Modification \u00E0 travers asset.size $ () enregistre
+Logout=Se d\u00E9connecter
+My\ Account=Mon compte
+Login=S&\#39;identifier
+There\ was\ a\ problem\ completing\ this\ request=Il y avait une difficult\u00E9 \u00E0 remplir cette demande
+Links\ and\ Menus=Liens et des menus
+File\ Manager=Gestionnaire de fichiers
+System\ Settings=Les param\u00E8tres du syst\u00E8me
+\ Return\ to\ site\ =Retour au site
+Applications=Applications
+Asset\ is\ missing=Actif est manquant

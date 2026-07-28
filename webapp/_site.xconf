@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+	<property name="showToolbar">false</property>
+	<property name="encoding">UTF-8</property>
+	<!--
+	<generator name="webDavGenerator" alltypes="true"/>
+	-->
+
+	<generator name="velocity" mimetypes="text/html"/>
+	<generator name="jteGenerator" mimetypes="text/jte"/>
+
+	<property name="auto_translate">true</property>
+	<property name="auto_translate_en">false</property>
+
+	<generator name="file" />
+
+	<permission name="view">
+		<boolean value="true"/>
+	</permission>
+
+	<property name="autologingroup">guest</property>
+	<property name="autologinrole">users</property>
+	<property name="referredgroup">media</property>
+
+	<path-action name="Admin.checkExist" alltypes="true" />
+
+	<property name="allopathrequestactions">true</property>
+
+	<!-- property name="siteRoot">http://localhost:8080</property -->
+
+	<!-- Allows uses to create their own accounts in the guest group -->
+	<property name="allowguestregistration">true</property>
+
+	<!-- Defines what languages can be selected for this site -->
+	<property name="languages">
+		<value>English</value>
+		<value locale="es">Español</value>
+	</property>
+	<!-- Save in /translations directory for certain languages  -->
+	<property name="usemultiplelanguages">
+		<value>true</value>
+		<value locale="en">false</value>
+	</property>
+	<property name="oetextfilter">translation</property>
+
+	<!-- Forces the editor to create draft version of files it edits-->
+	<property name="oe.edit.draftedits">false</property>
+	<property name="encoding">UTF-8</property>
+
+
+	<!-- Default group permissions required to edit pages -->
+	<permission name="edit">
+		<and>
+			<or>
+				<group id="administrators"/>
+				<group id="editors"/>
+			</or>
+			<not>
+				<page-property equals="false" name="editable"/>
+			</not>
+		</and>
+	</permission>
+
+	<!-- Logs in a user with a cookie -->
+	<path-action name="Admin.autoLogin"/>
+	<!-- Enables editing and checks for missing pages -->
+	<page-action name="Admin.allowEditing" allowduplicates="true"/>
+</page>

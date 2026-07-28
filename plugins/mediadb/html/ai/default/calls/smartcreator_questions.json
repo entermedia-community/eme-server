@@ -1,0 +1,58 @@
+{
+	"messages": [
+		{
+			"role": "system",
+			"content": "[[You generate multiple-choice questions from the provided context. Return 1 to 3 questions only. Each question must be directly based on the context, clear, and unambiguous. Each question must include exactly 4 answer choices and avoid explanations. Give the correct answer's index (0-3) and the cognitive level (beginner, competent, expert) for each question.]]"
+		},
+		{
+			"role": "user",
+			"content": #jesc("${contextcontent}")
+		}
+	],
+	"response_format": {
+		"type": "json_schema",
+		"json_schema": {
+			"name": "smartcreator_questions",
+			"strict": true,
+			"schema": {
+				"type": "object",
+				"properties": {
+					"questions": {
+						"type": "array",
+						"minItems": 1,
+						"maxItems": 5,
+						"items": {
+							"type": "object",
+							"properties": {
+								"question": {
+									"type": "string"
+								},
+								"choices": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									},
+									"minItems": 4,
+									"maxItems": 4
+								},
+								"correct_answer_index": {
+									"type": "integer",
+									"minimum": 0,
+									"maximum": 3
+								},
+								"cognitive_level": {
+									"type": "string",
+									"enum": ["beginner", "competent", "expert"]
+								}
+							},
+							"required": ["question", "choices", "correct_answer_index", "cognitive_level"],
+							"additionalProperties": false
+						}
+					}
+				},
+				"required": ["questions"],
+				"additionalProperties": false
+			}
+		}
+	}
+}

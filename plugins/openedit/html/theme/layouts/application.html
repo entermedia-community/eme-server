@@ -1,0 +1,28 @@
+<div id="application" data-user="$!user.getId()" data-home="$home" data-apphome="$apphome" data-themeprefix="${themeprefix}" data-browserlanguage="$!{browserlanguage}">   
+   
+   
+ $pages.include("$apphome/theme/layouts/nav.html")
+   
+
+ $pages.includeContent()
+
+  
+  <!-- Modal -->
+  <div class="modal" id="editmodal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body" id="edit-modal-body">
+          ...
+        </div>
+      
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  
+  
+ 
+</div>

@@ -1,0 +1,10 @@
+{
+	"response":
+	{
+	    "status":"$status"
+	    #if($assetscount) 
+	    ,
+	    "assetscount":$assetscount
+	    #end
+	}
+}

@@ -1,0 +1,34 @@
+<script type="text/javascript" src="/${applicationid}/components/javascript/jquery-core/jquery-4.0.0.min.js" onload="if (!window.jQuery) window.$ = window.jQuery = module.exports;"></script>
+
+
+<script type="text/javascript" src="/${applicationid}/components/javascript/bootstrap/5.3.8/js/bootstrap.min.js"></script>
+<script type="text/javascript" defer src="/${applicationid}/components/javascript/jquery-ui/1.14/jquery-ui.min.js" ></script>
+<script type="text/javascript" defer src="/${applicationid}/components/javascript/jquery-ui/i18n/jquery-ui-i18n.js" ></script>
+
+<script type="text/javascript" src="/${applicationid}/components/javascript/formathtml.js" defer></script>
+<script type="importmap">
+	{
+		"imports": {
+			"ckeditor5": "/${applicationid}/components/javascript/ckeditor5/ckeditor5.js",
+			"ckeditor5/": "/${applicationid}/components/javascript/ckeditor5/"
+		}
+	}
+</script>
+<script type="module" src="/${applicationid}/components/javascript/openedithtmleditor.js" defer></script>
+<link rel="stylesheet" type="text/css" href="/${applicationid}/components/javascript/ckeditor5/ckeditor5.css" />
+
+<script type="text/javascript" defer src="/${applicationid}/components/javascript/index.min.js" ></script>
+
+#foreach( $script in $pageManager.getScriptPathsWithoutApp($content))
+	#if($script.indexOf("stripe") > -1)
+		<script type="text/javascript" src="#if(!$script.startsWith("http"))$home#end$script"></script>
+	#end
+#end
+
+#foreach( $style in $pageManager.getStylePathsFor($content) )
+	<link rel="stylesheet" type="text/css" href="$style" />
+#end
+   
+#if( $desktop)
+<script type="text/javascript" src="/${applicationid}/components/javascript/emedia/electron-renderer.js"></script>
+#end

@@ -1,0 +1,6 @@
+<page>
+	<path-action name="JsonAssetModule.preprocess" alltypes="true"/>
+	<path-action name="MediaArchiveModule.getAsset" alltypes="true"  />
+	<path-action name="ConvertStatusModule.addConvertRequest"  alltypes="true" />
+	<page-action name="PageValue.loadPageVariable" bean="conversionUtil"  alltypes="true" />
+</page>

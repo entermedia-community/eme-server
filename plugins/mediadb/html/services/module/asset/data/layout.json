@@ -1,0 +1,51 @@
+#set($method = $context.getMethod())
+#set ($status = "ok")
+#if (!$data)
+  #set ($status = "not found")
+#end
+#if($method == "DELETE")
+{
+  "response":
+      {
+        "status":"$status",
+         "id":"$data.id"
+      }
+}
+#elseif($method == "PUT")## for updating assets
+{
+  "response":
+      {
+        "status":"$status",
+        "id":"$data.id"
+      }
+  ,
+  "data":#json($data $searcher.getPropertyDetails())
+}  
+#elseif($method == "POST")## for creating assets
+{
+  "response":
+      {
+        "status":"$status",
+        "id":"$data.id"
+      }
+  ,
+  "data":#json($data $searcher.getPropertyDetails())
+}
+#elseif($method == "GET")
+{
+  "response":
+      {
+        "status":"$status"
+        #ifnotnull($data),"id":"$data.id"#end
+      }
+  #ifnotnull($data),
+	$context.putPageValue("hit",$data)
+	"data": $pages.include(	"${apphome}/services/module/${searcher.getSearchType()}/hit.json",$context)
+  #end
+}
+#else
+  {
+    "status":"error",
+  	"error":"Invalid request"
+  }
+#end

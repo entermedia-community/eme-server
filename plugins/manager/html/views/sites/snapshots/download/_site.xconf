@@ -1,0 +1,9 @@
+<page>
+	<permission name="view">
+		<boolean value="true" />
+	</permission>
+	<property name="virtual">true</property>
+	<path-action name="MediaAdminModule.zipSnapshot" alltypes="true"/>
+	<generator name="zipGenerator"/>
+	
+</page>

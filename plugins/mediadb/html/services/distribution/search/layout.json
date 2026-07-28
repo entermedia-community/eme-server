@@ -1,0 +1,52 @@
+#set($cdnprefix = $!{mediaarchive.getCatalogSettingValue("cdn_prefix")})
+#if(!$cdnprefix )
+	#set($cdnprefix = $context.siteRoot )
+#end
+
+{
+	"response":
+		{
+		    "status":"ok",
+			"totalhits" : $hits.size(),
+			"searchtype" : "$searcher.getSearchType()",
+			"hitsperpage": $hits.getHitsPerPage(),			
+			"page": $hits.getPage(),
+			"pages": $hits.totalPages,
+			"hitsessionid": "$hits.getSessionId()",
+			"query":
+			{
+				"friendly":#jesc($hits.getSearchQuery().toFriendly()),
+				"search":#jesc($hits.getSearchQuery().toQuery())
+			}
+		},
+	"results":[
+		#foreach($hit in $hits.getPageOfHits())#if( ${foreach.count} != 1 ), #end
+			##json($hit $searcher.getPropertyDetails())
+			{
+			  	#set($asset = $mediaarchive.getAsset($hit.assetid) )
+			  	#set($presets = $mediaarchive.asListOfPreviewLinks($asset))
+			    "id":"$hit.id",
+			    "assetId": "$hit.assetid",
+			    "allowOrigin": "$hit.getValue("alloworiginal")",
+			    #if($hit.getValue("alloworiginal") == "true")
+			    #set($folderpath = $asset.getValue("foldersourcepath"))
+			  	#set($filename = $asset.getValue("name"))
+			    "originalUrl": "$cdnprefix$home/$mediadbappid/services/distribution/published/$hit.id",
+			    #end
+			    "presets": [
+			    #foreach( $preset in $presets )#if( ${foreach.count} != 1 ), #end
+				  {	
+					"name":#jesc($preset.name),	
+					"id":#jesc($preset.id),	
+					#if( $preset.getId() == "0")
+					   "url": "$cdnprefix$home/$mediadbappid/services/distribution/published/$hit.id"
+					#else
+						"url": "$cdnprefix$home/$mediadbappid/services/distribution/published/$hit.id/$preset.id"
+					#end	
+				 	 }
+			    	#end
+			  	]
+			}
+		#end
+		]
+}

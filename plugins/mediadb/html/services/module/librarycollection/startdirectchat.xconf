@@ -1,0 +1,12 @@
+<page>
+	<path-action name="JsonAssetModule.preprocess" />
+
+
+	<path-action name="Script.run" allowduplicates="true">
+		<script>/${catalogid}/events/scripts/librarycollection/startdirectchat.groovy</script>
+	</path-action>
+	
+	<permission name="view">
+			<user />
+	</permission>
+</page>

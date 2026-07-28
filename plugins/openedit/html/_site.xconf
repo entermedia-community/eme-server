@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+	<property name="fallbackdirectory">/community/default</property>
+
+	<property name="filerootpath">/${applicationid}/views/filemanager</property>
+
+	<property name="catalogid">system</property>
+	<property name="applicationid">openedit</property>
+
+	<path-action name="MediaArchiveModule.loadApplicationId" />
+	<path-action name="ProfileModule.loadUserProfile" />
+
+	<path-action name="Admin.loadPermissions"/>
+	<path-action name="Admin.allowViewing" />
+
+	<path-action bean="searcherManager" name="PageValue.loadPageVariable" allowduplicates="true" />
+	<path-action bean="userManager" name="PageValue.loadPageVariable" allowduplicates="true" />
+
+	<path-action name="TranslationModule.loadBrowserLanguage" />
+
+	<property name="themeid">theme</property>
+  	<path-action name="ThemeModule.loadCurrentTheme" />
+
+	<property name="allowspecifiedpath">true</property>
+
+	<property name="title">OpenEdit</property>
+	<property name="jquery-theme">ui-lightness</property>
+	<property name="mastergroup">video</property>
+	<property name="showaddselections">true</property>
+	<property name="showremoveselections">false</property>
+	<property name="editable">false</property>
+	<property name="showdebug">false</property>
+	<property name="skipvirtualhost">true</property>
+
+
+	<!--
+  <generator mimetypes="text/html" name="velocityGenerator"/>
+	-->
+	<property name="section">activity</property>
+
+	<path-action name="MediaSearchModule.searchCategories" cancel="true"/>
+
+	<!-- style id="openedit" href="/openedit/components/html/theme/style.css" / -->
+	<style id="tools" href="/${applicationid}/theme/styles/filemanager/tools.css" />
+
+	<property name="login-path">/${applicationid}/authentication/login.html</property>
+
+	<path-action bean="pageManager" name="PageValue.loadPageVariable" allowduplicates="true" />
+
+
+	<script id="jquery" cancel="true" />
+	<script id="jquery-ui" cancel="true"/>
+
+	<style id="jqueryui" href="/${applicationid}/components/javascript/jquery-ui/1.12/jquery-ui.css"/>
+	<script id="jquery-ui-i18n" cancel="true" src="/${applicationid}/components/javascript/jquery-ui/i18n/jquery-ui-i18n.js"/>
+	<script id="jquery-form" src="/${applicationid}/components/javascript/jquery.form-4.3.0.min.js"/>
+	<script id="liveajax" src="/${applicationid}/components/javascript/emedia/liveajax.js"/>
+
+	<style id="bootstrap" href="/${applicationid}/components/javascript/bootstrap/5.3.8/css/bootstrap.min.css" />
+	<style id="fonts-css" href="/${applicationid}/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css"/>
+
+
+	<script id="openedit" src="/${applicationid}/components/javascript/openedit.js" />
+
+
+	<inner-layout>/${applicationid}/theme/layouts/application.html</inner-layout>
+
+	<style id="openedit-tree" href="/${applicationid}/theme/styles/dtree.css"/>
+	<script id="entermedia" src="/${applicationid}/components/javascript/tabs.js"></script>
+
+
+	<permission name="view">
+		<or>
+			<group id="administrators"/>
+		</or>
+	</permission>
+
+	<permission name="edit">
+		<not />
+	</permission>
+
+	<permission name="openeditdebug">
+		<group id="administrators"/>
+	</permission>
+
+	<permission name="approve">
+		<group id="administrators"/>
+	</permission>
+</page>

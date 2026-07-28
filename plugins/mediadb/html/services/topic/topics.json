@@ -1,0 +1,29 @@
+{
+      "response": {
+            "status": "ok",
+            "userid": "$user.id"
+      },
+      "topics": [
+            #foreach($d in $data)
+                  #if($foreach.count > 1),#end
+                  #set($topic = $d.get("topic"))
+                  #set($progress = $d.get("progress"))
+                  #set($tutorials = $d.get("tutorials"))
+                  {
+                        "id": #jesc($topic.id),
+                        "thumbnail": "$siteroot$mediaarchive.asLinkToPreview($topic.primarymedia, 'image200x200')",
+                        "title": "#text($topic)",
+                        "tutorials": $tutorials,
+                        "completed": 0,
+                        "description": #jesc($topic.longcaption),
+                        "progress": {
+                              "beginnerprogress":  $progress.beginnerprogress,
+                              "competentprogress": $progress.competentprogress,
+                              "expertprogress": $progress.expertprogress
+                        },
+                        "answersforgotten": 0,
+                        "forgottenperiod": 0
+                  }
+            #end
+      ]
+}

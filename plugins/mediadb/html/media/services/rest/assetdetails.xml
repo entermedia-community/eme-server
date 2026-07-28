@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rsp stat="ok">
+#set( $mediaarchive = $entermedia.getMediaArchive($catalogid) )
+#set($languages = $!searcherManager.getList($catalogid, "locale"))
+#set($details = $searcher.getDetailsForView("asset/restassetdetails", $user))
+#foreach( $detail in $details )
+#set( $value = false )
+#set( $value = $asset.get($detail.id) )
+#if( $value )
+#if($detail.isList())
+<property id="$detail.id" valueid="$value"><![CDATA[$!searcherManager.getData($detail, $value)]]></property>
+#elseif($detail.isMultiLanguage())
+	
+    #set($map = $asset.getValue($detail.getId()))
+
+	#foreach($locale in $languages)
+	   #set( $val = false ) #set( $val = $map.getText($locale.id) )
+	   #if($val)
+		<property id="${detail.id}.${locale.id}"><![CDATA[$val]]></property>
+	   #end	
+	#end
+#else
+<property id="$detail.id"><![CDATA[$value]]></property>
+#end
+#end
+#end
+#set( $prefix = $mediaarchive.getCatalogSettingValue("cdn_prefix") )
+#if(!$prefix) #set( $prefix = $context.siteRoot ) #end
+#set( $mediadbappid = $mediaarchive.getMediaDbId() )
+#set( $type = $mediaarchive.getMediaRenderType($asset.fileFormat))
+#set( $thumb = "$prefix$home/${mediadbappid}/services/module/asset/downloads/preset/$asset.getSourcePath()/image200x200.jpg")
+<thumb>#esc($thumb)</thumb>
+#if( $type == "document" )
+#set( $preview = "$prefix$home/${mediadbappid}/services/module/asset/downloads/preset/$asset.getSourcePath()/image1024x768.png")
+#elseif( $type == "image")
+#set( $preview = "$prefix$home/${mediadbappid}/services/module/asset/downloads/preset/$asset.getSourcePath()/image1024x768.jpg")
+#elseif(  $type == "video" )
+#set( $preview = "$prefix$home/${mediadbappid}/services/module/asset/downloads/preset/$asset.getSourcePath()/video.mp4")
+#elseif( $type == "audio" )
+#set( $preview = "$prefix$home/${mediadbappid}/services/module/asset/downloads/preset/$asset.getSourcePath()/audio.mp3")
+#end
+<preview>#esc($preview)</preview>
+
+#set( $downloadlink = "$context.siteRoot$home/${mediadbappid}/services/module/asset/downloads/originals/$asset.getSourcePath()/$asset.getMediaName()")
+
+<original>#esc($downloadlink)</original>
+</rsp>

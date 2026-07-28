@@ -1,0 +1,23 @@
+#set ( $urlutils = $context.getPageValue("url_util"))
+#if (!$urlutils)
+	#set ($urlenc = $asset.sourcepath)
+#else
+	#set ( $urlenc = $urlutils.encode($asset.sourcepath))
+	#set ( $urlenc = $urlenc.replace("%2F", "/") )
+#end
+
+#set($imagesize = "image550x350")
+#set($imagepath = $mediaarchive.asLinkToGenerated($asset, $imagesize))
+
+	<img id="main-media"
+		alt="$!asset.name" 
+		class="emdropshadow  assetdragdrop"  
+		draggable="true"  
+		data-assetid="$asset.id"
+		data-name="$asset.name"
+		data-width="$!asset.width" 
+		data-height="$!asset.height"
+		data-sourcepath="${urlenc}" 
+		src="$!{imagepath}" 
+		/>
+

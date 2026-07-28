@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="fallbackdirectory">/mediadb/services/module/default</property>
+  <property name="module">desktopsyncfolder</property>
+  <property name="searchtype">desktopsyncfolder</property>
+  <property name="fallbackprop">/mediadb/services/module/desktopsyncfolder</property>
+</page>

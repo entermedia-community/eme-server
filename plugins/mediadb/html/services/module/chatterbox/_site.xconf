@@ -1,0 +1,5 @@
+<page>
+	<property name="fallbackdirectory">/mediadb/services/module/default</property>
+	<property name="module">chatterbox</property>
+	<property name="searchtype">chatterbox</property>
+</page>

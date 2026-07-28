@@ -1,0 +1,9 @@
+#
+#Tue Jan 26 14:57:40 EST 2016
+Live\ Mode=Mode Direct
+Edit\ Mode=Edit Mode
+Logout=Se d\u00E9connecter
+Debug\ Mode=Mode d\u00E9bogage
+Home=Accueil
+File\ Manager=Gestionnaire de fichiers
+filemanager=gestionnaire de fichiers

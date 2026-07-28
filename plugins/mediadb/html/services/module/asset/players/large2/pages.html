@@ -1,0 +1,85 @@
+<div id="stacked-pdf-thumbnail-sidebar" class="hidden-xs">
+
+    #set($currentpreview = $context.findValue('currentpreview'))
+    #set($pagenum = $context.findValue('documentpagenum'))
+    #set($totalpages = $numberutils.toInt($asset.pages))
+    
+    #if($totalpages == 0)
+    	##set it back to 1
+    	#set($totalpages = 1)	
+    #end
+    
+    #set ( $hitssessionid = $context.findValue("hitssessionid"))
+    #if( !$currentpreview )
+      #if ( !$pagenum )
+        #set($currentpreview = 0)
+        #set ($pagenum = 1)
+      #else   
+        #set($pagenumnum = $numberutils.toInt($pagenum) )
+        #set( $currentpreview = $pagenumnum - 1 )
+      #end
+    #else
+        #set( $currentpreview = $numberutils.toInt($currentpreview) )
+        #set( $pagenum = $currentpreview + 1  )
+    #end
+   #set($pagenumparsed = $numberutils.toInt($pagenum) )
+   #if ( $pagenumparsed && ($totalpages < $pagenumparsed) )
+       #set( $pagenum = $totalpages )
+       #set( $currentpreview = $totalpages - 1 )
+    #end
+    <div id="pdf-thumbnail-sidebar" >
+  
+            #set($thepages = $totalpages / 5)
+
+            #if( $currentpreview >= 5)
+                #set( $page = $currentpreview / 5)
+            #else
+                #set( $page = 0)
+            #end
+
+            <ul class="mvpageslist">
+                    
+                #set( $start = $page*5) 
+                #set($end = $start + 4)
+               
+                #if( $end > $totalpages - 1 )
+                  #set( $end = $totalpages - 1 )
+                #end
+                #set ( $urlenc = $url_util.encode($asset.sourcepath))
+                
+                #foreach( $page in [$start..$end])
+                	<li class="mvpagelink #if ( $page == $currentpreview ) current #end">
+                        #set( $page = $page + 1)
+                        <a href="#" class="mvpageclick" 
+                        	data-pageurl="$!siteroot/${mediadbappid}/services/module/asset/downloads/preview/extralarge/${urlenc}/preview.png?pagenum=$!page">
+                            <div class="emdropshadow">
+       							<img src="$!siteroot/${applicationid}/views/modules/asset/downloads/preview/documentcrop/${urlenc}/preview.jpg?documentpagenum=$page&pagenum=$!page" />
+       						</div>	
+                            <div class="pdf-page-number">$page</div>
+                        </a>
+                    </li>
+                #end
+                #set ($pageholder = $page + 1)
+                <li class="next-pages">
+                #if ($page > 0 )
+                    
+                         #set ($pageholder = $page + 1)
+                         #set( $prevthumb = $pageholder - 1)
+                         #set( $prevthumb = $prevthumb * 5 - 4)
+                        <a class="ajax next-pages-prev" targetdiv="stacked-pdf-thumbnail-sidebar" href="$!siteroot${context.getPage().getPath()}?assetid=${asset.getId()}&documentpagenum=$prevthumb&hitssessionid=#urlescape($hitssessionid)" style="#if ( $pageholder * 5 < $totalpages) margin-right:10px; #end"><i class="fas fa-caret-left"></i> [[Previous Five]] </a>                         
+                #end
+                #if ( $pageholder * 5 < $totalpages)
+                    #set( $nextthumb = $pageholder + 1)
+                    #set( $nextthumb = $nextthumb * 5 - 4)
+                        <a class="ajax  next-pages-next" targetdiv="stacked-pdf-thumbnail-sidebar" href="$!siteroot${context.getPage().getPath()}?assetid=${asset.getId()}&documentpagenum=$nextthumb&hitssessionid=#urlescape($hitssessionid)"> [[Next Five]] <i class="fas fa-caret-right"></i></a>
+                #end
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+            #if(!$currentpreview)
+            	#set( $currentpreview = 1)
+            #end
+            $context.putPageValue("currentpreview",$currentpreview)
+            $context.putPageValue("totalpages",$totalpages)
+   </div>
+</div>   

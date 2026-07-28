@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="fallbackdirectory">/mediadb/services/module/default</property>
+  <property name="module">asset</property>
+  <property name="searchtype">asset</property>
+  <property name="fallbackprop">/mediadb/services/module/asset</property>
+  <permission name="download">
+    <userprofile name="download" value="true"/>
+  </permission>
+  <permission name="editasset">
+    <or>
+      <group id="administrators"/>
+      <userprofile name="metadatageneral" value="true"/>
+      <userprofile name="editassettags" value="true"/>
+      <action name="AssetControlModule.canEditAsset"/>
+    </or>
+  </permission>
+  <permission name="viewallassets">
+    <userprofile name="viewallassets" value="true"/>
+  </permission>
+</page>

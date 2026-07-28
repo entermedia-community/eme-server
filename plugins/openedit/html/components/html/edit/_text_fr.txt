@@ -1,0 +1,17 @@
+#
+#Tue Jan 26 15:03:20 EST 2016
+Scripts=Scripts
+Delete\ File=Supprimer le fichier
+Move\ or\ Rename\ File=D\u00E9placer ou renommer les fichiers
+Styles=modes
+Preview=Aper\u00E7u
+Download\ File=T\u00E9l\u00E9charger le fichier
+Copy\ file=Copier un fichier
+Properties=Propri\u00E9t\u00E9s
+Editor=\u00C9diteur
+SEO=SEO
+Move\ and\ rename\ file=D\u00E9placer et renommer le fichier
+Copy\ File=Copier un fichier
+Delete\ file=Supprimer le fichier
+Raw=cru
+Versions=Versions

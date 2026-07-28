@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="fallbackdirectory">/mediadb/services/module/default</property>
+  <property name="module">order</property>
+  <property name="searchtype">order</property>
+  <property name="fallbackprop">/mediadb/services/module/order</property>
+  <path-action name="OrderModule.loadOrderManager"/>
+</page>

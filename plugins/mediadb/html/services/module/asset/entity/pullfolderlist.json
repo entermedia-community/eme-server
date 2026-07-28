@@ -1,0 +1,27 @@
+
+#set( $children = $category.getChildren() )
+{
+  "response":
+		{
+		#if( $category)
+				"status":"ok"
+			#else 
+				"status": "notfound" 
+			#end
+			#ifnotnull($category)
+			,"size":"$children.size()" 
+			#end
+		}
+  ,
+  "categories": [
+	#foreach( $subfolder in $children) #if( ${foreach.count} != 1 ), #end
+		{
+			"index": "${foreach.count}",
+			"id": "$subfolder.getId()",
+			"name": "$subfolder.getName()",
+			"level": "$subfolder.getLevel()",
+			"path": "$subfolder.getCategoryPath()"
+		}
+	#end
+  ]
+}

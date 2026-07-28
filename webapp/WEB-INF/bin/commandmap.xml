@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<commandmaps>
+	<commandmap os="LINUX">
+		<commandbase>./WEB-INF/bin/linux</commandbase>
+		<exiftoolthumb>./exiftoolthumb.sh</exiftoolthumb>
+		<asperaupload>./aspera/upload.sh</asperaupload>
+		<avconv>ffmpeg</avconv>
+		<avprobe>ffprobe</avprobe>
+	</commandmap>
+	<commandmap os="WINDOWS">
+		<commandbase>./WEB-INF/bin/windows</commandbase>
+		<lame>.\lame\lame.exe</lame>
+		<ffmpeg>.\ffmpeg\ffmpeg.exe</ffmpeg>
+		<convert>.\imageMagick\convert.exe</convert>
+		<composite>.\imageMagick\composite.exe</composite>
+		<ghostscript>.\gs8.71\bin\gswin32c.exe</ghostscript>
+		<exiftool>.\exiftool\exiftool.exe</exiftool>
+		<exiftoolthumb>.\exiftool\exiftoolthumb.bat</exiftoolthumb>
+		<qt-faststart>.\ffmpeg\qt-faststart.exe</qt-faststart>
+		<unlock>.\unlocker\unlocker.exe</unlock>
+	</commandmap>
+	<commandmap os="MAC OS X">
+		<commandbase>./WEB-INF/bin/mac</commandbase>
+		<exiftoolthumb>./exiftoolthumb.sh</exiftoolthumb>
+		<convert>/usr/local/bin/magick</convert>
+		<composite>/usr/local/bin/composite</composite>
+		<ghostscript>/usr/local/bin/gs</ghostscript>
+		<gs>/usr/local/bin/gs</gs>
+		<ffmpeg>/usr/local/bin/ffmpeg</ffmpeg>
+		<qt-faststart>./qt-faststart</qt-faststart>
+	</commandmap>
+</commandmaps>

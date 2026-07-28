@@ -1,0 +1,62 @@
+
+
+#set( $sections = ["preview","htmledit","text","seo","versions","styles","scripts", "properties"] )
+#set( $thissection = $content.section )
+#set($origURL = $context.getRequestParameter('origURL'))
+#set($editPath = $context.getRequestParameter('editPath'))
+
+#set( $editPage = $pageManager.getPage( $editPath ) )
+
+#if( $editPage.isFolder() ) #set( $type = "folder" ) 
+#elseif ( $editPage.getMimeType().startsWith("image/")) #set ( $type = "image" )
+#else #set( $type = "file" )
+#end
+
+
+<nav class="navbar navbar-expand-lg m-0 p-0" style="background-color: #efefef;" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+	<button  class="navbar-toggler" type="button" data-bs-toggle="collapse"  data-target="#htmlnavbar">
+		<span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="htmlnavbar">
+    <ul class="nav navbar-nav">
+    
+     <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown">File Options<b class="caret"></b></a>
+	        <ul class="dropdown-menu">
+	        
+	        	<li><a data-title="[[Copy File]]" class="dropdown-item oeDialog" href="$home$apphome/components/html/edit/actions/copypage-leaf/copypage.html?path=$!{editPath}&editPath=$editPath&oemaxlevel=1" >$context.getText("Copy $type")</a></li>
+				##if( $pages.canEdit($editPath) || $caneditallfiles)
+				<li><a data-title="[[Move or Rename File]]" class="dropdown-item oeDialog" href="$home$apphome/components/html/edit/actions/movepage-leaf/movepage.html?path=$!{editPath}&editPath=$editPath&oemaxlevel=1" class="oeDialog" >$context.getText("Move and rename $type")</a></li>		
+				<li><a data-title="[[Delete File]]" class="dropdown-item oeDialog" href="$home$apphome/components/html/edit/actions/deletepage-leaf/deletepage.html?delete=$!{editPath}&editPath=$editPath&oemaxlevel=1" >$context.getText("Delete $type")</a></li>
+				##end
+				<li><a class="dropdown-item" href="$home${page.filerootpath}/download${editPath}">[[Download File]] </a></li>	
+				#if( $editorSession.getEditPage().isDraft() )
+				
+					<li><a class="dropdown-item" href="$home/openedit/components/html/edit/htmledit/approve-finished.html?editPath=$editorSession.getEditPath()">Approve Draft</a></li>
+					<li><a class="dropdown-item" href="$home/openedit/components/html/edit/htmledit/delete.html?editPath=$editorSession.getEditPath()">Delete Draft</a></li>		
+				#end
+	        
+	        </ul>
+      </li>
+     
+     #foreach( $section in $sections )
+     	#set( $img = "/openedit/components/html/theme/images/${section}.png")
+		#set( $link = "$home/openedit/components/html/edit/${section}/index.html?width=1000&editPath=$context.getRequestParameter('editPath')&textheight=500px&origURL=$!origURL")
+		<li class="nav-item #if($thissection == $section)  active #end">
+			<a  class="nav-link dropdown-item" href="$link"  ><img border=0 src="$img"> $context.getText($content.get($section))</a>
+		</li>
+     
+     #end
+     
+     
+      
+      
+    </ul>
+    
+  </div><!-- /.navbar-collapse -->
+</nav>			

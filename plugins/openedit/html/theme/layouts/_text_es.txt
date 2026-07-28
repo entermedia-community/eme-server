@@ -1,0 +1,17 @@
+#
+#Mon Oct 10 12:27:04 EDT 2016
+Settings=Ajustes
+Pending\ Approval=Aprobaci\u00F3n pendiente
+Language=Idioma
+Logout=Cerrar sesi\u00F3n
+Selected\ Media=Medios Seleccionados
+\#if($isattachments)\ Attachments\ \#else\ Related\ Media\ \#end=\#if ( $ isattachments ) Adjuntos \#else \#end Medios relacionados
+My\ Account=Mi Cuenta
+There\ was\ a\ problem\ completing\ this\ request=Hubo un problema para completar esta solicitud
+Login=Iniciar Sesi\u00F3n
+Links\ and\ Menus=Enlaces y Men\u00FAs
+File\ Manager=Administrador de archivos
+System\ Settings=Configuraci\u00F3n del sistema
+\ Return\ to\ site\ =Volver al sitio
+Dashboard=Tablero
+Applications=Aplicaciones
