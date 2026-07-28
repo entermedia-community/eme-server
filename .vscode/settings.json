@@ -4,6 +4,8 @@
 		"**/indexdefer.min.css": true,
 		  "**/html/**": true
 	},
+	"search.useIgnoreFiles": false,
+	"search.useGlobalIgnoreFiles": false,
 	"java.jdt.ls.java.home": "/usr/lib/jvm/default-java",
 	"java.configuration.runtimes": [
 		{		
