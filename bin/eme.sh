@@ -8,6 +8,7 @@
 CMD="${1:-help}"
 SERVERHOME="$2"
 SERVERNAME="$(basename "$SERVERHOME")"
+NODENUMBER="$3"
 
 echo "Running $CMD command"
 
@@ -186,7 +187,7 @@ case "$CMD" in
         exit 1
     fi
 
-    NODENUMBER="$3"
+    
     USERNAME="$4"
     if [ -z "$USERNAME" ]; then
        echo "USERNAME not set using running user as default"
