@@ -2,7 +2,8 @@
 	"search.exclude": {
 		"**/index.min.js": true,
 		"**/indexdefer.min.css": true,
-		  "**/html/**": true
+		  "**/html/**": true,
+		  "/build/**": true
 	},
 	"search.useIgnoreFiles": false,
 	"search.useGlobalIgnoreFiles": false,
