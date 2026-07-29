@@ -15,14 +15,24 @@ case "$CMD" in
 
   developer | init | start | dockerbuild | dockerstart | update | branchpush)
 
+    #if $SERVERHOME is not set, exit with error 
+    if [ -z "$SERVERHOME" ]; then
+        echo "SERVER HOME is not set. Please provide a server path as the second argument."
+        exit 1
+    fi
+
     mkdir -p "$SERVERHOME"
     cd "$SERVERHOME"
     SERVERHOME=$(pwd)
 
-    echo "INSTANCE=$SERVERNAME$NODENUMBER" > "$SERVERHOME/.env"
-    echo "SITE=$SERVERNAME" >> "$SERVERHOME/.env"
-    echo "NODENUMBER=$NODENUMBER" >> "$SERVERHOME/.env"
-    ##echo "IP_ADDR=$IP_ADDR" >> "$SERVERHOME/.env"
+    #if $SERVERHOME/.env does not exist, create it with the following variables
+    if [ ! -f "$SERVERHOME/.env" ]; then
+        echo "Creating $SERVERHOME/.env file"
+        echo "INSTANCE=$SERVERNAME$NODENUMBER" > "$SERVERHOME/.env"
+        echo "SITE=$SERVERNAME" >> "$SERVERHOME/.env"
+        echo "NODENUMBER=$NODENUMBER" >> "$SERVERHOME/.env"
+        ##echo "IP_ADDR=$IP_ADDR" >> "$SERVERHOME/.env"
+    fi
 
   ;;&
 
