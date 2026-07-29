@@ -14,3 +14,6 @@ plugins/finder/
 plugins/system/
 plugins/community/
 plugins/profile/
+plugins/manager/
+plugins/mediadb/
+plugins/openedit/
