@@ -1,6 +1,0 @@
-#set($catalogs = $mediaarchive.getList("catalog"))
-#foreach($catalog in $catalogs)
-#
-$mediaarchive.getNodeManager().createSnapshot($catalog.id)
-
-#end

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<page>
-  <property name="module">collectiveproduct</property>
-  <property name="fallbackprop">/mediadb/services/module/default</property>
-  <property name="searchtype">collectiveproduct</property>
-</page>

@@ -1,9 +1,0 @@
-{
-	"response": {
-		"status": "ok",
-		"id": "transcription"
-	},
-	"data": {
-		"transcription": #jesc($transcription)
-	}
-}

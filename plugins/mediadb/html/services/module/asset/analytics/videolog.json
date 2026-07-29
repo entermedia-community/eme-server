@@ -1,7 +1,0 @@
-{
-	"response":
-	{
-	    "status":"ok",
-		"logid" : "$!{data.id}"
-	}
-}

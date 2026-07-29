@@ -1,6 +1,0 @@
-<page>
-
-  	<path-action name="Page.uploadFile" />
-	<path-action name="MediaAdminModule.uploadSnapshot" />
-
-</page>

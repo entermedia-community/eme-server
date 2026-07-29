@@ -1,5 +1,0 @@
-<page>
-  <generator name="velocity"/>
-
-  <path-action name="ChatModule.loadUserChannels" alltypes="true"/>
-</page>

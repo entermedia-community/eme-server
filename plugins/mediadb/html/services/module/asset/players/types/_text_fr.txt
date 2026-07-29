@@ -1,4 +1,0 @@
-#Thu Apr 27 09:03:43 CDT 2017
-$asset=$asset
-Preview\ Image=Aperçu
-

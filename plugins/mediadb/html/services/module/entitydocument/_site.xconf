@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<page>
-  <property name="fallbackdirectory">/mediadb/services/module/default</property>
-  <property name="module">entitydocument</property>
-  <property name="searchtype">entitydocument</property>
-  <property name="fallbackprop">/mediadb/services/module/entitydocument</property>
-</page>

@@ -1,4 +1,0 @@
-<page>
-	<path-action name="MediaAdminModule.downloadSnapshot" />
- 	<property name="save">true</property>
-</page>

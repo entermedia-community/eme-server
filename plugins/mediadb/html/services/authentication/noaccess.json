@@ -1,8 +1,0 @@
-{
-	"errorcode":"403",
-	"response": 
-	{ 
-		"status":"error",
-		"details":"No view permissions for action"
-	}
-}

@@ -1,5 +1,0 @@
-<page>
-	<path-action name="JsonAdminModule.preprocess" />
-	<path-action name="EntityModule.getEntity"/>
-	<path-action name="ContentModule.createNewImageRequest" method="POST"/>
-</page>

@@ -1,5 +1,0 @@
-#
-#Mon Oct 10 12:26:56 EDT 2016
-Base=Base
-View=Ver
-Inline\ Edit=Edici\u00F3n en l\u00EDnea

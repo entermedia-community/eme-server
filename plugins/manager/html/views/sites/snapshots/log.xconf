@@ -1,5 +1,0 @@
-<page>
-	<inner-layout />
-	<page-action  name="PageValue.loadPageVariable" bean="moduleManager" allowduplicates="true" />
-	
-</page>

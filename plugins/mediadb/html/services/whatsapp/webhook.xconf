@@ -1,8 +1,0 @@
-<page>
-
-  <path-action name="WhatsAppModule.handleWebhook" />
-
-  <permission name="view">
-    <blank />
-  </permission>
-</page>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<page>
-  <property name="fallbackdirectory">/mediadb/services/module/default</property>
-  <property name="module">collectiveinvestment</property>
-  <property name="searchtype">collectiveinvestment</property>
-  <property name="fallbackprop">/mediadb/services/module/collectiveinvestment</property>
-</page>

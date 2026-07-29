@@ -1,9 +1,0 @@
-<page>
-	<permission name="view">
-		<blank/>
-	</permission>
-	<path-action name="JsonAdminModule.preprocess" />
-	<path-action name="Admin.login" />		
-	<path-action name="GoogleModule.createUserInFirebase" />
-
-</page>

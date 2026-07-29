@@ -1,5 +1,0 @@
-<page>
-	 <path-action name="DataEditModule.saveData">
-	 	<searchtype>catalog</searchtype>
-	 </path-action>
-</page>

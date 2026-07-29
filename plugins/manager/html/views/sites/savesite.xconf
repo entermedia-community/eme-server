@@ -1,8 +1,0 @@
-<page>
-	<path-action name="DataEditModule.saveData">
-		<searchtype>site</searchtype>
-	</path-action>
-	<property name="save">true</property>
-	<path-action name="MediaAdminModule.clearCaches" />
-
-</page>

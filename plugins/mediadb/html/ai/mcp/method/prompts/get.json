@@ -1,1 +1,0 @@
-$render.loadInputFromTemplate($context, "$apphome/ai/openai/mcp/functions/${functionname}.md")

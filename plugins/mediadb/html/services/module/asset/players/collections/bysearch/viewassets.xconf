@@ -1,5 +1,0 @@
-<page>
-
-	<inner-layout>/${applicationid}/services/module/asset/players/collections/bysearch/layout.html</inner-layout>
-	
-</page>

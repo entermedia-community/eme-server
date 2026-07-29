@@ -1,7 +1,0 @@
-<page>
-	<path-action name="SyncModule.receiveFile" alltypes="true"/>
-	<permission name="view">
-			<userprofile property="api-load-data" equals="true" />
-	</permission>
-	
-</page>
