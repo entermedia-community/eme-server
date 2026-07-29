@@ -17,8 +17,8 @@ for plugin in "${plugins[@]}"; do
             COMMITMESSAGE="$2"
             git add -A .
             git commit -m "$COMMITMESSAGE"
-            git pull origin main
-            git push origin main
+            git pull  --no-rebase  origin main
+            git push  origin main
         else
             git status
         fi

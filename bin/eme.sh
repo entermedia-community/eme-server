@@ -53,8 +53,8 @@ case "$CMD" in
         echo "Cloning eme-server repo into $SERVERHOME"
         git init
         git remote add origin https://github.com/entermedia-community/eme-server.git
-        git pull origin main 
-        git checkout -b deployed
+        git fetch origin
+        git checkout -t origin/main
     fi  
     
     $SERVERHOME/bin/pluginspull.sh
@@ -122,15 +122,12 @@ case "$CMD" in
 
     ;;&
 
-  update | updatefork | branchpush)
+  update | branchpush)
     ## Updates the eme-server-client repo to the latest version
     echo "Updating eme-server-client repo to the latest version"
 
     git stash
-    git submodule foreach 'git pull origin main'
-    git add -A .
-    git commit -a -m "Update submodules"
-    git pull origin main 
+    git pull --no-rebase origin main
     git stash pop
     
    ;;&
@@ -142,16 +139,21 @@ case "$CMD" in
    
     git add -A .
     git commit -m "$COMMITMESSAGE" || true
-    git pull origin main 
-    git push origin main 
+    git pull --no-rebase origin main
+    git push --no-rebase origin main
 
   ;;&
   
   updatefork)
-    ## Pulls the eme-server-client repo from the upstream repository
+    ## Pulls the eme-server-client repo from the upstream repository. We have to make sure all changes are committed and pushed to the origin before we can pull from upstream. This is because we are using rebase to keep the history clean.
     echo "Pulling from upstream"
+
+    ##make sure upstream remote is set
+    if ! git remote | grep -q upstream; then
+        git remote add upstream https://github.com/entermedia-community/eme-server.git
+    fi
     git fetch upstream
-    git rebase upstream/main
+    git merge upstream/main
 
   ;;
 
