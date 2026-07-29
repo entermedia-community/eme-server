@@ -13,7 +13,7 @@ echo "Running $CMD command"
 
 case "$CMD" in
 
-  developer | init | start | dockerbuild | dockerstart | update | updatefork | branchpush)
+  developer | init | start | dockerbuild | dockerstart | update | branchpush)
 
     mkdir -p "$SERVERHOME"
     cd "$SERVERHOME"
@@ -140,7 +140,7 @@ case "$CMD" in
     git add -A .
     git commit -m "$COMMITMESSAGE" || true
     git pull --no-rebase origin main
-    git push --no-rebase origin main
+    git push origin main
 
   ;;&
   
