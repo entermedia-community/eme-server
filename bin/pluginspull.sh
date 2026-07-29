@@ -21,7 +21,7 @@ for plugin in "${plugins[@]}"; do
         echo "Cloning $plugin repo into $SERVERHOME/plugins/$plugin"
         git init 
         git remote add origin "https://github.com/entermedia-community/eme-plugin-$plugin.git"
-        git fetch origin
+        git fetch --depth=1 origin main
         git checkout -t origin/main
     fi
     git pull origin main --depth=1
