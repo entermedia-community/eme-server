@@ -1,4 +1,6 @@
-LISTOFPLUGINS="catalog|finder|system|community|profile"
+#!/bin/bash
+
+LISTOFPLUGINS="catalog|finder|system|manager|mediadb|community|openedit|profile"
 
 SERVERHOME="$(pwd)"
 
