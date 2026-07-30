@@ -164,7 +164,9 @@ case "$CMD" in
         git remote add upstream https://github.com/entermedia-community/eme-server.git
     fi
     git fetch upstream
-    git merge upstream/main
+    git merge upstream/main --allow-unrelated-histories
+    ## allows the upstream to win 
+    git checkout --theirs . 
 
   ;;
 
