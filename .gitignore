@@ -2,6 +2,7 @@
 /build/
 tomcat/logs
 webapp/WEB-INF/data/
+!webapp/WEB-INF/data/.gitignore
 webapp/WEB-INF/elastic/
 webapp/WEB-INF/tmp/
 webapp/WEB-INF/temp/
