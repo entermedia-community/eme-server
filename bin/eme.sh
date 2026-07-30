@@ -68,7 +68,7 @@ case "$CMD" in
         git checkout -t origin/main
     fi  
     
-    $SERVERHOME/bin/pluginspull.sh
+    $SERVERHOME/bin/plugins.sh
 
   ;;&
 
