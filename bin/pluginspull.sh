@@ -24,7 +24,15 @@ for plugin in "${plugins[@]}"; do
         git fetch --depth=1 origin main
         git checkout -t origin/main
     fi
-    git pull origin main --depth=1
+    cd "$SERVERHOME/plugins/$plugin"
+    if [ -n "$(git status --porcelain)" ]; then
+        echo "\e[34mplugins/$plugin has uncommitted changes, skipping pull. Run: git fetch --unshallow origin main\e[0m"
+        continue
+    fi
+    echo "Pulling latest changes for $plugin"
+    git fetch --depth=1 origin main
+    git reset --hard origin/main
+
     if [ -d "$SERVERHOME/plugins/$plugin/html" ]; then
         if [ ! -L "$SERVERHOME/webapp/$plugin" ]; then
             ln -nsf "$SERVERHOME/plugins/$plugin/html" "$SERVERHOME/webapp/$plugin"

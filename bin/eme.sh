@@ -1,9 +1,9 @@
-#!/bin/bash -x
+#!/bin/bash
 
 #set -e
 
 ##    curl -fsSL get-eme.eme.world | bash -s -- help
-   
+ 
    
 CMD="${1:-help}"
 SERVERHOME="$2"
@@ -70,10 +70,10 @@ case "$CMD" in
     
     $SERVERHOME/bin/pluginspull.sh
 
-    ;;&
+  ;;&
 
-    start)
-        ##JAVA_HOME is not set throw an error if JAVA_HOME is not set
+  start)
+        
         if [ -z "$JAVA_HOME" ]; then
             #checi if there is a jre path
             if [ -d "$HOME/.sdkman/candidates/java/current" ]; then
@@ -94,8 +94,8 @@ case "$CMD" in
             mkdir -p "$SERVERHOME/tomcat/work"
         fi
 
-    #   sudo chown ${USERID}:${GROUPID} "$SERVERHOME/webapp/"
-        if [ ! -L "$SERVERHOME/data" ]; then
+        #sudo chown ${USERID}:${GROUPID} "$SERVERHOME/webapp/"
+        if [ ! -L "$SERVERHOME/data"  || ! -d "$SERVERHOME/webapp/WEB-INF/data" ]; then
             mkdir -p "$SERVERHOME/webapp/WEB-INF/data"
             ln -nsf "$SERVERHOME/webapp/WEB-INF/data" "$SERVERHOME/data"
             sudo chown -R $USERID:$GROUPID "$SERVERHOME/data"
@@ -131,7 +131,7 @@ case "$CMD" in
         echo "$JAVA -Dappname=$SERVERNAME $(cat "$EXPANDED_ARGS") org.apache.catalina.startup.Bootstrap start"
         "$JAVA" -Dappname="$SERVERNAME" "@$EXPANDED_ARGS" org.apache.catalina.startup.Bootstrap start
 
-    ;;&
+  ;;&
 
   update | branchpush)
     ## Updates the eme-server-client repo to the latest version
@@ -168,14 +168,14 @@ case "$CMD" in
 
   ;;
 
-    developer)
+  developer)
     ## Opens default workspace in VS Code for development
     echo "Opening default workspace in VS Code for development"
     code eme-server.code-workspace
 
   ;;
 
-      dockerbuild)
+  dockerbuild)
 
     echo "Creating Docker instance for $SERVERHOME"
 
@@ -186,7 +186,6 @@ case "$CMD" in
         echo "Usage: eme.sh dockerbuild <server-path> <nodenumber> <ownedby>"
         exit 1
     fi
-
     
     USERNAME="$4"
     if [ -z "$USERNAME" ]; then
@@ -197,6 +196,7 @@ case "$CMD" in
     GROUPID=$(id -g "$USERNAME")
     
     curl -s https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/bin/resources/docker/scripts/eme-docker-init.sh | sudo bash -s -- "$SERVERHOME" "$NODENUMBER" "$USERID" "$GROUPID"
+
   ;;
 
   dockerstart)
@@ -278,7 +278,7 @@ case "$CMD" in
     wait "$launcherpid"
     echo "Launcher process $launcherpid exited"
 
-    ;;
+  ;;
 
 
   help)
