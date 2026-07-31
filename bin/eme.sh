@@ -1,14 +1,11 @@
 #!/bin/bash
 
-#set -e
+# Exit on unexpected errors if needed (uncomment for strictness)
+# set -e
 
-##    curl -fsSL get-eme.eme.world | bash -s -- help
- 
-   
 CMD="${1:-help}"
 SERVERHOME="$2"
-SERVERNAME="$(basename "$SERVERHOME")"
-NODENUMBER="$3"
+SERVERNAME="$(basename "${SERVERHOME:-}")"
 
 echo "Running $CMD command"
 
@@ -16,32 +13,35 @@ case "$CMD" in
 
   developer | init | start | dockerbuild | dockerstart | update | branchpush)
 
-    #if $SERVERHOME is not set, exit with error 
+    # Check if SERVERHOME is set
     if [ -z "$SERVERHOME" ]; then
-        echo "SERVER HOME is not set. Please provide a server path as the second argument."
+        echo "ERROR: SERVERHOME is not set. Please provide a server path as the second argument." >&2
         exit 1
     fi
 
     mkdir -p "$SERVERHOME"
-    cd "$SERVERHOME"
+    cd "$SERVERHOME" || exit 1
     SERVERHOME=$(pwd)
 
-    #if $SERVERHOME/.env does not exist, create it with the following variables
+    NODENUMBER="${3:-1}"
+
+    # Create .env file if missing
     if [ ! -f "$SERVERHOME/.env" ]; then
         echo "Creating $SERVERHOME/.env file"
-        echo "INSTANCE=$SERVERNAME$NODENUMBER" > "$SERVERHOME/.env"
-        echo "SITE=$SERVERNAME" >> "$SERVERHOME/.env"
-        echo "NODENUMBER=$NODENUMBER" >> "$SERVERHOME/.env"
-        ##echo "IP_ADDR=$IP_ADDR" >> "$SERVERHOME/.env"
+        {
+          echo "INSTANCE=$SERVERNAME$NODENUMBER"
+          echo "SITE=$SERVERNAME"
+          echo "NODENUMBER=$NODENUMBER"
+        } > "$SERVERHOME/.env"
     fi
 
   ;;&
 
   developer | init | start)
 
-    #verify is not running as root
+    # Verify not running as root
     if [[ $(id -u) -eq 0 ]]; then
-        echo "Don't run this script as root."
+        echo "ERROR: Don't run this script as root directly." >&2
         exit 1
     fi
 
@@ -49,8 +49,7 @@ case "$CMD" in
 
   init | developer | start | dockerbuild)    
 
-    #Set USERID and GROUPID to the current user
-    USERID="$(id -un)"
+    USERID="${SUDO_USER:-$(id -un)}"
 
     if GROUPNAME=$(id -gn "$USERID" 2>/dev/null); then
         GROUPID="$GROUPNAME"
@@ -68,85 +67,73 @@ case "$CMD" in
         git checkout -t origin/main
     fi  
     
-    $SERVERHOME/bin/plugins.sh
+    "$SERVERHOME/bin/plugins.sh"
 
   ;;&
 
   start)
         
         if [ -z "$JAVA_HOME" ]; then
-            #checi if there is a jre path
             if [ -d "$HOME/.sdkman/candidates/java/current" ]; then
                 JAVA_HOME="$HOME/.sdkman/candidates/java/current"
             elif [ -d "/usr/lib/jvm/default-java" ]; then
                 JAVA_HOME="/usr/lib/jvm/default-java"
             else
-                echo "JAVA_HOME is not set and /usr/lib/jvm/jre does not exist. Please set JAVA_HOME to a valid JDK path."
-                echo "Please check your local java version: curl -s \"https://get.sdkman.io\" | bash && sudo sdk install java 26.0.1-open"
+                echo "ERROR: JAVA_HOME is not set and fallback JRE paths do not exist." >&2
+                echo "Install JDK via SDKMAN: curl -s \"https://get.sdkman.io\" | bash && sdk install java 26.0.1-open" >&2
                 exit 1
             fi
         fi  
 
-        #Compile the eme-lib if it has not been compiled yet
-        $SERVERHOME/bin/compile.sh
+        "$SERVERHOME/bin/compile.sh"
 
-        if [ ! -d "$SERVERHOME/tomcat/work" ]; then
-            mkdir -p "$SERVERHOME/tomcat/work"
-        fi
+        mkdir -p "$SERVERHOME/tomcat/work"
 
-        #sudo chown ${USERID}:${GROUPID} "$SERVERHOME/webapp/"
-        if [ ! -L "$SERVERHOME/data"  || ! -d "$SERVERHOME/webapp/WEB-INF/data" ]; then
+        # FIXED SYNTAX BUG: [[ ... ]] used for compound condition
+        if [[ ! -L "$SERVERHOME/data" || ! -d "$SERVERHOME/webapp/WEB-INF/data" ]]; then
             mkdir -p "$SERVERHOME/webapp/WEB-INF/data"
             ln -nsf "$SERVERHOME/webapp/WEB-INF/data" "$SERVERHOME/data"
-            sudo chown -R $USERID:$GROUPID "$SERVERHOME/data"
+            sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/data"
         fi
 
         if [ ! -d "$SERVERHOME/data/system" ]; then
-            #mkdir -p "$SERVERHOME/webapp/WEB-INF/data/system/"
             cp -rp "$SERVERHOME/plugins/system/defaultdata" "$SERVERHOME/webapp/WEB-INF/data/system"
-            sudo chown -R $USERID:$GROUPID "$SERVERHOME/webapp/WEB-INF/data/system/"
+            sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/webapp/WEB-INF/data/system/"
         fi
 
         ARGS_TEMPLATE="$SERVERHOME/bin/resources/tomcat.args"
 
-            echo "**** Starting $SERVERNAME using JAVA_HOME  = $JAVA_HOME"
+        echo "**** Starting $SERVERNAME using JAVA_HOME = $JAVA_HOME"
 
-
-            if [ ! -f "$ARGS_TEMPLATE" ]; then
-                echo "ERROR: $ARGS_TEMPLATE not found. Run: eme.sh init <server-path>" >&2
-                exit 1
-            fi
+        if [ ! -f "$ARGS_TEMPLATE" ]; then
+            echo "ERROR: $ARGS_TEMPLATE not found. Run: eme.sh init <server-path>" >&2
+            exit 1
+        fi
         echo "**** Starting server from: $SERVERHOME"
 
-        # Java @argfile does not expand shell variables, so expand them here
-        mkdir -p "$SERVERHOME/tomcat/work"
         EXPANDED_ARGS="$SERVERHOME/tomcat/work/tomcat-args.txt"
-    #    trap " rm -f $EXPANDED_ARGS" EXIT
         sed -e "s|\$SERVERHOME|$SERVERHOME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
         sudo chmod 600 "$EXPANDED_ARGS"
 
         JAVA="$JAVA_HOME/bin/java"
     
-        #Run Tomcat as entermedia user
         echo "$JAVA -Dappname=$SERVERNAME $(cat "$EXPANDED_ARGS") org.apache.catalina.startup.Bootstrap start"
         "$JAVA" -Dappname="$SERVERNAME" "@$EXPANDED_ARGS" org.apache.catalina.startup.Bootstrap start
 
   ;;&
 
-  update | branchpush)
-    ## Updates the eme-server-client repo to the latest version
+  update)
     echo "Updating eme-server-client repo to the latest version"
 
     git stash
     git pull --no-rebase origin main
     git stash pop
     
-    $SERVERHOME/bin/plugins.sh pull
+    "$SERVERHOME/bin/plugins.sh" pull
 
-   ;;&
+   ;;
 
-  branchpush | updatefork)
-    ## Pushes the eme-server-client repo to the remote repository
+  branchpush)
     echo "Pushing eme-server-client repo to the remote repository"
     COMMITMESSAGE="${3:-Update from Client}"
    
@@ -155,25 +142,20 @@ case "$CMD" in
     git pull --no-rebase origin main
     git push origin main
 
-  ;;&
+  ;;
   
   updatefork)
-    ## Pulls the eme-server-client repo from the upstream repository. We have to make sure all changes are committed and pushed to the origin before we can pull from upstream. This is because we are using rebase to keep the history clean.
     echo "Pulling from upstream"
 
-    ##make sure upstream remote is set
     if ! git remote | grep -q upstream; then
         git remote add upstream https://github.com/entermedia-community/eme-server.git
     fi
     git fetch upstream
-    git merge upstream/main --allow-unrelated-histories
-    ## allows the upstream to win 
-    git checkout --theirs . 
+    git merge upstream/main --allow-unrelated-histories -X theirs
 
   ;;
 
   developer)
-    ## Opens default workspace in VS Code for development
     echo "Opening default workspace in VS Code for development"
     code eme-server.code-workspace
 
@@ -183,19 +165,12 @@ case "$CMD" in
 
     echo "Creating Docker instance for $SERVERHOME"
 
-    ##this is run outside the docker container to create a new instance of the eme server
-
-    ##if missing $2, $3 or $4 exit
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
         echo "Usage: eme.sh dockerbuild <server-path> <nodenumber> <ownedby>"
         exit 1
     fi
     
     USERNAME="$4"
-    if [ -z "$USERNAME" ]; then
-       echo "USERNAME not set using running user as default"
-       USERNAME=$(whoami)
-    fi
     USERID=$(id -u "$USERNAME")
     GROUPID=$(id -g "$USERNAME")
     
@@ -205,19 +180,17 @@ case "$CMD" in
 
   dockerstart)
 
-    #this must be started as root
     if [[ $EUID -ne 0 ]]; then
-       echo "This script must be run as root"
+       echo "ERROR: This script must be run as root" >&2
        exit 1
     fi
 
-   #This is run from inside the docker container to start the server
+    # Moved USERID validation up
     if [ -z "$USERID" ]; then
-       echo "USERID should have been passed in as an argument to the docker container"
-         exit 1
+       echo "ERROR: USERID environment variable is missing" >&2
+       exit 1
     fi
 
-    #make sure entermedia user is setup to match the id passed in from the host machine
     if [[ ! $(id entermedia 2>/dev/null) ]]; then
         groupadd -g "$GROUPID" "entermedia"
         useradd -m -s /bin/bash -u "$USERID" -g "entermedia" "entermedia"
@@ -225,13 +198,6 @@ case "$CMD" in
         chmod 0440 /etc/sudoers.d/"entermedia"
     fi
 
-    #Verify if $USERID is passed in
-    if [ -z "$USERID" ]; then
-       echo "USERID not set"
-       exit 1 
-    fi
-
-    ##move this to the docker build script or mount /etc/resolv.conf to the host machine
     echo "Starting Tomcat in foreground (PID: $$)"
 
     sudo -u "entermedia" /usr/bin/eme start "$2" &
@@ -246,15 +212,15 @@ case "$CMD" in
         fi
         sleep 0.3
     done
+
     if [[ ! "$catalinapid" =~ ^[0-9]+$ ]]; then
         echo "Could not find eme start process"
         exit 1
     fi
 
-   # SIGTERM handler
    term_handler() {
         trap - SIGTERM
-       echo "SIGTERM received, shutting down Tomcat (PID: ${catalinapid:-unset}, launcher PID: ${launcherpid:-unset})"
+        echo "SIGTERM received, shutting down Tomcat (PID: ${catalinapid:-unset}, launcher PID: ${launcherpid:-unset})"
 
         if [[ "$catalinapid" =~ ^[0-9]+$ ]] && kill -0 "$catalinapid" 2>/dev/null; then
             echo "Deployment shutdown start"
@@ -275,8 +241,7 @@ case "$CMD" in
         echo "Tomcat shutdown complete, exiting (143)"
         exit 143
     }
-    #Send SIGTERM to the PID of the most recently started background job
-    #trap 'kill $$; term_handler' SIGTERM
+
     trap 'term_handler' SIGTERM
 
     wait "$launcherpid"
@@ -284,30 +249,26 @@ case "$CMD" in
 
   ;;
 
-
-  help)
-        echo -e "Eme Server Management Script\n"
+  help|*)
+        echo "Eme Server Management Script"
+        echo ""
         echo "General usage:"
         echo "  eme.sh <command> [server-path] [args]"
+        echo ""
         echo "Core commands:"
-        echo "  init         <server-path>                     Prepare local server files but dont start server"
-        echo "  start        <server-path>                     Start tomcat server on port 8080"
-        echo
+        echo "  init         <server-path> [nodenumber]       Prepare local server files without starting server"
+        echo "  start        <server-path>                     Start Tomcat server"
+        echo ""
         echo "Developer commands:"
-        echo "  developer    <server-path>                     Clone/setup and open VSS workspace"
-        echo "  update       <server-path>                     Pull submodules and local updates"
-        echo "  updatefork    <server-path>                     Update, push, and rebase upstream"
-        echo "  branchpush   <server-path> [commit message]    Commit/pull/push changes"
-        echo
+        echo "  developer    <server-path>                     Clone/setup workspace and open VS Code"
+        echo "  update       <server-path>                     Pull latest changes and plugins"
+        echo "  updatefork   <server-path>                     Update from upstream remote"
+        echo "  branchpush   <server-path> [commit message]    Commit and push local changes"
+        echo ""
         echo "Docker commands:"
-        echo "  dockerbuild <server-path> <nodenumber> <ownedby>"
-        echo "                                                 Create new docker instance or rebuilds existing instance"
-        echo "  dockerstart  <server-path>                     Start inside docker container"
-        echo
-        echo "Examples:"
-        echo "  bash eme.sh developer /opt/eme-server"
-        echo "  sudo bash eme.sh dockerbuild /opt/eme-server 1 myuser"
-        echo "  eme.sh start /opt/eme-server"
-    exit 0
+        echo "  dockerbuild  <server-path> <nodenumber> <ownedby>"
+        echo "                                                 Build new Docker instance"
+        echo "  dockerstart  <server-path>                     Start inside Docker container"
+        exit 0
     ;;
 esac
