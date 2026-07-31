@@ -9,7 +9,6 @@
 			"request": "launch",
 			"console": "internalConsole",
 			"mainClass": "org.apache.catalina.startup.Bootstrap",
-			"javaExec": "/usr/lib/jvm/default-java/bin/java",
 			"vmArgs": "-XX:+ShowCodeDetailsInExceptionMessages -Dcatalina.home=${workspaceFolder}/tomcat/ -Dcatalina.base=${workspaceFolder}/tomcat -Djava.io.tmpdir=${workspaceFolder}/tomcat/work -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -DEMELIB=${workspaceFolder}",
 			"classPaths": [
 				"${workspaceFolder}/build",
