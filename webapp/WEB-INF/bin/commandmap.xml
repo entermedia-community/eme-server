@@ -29,5 +29,6 @@
 		<gs>/usr/local/bin/gs</gs>
 		<ffmpeg>/usr/local/bin/ffmpeg</ffmpeg>
 		<qt-faststart>./qt-faststart</qt-faststart>
+		<avconv>/usr/local/bin/ffmpeg</avconv>
 	</commandmap>
 </commandmaps>
