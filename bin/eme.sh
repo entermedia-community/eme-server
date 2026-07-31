@@ -141,6 +141,8 @@ case "$CMD" in
     git pull --no-rebase origin main
     git stash pop
     
+    $SERVERHOME/bin/plugins.sh pull
+
    ;;&
 
   branchpush | updatefork)
