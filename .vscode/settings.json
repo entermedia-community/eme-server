@@ -11,5 +11,5 @@
 	"git.rebaseWhenPulling": false,
 	"git.rebaseWhenSync": false,
 	"git.autoStash": true,
-	"git.repositoryScanMaxDepth": 3
+	"git.repositoryScanMaxDepth": 4
 }

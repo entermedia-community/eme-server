@@ -9,8 +9,9 @@ SERVERNAME="$(basename "${SERVERHOME:-}")"
 
 echo "Running $CMD command"
 
-case "$CMD" in
+## Portable preflight blocks (Bash 3.2+ compatible: avoids ;;& fallthrough)
 
+case "$CMD" in
   developer | init | start | dockerbuild | dockerstart | update | branchpush)
 
     # Check if SERVERHOME is set
@@ -34,9 +35,10 @@ case "$CMD" in
           echo "NODENUMBER=$NODENUMBER"
         } > "$SERVERHOME/.env"
     fi
+  ;;
+esac
 
-  ;;&
-
+case "$CMD" in
   developer | init | start)
 
     # Verify not running as root
@@ -44,10 +46,11 @@ case "$CMD" in
         echo "ERROR: Don't run this script as root directly." >&2
         exit 1
     fi
+  ;;
+esac
 
-  ;;&
-
-  init | developer | start | dockerbuild)    
+case "$CMD" in
+  init | developer | start | dockerbuild)
 
     USERID="${SUDO_USER:-$(id -un)}"
 
@@ -65,62 +68,63 @@ case "$CMD" in
         git remote add origin https://github.com/entermedia-community/eme-server.git
         git fetch origin
         git checkout -t origin/main
-    fi  
-    
+    fi
+
     "$SERVERHOME/bin/plugins.sh"
+  ;;
+esac
 
-  ;;&
+if [ "$CMD" = "start" ]; then
 
-  start)
-        
-        if [ -z "$JAVA_HOME" ]; then
-            if [ -d "$HOME/.sdkman/candidates/java/current" ]; then
-                JAVA_HOME="$HOME/.sdkman/candidates/java/current"
-            elif [ -d "/usr/lib/jvm/default-java" ]; then
-                JAVA_HOME="/usr/lib/jvm/default-java"
-            else
-                echo "ERROR: JAVA_HOME is not set and fallback JRE paths do not exist." >&2
-                echo "Install JDK via SDKMAN: curl -s \"https://get.sdkman.io\" | bash && sdk install java 26.0.1-open" >&2
-                exit 1
-            fi
-        fi  
-
-        "$SERVERHOME/bin/compile.sh"
-
-        mkdir -p "$SERVERHOME/tomcat/work"
-
-        # FIXED SYNTAX BUG: [[ ... ]] used for compound condition
-        if [[ ! -L "$SERVERHOME/data" || ! -d "$SERVERHOME/webapp/WEB-INF/data" ]]; then
-            mkdir -p "$SERVERHOME/webapp/WEB-INF/data"
-            ln -nsf "$SERVERHOME/webapp/WEB-INF/data" "$SERVERHOME/data"
-            sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/data"
-        fi
-
-        if [ ! -d "$SERVERHOME/data/system" ]; then
-            cp -rp "$SERVERHOME/plugins/system/defaultdata" "$SERVERHOME/webapp/WEB-INF/data/system"
-            sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/webapp/WEB-INF/data/system/"
-        fi
-
-        ARGS_TEMPLATE="$SERVERHOME/bin/resources/tomcat.args"
-
-        echo "**** Starting $SERVERNAME using JAVA_HOME = $JAVA_HOME"
-
-        if [ ! -f "$ARGS_TEMPLATE" ]; then
-            echo "ERROR: $ARGS_TEMPLATE not found. Run: eme.sh init <server-path>" >&2
+    if [ -z "$JAVA_HOME" ]; then
+        if [ -d "$HOME/.sdkman/candidates/java/current" ]; then
+            JAVA_HOME="$HOME/.sdkman/candidates/java/current"
+        elif [ -d "/usr/lib/jvm/default-java" ]; then
+            JAVA_HOME="/usr/lib/jvm/default-java"
+        else
+            echo "ERROR: JAVA_HOME is not set and fallback JRE paths do not exist." >&2
+            echo "Install JDK via SDKMAN: curl -s \"https://get.sdkman.io\" | bash && sdk install java 26.0.1-open" >&2
             exit 1
         fi
-        echo "**** Starting server from: $SERVERHOME"
+    fi
 
-        EXPANDED_ARGS="$SERVERHOME/tomcat/work/tomcat-args.txt"
-        sed -e "s|\$SERVERHOME|$SERVERHOME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
-        sudo chmod 600 "$EXPANDED_ARGS"
+    "$SERVERHOME/bin/compile.sh"
 
-        JAVA="$JAVA_HOME/bin/java"
-    
-        echo "$JAVA -Dappname=$SERVERNAME $(cat "$EXPANDED_ARGS") org.apache.catalina.startup.Bootstrap start"
-        "$JAVA" -Dappname="$SERVERNAME" "@$EXPANDED_ARGS" org.apache.catalina.startup.Bootstrap start
+    mkdir -p "$SERVERHOME/tomcat/work"
 
-  ;;&
+    # FIXED SYNTAX BUG: [[ ... ]] used for compound condition
+    if [[ ! -L "$SERVERHOME/data" || ! -d "$SERVERHOME/webapp/WEB-INF/data" ]]; then
+        mkdir -p "$SERVERHOME/webapp/WEB-INF/data"
+        ln -nsf "$SERVERHOME/webapp/WEB-INF/data" "$SERVERHOME/data"
+        sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/data"
+    fi
+
+    if [ ! -d "$SERVERHOME/data/system" ]; then
+        cp -rp "$SERVERHOME/plugins/system/defaultdata" "$SERVERHOME/webapp/WEB-INF/data/system"
+        sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/webapp/WEB-INF/data/system/"
+    fi
+
+    ARGS_TEMPLATE="$SERVERHOME/bin/resources/tomcat.args"
+
+    echo "**** Starting $SERVERNAME using JAVA_HOME = $JAVA_HOME"
+
+    if [ ! -f "$ARGS_TEMPLATE" ]; then
+        echo "ERROR: $ARGS_TEMPLATE not found. Run: eme.sh init <server-path>" >&2
+        exit 1
+    fi
+    echo "**** Starting server from: $SERVERHOME"
+
+    EXPANDED_ARGS="$SERVERHOME/tomcat/work/tomcat-args.txt"
+    sed -e "s|\$SERVERHOME|$SERVERHOME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
+    sudo chmod 600 "$EXPANDED_ARGS"
+
+    JAVA="$JAVA_HOME/bin/java"
+
+    echo "$JAVA -Dappname=$SERVERNAME $(cat "$EXPANDED_ARGS") org.apache.catalina.startup.Bootstrap start"
+    "$JAVA" -Dappname="$SERVERNAME" "@$EXPANDED_ARGS" org.apache.catalina.startup.Bootstrap start
+fi
+
+case "$CMD" in
 
   update)
     echo "Updating eme-server-client repo to the latest version"
@@ -247,6 +251,10 @@ case "$CMD" in
     wait "$launcherpid"
     echo "Launcher process $launcherpid exited"
 
+  ;;
+
+  init | start)
+    # Work already done in preflight blocks above.
   ;;
 
   help|*)
