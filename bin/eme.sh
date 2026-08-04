@@ -8,19 +8,21 @@ SERVERHOME="$2"
 SERVERNAME="$(basename "${SERVERHOME:-}")"
 
 
-# Verify not running as root
-if [[ $(id -u) -eq 0 ]]; then
-    echo "ERROR: Don't run this script as root directly." >&2
-    exit 1
-fi
-
-
 echo "*** Running $CMD command"
 
-## Portable preflight blocks (Bash 3.2+ compatible: avoids ;;& fallthrough)
+case "$CMD" in
+  developer | init | start)
+
+    # Verify not running as root
+    if [[ $(id -u) -eq 0 ]]; then
+        echo "ERROR: Don't run this script as root directly." >&2
+        exit 1
+    fi
+  ;;
+esac
 
 case "$CMD" in
-  developer | init | start | dockerbuild | dockerstart | update | branchpush)
+  developer | init | dockerbuild | dockerstart | update | branchpush)
 
     # Check if SERVERHOME is set
     if [ -z "$SERVERHOME" ]; then
@@ -72,6 +74,12 @@ case "$CMD" in
 esac
 
 if [ "$CMD" = "start" ]; then
+
+    #if $SERVERHOME does not exist, exit with error
+    if [ ! -d "$SERVERHOME" ]; then
+        echo "ERROR: $SERVERHOME does not exist. Run: eme.sh init <server-path>" >&2
+        exit 1
+    fi
 
     if [ -z "$JAVA_HOME" ]; then
         if [ -d "$HOME/.sdkman/candidates/java/current" ]; then
