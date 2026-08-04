@@ -7,7 +7,15 @@ CMD="${1:-help}"
 SERVERHOME="$2"
 SERVERNAME="$(basename "${SERVERHOME:-}")"
 
-echo "Running $CMD command"
+
+# Verify not running as root
+if [[ $(id -u) -eq 0 ]]; then
+    echo "ERROR: Don't run this script as root directly." >&2
+    exit 1
+fi
+
+
+echo "*** Running $CMD command"
 
 ## Portable preflight blocks (Bash 3.2+ compatible: avoids ;;& fallthrough)
 
@@ -39,18 +47,7 @@ case "$CMD" in
 esac
 
 case "$CMD" in
-  developer | init | start)
-
-    # Verify not running as root
-    if [[ $(id -u) -eq 0 ]]; then
-        echo "ERROR: Don't run this script as root directly." >&2
-        exit 1
-    fi
-  ;;
-esac
-
-case "$CMD" in
-  init | developer | start | dockerbuild)
+  init | developer | dockerbuild)
 
     USERID="${SUDO_USER:-$(id -un)}"
 
@@ -88,6 +85,8 @@ if [ "$CMD" = "start" ]; then
         fi
     fi
 
+    echo "*** Compiling $SERVERNAME using JAVA_HOME = $JAVA_HOME"
+
     "$SERVERHOME/bin/compile.sh"
 
     mkdir -p "$SERVERHOME/tomcat/work"
@@ -106,13 +105,12 @@ if [ "$CMD" = "start" ]; then
 
     ARGS_TEMPLATE="$SERVERHOME/bin/resources/tomcat.args"
 
-    echo "**** Starting $SERVERNAME using JAVA_HOME = $JAVA_HOME"
-
     if [ ! -f "$ARGS_TEMPLATE" ]; then
         echo "ERROR: $ARGS_TEMPLATE not found. Run: eme.sh init <server-path>" >&2
         exit 1
     fi
-    echo "**** Starting server from: $SERVERHOME"
+
+    echo "*** Starting server: $SERVERHOME"
 
     EXPANDED_ARGS="$SERVERHOME/tomcat/work/tomcat-args.txt"
     sed -e "s|\$SERVERHOME|$SERVERHOME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
@@ -125,7 +123,6 @@ if [ "$CMD" = "start" ]; then
 fi
 
 case "$CMD" in
-
   update)
     echo "Updating eme-server-client repo to the latest version"
 
@@ -167,8 +164,6 @@ case "$CMD" in
 
   dockerbuild)
 
-    echo "Creating Docker instance for $SERVERHOME"
-
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
         echo "Usage: eme.sh dockerbuild <server-path> <nodenumber> <ownedby>"
         exit 1
@@ -177,6 +172,8 @@ case "$CMD" in
     USERNAME="$4"
     USERID=$(id -u "$USERNAME")
     GROUPID=$(id -g "$USERNAME")
+
+    echo "*** Creating Docker instance for $SERVERHOME with node number $NODENUMBER owned by $USERNAME (UID: $USERID, GID: $GROUPID)"
     
     curl -s https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/bin/resources/docker/scripts/eme-docker-init.sh | sudo bash -s -- "$SERVERHOME" "$NODENUMBER" "$USERID" "$GROUPID"
 
@@ -273,10 +270,12 @@ case "$CMD" in
         echo "  updatefork   <server-path>                     Update from upstream remote"
         echo "  branchpush   <server-path> [commit message]    Commit and push local changes"
         echo ""
+        echo ""
         echo "Docker commands:"
         echo "  dockerbuild  <server-path> <nodenumber> <ownedby>"
         echo "                                                 Build new Docker instance"
         echo "  dockerstart  <server-path>                     Start inside Docker container"
+        echo ""
         exit 0
     ;;
 esac
