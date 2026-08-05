@@ -10,16 +10,16 @@ SERVERNAME="$(basename "${SERVERHOME:-}")"
 
 echo "*** Running $CMD command"
 
-case "$CMD" in
-  developer | init | start)
-
-    # Verify not running as root
-    if [[ $(id -u) -eq 0 ]]; then
-        echo "ERROR: Don't run this script as root directly." >&2
-        exit 1
-    fi
-  ;;
-esac
+ # Verify not running as root
+if [[ $(id -u) -eq 0 ]]; then
+    echo "ERROR: Don't run this script as root directly." >&2
+    exit 1
+fi
+#verify user is a sudoer
+if ! sudo -v >/dev/null 2>&1; then
+    echo "ERROR: User is not a sudoer or sudo is not configured correctly." >&2
+    exit 1
+fi
 
 case "$CMD" in
   developer | init | dockerbuild | dockerstart | update | branchpush)
@@ -191,7 +191,7 @@ case "$CMD" in
 
     echo "*** Creating Docker instance for $SERVERHOME with node number $NODENUMBER owned by $USERNAME (UID: $USERID, GID: $GROUPID)"
     
-    curl -s https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/bin/resources/docker/scripts/eme-docker-init.sh | sudo bash -s -- "$SERVERHOME" "$NODENUMBER" "$USERID" "$GROUPID"
+    curl -s https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/bin/resources/docker/scripts/eme-docker-init.sh | bash -s -- "$SERVERHOME" "$NODENUMBER" "$USERID" "$GROUPID"
 
   ;;
 
@@ -277,8 +277,8 @@ case "$CMD" in
         echo "  eme.sh <command> [server-path] [args]"
         echo ""
         echo "Core commands:"
-        echo "  init         <server-path> [nodenumber]       Prepare local server files without starting server"
-        echo "  start        <server-path>                     Start Tomcat server"
+        echo "  init         <server-path>              Prepare local server files without starting server"
+        echo "  start        <server-path>              Start Tomcat server"
         echo ""
         echo "Developer commands:"
         echo "  developer    <server-path>                     Clone/setup workspace and open VS Code"
