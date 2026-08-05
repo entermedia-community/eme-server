@@ -10,10 +10,12 @@ SERVERNAME="$(basename "${SERVERHOME:-}")"
 
 echo "*** Running $CMD command"
 
- # Verify not running as root
-if [[ $(id -u) -eq 0 ]]; then
-    echo "ERROR: Don't run this script as root directly." >&2
-    exit 1
+ # Verify not running as root if CMD is not dockerstart
+if [[ "$CMD" != "dockerstart" ]]; then
+    if [[ $(id -u) -eq 0 ]]; then
+        echo "ERROR: Don't run this script as root directly." >&2
+        exit 1
+    fi
 fi
 
 #verify user is a sudoer
@@ -273,6 +275,8 @@ case "$CMD" in
 
   help|*)
         echo "Eme Server Management Script"
+        echo ""
+        echo "*Run this script from the command line with a sudoer account. Do not run as root directly."
         echo ""
         echo "General usage:"
         echo "  eme.sh <command> [server-path] [args]"
