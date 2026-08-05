@@ -18,12 +18,6 @@ if [[ "$CMD" != "dockerstart" ]]; then
     fi
 fi
 
-#verify user is a sudoer
-if ! sudo -v >/dev/null 2>&1; then
-    echo "ERROR: User is not a sudoer or sudo is not configured correctly." >&2
-    exit 1
-fi
-
 case "$CMD" in
   developer | init | dockerbuild | dockerstart | update | branchpush)
 
