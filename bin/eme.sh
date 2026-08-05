@@ -43,6 +43,7 @@ case "$CMD" in
           echo "INSTANCE=$SERVERNAME$NODENUMBER"
           echo "SITE=$SERVERNAME"
           echo "NODENUMBER=$NODENUMBER"
+          echo "LISTOFPLUGINS=\"catalog|finder|system|manager|mediadb|community|openedit|profile\""
         } > "$SERVERHOME/.env"
     fi
   ;;
@@ -70,6 +71,13 @@ case "$CMD" in
     fi
 
     "$SERVERHOME/bin/plugins.sh"
+
+    ## Copy default site if missing
+    if [ ! -d "$SERVERHOME/webapp/site" ]; then
+        echo "*** Copying default site to $SERVERHOME/webapp/site"
+        cp -rp "$SERVERHOME/webapp/system/templates/webapp/site" "$SERVERHOME/webapp/site"
+    fi
+
   ;;
 esac
 

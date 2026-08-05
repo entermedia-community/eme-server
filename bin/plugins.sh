@@ -1,6 +1,13 @@
 #!/bin/bash
 
-LISTOFPLUGINS="catalog|finder|system|manager|mediadb|community|openedit|profile"
+if [ -f ".env" ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+if [ -z "$LISTOFPLUGINS" ]; then
+    echo "ERROR: LISTOFPLUGINS is not set. Please set it in the .env file." >&2
+    exit 1
+fi
 
 
 ##pull 
