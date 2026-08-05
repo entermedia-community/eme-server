@@ -14,14 +14,9 @@ if [ -z $BASH ]; then
   exit
 fi
 
-# Root check
-if [[ ! $(id -u) -eq 0 ]]; then
-  echo "You must run this script as the superuser. Usage: sudo ./eme-docker-init.sh serverpath nodenumber"
-  exit 1
-fi
-
-if [ "$#" -ne 4 ]; then
-    echo "Usage: sudo ./eme-docker-init.sh <serverpath> <nodenumber> <userid> <groupid>"
+#verify user is a sudoer
+if ! sudo -v >/dev/null 2>&1; then
+    echo "ERROR: User is not a sudoer or sudo is not configured correctly." >&2
     exit 1
 fi
 

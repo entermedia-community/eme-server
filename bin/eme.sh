@@ -15,6 +15,7 @@ if [[ $(id -u) -eq 0 ]]; then
     echo "ERROR: Don't run this script as root directly." >&2
     exit 1
 fi
+
 #verify user is a sudoer
 if ! sudo -v >/dev/null 2>&1; then
     echo "ERROR: User is not a sudoer or sudo is not configured correctly." >&2
