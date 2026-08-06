@@ -2,13 +2,11 @@
 	"search.exclude": {
 		"**/index.min.js": true,
 		"**/indexdefer.min.css": true,
-		"**/build/**": true,
-		"**/webapp/**": true
+		"**/build/**": true
 	},
 
 	"search.useIgnoreFiles": false,
 	"search.useGlobalIgnoreFiles": false,
-	"git.rebaseWhenSync": false,
-	"git.autoStash": true,
-	"git.repositoryScanMaxDepth": 4
+	"git.rebaseWhenSync": true,
+	"git.autoStash": true
 }
