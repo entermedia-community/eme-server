@@ -22,6 +22,14 @@ IFS='|' read -r -a plugins <<< "$LISTOFPLUGINS"
 
 CMD="$1"
 
+safe_fetch_main() {
+    if [ "$(git rev-parse --is-shallow-repository 2>/dev/null)" = "true" ]; then
+        git fetch --unshallow origin main
+    else
+        git fetch origin main
+    fi
+}
+
 if [ -n "$CMD" ]; then
     echo "*** Running $CMD command for plugins: ${plugins[*]}"
 fi
@@ -53,7 +61,7 @@ for plugin in "${plugins[@]}"; do
     if [ "$CMD" == "update" ]; then
         cd "$SERVERHOME/plugins/$plugin"
         if [ -n "$(git status --porcelain)" ]; then
-            echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping update. Run: git fetch --unshallow origin main\e[0m"
+            echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping update. Run: git fetch origin main\e[0m"
             continue
         fi  
 
@@ -70,12 +78,13 @@ for plugin in "${plugins[@]}"; do
     elif [ "$CMD" == "pull" ]; then
         cd "$SERVERHOME/plugins/$plugin"
         if [ -n "$(git status --porcelain)" ]; then
-            echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping pull. Run: git fetch --unshallow origin main\e[0m"
+            echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping pull. Run: git fetch origin main\e[0m"
             continue
         fi  
         
         echo -e "\e[34mplugins/$plugin\e[0m: Pulling latest changes from origin/main"
-        git fetch --unshallow
+        
+        safe_fetch_main
         git merge --ff-only origin/main
 
     elif [ "$CMD" == "push" ]; then
@@ -92,7 +101,7 @@ for plugin in "${plugins[@]}"; do
             git commit -m "$COMMITMESSAGE"
         fi
         echo -e "\e[34mplugins/$plugin\e[0m: Pulling & Pushing latest changes"
-        git fetch --unshallow
+        safe_fetch_main
         git merge --ff-only origin/main
         git push  origin main
     fi
