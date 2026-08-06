@@ -18,3 +18,4 @@ plugins/profile/
 plugins/manager/
 plugins/mediadb/
 plugins/openedit/
+.env

@@ -8,7 +8,6 @@
 
 	"search.useIgnoreFiles": false,
 	"search.useGlobalIgnoreFiles": false,
-	"git.rebaseWhenPulling": false,
 	"git.rebaseWhenSync": false,
 	"git.autoStash": true,
 	"git.repositoryScanMaxDepth": 4
