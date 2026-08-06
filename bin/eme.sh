@@ -111,11 +111,6 @@ if [ "$CMD" = "start" ]; then
         sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/data"
     fi
 
-    if [ ! -d "$SERVERHOME/data/system" ]; then
-        cp -rp "$SERVERHOME/plugins/system/defaultdata" "$SERVERHOME/webapp/WEB-INF/data/system"
-        sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/webapp/WEB-INF/data/system/"
-    fi
-
     ARGS_TEMPLATE="$SERVERHOME/bin/resources/tomcat.args"
 
     if [ ! -f "$ARGS_TEMPLATE" ]; then
