@@ -22,6 +22,10 @@ IFS='|' read -r -a plugins <<< "$LISTOFPLUGINS"
 
 CMD="$1"
 
+if [ -n "$CMD" ]; then
+    echo "*** Running $CMD command for plugins: ${plugins[*]}"
+fi
+
 ##loop over list of plugins and pull them from github
 for plugin in "${plugins[@]}"; do
     cd "$SERVERHOME"
@@ -46,43 +50,51 @@ for plugin in "${plugins[@]}"; do
    cd "$SERVERHOME/plugins/$plugin"
 
 
-    if [ "$CMD" == "pull" ]; then
+    if [ "$CMD" == "update" ]; then
+        cd "$SERVERHOME/plugins/$plugin"
+        if [ -n "$(git status --porcelain)" ]; then
+            echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping update. Run: git fetch --unshallow origin main\e[0m"
+            continue
+        fi  
+
+        git fetch --depth=1 origin main
+        # Get total unpushed commit count across all local branches
+        UNPUSHED_ALL=$(git log --branches --not --remotes --oneline | wc -l)
+
+        if [ "$UNPUSHED_ALL" -gt 0 ]; then
+            echo -e "\e[34mplugins/$plugin\e[0m: You have $UNPUSHED_ALL unpushed commit(s) across your local branches."
+        else
+            echo " All local branches are fully pushed."
+            git reset --hard origin/main
+        fi
+    elif [ "$CMD" == "pull" ]; then
         cd "$SERVERHOME/plugins/$plugin"
         if [ -n "$(git status --porcelain)" ]; then
             echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping pull. Run: git fetch --unshallow origin main\e[0m"
             continue
-        fi
-        echo "Reset to latest changes for $plugin"
-        git fetch --depth=1 origin main
-        git reset --hard origin/main
-    else
-    ##look for changes
+        fi  
+        
+        echo -e "\e[34mplugins/$plugin\e[0m: Pulling latest changes from origin/main"
+        git fetch --unshallow
+        git merge --ff-only origin/main
+
+    elif [ "$CMD" == "push" ]; then
+        
         if [ -n "$(git status --porcelain)" ]; then
             ##red text for plugin with changes
             echo -e "\e[31mplugins/$plugin has uncommitted changes\e[0m"
-            if [ "$CMD" == "push" ]; then
-                ##loop over list of plugins and pull them from github
-                COMMITMESSAGE="$2"
-                if [ -z "$COMMITMESSAGE" ]; then
-                    COMMITMESSAGE="Auto commit from pluginsstatus.sh"
-                fi
-                git add -A .
-                git commit -m "$COMMITMESSAGE"
-                git pull  --no-rebase  origin main  ##Do a full pull to avoid issues with shallow clones
-                git push  origin main
-            elif [ "$CMD" == "pull" ]; then
-                cd "$SERVERHOME/plugins/$plugin"
-                if [ -n "$(git status --porcelain)" ]; then
-                    echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping pull. Run: git fetch --unshallow origin main\e[0m"
-                    continue
-                fi
-                echo "Reset to latest changes for $plugin"
-                git fetch --depth=1 origin main
-                git reset --hard origin/main
+            ##loop over list of plugins and pull them from github
+            COMMITMESSAGE="$2"
+            if [ -z "$COMMITMESSAGE" ]; then
+                COMMITMESSAGE="Auto commit from plugins.sh"
             fi
-        else
-            echo -e "\e[34mplugins/$plugin\e[0m: No changes pending"
+            git add -A .
+            git commit -m "$COMMITMESSAGE"
         fi
+        echo -e "\e[34mplugins/$plugin\e[0m: Pulling & Pushing latest changes"
+        git fetch --unshallow
+        git merge --ff-only origin/main
+        git push  origin main
     fi
     git log -1 --format="%an <%ae> - %s"
     cd "$SERVERHOME"

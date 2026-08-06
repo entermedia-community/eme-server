@@ -67,7 +67,7 @@ case "$CMD" in
         git checkout -t origin/main
     fi
 
-    "$SERVERHOME/bin/plugins.sh"
+    "$SERVERHOME/bin/plugins.sh" update
 
     ## Copy default site if missing
     if [ ! -d "$SERVERHOME/webapp/site" ]; then
@@ -145,7 +145,7 @@ case "$CMD" in
     git pull --no-rebase origin main
     git stash pop
     
-    "$SERVERHOME/bin/plugins.sh" pull
+    "$SERVERHOME/bin/plugins.sh" update
 
    ;;
 
