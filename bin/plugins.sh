@@ -22,6 +22,9 @@ IFS='|' read -r -a plugins <<< "$LISTOFPLUGINS"
 
 CMD="$1"
 
+##track if any changes were made to any of the plugins
+FOUNDPENDING=false
+
 safe_fetch_main() {
     if [ "$(git rev-parse --is-shallow-repository 2>/dev/null)" = "true" ]; then
         git fetch --unshallow origin main
@@ -29,10 +32,6 @@ safe_fetch_main() {
         git fetch origin main
     fi
 }
-
-if [ -n "$CMD" ]; then
-    echo "*** Running $CMD command for plugins: ${plugins[*]}"
-fi
 
 ##loop over list of plugins and pull them from github
 for plugin in "${plugins[@]}"; do
@@ -53,15 +52,30 @@ for plugin in "${plugins[@]}"; do
         git fetch --depth=1 origin main
         # Switch to main, force tracking, and pull down remote history
         git checkout -B main origin/main
+        FOUNDPENDING=true
     fi
 
    cd "$SERVERHOME/plugins/$plugin"
 
+    if [ "$CMD" == "status" ]; then
+        cd "$SERVERHOME/plugins/$plugin"
+        if [ -n "$(git status --porcelain)" ]; then
+            git status
+            echo "Run plugins.sh push \"Commit message\" to commit and push changes for $plugin"
+            FOUNDPENDING=true
+            continue
+        fi  
+        UNPUSHED_ALL=$(git log --branches --not --remotes --oneline | wc -l)
+        if [ "$UNPUSHED_ALL" -gt 0 ]; then
+            echo -e "\e[34mplugins/$plugin\e[0m: You have $UNPUSHED_ALL unpushed commit(s)."
+            FOUNDPENDING=true
+        fi
 
-    if [ "$CMD" == "update" ]; then
+    elif [ "$CMD" == "update" ]; then
         cd "$SERVERHOME/plugins/$plugin"
         if [ -n "$(git status --porcelain)" ]; then
             echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping update. Run: git fetch origin main\e[0m"
+            FOUNDPENDING=true
             continue
         fi  
 
@@ -71,6 +85,7 @@ for plugin in "${plugins[@]}"; do
 
         if [ "$UNPUSHED_ALL" -gt 0 ]; then
             echo -e "\e[34mplugins/$plugin\e[0m: You have $UNPUSHED_ALL unpushed commit(s) across your local branches."
+            FOUNDPENDING=true
         else
             echo " All local branches are fully pushed."
             git reset --hard origin/main
@@ -79,6 +94,7 @@ for plugin in "${plugins[@]}"; do
         cd "$SERVERHOME/plugins/$plugin"
         if [ -n "$(git status --porcelain)" ]; then
             echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping pull. Run: git fetch origin main\e[0m"
+            FOUNDPENDING=true
             continue
         fi  
         
@@ -99,13 +115,13 @@ for plugin in "${plugins[@]}"; do
             fi
             git add -A .
             git commit -m "$COMMITMESSAGE"
+            FOUNDPENDING=true   
         fi
         echo -e "\e[34mplugins/$plugin\e[0m: Pulling & Pushing latest changes"
         safe_fetch_main
         git merge --ff-only origin/main
         git push  origin main
     fi
-    git log -1 --format="%an <%ae> - %s"
     cd "$SERVERHOME"
     ##make sure all the symlinks are in place for the webapp
     if [ -d "$SERVERHOME/plugins/$plugin/html" ]; then
@@ -114,3 +130,9 @@ for plugin in "${plugins[@]}"; do
         fi
     fi
 done
+
+if [ "$FOUNDPENDING" = true ]; then
+    echo "Some plugins have pending changes. Please review the output above."
+else
+    echo "All plugins are up to date and have no pending changes."
+fi
