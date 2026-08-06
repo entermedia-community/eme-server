@@ -140,6 +140,7 @@ case "$CMD" in
     echo "Updating eme-server-client repo to the latest version"
 
     #git stash clear git stash drop
+    #git checkout -f main .vscode/settings.json
     git stash
     git pull --no-rebase origin main
     git stash pop
