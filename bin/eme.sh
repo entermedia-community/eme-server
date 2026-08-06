@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit on unexpected errors if needed (uncomment for strictness)
-# set -e
+set -e
 
 CMD="${1:-help}"
 SERVERHOME="$2"
@@ -139,6 +139,7 @@ case "$CMD" in
   update)
     echo "Updating eme-server-client repo to the latest version"
 
+    #git stash clear git stash drop
     git stash
     git pull --no-rebase origin main
     git stash pop
