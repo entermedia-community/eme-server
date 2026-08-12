@@ -40,7 +40,6 @@ case "$CMD" in
           echo "INSTANCE=$SERVERNAME$NODENUMBER"
           echo "SITE=$SERVERNAME"
           echo "NODENUMBER=$NODENUMBER"
-          echo "LISTOFPLUGINS=\"catalog|finder|system|manager|mediadb|community|openedit|profile\""
         } > "$SERVERHOME/.env"
     fi
   ;;
