@@ -135,9 +135,9 @@ case "$CMD" in
 
     #git stash clear git stash drop
     #git checkout -f main .vscode/settings.json
-    git stash
-    git pull --no-rebase origin main
-    git stash pop
+    git stash || true
+    git pull --no-rebase origin main || true
+    git stash pop || true
     
     "$SERVERHOME/bin/plugins.sh" update
 
