@@ -10,6 +10,6 @@
 	"search.useGlobalIgnoreFiles": false,
 	"git.rebaseWhenSync": true,
 	"git.autoStash": true,
-	"git.repositoryScanMaxDepth": 1,
+	"git.repositoryScanMaxDepth": 3,
 	"git.openRepositoryInParentFolders": "never"
 }
