@@ -8,7 +8,7 @@ webapp/WEB-INF/tmp/
 webapp/WEB-INF/temp/
 webapp/WEB-INF/trash/
 webapp/site
-
+/data/
 
 plugins/catalog/
 plugins/finder/
