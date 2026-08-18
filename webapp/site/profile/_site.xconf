@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+<property name="fallbackdirectory">/profile</property>  
+  <property name="applicationid">site/profile</property>
+  <property name="catalogid">site/catalog</property>
+</page>
