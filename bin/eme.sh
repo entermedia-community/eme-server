@@ -184,7 +184,10 @@ case "$CMD" in
 
     echo "*** Creating Docker instance for $SERVERHOME with node number $NODENUMBER owned by $USERNAME (UID: $USERID, GID: $GROUPID)"
     
-    curl -s https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/bin/resources/docker/scripts/eme-docker-init.sh | bash -s -- "$SERVERHOME" "$NODENUMBER" "$USERID" "$GROUPID"
+    #curl -s https://raw.githubusercontent.com/entermedia-community/eme-server/refs/heads/main/bin/resources/docker/scripts/eme-docker-init.sh | bash -s -- "$SERVERHOME" "$NODENUMBER" "$USERID" "$GROUPID"
+    
+    $SERVERHOME/bin/resources/docker/scripts/eme-docker-init.sh "$SERVERHOME" "$NODENUMBER" "$USERID" "$GROUPID"
+
 
   ;;
 
