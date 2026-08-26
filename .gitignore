@@ -7,7 +7,7 @@ webapp/WEB-INF/elastic/
 webapp/WEB-INF/tmp/
 webapp/WEB-INF/temp/
 webapp/WEB-INF/trash/
-data/
+data
 
 plugins/catalog/
 plugins/finder/
