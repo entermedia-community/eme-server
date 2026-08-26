@@ -8,8 +8,6 @@ SERVERHOME="$2"
 SERVERNAME="$(basename "${SERVERHOME:-}")"
 
 
-echo "*** Running $CMD command"
-
  # Verify not running as root if CMD is not dockerstart
 if [[ "$CMD" != "dockerstart" ]]; then
     if [[ $(id -u) -eq 0 ]]; then
