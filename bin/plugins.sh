@@ -137,7 +137,7 @@ plugin_update() {
     # first so it stays reachable and easy to find instead of relying on reflog.
     git tag "pre-update-$(date +%Y%m%d%H%M%S)" "$local_sha" >/dev/null 2>&1
     git reset --hard "origin/$branch"
-    echo " plugins/$plugin updated to $remote_sha"
+    #echo " plugins/$plugin updated to $remote_sha"
 }
 
 plugin_pull() {
