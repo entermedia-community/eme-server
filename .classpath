@@ -4,7 +4,11 @@
 	<classpathentry kind="src" path="plugins/system/code"/>
 	<classpathentry kind="src" path="plugins/finder/code"/>
 	<classpathentry kind="src" path="plugins/community/code"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/current"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="plugins/finder/lib/pdfbox-app-2.0.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugins/community/lib/compile/servlet-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugins/community/lib/compile/websocket-api.jar"/>
