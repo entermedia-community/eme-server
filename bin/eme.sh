@@ -162,6 +162,9 @@ case "$CMD" in
     git merge upstream/main --allow-unrelated-histories -X theirs
     #git checkout upstream/main -- .
 
+    # Fix any conflicts that may arise during the merge
+    #git checkout upstream/main -- .gitignore
+
   ;;
 
   developer)
