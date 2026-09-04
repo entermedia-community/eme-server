@@ -14,12 +14,14 @@ The two most important folders are:
 
 ### Prerequisites
 
-- Install java and dependencies. See .agents/SKILL.md
+- Install java and dependencies. 
+- Use SDKMAN: sdk default java 26.0.1-open
+- To run in VSS make sure you install a good Java Control - Shift - P | Configure Java Runtime and chose the version above /home/USERNAME/.sdkman/candidates/java/current
 
 ### Codebase map
 
 - `plugins` Contains extention points that are mounted in the web server using symbolic links
-- `plugins/eme` This is the main entry point for the web site and theme of the site. It can be reached by going to http://localhost:8080/eme
+- `plugins/site/find` This is the main entry point for the web site and theme of the site. It can be reached by going to http://localhost:8080/site/find
 - `plugins/system/lib` The main jar libraries that the system uses to process web pages etc
 - `plugins/system/code` This handles html web page requests and user security
 - `plugins/finder/html/find` This is the app contains all the components needed to organize and media library and for data entry
@@ -44,7 +46,7 @@ VSS has a launcher that will build the java source code automatically into MySer
 - plugins/manager folder that is used when users want to have more than one database. It is not needed for normal operation
 - plugin/components - This folder is used by web pages to find common javascript libraries. The eme app users a /eme/components -> /components fallback to add additional javascript it needs.
 - plugin/mediadb Contains the JSON REST APi services. All available API calls can be found in eme-lib/plugins/catalog/html/data/lists/endpoint/\*.xml files
-- plugins/catalog/html/data/lists/aiskillenabled/_.xml Contains various automation steps that are performed by Java classes fined in plugins/catalog/html/data/lists/aiskill/_.xml
+- plugins/catalog/html/data/lists/automationstep/_.xml Contains various automation steps that are performed by Java classes fined in plugins/catalog/html/data/lists/aiskill/_.xml
 - plugins/finder/html/src/plugin.xml Contains Spring style bean definitions for finder Java classes
 - Each eme-lib can spawn multiple Websites using the eme.sh command. A website is where the user will customize his site. The website will contain his database
 - Website/data This is where any database and file uploads will be saved
@@ -108,7 +110,7 @@ Add a bean entry in plugin.xml (example pattern from plugins/myplugin/html/src/p
 #### 4) Make it selectable and runnable
 
 - Add a skill definition in plugins/catalog/html/data/lists/aiskill/\*.xml with a unique data id and bean="myCustomSkill".
-- Enable and order it in plugins/catalog/html/data/lists/aiskillenabled/\*.xml using aiskill="<data id from aiskill>".
+- Enable and order it in plugins/catalog/html/data/lists/automationstep/\*.xml using aiskill="<data id from aiskill>".
 - Use runafter and automationscenario to control sequence and where it runs.
 
 #### 5) Validate changes

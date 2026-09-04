@@ -57,7 +57,7 @@ Add a bean entry to the owning plugin's `plugin.xml` (e.g. `plugins/myplugin/htm
 
 - Add a skill definition in `plugins/catalog/html/data/lists/aiskill/*.xml` with a unique `data id`
   and `bean="myCustomSkill"`.
-- Enable and order it in `plugins/catalog/html/data/lists/aiskillenabled/*.xml` using
+- Enable and order it in `plugins/catalog/html/data/lists/automationstep/*.xml` using
   `aiskill="<data id from aiskill>"`.
 - Use `runafter` and `automationscenario` to control sequence and where it runs (e.g. after asset
   upload, on a scheduled job).
@@ -70,6 +70,6 @@ Add a bean entry to the owning plugin's `plugin.xml` (e.g. `plugins/myplugin/htm
 
 ## Related
 
-- Data tables that back the AI pipeline (aiskill, aiskillenabled, aiserver, aistyle, ...) live under
+- Data tables that back the AI pipeline (aiskill, automationstep, aiserver, aistyle, ...) live under
   `plugins/catalog/html/data/fields` and `plugins/catalog/html/data/lists` — use the
   `catalog-table-creator` skill (in the `catalog` plugin) if you also need a new backing table or field.

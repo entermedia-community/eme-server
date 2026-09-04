@@ -11,5 +11,6 @@
 	"git.rebaseWhenSync": true,
 	"git.autoStash": true,
 	"git.repositoryScanMaxDepth": 3,
-	"git.openRepositoryInParentFolders": "never"
+	"git.openRepositoryInParentFolders": "never",
+	"java.format.settings.url": "formatter.xml"
 }
