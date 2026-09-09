@@ -16,5 +16,6 @@
 			"editor.formatOnSave": true,
 		},
 		"java.debug.settings.onBuildFailureProceed": true,
+		"postman.settings.dotenv-detection-notification-visibility": false,
 	},
 }

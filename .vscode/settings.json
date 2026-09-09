@@ -12,5 +12,6 @@
 	"git.autoStash": true,
 	"git.repositoryScanMaxDepth": 3,
 	"git.openRepositoryInParentFolders": "never",
-	"java.format.settings.url": "formatter.xml"
+	"java.format.settings.url": "formatter.xml",
+
 }
