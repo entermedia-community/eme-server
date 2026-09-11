@@ -192,8 +192,8 @@ plugin_push() {
 plugin_link_webapp() {
     local plugin="$1"
 
-    if [ -d "$SERVERHOME/plugins/$plugin/html" ] && [ ! -L "$SERVERHOME/webapp/$plugin" ]; then
-        ln -nsf "$SERVERHOME/plugins/$plugin/html" "$SERVERHOME/webapp/$plugin"
+    if [ -d "$SERVERHOME/plugins/$plugin/html" ]; then
+        ln -nsf "../plugins/$plugin/html" "$SERVERHOME/webapp/$plugin"
     fi
 }
 
