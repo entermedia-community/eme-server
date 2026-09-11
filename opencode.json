@@ -1,0 +1,18 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "local-llama": {
+      "options": {
+        "baseURL": "https://llamat.emediaworkspace.com/v1",
+        "apiKey": "sk-dummy"
+      },
+      "models": {
+        "local-llama": {
+          "name": "Qwen3.8-27B-GGUF",
+          "supportsToolCalls": true
+        }
+      }
+    }
+  },
+  "model": "local-llama/Qwen3.8-27B-GGUF"
+}
