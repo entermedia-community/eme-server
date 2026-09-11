@@ -95,6 +95,8 @@ file is topically closest (these files are grouped by domain, e.g. `chat_monitor
 same-pattern file there if none fits. This is a data row on an already-existing list field, so it
 does **not** need the `catalog-table-creator` skill (that's only for new tables/fields).
 
+The parameters will be what the Java code needs to operate. Each parameter will have its id, description, and optionally an "optional" flag indicating whether it is required.
+
 ```xml
 <data id="beanId" bean="beanId" enabled="true" agenttype="eventagent" ordering="10">
 	<name>
@@ -102,6 +104,22 @@ does **not** need the `catalog-table-creator` skill (that's only for new tables/
 	</name>
 	<markdowncontent><![CDATA[One-sentence description of what this skill does — this text is
 what embedding-based retrieval (see AgentJobCreatorSkill) matches against, so make it descriptive.]]></markdowncontent>
+<parameters><![CDATA[ 
+[{
+"id":"goal",
+"description":"The goal to be achieved by this skill"
+},
+{
+"id":"urgency",
+"description":"The urgency level of achieving the goal",
+"optional": true
+}]
+   ]]></parameters>,
+   <defaultoutput><![CDATA[ [
+  {
+    "id": "jobstatus"
+  }
+] ]]></defaultoutput>
 </data>
 ```
 
