@@ -7,6 +7,7 @@
 		<asperaupload>./aspera/upload.sh</asperaupload>
 		<avconv>ffmpeg</avconv>
 		<avprobe>ffprobe</avprobe>
+		<opencode>~/.opencode/bin/opencode</opencode>
 		<localopencommand>code</localopencommand>
 	</commandmap>
 	<commandmap os="WINDOWS">

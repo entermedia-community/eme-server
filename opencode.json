@@ -7,12 +7,16 @@
         "apiKey": "sk-dummy"
       },
       "models": {
-        "local-llama": {
+        "/root/unsloth/Qwen3.8-27B-GGUF/Qwen3.8-27B-UD-Q4_K_XL.gguf": {
           "name": "Qwen3.8-27B-GGUF",
-          "supportsToolCalls": true
+          "tool_call": true,
+          "limit": {
+            "context": 30000,
+            "output": 8192
+          }
         }
       }
     }
   },
-  "model": "local-llama/Qwen3.8-27B-GGUF"
+  "model": "local-llama//root/unsloth/Qwen3.8-27B-GGUF/Qwen3.8-27B-UD-Q4_K_XL.gguf"
 }
