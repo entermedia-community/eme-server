@@ -6,6 +6,7 @@ set -e
 CMD="${1:-help}"
 SERVERHOME="$2"
 SERVERNAME="$(basename "${SERVERHOME:-}")"
+VERSION="$3"
 
 
  # Verify not running as root if CMD is not dockerstart
@@ -17,7 +18,7 @@ if [[ "$CMD" != "dockerstart" ]]; then
 fi
 
 case "$CMD" in
-  developer | init | dockerbuild | dockerstart | update | branchpush)
+  developer | init | dockerbuild | dockerstart | update | branchpush | tag)
 
     # Check if SERVERHOME is set
     if [ -z "$SERVERHOME" ]; then
@@ -128,16 +129,38 @@ if [ "$CMD" = "start" ]; then
 fi
 
 case "$CMD" in
-  update)
-    echo "Updating eme-server-client repo to the latest version"
+  tag)
+    if [ -z "$3" ]; then
+        echo "ERROR: Please provide a tag name as the third argument."
+        exit 1
+    fi
 
-    #git stash clear git stash drop
-    #git checkout -f main .vscode/settings.json
-    git stash || true
-    git pull --no-rebase origin main || true
-    git stash pop || true
+    TAG_NAME="v${VERSION#v}"
+    echo "Tagging eme-server repo with $TAG_NAME"
+
+    git add -A .
+    git commit -m "Tagging $TAG_NAME" || true
+    git tag "$TAG_NAME"
+    git push origin "$TAG_NAME"
     
+  ;;
+
+  update)
+    git stash || true
+    if [ -z "$3" ]; then
+        echo "Updating eme-server repo to the latest version"
+        git checkout main || true
+        git pull --no-rebase origin main || true
+    else 
+        TAG_NAME="v${VERSION#v}"
+        echo "Updating eme-server repo to tag $TAG_NAME"
+        git fetch --tags origin || git fetch origin || true
+        git checkout "$TAG_NAME"
+    fi
+    
+    git stash pop || true
     "$SERVERHOME/bin/plugins.sh" update
+    
 
    ;;
 
@@ -282,7 +305,8 @@ case "$CMD" in
         echo ""
         echo "Developer commands:"
         echo "  developer    <server-path>                     Clone/setup workspace and open VS Code"
-        echo "  update       <server-path>                     Pull latest changes and plugins"
+        echo "  update       <server-path> [version/tag]       Pull latest changes or checkout a specific tag"
+        echo "  tag          <server-path> <version/tag>       Commit, tag, and push a specific version"
         echo "  updatefork   <server-path>                     Update from upstream remote"
         echo "  branchpush   <server-path> [commit message]    Commit and push local changes"
         echo ""
