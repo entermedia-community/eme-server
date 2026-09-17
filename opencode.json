@@ -28,7 +28,6 @@
     "cua-driver": {
       "type": "local",
       "command": ["/home/shanti/.local/bin/cua-driver", "mcp"],
-      "enabled": false,
       "timeout": 30000
     }
   },
