@@ -173,8 +173,6 @@ args.add("-c");
 args.add(commandLine);
 
 FinalizedProcessBuilder builder = new FinalizedProcessBuilder(args);
-builder.keepProcess(false);
-builder.logInputtStream(true);   // gobble stdout (and merge stderr into it)
 builder.directory(new File(".")); // working directory; null is NOT safe — Exec.runExec always sets one
 
 FinalizedProcess process = builder.start(getExec().getExecutorManager());
@@ -192,10 +190,12 @@ finally
 
 Key facts (verified against `FinalizedProcessBuilder.java` / `FinalizedProcess.java`):
 
-- Default is `gobbleInput=true`, `gobbleError=false`; with that combination `start()` calls
-  `processBuilder.redirectErrorStream(true)`, so stderr lands in the stdout gobblers and
-  `getStandardOutputs()` contains both. If you set `logErrorStream(true)` explicitly, read stderr
-  separately via `getErrorOutputs()`.
+- Standard output and standard error are always gobbled and logged separately (never merged via
+  `redirectErrorStream`) — there's no way to turn this off, so the subprocess can never block on a
+  full stdout or stderr pipe. Read them independently via `process.getStandardOutputs()` and
+  `process.getErrorOutputs()` (or `getAllOutputs()` for both).
+- The subprocess is always destroyed when `process.close()` runs — there's no way to keep it alive
+  past that point (this class is for running a command to completion, not starting a daemon).
 - Always call `process.close()` in a `finally` block — it's what `Exec.runExec` does
   (`Exec.java:210-214`) and skipping it leaks the gobbler threads.
 - Reuse `getExec().getExecutorManager()` and `getExec().getTimeLimit()` rather than creating your

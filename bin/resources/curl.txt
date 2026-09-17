@@ -214,6 +214,8 @@ INFO: media_catalogs_public/lock/_search' -d '{
 }' 
 
 curl -XGET  'http://localhost:9200/assets_catalog/asset/_mapping?pretty=true'  | python -mjson.tool
+curl -XGET  'http://localhost:9200/systen/user/_mapping?pretty=true'  | python -mjson.tool
+
 
 
 curl -XGET 'http://localhost:9200/assets_catalog/assettype/_search' -d '{
