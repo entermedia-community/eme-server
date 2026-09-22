@@ -24,13 +24,6 @@
     }
   },
   "model": "local-llama//root/unsloth/Qwen3.8-27B-GGUF/Qwen3.8-27B-UD-Q4_K_XL.gguf",
-  "mcp": {
-    "cua-driver": {
-      "type": "local",
-      "command": ["/home/shanti/.local/bin/cua-driver", "mcp"],
-      "timeout": 30000
-    }
-  },
   "attachment": {
     "image": {
       "auto_resize": true,

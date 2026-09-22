@@ -13,5 +13,6 @@
 	"git.repositoryScanMaxDepth": 3,
 	"git.openRepositoryInParentFolders": "never",
 	"java.format.settings.url": "formatter.xml",
+	"postman.settings.dotenv-detection-notification-visibility": false,
 
 }
