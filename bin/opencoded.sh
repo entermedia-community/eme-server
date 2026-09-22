@@ -24,6 +24,8 @@ elif [[ -x "$HOME/.opencode/bin/opencode" ]]; then
   OPENCODE="$HOME/.opencode/bin/opencode"
 else
   echo "error: opencode not found in PATH or ~/.opencode/bin" >&2
+  echo "  curl -fsSL https://opencode.ai/v2/install | bash"
+  #echo "  curl -fsSL https://opencode.ai/install | bash"
   exit 1
 fi
 
