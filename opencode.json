@@ -2,12 +2,13 @@
   "$schema": "https://opencode.ai/config.json",
   "provider": {
     "local-llama": {
+      "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "https://llamat.emediaworkspace.com/v1",
         "apiKey": "sk-dummy"
       },
       "models": {
-        "/root/unsloth/Qwen3.8-27B-GGUF/Qwen3.8-27B-UD-Q4_K_XL.gguf": {
+        "Qwen3.8-27B-GGUF": {
           "name": "Qwen3.8-27B-GGUF",
           "tool_call": true,
           "attachment": true,
@@ -23,7 +24,7 @@
       }
     }
   },
-  "model": "local-llama//root/unsloth/Qwen3.8-27B-GGUF/Qwen3.8-27B-UD-Q4_K_XL.gguf",
+  "model": "local-llama/Qwen3.8-27B-GGUF",
   "attachment": {
     "image": {
       "auto_resize": true,
