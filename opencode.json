@@ -1,45 +1,49 @@
 {
-  "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "local-llama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "options": {
-        "baseURL": "https://llamat.emediaworkspace.com/v1",
-        "apiKey": "sk-dummy"
-      },
-      "models": {
-        "Qwen3.8-27B-GGUF": {
-          "name": "Qwen3.8-27B-GGUF",
-          "tool_call": true,
-          "attachment": true,
-          "modalities": {
-            "input": ["text", "image"],
-            "output": ["text"]
-          },
-          "limit": {
-            "context": 65536,
-            "output": 16384
-          }
-        }
-      }
-    }
-  },
-  "model": "local-llama/Qwen3.8-27B-GGUF",
-  "attachment": {
-    "image": {
-      "auto_resize": true,
-      "max_width": 1600,
-      "max_height": 1200,
-      "max_base64_bytes": 2097152
-    }
-  },
-  "tool_output": {
-    "max_lines": 1000,
-    "max_bytes": 32768
-  },
-  "compaction": {
-    "auto": true,
-    "prune": true,
-    "tail_turns": 10
-  }
+	"$schema": "https://opencode.ai/config.json",
+	"autoupdate": true,
+	"username": "eme",
+	"server": {
+		"port": 4096
+	},
+	"provider": {
+		"local-llama": {
+			"npm": "@ai-sdk/openai-compatible",
+			"options": {
+				"baseURL": "https://llamat.emediaworkspace.com/v1"
+			},
+			"models": {
+				"Qwen3.8-27B-GGUF": {
+					"name": "Qwen3.8-27B-GGUF",
+					"tool_call": true,
+					"attachment": true,
+					"modalities": {
+						"input": ["text", "image"],
+						"output": ["text"]
+					},
+					"limit": {
+						"context": 65536,
+						"output": 16384
+					}
+				}
+			}
+		}
+	},
+	"model": "local-llama/Qwen3.8-27B-GGUF",
+	"attachment": {
+		"image": {
+			"auto_resize": true,
+			"max_width": 1600,
+			"max_height": 1200,
+			"max_base64_bytes": 2097152
+		}
+	},
+	"tool_output": {
+		"max_lines": 1000,
+		"max_bytes": 32768
+	},
+	"compaction": {
+		"auto": true,
+		"prune": true,
+		"tail_turns": 10
+	}
 }
