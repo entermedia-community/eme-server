@@ -17,6 +17,11 @@ if [[ "$CMD" != "dockerstart" ]]; then
     fi
 fi
 
+if [ "$CMD" = "restart" ]; then
+    "$0" stop "$SERVERHOME"
+    exec "$0" start "$SERVERHOME"
+fi
+
 case "$CMD" in
   developer | init | dockerbuild | dockerstart | update | branchpush | tag)
 
@@ -106,7 +111,6 @@ if [ "$CMD" = "start" ]; then
     if [[ ! -L "$SERVERHOME/data" || ! -d "$SERVERHOME/webapp/WEB-INF/data" ]]; then
         mkdir -p "$SERVERHOME/webapp/WEB-INF/data"
         ln -nsf "$SERVERHOME/webapp/WEB-INF/data" "$SERVERHOME/data"
-        sudo chown -R "$USERID:$GROUPID" "$SERVERHOME/data"
     fi
 
     ARGS_TEMPLATE="$SERVERHOME/bin/resources/tomcat.args"
@@ -120,12 +124,82 @@ if [ "$CMD" = "start" ]; then
 
     EXPANDED_ARGS="$SERVERHOME/tomcat/work/tomcat-args.txt"
     sed -e "s|\$SERVERHOME|$SERVERHOME|g" "$ARGS_TEMPLATE" > "$EXPANDED_ARGS"
-    sudo chmod 600 "$EXPANDED_ARGS"
+    chmod 600 "$EXPANDED_ARGS"
 
     JAVA="$JAVA_HOME/bin/java"
 
     echo "$JAVA -Dappname=$SERVERNAME $(cat "$EXPANDED_ARGS") org.apache.catalina.startup.Bootstrap start"
-    "$JAVA" -Dappname="$SERVERNAME" "@$EXPANDED_ARGS" org.apache.catalina.startup.Bootstrap start
+
+    PIDFILE="$SERVERHOME/tomcat/work/eme.pid"
+
+    if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+        echo "ERROR: Server already running (PID $(cat "$PIDFILE")). Run: eme.sh stop $SERVERHOME" >&2
+        exit 1
+    fi
+
+    # Run Tomcat in the background so this script can trap signals and shut it down gracefully
+    "$JAVA" -Dappname="$SERVERNAME" "@$EXPANDED_ARGS" org.apache.catalina.startup.Bootstrap start &
+    TOMCATPID=$!
+    echo "$TOMCATPID" > "$PIDFILE"
+
+    stop_tomcat() {
+        trap - TERM INT
+        echo "*** Shutdown requested, stopping Tomcat (PID: $TOMCATPID)"
+        # Tomcat's JVM shutdown hook stops webapps and connectors cleanly on SIGTERM
+        kill -TERM "$TOMCATPID" 2>/dev/null || true
+        for _ in $(seq 1 100); do
+            kill -0 "$TOMCATPID" 2>/dev/null || break
+            sleep 0.6
+        done
+        if kill -0 "$TOMCATPID" 2>/dev/null; then
+            echo "Tomcat did not stop in time, forcing shutdown"
+            kill -KILL "$TOMCATPID" 2>/dev/null || true
+        fi
+        rm -f "$PIDFILE"
+        echo "*** Tomcat stopped"
+        exit 143
+    }
+    trap stop_tomcat TERM INT
+
+    wait "$TOMCATPID" || true
+    rm -f "$PIDFILE"
+fi
+
+if [ "$CMD" = "stop" ]; then
+
+    if [ -z "$SERVERHOME" ] || [ ! -d "$SERVERHOME" ]; then
+        echo "ERROR: Please provide an existing server path. Usage: eme.sh stop <server-path>" >&2
+        exit 1
+    fi
+    SERVERHOME="$(cd "$SERVERHOME" && pwd)"
+    PIDFILE="$SERVERHOME/tomcat/work/eme.pid"
+
+    if [ ! -f "$PIDFILE" ]; then
+        echo "Server is not running (no $PIDFILE)"
+        exit 0
+    fi
+
+    TOMCATPID="$(cat "$PIDFILE")"
+    if [[ ! "$TOMCATPID" =~ ^[0-9]+$ ]] || ! kill -0 "$TOMCATPID" 2>/dev/null; then
+        echo "Server is not running (stale PID file removed)"
+        rm -f "$PIDFILE"
+        exit 0
+    fi
+
+    echo "*** Stopping server: $SERVERHOME (PID: $TOMCATPID)"
+    kill -TERM "$TOMCATPID"
+    for _ in $(seq 1 300); do
+        kill -0 "$TOMCATPID" 2>/dev/null || break
+        printf "."
+        sleep 0.6
+    done
+    echo
+    if kill -0 "$TOMCATPID" 2>/dev/null; then
+        echo "Tomcat did not stop in time, forcing shutdown"
+        kill -KILL "$TOMCATPID" 2>/dev/null || true
+    fi
+    rm -f "$PIDFILE"
+    echo "*** Server stopped"
 fi
 
 case "$CMD" in
@@ -241,53 +315,24 @@ case "$CMD" in
     sudo -u "entermedia" /usr/bin/eme start "$2" &
     launcherpid=$!
 
-    catalinapid=""
-    for _ in $(seq 1 50); do
-        catalinapid=$(pgrep -n -f "eme start" || true)
-        if [[ "$catalinapid" =~ ^[0-9]+$ ]]; then
-            echo "Tomcat PID: $catalinapid (launcher PID: $launcherpid)"
-            break
-        fi
-        sleep 0.3
-    done
-
-    if [[ ! "$catalinapid" =~ ^[0-9]+$ ]]; then
-        echo "Could not find eme start process"
-        exit 1
-    fi
-
-   term_handler() {
-        trap - SIGTERM
-        echo "SIGTERM received, shutting down Tomcat (PID: ${catalinapid:-unset}, launcher PID: ${launcherpid:-unset})"
-
-        if [[ "$catalinapid" =~ ^[0-9]+$ ]] && kill -0 "$catalinapid" 2>/dev/null; then
-            echo "Deployment shutdown start"
-            "$SERVERHOME/tomcat/bin/catalina.sh" stop || true
-            kill -TERM "$catalinapid" 2>/dev/null || true
-
-            while kill -0 "$catalinapid" 2>/dev/null; do
-                printf "."
-                sleep 0.6
-            done
-        fi
-
-        if [[ "$launcherpid" =~ ^[0-9]+$ ]]; then
-            kill -TERM "$launcherpid" 2>/dev/null || true
-        fi
-
-        echo
+    term_handler() {
+        trap - TERM INT
+        echo "Signal received, stopping Tomcat (launcher PID: $launcherpid)"
+        sudo -u "entermedia" /usr/bin/eme stop "$SERVERHOME" || true
+        # Reap the launcher, which exits once Tomcat is down
+        wait "$launcherpid" 2>/dev/null || true
         echo "Tomcat shutdown complete, exiting (143)"
         exit 143
     }
 
-    trap 'term_handler' SIGTERM
+    trap term_handler TERM INT
 
     wait "$launcherpid"
     echo "Launcher process $launcherpid exited"
 
   ;;
 
-  init | start)
+  init | start | stop | restart)
     # Work already done in preflight blocks above.
   ;;
 
@@ -301,7 +346,9 @@ case "$CMD" in
         echo ""
         echo "Core commands:"
         echo "  init         <server-path>              Prepare local server files without starting server"
-        echo "  start        <server-path>              Start Tomcat server"
+        echo "  start        <server-path>              Start Tomcat server (Ctrl-C/SIGTERM shuts down gracefully)"
+        echo "  stop         <server-path>              Gracefully stop a running Tomcat server"
+        echo "  restart      <server-path>              Gracefully stop, then start Tomcat server"
         echo ""
         echo "Developer commands:"
         echo "  developer    <server-path>                     Clone/setup workspace and open VS Code"

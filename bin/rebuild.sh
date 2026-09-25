@@ -1,5 +1,6 @@
 #!/bin/bash
 
+##build a docker 
 set -a
 SCRIPT_DIR=$(dirname "$0")
 source "$SCRIPT_DIR/../.env"

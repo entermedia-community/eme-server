@@ -1,5 +1,6 @@
 #!/bin/bash +x
 
+##Elasticsearch health check script
 set -a
 SCRIPT_DIR=$(dirname "$0")
 source "$SCRIPT_DIR/../.env"

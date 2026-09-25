@@ -1,6 +1,6 @@
 ---
 name: opencode-v2-api
-description: Use when working with OpenCodeClient.java or any code that talks to a paired OpenCode v2 HTTP server (the "opencode pair" web interface). Covers the full verified /api/* endpoint surface, Basic auth, request/response envelopes, the SSE event stream wire format and event-type catalog, the v1→v2 migration mapping for OpenCodeClient.java, and the live-probe recipe for re-verifying the API against a running server.
+description: Use when working with OpenCodeClient.java or any code that talks to a paired OpenCode v2 HTTP server (the "opencode pair" web interface), or when starting/opening the OpenCode web UI locally. Covers the full verified /api/* endpoint surface, Basic auth, request/response envelopes, the SSE event stream wire format and event-type catalog, the v1→v2 migration mapping for OpenCodeClient.java, the fixed-login startup script bin/opencoded.sh (127.0.0.1:49374), and the live-probe recipe for re-verifying the API against a running server.
 ---
 
 # Skill: opencode-v2-api
@@ -12,6 +12,29 @@ bundles and confirmed by live probing (server 2.0.14, verified 2026-09-23).
 
 Primary consumer: `plugins/finder/code/org/entermediadb/mcp/client/OpenCodeClient.java`
 (715 lines, still written against the v1 surface — see the migration mapping below).
+
+## Starting the web interface (`bin/opencoded.sh`)
+
+The repo ships `bin/opencoded.sh` for bringing up this server locally:
+
+- Starts the OpenCode **background service** (`opencode service set/start`, not standalone
+  `opencode serve`) pinned to **127.0.0.1:49374**.
+- Pins a **fixed password** (no rotation): sign-in is always username `opencode` with the
+  default in the script, overridable via the `OPENCODE_PASSWORD` env var. The script prints
+  the credentials on every run.
+- **Idempotent**: it only runs `opencode service set <x>` when the current value differs, so a
+  normal run never restarts an already-correctly-configured server.
+- Opens the local browser (`xdg-open` → `google-chrome` → `firefox`, best effort).
+
+**Gotcha — self-hosting:** this agent session is hosted by that same service. Any
+`opencode service set <x>` **stops the background server**, which kills in-flight tool calls and
+makes the session report a restart. When an agent must change service config, run it detached so
+the restart cannot take the caller down:
+
+```bash
+setsid nohup bash -c 'opencode service set password <pw>; sleep 3; opencode service start' \
+  >/tmp/oc-restart.log 2>&1 < /dev/null &
+```
 
 ## Ground truth and how to re-derive it
 
@@ -35,9 +58,11 @@ Primary consumer: `plugins/finder/code/org/entermediadb/mcp/client/OpenCodeClien
   Authorization: Basic base64("opencode:" + <pairing-password>)
   ```
   (Found in bundle: `` btoa(`opencode:${e.password}`) ``.)
-- The password **changes on every pairing**. In this deployment the password is stored in the
-  `aiserver` table (`serverapikey` field); `OpenCodeClient` reads it from there. If you start
-  getting 401s, re-run `opencode pair` and update the stored key.
+- The password **changes on every pairing** — except in this deployment, where `bin/opencoded.sh`
+  pins it to a fixed value (see "Starting the web interface" above), so it no longer rotates. It
+  is also stored in the `aiserver` table (`serverapikey` field); `OpenCodeClient` reads it from
+  there. If you start getting 401s, re-run `bin/opencoded.sh` (or `opencode pair`) and update the
+  stored key to match.
 - Working curl pattern (replace `<password>`):
   ```bash
   AUTH=$(printf 'opencode:<password>' | base64 -w0)
@@ -167,6 +192,36 @@ Failure / control events:
 - `permission.asked` — `data:{id, sessionID, action, resources?, save?, metadata?, source?, message?}`. The request id to use in the reply URL is `data.id`.
 - `permission.replied` — `data:{sessionID, requestID, reply}` with `reply` ∈ `once|always|reject`.
 - `server.connected` (first event on connect).
+- `form.created` — `data:{form:{id:"frm_...", sessionID, title, metadata?, fields:[...]}}`. **The session id is nested under `data.form`**, not `data.sessionID`. Each field has `{key, type, title?, description?, required?, hidden?, when?}` plus per-type props: `string` (`format?` email|uri|date|date-time, `options?`, `custom?`, `default?`, `placeholder?`, `pattern?`), `number`/`integer` (`minimum?`, `maximum?`, `default?`), `boolean` (`default?`), `multiselect` (`options:[{value,label,description?}]`, `minItems?`, `maxItems?`, `default?`), `external` (`url`, no answer). Reply via `POST /api/session/{id}/form/{formID}/reply` body `{answer:{<key>: string|number|boolean|string[]}}`.
+- `form.replied` — `data:{id, sessionID, answer}`; `form.cancelled` — `data:{id, sessionID}`. v2 has no `question.*` events.
+- **`question` forms** — when the agent asks a question mid-turn (e.g. via an `ask`/`question` tool call), the resulting form carries `metadata:{kind:"question", tool:{messageID, id}}`, where `tool.messageID`/`tool.id` identify the assistant message and tool-call part that raised the question (so the reply can be correlated back to that tool call). Live-shaped example:
+  ```json
+  {
+    "metadata": {
+      "kind": "question",
+      "tool": {"messageID": "msg_0d969c158001RHvgmp8pwj2i9n", "id": "2OzRw5iK9A2yOBXtQ6JjKu3hL4Fm4QtC"}
+    },
+    "id": "frm_0d969e052001Qsr8esvqgU2UX9",
+    "sessionID": "ses_f26963f0bffevr2uTvNbV6hkoJ",
+    "title": "Questions",
+    "fields": [
+      {
+        "custom": true,
+        "type": "string",
+        "key": "q0",
+        "title": "Favorite color",
+        "description": "What's your favorite color?",
+        "options": [
+          {"label": "Deep teal (Recommended)", "value": "Deep teal (Recommended)", "description": "A rich blue-green, calm and a little moody"},
+          {"label": "Warm amber", "value": "Warm amber", "description": "Golden-orange, cozy like late afternoon light"},
+          {"label": "Misty lavender", "value": "Misty lavender", "description": "Soft purple-grey, quiet and understated"},
+          {"label": "Forest green", "value": "Forest green", "description": "Deep, earthy, very grounding"}
+        ]
+      }
+    ]
+  }
+  ```
+  Note the `string`-type option shape here is `{label, value, description}` — **not** the same key order/shape as `multiselect`'s `{value,label,description?}`, but the same three fields. `custom:true` on a `string` field with `options` means it's a suggested-choices field: the UI should offer the listed `label`/`description` pairs as pickable suggestions but still accept free-text, since the field type is `string` (not `multiselect` or an enum) and the reply value is just the chosen/typed string in `answer.q0`. A "(Recommended)" suffix baked into an option's `label`/`value` is just prompt-authored text, not a protocol field — there is no separate `recommended` flag.
 
 Other types seen: `session.step.failed`, `session.step.streamed`, `session.viewed`,
 `session.compaction.started|delta|ended|failed`, `session.btw.error`,
@@ -211,8 +266,8 @@ v1 used.
 ## Live probe recipe
 
 ```bash
-PORT=49374   # from `opencode pair` output / aiserver table
-PW='<pairing-password>'
+PORT=49374   # bin/opencoded.sh default; verify with `opencode service get port`
+PW='<fixed password — printed by bin/opencoded.sh / stored in the aiserver table>'
 AUTH=$(printf 'opencode:%s' "$PW" | base64 -w0)
 B="http://127.0.0.1:$PORT"
 
@@ -266,7 +321,9 @@ curl -s -i -X POST -H "Authorization: Basic $AUTH" -H 'Content-Type: application
 - **`error` in `session.execution.failed` is an object** (`{type,message}`), not a string.
 - **Permission request id lives in `permission.asked` → `data.id`**, and the reply endpoint is
   nested under `/permission/{requestID}/reply` (v1 used `/permissions/{id}`).
-- **The pairing password rotates** on every `opencode pair`; 401s after a re-pair are expected.
+- **The pairing password normally rotates** on every `opencode pair` (401s after a re-pair are
+  expected) — but in this deployment `bin/opencoded.sh` pins it to a fixed value, so 401s here
+  mean the service was re-paired *without* the script; just re-run `bin/opencoded.sh`.
 - `GET /api/info` is the one API response that is **not** wrapped in `{"data":...}`.
 - If a `permission.asked` never arrives for a tool call, the session's permission config auto-
   approved it (observed: build agent ran bash without asking).
