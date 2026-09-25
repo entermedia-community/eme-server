@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "date": "2026-09-25 15:47:25",
+  "components": [
+    {
+      "name": "eme-server",
+      "path": ".",
+      "repo": "https://github.com/entermedia-community/eme-server.git",
+      "branch": "main",
+      "commit": "819f296a63113a6069fec6c6a7c2938de106540e"
+    },
+    {
+      "name": "catalog",
+      "path": "plugins/catalog",
+      "repo": "https://github.com/entermedia-community/eme-plugin-catalog.git",
+      "branch": "main",
+      "commit": "ec1a91359b3af5637d52d4a46054aecd9cf3b466"
+    },
+    {
+      "name": "community",
+      "path": "plugins/community",
+      "repo": "https://github.com/entermedia-community/eme-plugin-community.git",
+      "branch": "main",
+      "commit": "71d74cf20b2f3f056e84b81761936f3e36f9dd32"
+    },
+    {
+      "name": "finder",
+      "path": "plugins/finder",
+      "repo": "https://github.com/entermedia-community/eme-plugin-finder.git",
+      "branch": "main",
+      "commit": "20db2d3f4605eea0c6c3f53f8c325ccc91cb1fcd"
+    },
+    {
+      "name": "manager",
+      "path": "plugins/manager",
+      "repo": "https://github.com/entermedia-community/eme-plugin-manager.git",
+      "branch": "main",
+      "commit": "052683b496a4afb04f91c1e1800fc8d2a2851662"
+    },
+    {
+      "name": "mediadb",
+      "path": "plugins/mediadb",
+      "repo": "https://github.com/entermedia-community/eme-plugin-mediadb.git",
+      "branch": "main",
+      "commit": "58ebef12bb71260e19a5610ace2753a0f4bb9146"
+    },
+    {
+      "name": "openedit",
+      "path": "plugins/openedit",
+      "repo": "https://github.com/entermedia-community/eme-plugin-openedit.git",
+      "branch": "main",
+      "commit": "a628ce9822a6d417fb649a92f4ac57176937b2b5"
+    },
+    {
+      "name": "profile",
+      "path": "plugins/profile",
+      "repo": "https://github.com/entermedia-community/eme-plugin-profile.git",
+      "branch": "main",
+      "commit": "fae8d208062983a9354d4be546df31317439047d"
+    },
+    {
+      "name": "system",
+      "path": "plugins/system",
+      "repo": "https://github.com/entermedia-community/eme-plugin-system.git",
+      "branch": "main",
+      "commit": "1ccb876e76cc9cda3b99e273552e71c21f699f25"
+    }
+  ]
+}
