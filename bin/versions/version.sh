@@ -7,6 +7,7 @@
 #   version.sh <version>               # shorthand for create
 #   version.sh restore <version>       # check out every component at the recorded commit
 #   version.sh list                    # show the saved versions
+#   version.sh status                  # confirm nothing is pending (exit 1 if something is)
 #
 # A version file looks like:
 #   { "version": "1.1", "date": "2026-09-25 10:00:00",
@@ -25,6 +26,9 @@
 main() {
     SERVERHOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
     VERSIONSDIR="$SERVERHOME/bin/versions"
+    # Copy of the last restored version file, kept inside .git so it survives checking out an
+    # older eme-server commit (which removes newer bin/versions files) and never shows as a change
+    RESTOREDFILE="$SERVERHOME/.git/eme-restored-version.json"
 
     for tool in git jq; do
         if ! command -v "$tool" >/dev/null 2>&1; then
@@ -38,13 +42,14 @@ main() {
         create)  version_create "$2" "$3" ;;
         restore) version_restore "$2" ;;
         list)    version_list ;;
+        status)  version_status ;;
         ""|help|-h|--help) usage ;;
         *)       version_create "$1" "$2" ;;
     esac
 }
 
 usage() {
-    sed -n '3,9p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+    sed -n '3,10p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
 }
 
 check_version_name() {
@@ -149,6 +154,7 @@ version_restore() {
     # Read the whole file up front; restoring eme-server may change bin/versions
     local rows
     rows=$(jq -r '.components[] | [.name, (.path // (if .name == "eme-server" then "." else "plugins/" + .name end)), (.repo // ""), (.branch // "main"), .commit] | join("|")' "$versionfile") || exit 1
+    [ -d "$SERVERHOME/.git" ] && cp "$versionfile" "$RESTOREDFILE"
 
     local failed=false name path repo branch commit dir current
     while IFS='|' read -r name path repo branch commit; do
@@ -202,6 +208,90 @@ version_restore() {
         exit 1
     fi
     echo "Version $version restored. Run bin/restart.sh to pick up the changes."
+}
+
+##prints "name|commit" for every component of every saved version
+known_commits() {
+    local file
+    for file in "$VERSIONSDIR"/*.json "$RESTOREDFILE"; do
+        [ -e "$file" ] || continue
+        jq -r '.components[] | .name + "|" + .commit' "$file"
+    done
+}
+
+##read-only: reports uncommitted changes and local commits that are not on origin, then
+##which saved version (if any) matches the current checkouts. Exit 1 if anything is pending.
+version_status() {
+    local pending=false known line name path dir changes branch local_sha remote_sha
+    known=$(known_commits)
+
+    while IFS= read -r line; do
+        name="${line%%|*}"
+        path="${line#*|}"
+        dir="$SERVERHOME/$path"
+
+        if [ ! -d "$dir/.git" ]; then
+            echo -e "\e[31m$name: $path is not checked out. Run: bin/plugins.sh update\e[0m"
+            pending=true
+            continue
+        fi
+
+        changes=$(git -C "$dir" status --porcelain)
+        if [ -n "$changes" ]; then
+            echo -e "\e[31m$name has uncommitted changes:\e[0m"
+            echo "$changes"
+            pending=true
+            continue
+        fi
+
+        local_sha=$(git -C "$dir" rev-parse HEAD)
+        branch=$(git -C "$dir" rev-parse --abbrev-ref HEAD)
+        [ "$branch" = "HEAD" ] && branch="main"
+        remote_sha=$(git -C "$dir" rev-parse -q --verify "origin/$branch")
+
+        if [ -z "$remote_sha" ]; then
+            echo -e "\e[31m$name: origin/$branch has never been fetched, cannot tell if $local_sha is pushed.\e[0m"
+            pending=true
+        elif [ "$local_sha" = "$remote_sha" ]; then
+            echo "$name clean at $local_sha"
+        elif git -C "$dir" merge-base --is-ancestor "$local_sha" "$remote_sha" 2>/dev/null; then
+            echo "$name clean at $local_sha (behind origin/$branch)"
+        elif echo "$known" | grep -qxF "$name|$local_sha"; then
+            # A restored version: the commit came from origin, shallow history just can't prove it
+            echo "$name clean at $local_sha (saved version commit)"
+        else
+            echo -e "\e[31m$name: $local_sha is not on last-known origin/$branch. Push it (bin/plugins.sh push or bin/eme.sh branchpush .) or pull.\e[0m"
+            pending=true
+        fi
+    done <<< "$(list_components)"
+
+    local file vname matches="" rows ok cname cpath ccommit
+    for file in "$VERSIONSDIR"/*.json "$RESTOREDFILE"; do
+        [ -e "$file" ] || continue
+        rows=$(jq -r '.components[] | [.name, (.path // (if .name == "eme-server" then "." else "plugins/" + .name end)), .commit] | join("|")' "$file") || continue
+        ok=true
+        while IFS='|' read -r cname cpath ccommit; do
+            [ -n "$cname" ] || continue
+            if [ "$(git -C "$SERVERHOME/$cpath" rev-parse -q --verify HEAD 2>/dev/null)" != "$ccommit" ]; then
+                ok=false
+                break
+            fi
+        done <<< "$rows"
+        vname=$(jq -r '.version // empty' "$file")
+        [ -n "$vname" ] || vname=$(basename "$file" .json)
+        if [ "$ok" = true ]; then
+            case " $matches " in *" $vname "*) ;; *) matches="$matches $vname" ;; esac
+        fi
+    done
+    if [ -n "$matches" ]; then
+        echo "Checkouts match saved version:$matches"
+    fi
+
+    if [ "$pending" = true ]; then
+        echo "Pending changes found. Commit and push them before creating or restoring a version."
+        exit 1
+    fi
+    echo "No pending changes. Safe to create or restore a version."
 }
 
 version_list() {

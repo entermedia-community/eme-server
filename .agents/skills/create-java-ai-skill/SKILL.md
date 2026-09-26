@@ -87,6 +87,8 @@ alongside the other `*Skill` beans):
 </bean>
 ```
 
+Editing `plugin.xml` means the server must be restarted — see Step 6.
+
 ## Step 4: Add the aiskill row
 
 Add a `<data>` record to `plugins/catalog/html/data/lists/aiskill/*.xml` — pick whichever existing
@@ -149,11 +151,58 @@ add a `<data>` record just before `</records>`:
 - `agenttype` here can differ from the aiskill row's `agenttype` in existing examples — match it to
   the other steps in this specific automationstep file instead.
 
-## Step 6: Validate
+## Step 6: Compile, restart, reload data
 
-1. Rebuild/reload so the Java class and the Spring bean definition are picked up.
-2. Confirm `beanId` appears in the automation agent list in the admin UI.
-3. Trigger the target event/module and verify the skill executed in the logs.
+A running server reads `plugin.xml` and loads classes only at startup. **Whenever any
+`plugins/*/html/src/plugin.xml` is edited, restart the server** — otherwise the new bean does not exist
+and the step fails when it runs. New or changed Java classes need the same restart.
+
+```bash
+bin/compile.sh      # must end with "Compiling Java finished." and no errors
+bin/restart.sh      # INSTANCE=localhost in .env: runs eme.sh restart; otherwise restarts the docker container
+```
+
+On localhost, `restart.sh` keeps running while Tomcat is up, so launch it as a background command and
+poll `http://localhost:8080/site/find/` until it answers.
+
+Confirm the restart really happened: the Tomcat process start time must be after the restart.
+
+```bash
+ps -eo pid,lstart,cmd | grep "[c]atalina.startup" | cut -c1-120
+```
+
+### When the server runs in the VS Code Java debugger
+
+`restart.sh` only manages the Tomcat recorded in `tomcat/work/eme.pid`. Check which case applies
+**before** running it:
+
+```bash
+ls tomcat/work/eme.pid 2>/dev/null || echo "no eme.pid"
+ps -eo cmd | grep "[c]atalina.startup" | grep -c Xrunjdwp     # 1 = launched by the debugger
+```
+
+If there is no `eme.pid` and the running Tomcat has `-Xrunjdwp` on its command line, it was started by
+the **Launch eMedia** configuration in `.vscode/launch.json`. Do not run `restart.sh` then: its stop
+step prints "Server is not running", its start fails with `BindException: Address already in use`, and
+the old server keeps running. Instead:
+
+1. Still run `bin/compile.sh` — the launch configuration's classpath starts with `${workspaceFolder}/build`,
+   which is where `compile.sh` writes the classes.
+2. Ask the user to restart the debug session in VS Code:
+   - **Restart:** press `Ctrl+Shift+F5`, or click the green circular-arrow button on the floating
+     debug toolbar.
+   - **Or stop, then start:** `Shift+F5` (red square) to stop, then open **Run and Debug**
+     (`Ctrl+Shift+D`), pick **Launch eMedia** in the dropdown and press `F5`.
+3. Wait until the user says it is restarted, then confirm with the `ps` check above (new start time)
+   and that `http://localhost:8080/site/find/` answers, before reloading list data.
+
+Then load the new `aiskill` and `automationstep` rows with the `reload-list-data` skill
+(`restoredata` for both tables; a restart does not do this).
+
+## Step 7: Validate
+
+1. Confirm `beanId` appears in the automation agent list in the admin UI.
+2. Trigger the target event/module and verify the skill executed in the logs.
 
 ## Calling an LLM: `html/ai/<provider>/calls/*.json` templates
 
