@@ -1,22 +1,18 @@
 {
 	"$schema": "https://opencode.ai/config.json",
-	"autoupdate": true,
+	"update": "auto",
 	"username": "eme",
-	"server": {
-		"port": 4096
-	},
-	"provider": {
+	"providers": {
 		"local-llama": {
-			"npm": "@ai-sdk/openai-compatible",
-			"options": {
+			"package": "aisdk:@ai-sdk/openai-compatible",
+			"settings": {
 				"baseURL": "https://llamat.emediaworkspace.com/v1"
 			},
 			"models": {
 				"Qwen3.8-27B-GGUF": {
 					"name": "Qwen3.8-27B-GGUF",
-					"tool_call": true,
-					"attachment": true,
-					"modalities": {
+					"capabilities": {
+						"tools": true,
 						"input": ["text", "image"],
 						"output": ["text"]
 					},
@@ -28,8 +24,11 @@
 			}
 		}
 	},
-	"model": "local-llama/Qwen3.8-27B-GGUF",
-	"attachment": {
+	"model": {
+		"providerID": "local-llama",
+		"model": "Qwen3.8-27B-GGUF"
+	},
+	"media": {
 		"image": {
 			"auto_resize": true,
 			"max_width": 1600,
@@ -42,8 +41,6 @@
 		"max_bytes": 32768
 	},
 	"compaction": {
-		"auto": true,
-		"prune": true,
-		"tail_turns": 10
+		"auto": true
 	}
 }
