@@ -1,0 +1,19 @@
+{
+  "servers": {
+    "eme-mediadb": {
+      "type": "http",
+      "url": "http://localhost:8080/site/mediadb/ai/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${input:eme-token}"
+      }
+    }
+  },
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "eme-token",
+      "description": "EME bearer token",
+      "password": true
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+	// bin/restart.sh uses Remote Control to restart the VS Code debug session
+	"recommendations": [
+		"eliostruyf.vscode-remote-control"
+	]
+}
