@@ -33,3 +33,58 @@ Use screenshots as the primary verification surface; the configured model accept
   - Use foreground delivery for input actions that require focus.
 - Verify with `verify_state` using a small number of exact predicates; include a screenshot only when the predicate cannot prove the result.
 - Avoid repeated full-tree dumps. Re-snapshot only after UI state changes.
+
+## Local login credentials (VS Code / local development)
+
+When working in VS Code against the local server, the login credentials are always the same. To authenticate HTTP requests (curl, MCP endpoints, JSON APIs), add this header:
+
+```
+Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc
+```
+
+Example:
+
+```bash
+curl -H 'Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc' \
+  http://localhost:8080/site/mediadb/ai/mcp/
+```
+
+## After editing Java code
+
+Any time you change `.java` files, `plugin.xml`, or jars under `plugins/*/lib`, run `bin/restart.sh` so the running server picks up the change. Do not test against the old server, and do not start Tomcat yourself with `eme.sh start`.
+
+```bash
+bin/restart.sh
+```
+
+- On localhost it restarts the VS Code debug session through the Remote Control extension (`bin/start.sh` installs it if missing). The Java extension recompiles before relaunching.
+- If no debug session is running, it runs `bin/start.sh` to start one.
+- It returns as soon as the restart is sent, so wait for the server before testing, e.g. poll `http://localhost:8080/site/` until it responds.
+- It exits 1 if VS Code is not reachable on port 3710; report that rather than working around it.
+
+## After editing `.xconf` files
+
+Page configuration (`.xconf`) is cached by the page manager, so edits do not take effect until the cache is cleared. Any time an `.xconf` file is modified, clear the page manager cache with the Authorization header above (no restart needed):
+
+```bash
+curl -H 'Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc' \
+  http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
+```
+
+## After editing data list `.xml` files
+
+Data lists (e.g. `plugins/catalog/html/data/lists/<searchtype>/*.xml`) are loaded into the database, so edits do not show up until the table's data is reset. For each table you changed, reset its data from XML and then clear the caches:
+
+```bash
+AUTH='Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc'
+for t in automationscenario automationstep automationposition; do
+  curl -H "$AUTH" "http://localhost:8080/site/find/views/settings/lists/datamanager/list/restoredata.html?searchtype=$t&oemaxlevel=1"
+done
+curl -H "$AUTH" http://localhost:8080/site/find/views/settings/status/tools/clearcaches.html
+```
+
+A reset overwrites records with what is in the XML files, so any edits made only in the UI are lost. It does **not** remove records that were deleted from (or renamed in) the XML; delete those explicitly, before resetting:
+
+```bash
+curl -H "$AUTH" -X DELETE "http://localhost:8080/site/mediadb/services/lists/data/<searchtype>/<id>"
+```
