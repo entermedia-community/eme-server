@@ -18,9 +18,9 @@ conventions used across this project.
 
 Derive `beanId` = `SkillName` with the first letter lowercased (e.g. `agentJobStatusSkill`). Every
 existing skill uses the *same string* for the Spring bean id, the `aiskill` table's `data id`, and
-the `bean=` attribute on that row — e.g. `agentJobCreatorSkill` is the bean id in `plugin.xml`, the
-`<data id="agentJobCreatorSkill" bean="agentJobCreatorSkill" ...>` row in `aiskill/chat_monitor.xml`,
-and the `aiskill="agentJobCreatorSkill"` reference in `automationstep/agentorchestrator.xml`. Use
+the `bean=` attribute on that row — e.g. `openCodeJobCreatorSkill` is the bean id in `plugin.xml`, the
+`<data id="openCodeJobCreatorSkill" bean="openCodeJobCreatorSkill" ...>` row in `aiskill/chat_monitor.xml`,
+and the `aiskill="openCodeJobCreatorSkill"` reference in `automationstep/agentorchestrator.xml`. Use
 `beanId` everywhere below, and `SkillName` only for the Java class itself.
 
 ## Step 1: Place the plugin package
@@ -38,20 +38,30 @@ The core contract is `plugins/finder/code/org/entermediadb/ai/Skill.java`:
 ```java
 public interface Skill
 {
-	void startupScenario(AgentContext inContext);
-	void endScenario(AgentContext inContext);
+	void processStarting(AgentContext inContext);
 	void process(AgentContext inContext);
+	void processCompleted(AgentContext inContext);
 }
 ```
 
 - `AgentContext` is `org.entermediadb.ai.AgentContext` (not `org.entermediadb.ai.llm.AgentContext`
   — that's a different, unrelated class).
+- The running step is an `org.entermediadb.ai.agentjobs.AgentJobStep`
+  (`inContext.getCurrentAutomationStep()`), and the job it belongs to is an
+  `org.entermediadb.ai.agentjobs.AgentJob` (`inContext.getCurrentAgentJob()`, e.g.
+  `getCurrentAgentJob().getScenarioId()`). The old `org.entermediadb.ai.llm.AutomationStep` and
+  `RunningScenario` classes no longer exist.
 - Extend `BaseSkill` (`plugins/finder/code/org/entermediadb/ai/BaseSkill.java`) and override only
-  `process(...)` unless you specifically need to change startup/end behavior. `BaseSkill`'s
-  `startupScenario` fires the "starting" status; its default `process` fires the "complete" status
-  and then runs the step's children (`getCurrentAutomationStep().getChildren()`) — call
-  `super.process(inContext)` at the end of your override to keep that chaining, or omit it if this
-  step must not auto-advance.
+  `process(...)` unless you specifically need to change start/complete behavior. `BaseSkill`'s
+  `processStarting` fires the "starting" status (skipped if the context holds
+  `cancelstartup<enabledId>` = true); `processCompleted` does nothing by default. Its default
+  `process` fires the "complete" status and then runs the step's children
+  (`getCurrentAutomationStep().getChildren()`) through `getAgentJobManager().createAgentContext(...)`
+  and `getAgentJobManager().runProcess(...)` — call `super.process(inContext)` at the end of your
+  override to keep that chaining, or omit it if this step must not auto-advance.
+- To jump to a specific next step instead, call
+  `setNextAutomationStep("<scenarioId>.<stepId>")` on the `LlmResponse` (see
+  `OpenCodeJobCreatorSkill`).
 
 ```java
 package org.entermediadb.ai.skills; // or a custom plugin's own skills package
@@ -70,7 +80,7 @@ public class SkillName extends BaseSkill
 }
 ```
 
-See `plugins/finder/code/org/entermediadb/ai/skills/AgentJobCreatorSkill.java` for a real,
+See `plugins/finder/code/org/entermediadb/ai/skills/OpenCodeJobCreatorSkill.java` for a real,
 non-trivial example (only overrides `process`, casts `AgentContext` to a more specific subtype like
 `ChatMessageContext` when it needs chat history).
 
@@ -105,7 +115,7 @@ The parameters will be what the Java code needs to operate. Each parameter will 
 		<language id="en"><![CDATA[Human-readable name]]></language>
 	</name>
 	<markdowncontent><![CDATA[One-sentence description of what this skill does — this text is
-what embedding-based retrieval (see AgentJobCreatorSkill) matches against, so make it descriptive.]]></markdowncontent>
+what embedding-based retrieval (see OpenCodeJobCreatorSkill) matches against, so make it descriptive.]]></markdowncontent>
 <parameters><![CDATA[ 
 [{
 "id":"goal",
@@ -151,50 +161,24 @@ add a `<data>` record just before `</records>`:
 - `agenttype` here can differ from the aiskill row's `agenttype` in existing examples — match it to
   the other steps in this specific automationstep file instead.
 
-## Step 6: Compile, restart, reload data
+## Step 6: Restart, reload data
 
 A running server reads `plugin.xml` and loads classes only at startup. **Whenever any
 `plugins/*/html/src/plugin.xml` is edited, restart the server** — otherwise the new bean does not exist
 and the step fails when it runs. New or changed Java classes need the same restart.
 
 ```bash
-bin/compile.sh      # must end with "Compiling Java finished." and no errors
-bin/restart.sh      # INSTANCE=localhost in .env: runs eme.sh restart; otherwise restarts the docker container
+bin/restart.sh
 ```
 
-On localhost, `restart.sh` keeps running while Tomcat is up, so launch it as a background command and
-poll `http://localhost:8080/site/find/` until it answers.
-
-Confirm the restart really happened: the Tomcat process start time must be after the restart.
-
-```bash
-ps -eo pid,lstart,cmd | grep "[c]atalina.startup" | cut -c1-120
-```
-
-### When the server runs in the VS Code Java debugger
-
-`restart.sh` only manages the Tomcat recorded in `tomcat/work/eme.pid`. Check which case applies
-**before** running it:
-
-```bash
-ls tomcat/work/eme.pid 2>/dev/null || echo "no eme.pid"
-ps -eo cmd | grep "[c]atalina.startup" | grep -c Xrunjdwp     # 1 = launched by the debugger
-```
-
-If there is no `eme.pid` and the running Tomcat has `-Xrunjdwp` on its command line, it was started by
-the **Launch eMedia** configuration in `.vscode/launch.json`. Do not run `restart.sh` then: its stop
-step prints "Server is not running", its start fails with `BindException: Address already in use`, and
-the old server keeps running. Instead:
-
-1. Still run `bin/compile.sh` — the launch configuration's classpath starts with `${workspaceFolder}/build`,
-   which is where `compile.sh` writes the classes.
-2. Ask the user to restart the debug session in VS Code:
-   - **Restart:** press `Ctrl+Shift+F5`, or click the green circular-arrow button on the floating
-     debug toolbar.
-   - **Or stop, then start:** `Shift+F5` (red square) to stop, then open **Run and Debug**
-     (`Ctrl+Shift+D`), pick **Launch eMedia** in the dropdown and press `F5`.
-3. Wait until the user says it is restarted, then confirm with the `ps` check above (new start time)
-   and that `http://localhost:8080/site/find/` answers, before reloading list data.
+- On localhost it restarts the VS Code debug session (**Launch eMedia**) through the Remote Control
+  extension on port 3710; the Java extension recompiles before relaunching, so there is no separate
+  compile step. If no debug session is running, it runs `bin/start.sh` to start one. On other
+  instances it restarts the docker container.
+- It returns as soon as the restart is sent, so poll `http://localhost:8080/site/` until it answers
+  before testing.
+- It exits 1 if VS Code is not reachable on port 3710 — report that to the user rather than working
+  around it, and never start Tomcat yourself with `eme.sh start`.
 
 Then load the new `aiskill` and `automationstep` rows with the `reload-list-data` skill
 (`restoredata` for both tables; a restart does not do this).
@@ -261,7 +245,7 @@ is no working escape sequence for this. So:
 Don't hand-type the full `aiskill` catalog (or any other large reference table) into a call
 template just so the model can "see everything" — it duplicates the real source of truth (the
 `aiskill` table, already embedded/indexed for semantic search) and bloats every call's token cost.
-`plugins/finder/code/org/entermediadb/ai/skills/AgentJobCreatorSkill.java` already does this the
+`plugins/finder/code/org/entermediadb/ai/skills/OpenCodeJobCreatorSkill.java` already does this the
 right way for skill selection: `EmbeddingManager.callFindDocIds(...)` retrieves only the handful of
 skills relevant to the current request; only that small, dynamic subset should be serialized (as
 above) into the prompt.

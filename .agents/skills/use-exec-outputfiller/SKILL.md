@@ -266,8 +266,9 @@ new OutputFiller().fill(new InputStreamReader(in), out);
 
 ## Validation checklist
 
-1. Compile: `bin/compile.sh` (or the ant `compile` target in `plugins/finder/build.xml`) — new
-   usage must compile against the system plugin classes.
+1. Restart: `bin/restart.sh` (the VS Code Java extension recompiles before relaunching) — new
+   usage must compile against the system plugin classes; check the Problems panel / server log for
+   compile errors.
 2. For a new commandmap key: confirm the binary exists at the resolved path on the target OS
    (`<commandbase>` is relative to the webapp root), and that the `os` attribute matches
    (`LINUX`, `WINDOWS`, `MAC OS X` — matched as a substring of upper-cased `os.name`).
