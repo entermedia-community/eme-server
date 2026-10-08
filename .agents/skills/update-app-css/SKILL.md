@@ -36,24 +36,27 @@ Load order and `<style>` includes are declared in `plugins/finder/html/index.xco
 3. Confirm the file is served (see below) - the server reads the plugin html directly, so a browser hard-reload (Ctrl+Shift+R) is usually enough; no restart for CSS-only changes. If the change is to `overridestemplate.css`, the generated `<appid>/theme/<themeid>/custom.css` only refreshes when the theme is saved/regenerated in the theme editor (`ThemeModule.setTheme`).
 4. Verify visually.
 
-## Server control (`eme.sh`)
-
-`bin/eme.sh` now supports `start`, `stop` and `restart`: `eme.sh <start|stop|restart> [server-path]`.
+## Server control
 
 - Plain HTML/CSS edits do **not** need a restart; a browser reload is enough.
-- Editing an `.xconf` file, or adding/removing an HTML or `.xconf` file, needs the page cache cleared or a restart: `bin/eme.sh restart <server-path>`.
-- Run `restart` yourself when needed instead of asking the user to do it. Do not run as root.
-- `start` runs in the **foreground** (Ctrl-C/SIGTERM stops Tomcat), so from an agent/script run it detached and poll until it answers (about 30s; unauthenticated `/site/find/` returns 302 once up, `000` means not up yet):
+- Editing an `.xconf` file, or adding/removing an HTML or `.xconf` file, needs the page manager cache cleared (no restart needed):
 
 ```bash
-(setsid nohup bin/eme.sh start /home/shanti/git/eme-server > "$SCRATCH/eme.log" 2>&1 < /dev/null &)
+curl -H 'Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc' \
+  http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
+```
+
+- Java, `plugin.xml` or plugin jar changes need `bin/restart.sh` (restarts the VS Code debug session, or starts one if none is running). It returns immediately, so poll until the server answers (unauthenticated `/site/find/` returns 302 once up, `000` means not up yet):
+
+```bash
+bin/restart.sh
 for i in $(seq 1 40); do
   c=$(curl -s -o /dev/null -w "%{http_code}" --max-time 3 http://localhost:8080/site/find/)
   [ "$c" != "000" ] && break; sleep 3
 done; echo "code=$c"
 ```
 
-- Stop it with `bin/eme.sh stop <server-path>`; `start` refuses to run if a PID file shows it is already running.
+- If `restart.sh` exits 1 (VS Code not reachable on port 3710), report it to the user. Do not start Tomcat yourself with `eme.sh start`, and do not run as root.
 
 ## Verifying against the running server
 
