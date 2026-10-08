@@ -17,7 +17,7 @@ conventions used across this project.
   gets the new step appended.
 
 Derive `beanId` = `SkillName` with the first letter lowercased (e.g. `agentJobStatusSkill`). Every
-existing skill uses the *same string* for the Spring bean id, the `aiskill` table's `data id`, and
+existing skill uses the _same string_ for the Spring bean id, the `aiskill` table's `data id`, and
 the `bean=` attribute on that row — e.g. `openCodeJobCreatorSkill` is the bean id in `plugin.xml`, the
 `<data id="openCodeJobCreatorSkill" bean="openCodeJobCreatorSkill" ...>` row in `aiskill/chat_monitor.xml`,
 and the `aiskill="openCodeJobCreatorSkill"` reference in `automationstep/agentorchestrator.xml`. Use
@@ -40,26 +40,23 @@ public interface Skill
 {
 	void processStarting(AgentContext inContext);
 	void process(AgentContext inContext);
-	void processUpdate(AgentContext inContext);    // broadcast the last response, keep working
-	void processCompleted(AgentContext inContext); // broadcast the last response, then run its exec step
+	void processCompleted(AgentContext inContext);
 }
 ```
 
 - `AgentContext` is `org.entermediadb.ai.AgentContext` (not `org.entermediadb.ai.llm.AgentContext`
   — that's a different, unrelated class).
 - The running step is an `org.entermediadb.ai.agentjobs.AgentJobStep`
-  (`inContext.getCurrentAgentJobStep()`), and the job it belongs to is an
+  (`inContext.getCurrentAutomationStep()`), and the job it belongs to is an
   `org.entermediadb.ai.agentjobs.AgentJob` (`inContext.getCurrentAgentJob()`, e.g.
   `getCurrentAgentJob().getScenarioId()`). The old `org.entermediadb.ai.llm.AutomationStep` and
   `RunningScenario` classes no longer exist.
 - Extend `BaseSkill` (`plugins/finder/code/org/entermediadb/ai/BaseSkill.java`) and override only
   `process(...)` unless you specifically need to change start/complete behavior. `BaseSkill`'s
   `processStarting` fires the "starting" status (skipped if the context holds
-  `cancelstartup<enabledId>` = true). `processUpdate` saves and broadcasts `inContext.getLastResponse()`
-  to the chat without ending the step. `processCompleted` does the same broadcast, then runs the
-  response's `getExecAutomationStep()` if one is set. Its default
-  `process` calls `processCompleted` and then runs the step's children
-  (`getCurrentAgentJobStep().getChildren()`) through `getAgentJobManager().createAgentContext(...)`
+  `cancelstartup<enabledId>` = true); `processCompleted` does nothing by default. Its default
+  `process` fires the "complete" status and then runs the step's children
+  (`getCurrentAutomationStep().getChildren()`) through `getAgentJobManager().createAgentContext(...)`
   and `getAgentJobManager().runProcess(...)` — call `super.process(inContext)` at the end of your
   override to keep that chaining, or omit it if this step must not auto-advance.
 - To jump to a specific next step instead, call
@@ -159,7 +156,7 @@ Editing `plugin.xml` means the server must be restarted — see Step 6.
 
 Add a `<data>` record to `plugins/catalog/html/data/lists/aiskill/*.xml` — pick whichever existing
 file is topically closest (these files are grouped by domain, e.g. `chat_monitor.xml`,
-`automationagentbase.xml`, `goals.xml` — *not* one-file-per-automationscenario), or add a new
+`automationagentbase.xml`, `goals.xml` — _not_ one-file-per-automationscenario), or add a new
 same-pattern file there if none fits. This is a data row on an already-existing list field, so it
 does **not** need the `catalog-table-creator` skill (that's only for new tables/fields).
 
@@ -172,7 +169,7 @@ The parameters will be what the Java code needs to operate. Each parameter will 
 	</name>
 	<markdowncontent><![CDATA[One-sentence description of what this skill does — this text is
 what embedding-based retrieval (see OpenCodeJobCreatorSkill) matches against, so make it descriptive.]]></markdowncontent>
-<parameters><![CDATA[ 
+<parameters><![CDATA[
 [{
 "id":"goal",
 "description":"The goal to be achieved by this skill"
@@ -252,16 +249,19 @@ A Skill that needs to call an LLM (`LlmConnection.callStructure`, `callToolsFunc
 rendered by the **real** Velocity engine (`org.openedit.generators.VelocityGenerator`, see
 `plugins/mediadb/html/ai/_site.xconf` mapping `.json` -> `velocityGenerator`) against the
 `AgentContext`, and the rendered text is then parsed as JSON (`BaseLlmConnection.loadInputFromTemplate`
-+ `JSONParser`). So the output must be strictly valid JSON, and the template source must be
-strictly valid VTL — not just "close enough for an LLM to read".
+
+- `JSONParser`). So the output must be strictly valid JSON, and the template source must be
+  strictly valid VTL — not just "close enough for an LLM to read".
 
 ### `#jesc` / `#jrender`
 
 Defined once, in `plugins/system/html/display/velocitymacros.vm:65-66`:
+
 ```
 #macro(jesc $object)"$!jsonUtil.escape($object)"#end
 #macro(jrender $object)$!jsonUtil.escape($object)#end
 ```
+
 - `#jesc($x)` JSON-escapes `$x` (via `JsonUtil.escape`, `plugins/finder/.../asset/util/JsonUtil.java:44`)
   **and wraps it in the surrounding double quotes for you** — use it for any message `"content"`
   value. Never add your own quotes around a `#jesc(...)` call.
@@ -273,7 +273,7 @@ Defined once, in `plugins/system/html/display/velocitymacros.vm:65-66`:
 ### Hard rule: never put a literal `"` inside a `#jesc("...")` argument
 
 The argument to `#jesc(...)` is parsed by Velocity as a double-quoted **string literal** — the
-parser looks for the *next* unescaped `"` in the template source to end that literal, and it does
+parser looks for the _next_ unescaped `"` in the template source to end that literal, and it does
 this at parse time, before any rendering happens. It does not know the text is "meant to be" JSON.
 Confirmed against the actual shipped engine (`velocity-engine-core-2.3.jar`): an embedded `"`
 breaks the parse with `ParseErrorException`, and a backslash-escaped `\"` breaks identically — there
@@ -288,11 +288,13 @@ is no working escape sequence for this. So:
   `$var` inside a double-quoted literal is just one token to the parser (interpolation happens
   after parsing), so whatever quote characters live in `$var`'s runtime value are irrelevant to
   parsing:
+
   ```
   "content": #jesc("[[Here is the list of available skills:]]
 
   $!availableskillsjson")
   ```
+
   with `inAgentContext.put("availableskillsjson", ...)` set from Java (e.g.
   `jsonUtil.toJson(selectedSkills)` or `JSONArray.toString()`).
 
