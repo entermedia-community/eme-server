@@ -214,8 +214,9 @@ definitions at all.
 Known state (2026-10-09, after `--fix` applied to the real corpus): 13 site files —
 7 empty shells; 6 site `baseentity.xml` copies (contentcreator, entityasset, entityassetpage,
 entitycompany, entitylocation, librarycollection) now attribute-identical to the plugin side
-(all base files agree on `name` `multilanguage="false"` here), carrying only per-table label
-customizations; full `--site-fields` summary: NEW=0 DRIFT=0 LABELS=21 DEAD=3 EMPTY=7
+(all base files agree on `name` `multilanguage="true"` here — set 2026-10-09 in all 23 base
+files incl. the master template), carrying only per-table label customizations; full
+`--site-fields` summary: NEW=0 DRIFT=0 LABELS=21 DEAD=3 EMPTY=7
 identical=162. The site `userprofile.xml` 4 NEW fields
 (`librarycollection_entitytabopen`, `assetopentab`, `lastcatalog`, `assetdialogtreestatus`) were
 promoted to `plugins/catalog/html/data/fields/userprofile.xml` and the site file deleted.
