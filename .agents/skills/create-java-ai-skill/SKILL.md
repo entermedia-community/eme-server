@@ -40,7 +40,8 @@ public interface Skill
 {
 	void processStarting(AgentContext inContext);
 	void process(AgentContext inContext);
-	void processCompleted(AgentContext inContext);
+	void processUpdate(AgentContext inContext);    // broadcast the last response, keep working
+	void processCompleted(AgentContext inContext); // broadcast the last response, then run its exec step
 }
 ```
 
@@ -54,8 +55,10 @@ public interface Skill
 - Extend `BaseSkill` (`plugins/finder/code/org/entermediadb/ai/BaseSkill.java`) and override only
   `process(...)` unless you specifically need to change start/complete behavior. `BaseSkill`'s
   `processStarting` fires the "starting" status (skipped if the context holds
-  `cancelstartup<enabledId>` = true); `processCompleted` does nothing by default. Its default
-  `process` fires the "complete" status and then runs the step's children
+  `cancelstartup<enabledId>` = true). `processUpdate` saves and broadcasts `inContext.getLastResponse()`
+  to the chat without ending the step. `processCompleted` does the same broadcast, then runs the
+  response's `getExecAutomationStep()` if one is set. Its default
+  `process` calls `processCompleted` and then runs the step's children
   (`getCurrentAutomationStep().getChildren()`) through `getAgentJobManager().createAgentContext(...)`
   and `getAgentJobManager().runProcess(...)` — call `super.process(inContext)` at the end of your
   override to keep that chaining, or omit it if this step must not auto-advance.
