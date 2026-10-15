@@ -43,8 +43,7 @@ Two ways to use it from your class:
    ```
 
    Real examples of this exact pattern: `ExiftoolMetadataExtractor.java:778-785`,
-   `S3CmdAssetSource.java:78-85`, `WaterMarkTranscoder.java:27-34`,
-   `OpenCodeRunnerSkill.java` (finder plugin).
+   `S3CmdAssetSource.java:78-85`, `WaterMarkTranscoder.java:27-34`.
 
 2. **Look it up ad hoc** from the media archive (used by non-Spring or rarely-called code):
 
@@ -164,7 +163,7 @@ the caller. You can also target a file: pass a `FileOutputStream` as the `Output
 
 When the `runExec` overloads aren't enough (e.g. you must append output to a temp file yourself,
 or need both stdout and stderr separately), drop down to the same building blocks `Exec.runExec`
-uses — this is what `OpenCodeRunnerSkill.java` does:
+uses (see `Exec.java`):
 
 ```java
 List<String> args = new ArrayList<String>();
@@ -219,7 +218,7 @@ Key facts (verified against `FinalizedProcessBuilder.java` / `FinalizedProcess.j
 
 ### Worked example: reading a file's text content
 
-From `OpenCodeRunnerSkill.java:144-168` (read a command-output temp file back into a string):
+Read a command-output temp file back into a string:
 
 ```java
 protected String readFileContents(File inFile)
