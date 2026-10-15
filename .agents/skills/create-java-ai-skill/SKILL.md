@@ -48,7 +48,7 @@ public interface Skill
 - `AgentContext` is `org.entermediadb.ai.AgentContext` (not `org.entermediadb.ai.llm.AgentContext`
   — that's a different, unrelated class).
 - The running step is an `org.entermediadb.ai.agentjobs.AgentJobStep`
-  (`inContext.getCurrentAutomationStep()`), and the job it belongs to is an
+  (`inContext.getCurrentAgentJobStep()`), and the job it belongs to is an
   `org.entermediadb.ai.agentjobs.AgentJob` (`inContext.getCurrentAgentJob()`, e.g.
   `getCurrentAgentJob().getScenarioId()`). The old `org.entermediadb.ai.llm.AutomationStep` and
   `RunningScenario` classes no longer exist.
@@ -59,7 +59,7 @@ public interface Skill
   to the chat without ending the step. `processCompleted` does the same broadcast, then runs the
   response's `getExecAutomationStep()` if one is set. Its default
   `process` calls `processCompleted` and then runs the step's children
-  (`getCurrentAutomationStep().getChildren()`) through `getAgentJobManager().createAgentContext(...)`
+  (`getCurrentAgentJobStep().getChildren()`) through `getAgentJobManager().createAgentContext(...)`
   and `getAgentJobManager().runProcess(...)` — call `super.process(inContext)` at the end of your
   override to keep that chaining, or omit it if this step must not auto-advance.
 - To jump to a specific next step instead, call
