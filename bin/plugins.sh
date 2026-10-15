@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 #
 # Manage the per-plugin git checkouts under plugins/.
 #
@@ -46,7 +46,7 @@ discover_plugins() {
     done
 
     if [ "${#plugins[@]}" -eq 0 ]; then
-        echo "ERROR: No plugins/*.json config files found." >&2
+        echo -e "\e[33mERROR: No plugins/*.json config files found.\e[0m" >&2
         exit 1
     fi
 }
@@ -77,7 +77,7 @@ plugin_clone_if_missing() {
 
     mkdir -p "$SERVERHOME/plugins/$plugin"
     cd "$SERVERHOME/plugins/$plugin"
-    echo "Cloning $plugin repo into $SERVERHOME/plugins/$plugin"
+    echo -e "\nCloning $plugin repo into $SERVERHOME/plugins/$plugin"
     git init
     git remote add origin "$repo"
     git fetch --depth=1 origin "$branch"
@@ -104,7 +104,7 @@ plugin_status() {
     remote_sha=$(git rev-parse "origin/$branch" 2>/dev/null)
 
     if [ -n "$remote_sha" ] && [ "$local_sha" != "$remote_sha" ]; then
-        echo -e "\e[34mplugins/$plugin\e[0m: local HEAD differs from last-known origin/$branch (run update/pull to sync, or push if this is your own work)."
+        echo -e "\n\e[34mplugins/$plugin\e[0m: local HEAD differs from last-known origin/$branch (run update/pull to sync, or push if this is your own work)."
         FOUNDPENDING=true
     fi
 }
@@ -114,7 +114,7 @@ plugin_update() {
     local plugin="$1" branch="$2"
 
     if [ -n "$(git status --porcelain)" ]; then
-        echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping update. Run: git fetch origin $branch\e[0m"
+        echo -e "\e[33mplugins/$plugin has uncommitted changes, skipping update. Run: git fetch origin $branch\e[0m\n"
         FOUNDPENDING=true
         return
     fi
@@ -129,7 +129,9 @@ plugin_update() {
     remote_sha=$(git rev-parse "origin/$branch")
 
     if [ "$local_sha" == "$remote_sha" ]; then
-        echo " plugins/$plugin is already up to date."
+        #echo in color green or success
+        echo -e "\e[32mplugins/$plugin is already up to date.\e[0m\n"
+        
         return
     fi
 
@@ -144,7 +146,7 @@ plugin_pull() {
     local plugin="$1" branch="$2"
 
     if [ -n "$(git status --porcelain)" ]; then
-        echo -e "\e[34mplugins/$plugin has uncommitted changes, skipping pull. Run: git fetch origin $branch\e[0m"
+        echo -e "\n\e[34mplugins/$plugin has uncommitted changes, skipping pull. Run: git fetch origin $branch\e[0m"
         FOUNDPENDING=true
         return
     fi
@@ -223,7 +225,7 @@ for plugin in "${plugins[@]}"; do
 done
 
 if [ "$FOUNDPENDING" = true ]; then
-    echo "Some plugins have pending changes. Please review the output above."
+    echo -e "\e[33mWARNING: Some plugins have pending changes. Please review the output above.\e[0m"
 else
-    echo "All plugins are up to date and have no pending changes."
+    echo -e "\e[32mAll plugins are up to date and have no pending changes.\e[0m"
 fi
