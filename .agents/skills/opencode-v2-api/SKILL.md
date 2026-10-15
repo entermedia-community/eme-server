@@ -10,6 +10,9 @@ JSON HTTP API under `/api/*`. There is **no public v2 API spec** — the officia
 page documents v1 only. This skill records the v2 surface reverse-engineered from the web-app JS
 bundles and confirmed by live probing (server 2.0.14, verified 2026-09-23).
 
+For how chat agent job steps run OpenCode (runner, status card, answers, approvals), see
+`opencode-running`.
+
 Primary consumer: `plugins/finder/code/org/entermediadb/mcp/client/OpenCodeClient.java`
 (715 lines, still written against the v1 surface — see the migration mapping below).
 
