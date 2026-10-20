@@ -2,6 +2,11 @@
 	"$schema": "https://opencode.ai/config.json",
 	"update": "auto",
 	"username": "eme",
+	"server": {
+		"hostname": "0.0.0.0",
+		"port": 49374,
+		"password": ""
+	},
 	"providers": {
 		"local-llama": {
 			"package": "aisdk:@ai-sdk/openai-compatible",
