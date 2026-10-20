@@ -59,9 +59,11 @@ else
 
   #if OPENCODE_ENABLED is true, additional logic could be added here
   if [[ "$OPENCODE_ENABLED" = "true" ]]; then
+    sleep 2
     echo "*** Starting OPENCODE"
     #Run inside docker /home/entermedia/eme-server/bin/opencoded.sh with entermedia user
     sudo docker exec -u entermedia -it $INSTANCE /home/entermedia/eme-server/bin/opencoded.sh
+    echo ""
   fi
 
   sleep 5
