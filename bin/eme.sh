@@ -237,9 +237,9 @@ case "$CMD" in
   update)
     git stash || true
     if [ -z "$3" ]; then
-        echo -e "\nUpdating eme-server repo to the latest version"
-        git checkout main || true
-        git pull --no-rebase origin main || true
+        echo -e "\nUpdating eme-server repo to branch: ${BRANCH:-main}"
+        git checkout "${BRANCH:-main}" || true
+        git pull --no-rebase origin "${BRANCH:-main}" || true
     else 
         TAG_NAME="v${VERSION#v}"
         echo -e "\nUpdating eme-server repo to tag $TAG_NAME"
