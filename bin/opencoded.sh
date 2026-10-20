@@ -18,6 +18,12 @@
 #
 set -euo pipefail
 
+set -a
+SCRIPT_DIR=$(dirname "$0")
+source "$SCRIPT_DIR/../.env"
+set +a
+
+
 ACTION="${1:-start}"
 case "$ACTION" in
   start|restart|stop|status) ;;
@@ -52,13 +58,13 @@ else
   exit 1
 fi
 
-if [[ -z "$HOST" || -z "$PORT" || -z "$CONFIG_PW" ]]; then
-  echo "error: server.hostname / server.port / server.password missing in $CONFIG" >&2
-  exit 1
-fi
-
 PASSWORD="${OPENCODE_PASSWORD:-$CONFIG_PW}"
 URL="http://${HOST}:${PORT}"
+
+if [[ -z "$HOST" || -z "$PORT" || -z "$PASSWORD" ]]; then
+  echo "error: server.hostname / server.port / server.password missing in $CONFIG or .env" >&2
+  exit 1
+fi
 
 # Locate the opencode binary
 if command -v opencode >/dev/null 2>&1; then
@@ -152,6 +158,7 @@ fi
 
 echo "OpenCode web interface: $URL"
 echo "sign-in: username=opencode password=$PASSWORD"
+echo ""
 
 [[ "$ACTION" == start ]] || exit 0
 
