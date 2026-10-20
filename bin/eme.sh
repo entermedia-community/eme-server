@@ -8,6 +8,13 @@ SERVERHOME="$2"
 SERVERNAME="$(basename "${SERVERHOME:-}")"
 VERSION="$3"
 
+ENV_FILE="$SERVERHOME/.env"
+if [ -f "$ENV_FILE" ]; then
+    set -a
+    source "$ENV_FILE"
+    set +a
+fi
+
 
  # Verify not running as root if CMD is not dockerstart
 if [[ "$CMD" != "dockerstart" ]]; then
@@ -67,7 +74,15 @@ case "$CMD" in
         git init
         git remote add origin https://github.com/entermedia-community/eme-server.git
         git fetch origin
-        git checkout -t origin/main
+        git checkout -t origin/"${BRANCH:-main}"
+    fi
+
+    # check for the WEB-INF/encrypt.properties file and create it if missing
+    if [ ! -f "$SERVERHOME/webapp/WEB-INF/encrypt.properties" ]; then
+        echo "Creating $SERVERHOME/webapp/WEB-INF/encrypt.properties file"
+        touch "$SERVERHOME/webapp/WEB-INF/encrypt.properties"
+        ENCRYPTION_KEY=$(openssl rand -hex 16)
+        echo "encryption.key=$ENCRYPTION_KEY" >> "$SERVERHOME/webapp/WEB-INF/encrypt.properties"
     fi
 
     "$SERVERHOME/bin/plugins.sh" update
@@ -222,9 +237,9 @@ case "$CMD" in
   update)
     git stash || true
     if [ -z "$3" ]; then
-        echo -e "\nUpdating eme-server repo to the latest version"
-        git checkout main || true
-        git pull --no-rebase origin main || true
+        echo -e "\nUpdating eme-server repo to branch: ${BRANCH:-main}"
+        git checkout "${BRANCH:-main}" || true
+        git pull --no-rebase origin "${BRANCH:-main}" || true
     else 
         TAG_NAME="v${VERSION#v}"
         echo -e "\nUpdating eme-server repo to tag $TAG_NAME"
@@ -241,13 +256,13 @@ case "$CMD" in
    ;;
 
   branchpush)
-    echo "Pushing eme-server-client repo to the remote repository"
+    echo "Pushing eme-server repo to the remote repository"
     COMMITMESSAGE="${3:-Update from Client}"
    
     git add -A .
     git commit -m "$COMMITMESSAGE" || true
-    git pull --no-rebase origin main
-    git push origin main
+    git pull --no-rebase origin "${BRANCH:-main}"
+    git push origin "${BRANCH:-main}"
 
   ;;
   
@@ -258,7 +273,7 @@ case "$CMD" in
         git remote add upstream https://github.com/entermedia-community/eme-server.git
     fi
     git fetch upstream
-    git merge upstream/main --allow-unrelated-histories -X theirs
+    git merge upstream/"${BRANCH:-main}" --allow-unrelated-histories -X theirs
     #git checkout upstream/main -- .
 
     # Fix any conflicts that may arise during the merge
