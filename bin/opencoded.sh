@@ -58,13 +58,13 @@ else
   exit 1
 fi
 
-if [[ -z "$HOST" || -z "$PORT" || -z "$CONFIG_PW" ]]; then
-  echo "error: server.hostname / server.port / server.password missing in $CONFIG" >&2
-  exit 1
-fi
-
 PASSWORD="${OPENCODE_PASSWORD:-$CONFIG_PW}"
 URL="http://${HOST}:${PORT}"
+
+if [[ -z "$HOST" || -z "$PORT" || -z "$PASSWORD" ]]; then
+  echo "error: server.hostname / server.port / server.password missing in $CONFIG or .env" >&2
+  exit 1
+fi
 
 # Locate the opencode binary
 if command -v opencode >/dev/null 2>&1; then
