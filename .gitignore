@@ -8,6 +8,7 @@ webapp/WEB-INF/elastic/
 webapp/WEB-INF/tmp/
 webapp/WEB-INF/temp/
 webapp/WEB-INF/trash/
+webapp/WEB-INF/encrypt.properties
 
 plugins/catalog/
 plugins/finder/
