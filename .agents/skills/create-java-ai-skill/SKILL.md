@@ -239,10 +239,53 @@ bin/restart.sh
 Then load the new `aiskill` and `automationstep` rows with the `reload-list-data` skill
 (`restoredata` for both tables; a restart does not do this).
 
+If `bin/restart.sh` exits 1, the server is still running the old code. Report that, and check the
+edited files for compile errors through VS Code diagnostics (`getDiagnostics` on each `.java` file)
+so the code is known to compile before the user restarts.
+
 ## Step 7: Validate
 
 1. Confirm `beanId` appears in the automation agent list in the admin UI.
 2. Trigger the target event/module and verify the skill executed in the logs.
+
+## Skills that process assets (informatics)
+
+Steps with `contextbean="informaticsContext"` receive a page of assets from the Informatics
+Processor. Follow the same contract as `ClassifyManager`, `EmbeddingManager` and `TranscriberManager`:
+
+- Wrap the context with `new InformaticsContext(inContext)` and read `getAssetsToProcess()`.
+- When one asset fails, set `asset.setValue("llmerror", true)` and move on to the next one. Do not save
+  the asset: `InformaticsProcessorSkill` saves the whole page at the end and marks the rest
+  `taggedbyllm`.
+- After the work, remove `llmerror` assets from the list and call `setAssetsToProcess(...)` so child
+  steps skip them, then `super.process(...)`.
+- Assets with `llmerror=true` are left out of later informatics queries until the flag is cleared, so
+  a failure is not retried automatically.
+- If the skill tracks its own progress in another table (as `videotrack.transcribestatus` does), make
+  sure an `inprogress` state cannot get stuck forever after a restart. Treat it as stale after a time
+  limit.
+
+## Calling a non-LLM AI server (`aiserver` rows)
+
+Remote services such as transcribe, translate, embedding or face detection are rows in
+`plugins/catalog/html/data/lists/aiserver/*.xml`, usually with `connectionbean="httpConnection"`.
+`plugins/finder/.agents/skills/transcriber/SKILL.md` walks through a complete example.
+
+- Look the server up by type: `getMediaArchive().getLlmConnection("<aiservertype>")`. It picks the
+  row with that `aiservertype` and the lowest `ordering`, so never hard-code a row id or URL. If no row
+  matches, it falls back to the `localhost` row, which has no `serverroot`.
+- `serverroot` (+ `serverpathprefix`) is the base URL, `serverapikey` is the bearer token
+  (`connection.getApiKey()`).
+- File upload: `connection.callJson("/path", headers, params)` with a `Map` of params sends a
+  multipart POST. A `java.io.File` value becomes a file part (`application/octet-stream`), a `String`
+  a text field. Headers passed here stay on the shared connection.
+- A JSON body: `callJson("/path", JSONObject)`.
+- Status other than 200 throws `OpenEditException("Could not call /path")` and logs the body.
+  Read the result with `getRawResponse()` (object) or `getRawCollection()` (array).
+- Responses are parsed with json-simple, which returns `Long` for whole numbers and `Double` for
+  decimals. Read numbers as `((Number) json.get("x")).doubleValue()`, never `(double)` or `(Long)`.
+- Connections are cached per server type in cache `llmconnection`. After changing an `aiserver` row,
+  reset the table with `reload-list-data` and then clear caches, or the old URL and key stay in use.
 
 ## Calling an LLM: `html/ai/<provider>/calls/*.json` templates
 
@@ -317,6 +360,8 @@ array-of-objects-with-nested-array shape.
 
 ## Related
 
+- `plugins/finder/.agents/skills/transcriber/SKILL.md`: worked example of an informatics skill that
+  calls a non-LLM `aiserver` (transcribe) with multipart uploads.
 - Data tables that back the AI pipeline (aiskill, automationstep, aiserver, aistyle, ...) live under
   `plugins/catalog/html/data/fields` and `plugins/catalog/html/data/lists` — use the
   `catalog-table-creator` skill (in the `catalog` plugin) if you also need a new backing table or field.
