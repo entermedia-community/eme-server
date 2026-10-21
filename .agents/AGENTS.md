@@ -139,6 +139,9 @@ Elasticsearch 2.4.6 is embedded into the server. It is auto configured based on 
 ### Gotchas
 
 - When running within VSS we recommend using the Java debugger to start and stop your WebSite
+- `plugins/finder`, `plugins/catalog` and other plugins are separate git repositories, ignored by
+  the eme-server repo. Run `git status` and commit inside the plugin folder, not at the top level.
+  Plugin-specific skills live in `plugins/<plugin>/.agents/skills/` (e.g. `plugins/finder/.agents/skills/transcriber`).
 
 ### Known issues
 
