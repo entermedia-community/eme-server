@@ -82,7 +82,7 @@ case "$CMD" in
         echo "Creating $SERVERHOME/webapp/WEB-INF/encrypt.properties file"
         touch "$SERVERHOME/webapp/WEB-INF/encrypt.properties"
         ENCRYPTION_KEY=$(openssl rand -hex 16)
-        echo "encryption.key=$ENCRYPTION_KEY" >> "$SERVERHOME/webapp/WEB-INF/encrypt.properties"
+        echo "autologincookiekey=$ENCRYPTION_KEY" >> "$SERVERHOME/webapp/WEB-INF/encrypt.properties"
     fi
 
     "$SERVERHOME/bin/plugins.sh" update
