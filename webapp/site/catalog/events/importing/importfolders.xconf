@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="period">10m</property>
+  <property name="enabled">false</property>
+  <property name="eventname">Import Hot Folders</property>
+</page>
