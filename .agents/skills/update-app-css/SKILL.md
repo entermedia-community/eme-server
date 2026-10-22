@@ -42,8 +42,8 @@ Load order and `<style>` includes are declared in `plugins/finder/html/index.xco
 - Editing an `.xconf` file, or adding/removing an HTML or `.xconf` file, needs the page manager cache cleared (no restart needed):
 
 ```bash
-curl -H 'Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc' \
-  http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
+AUTH="Authorization: Bearer $(bin/refreshtoken.sh)"
+curl -H "$AUTH" http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
 ```
 
 - Java, `plugin.xml` or plugin jar changes need `bin/restart.sh` (restarts the VS Code debug session, or starts one if none is running). It returns immediately, so poll until the server answers (unauthenticated `/site/find/` returns 302 once up, `000` means not up yet):
@@ -62,10 +62,10 @@ done; echo "code=$c"
 
 App URL: `http://localhost:8080/site/find/`
 
-Auto-login by sending the HTTP header `Authorization: Bearer <admin token>` (handled by `BaseAutoLogin.java`). Token for this dev server (local dev only - do not commit it into other files):
+Auto-login by sending the HTTP header `Authorization: Bearer <admin token>` (handled by `BaseAutoLogin.java`). Get the current token on demand - never hardcode it:
 
-```
-Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc
+```bash
+TOKEN=$(bin/refreshtoken.sh)   # use as -H "Authorization: Bearer $TOKEN"
 ```
 
 **The header is only needed on the first call.** The server answers it with `Set-Cookie: JSESSIONID=...` (HttpOnly) and `Set-Cookie: emekey=<token>` (about 400 days), and later calls work with the cookies alone. Verified 2026-09-25:
@@ -78,7 +78,7 @@ Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc
 
 ```bash
 # first call: log in with the header and save cookies
-curl -s -c jar.txt -H "Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc" \
+curl -s -c jar.txt -H "Authorization: Bearer $(bin/refreshtoken.sh)" \
   http://localhost:8080/site/find/ -o /dev/null -w "%{http_code}\n"
 
 # every later call: cookie jar only, no header
@@ -91,11 +91,11 @@ Quick checks with the header on every call (no cookie jar):
 
 ```bash
 # page renders and is authenticated
-curl -s -H "Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc" \
+curl -s -H "Authorization: Bearer $(bin/refreshtoken.sh)" \
   http://localhost:8080/site/find/ | head -50
 
 # the CSS you edited is being served with your change
-curl -s -H "Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc" \
+curl -s -H "Authorization: Bearer $(bin/refreshtoken.sh)" \
   http://localhost:8080/site/find/theme/styles/theme.css | grep -n "your-selector"
 ```
 

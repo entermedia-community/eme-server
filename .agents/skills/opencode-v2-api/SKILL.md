@@ -1,6 +1,6 @@
 ---
 name: opencode-v2-api
-description: Use when working with OpenCodeClient.java or any code that talks to a paired OpenCode v2 HTTP server (the "opencode pair" web interface), or when starting/opening the OpenCode web UI locally. Covers the full verified /api/* endpoint surface, Basic auth, request/response envelopes, the SSE event stream wire format and event-type catalog, the v1→v2 migration mapping for OpenCodeClient.java, the fixed-login startup script bin/opencoded.sh (127.0.0.1:49374), and the live-probe recipe for re-verifying the API against a running server.
+description: Use when working with OpenCodeClient.java or any code that talks to a paired OpenCode v2 HTTP server (the "opencode pair" web interface), or when starting/opening the OpenCode web UI locally. Covers the full verified /api/* endpoint surface, Basic auth, request/response envelopes, the SSE event stream wire format and event-type catalog, the v1→v2 migration mapping for OpenCodeClient.java, the fixed-login startup script bin/opencoded.sh (host/port/password from opencode.json), and the live-probe recipe for re-verifying the API against a running server.
 ---
 
 # Skill: opencode-v2-api
@@ -21,10 +21,13 @@ Primary consumer: `plugins/finder/code/org/entermediadb/mcp/client/OpenCodeClien
 The repo ships `bin/opencoded.sh` for bringing up this server locally:
 
 - Starts the OpenCode **background service** (`opencode service set/start`, not standalone
-  `opencode serve`) pinned to **127.0.0.1:49374**.
-- Pins a **fixed password** (no rotation): sign-in is always username `opencode` with the
-  default in the script, overridable via the `OPENCODE_PASSWORD` env var. The script prints
-  the credentials on every run.
+  `opencode serve`). Hostname, port and password come from the `"server"` block in the
+  repo-root `opencode.json` — the script reads them (jq, python3 fallback) and applies them
+  with `opencode service set`. The v2 binary itself ignores that deprecated key; the service
+  only ever reads `~/.config/opencode/service.json`.
+- Pins a **fixed password** (no rotation): sign-in is always username `opencode` with
+  `server.password` from opencode.json, overridable via the `OPENCODE_PASSWORD` env var. The
+  script prints the credentials on every run.
 - **Idempotent**: it only runs `opencode service set <x>` when the current value differs, so a
   normal run never restarts an already-correctly-configured server.
 - Opens the local browser (`xdg-open` → `google-chrome` → `firefox`, best effort).
@@ -38,6 +41,41 @@ the restart cannot take the caller down:
 setsid nohup bash -c 'opencode service set password <pw>; sleep 3; opencode service start' \
   >/tmp/oc-restart.log 2>&1 < /dev/null &
 ```
+
+### Serving behind nginx — no base path, own origin only
+
+OpenCode v2 has **no base-path setting** (`service set` accepts only hostname/port/password/env;
+the config `server` key is deprecated), and the web app hardcodes root-absolute everything:
+assets `/_assets/*`, `/icons/*`; API `/api/*`; SPA routes `/`, `/new-session`,
+`/server/<id>/session/<id>`; and it uses `location.origin` as its API base. So it must own the
+**root of an origin** — a `/opencode/` path prefix on a shared host does not work (the page loads,
+but assets/API/navigation all escape to the root). Give it a dedicated host instead (this box:
+`localopencode.entermediadb.net`, wildcard cert `*.entermediadb.net` already covers it):
+
+```nginx
+server {
+  server_name localopencode.entermediadb.net;
+  listen 443 ssl;
+  ssl_certificate     /etc/letsencrypt/live/entermediadb.net/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/entermediadb.net/privkey.pem;
+
+  location / {
+    proxy_pass http://127.0.0.1:49374;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_buffering off;          # SSE /api/event must stream, not buffer
+    proxy_cache off;
+    proxy_read_timeout 1200s;     # long agent turns + idle SSE heartbeats
+    proxy_send_timeout 1200s;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
+```
+
+Direct access `http://127.0.0.1:49374/opencode/` also "works" (SPA fallback serves index.html for
+any path) but is not a real sub-path deployment — navigation rewrites the URL to root paths.
 
 ## Ground truth and how to re-derive it
 

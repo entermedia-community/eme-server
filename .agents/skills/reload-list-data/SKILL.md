@@ -31,6 +31,24 @@ GET http://localhost:8080/site/find/views/settings/lists/datamanager/list/restor
 UI, not in the files) is lost. Say so to the user before doing it on a table that may hold user data.
 Always follow it with `restoredata`.
 
+## 3. Replacing a row (id changed or row swapped): delete just the old row, then restoredata
+
+`restoredata` matches rows by `id`, so if an id was renamed in the XML (e.g. one skill row replaced
+by several new ones), the old row is **not** touched: it is not updated and not removed. A full
+`deleteall` would work but also wipes DB-only rows (see above). The middle path — delete only the
+specific stale row through the mediadb API, then restoredata:
+
+```bash
+A='Authorization: Bearer <admin token>'
+curl -s -H "$A" -X DELETE http://localhost:8080/site/mediadb/services/lists/data/<type>/<oldid>
+curl -s -b jar.txt -o /dev/null "$B/restoredata.html?searchtype=<type>"
+```
+
+Verified 2026-10-16 on `aiskill`: deleted the stale `searchingChatSkill` row, ran restoredata, and
+the table held exactly the 4 replacement rows with no leftover. (Note: to *find* the stale row first,
+use `id exact <oldid>` in a search — wildcard matches on `id` are unreliable, see the `mediadb-api`
+skill.)
+
 ## Which tables support it
 
 Only tables whose field definition in `plugins/catalog/html/data/fields/<type>.xml` does **not** use

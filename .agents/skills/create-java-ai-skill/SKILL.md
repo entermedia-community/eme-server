@@ -232,9 +232,20 @@ bin/restart.sh
   compile step. If no debug session is running, it runs `bin/start.sh` to start one. On other
   instances it restarts the docker container.
 - It returns as soon as the restart is sent, so poll `http://localhost:8080/site/` until it answers
-  before testing.
-- It exits 1 if VS Code is not reachable on port 3710 — report that to the user rather than working
-  around it, and never start Tomcat yourself with `eme.sh start`.
+  before testing. Note Tomcat listening on 8080 does **not** mean the app is ready — after a restart
+  the Java extension first compiles (several minutes for this codebase), and even once Tomcat is up,
+  `/site/` can keep returning 404 while the Spring context initializes. Poll `/site/` specifically;
+  a bare `/` answering HTML does not prove the app is up.
+- If it exits 1 ("VS Code is not reachable on port 3710"), don't work around it blindly: the
+  WebSocket port is hardcoded in the script, and a local edit to `bin/restart.sh` (or
+  `.vscode/settings.json`'s `remoteControl.port`) can make it point at the wrong port. Compare the
+  port in the script against what is actually listening (`ss -tlnp | grep code`) and send the same
+  node one-liner from the script against the correct port (ask the user first if you deviate from
+  the script). Leave the user's local edits to the script untouched.
+- If the VS Code window was closed or reloaded, the debug session is gone with it: `bin/restart.sh`
+  will fall through to `bin/start.sh` (`workbench.action.debug.start`). After a window reload the
+  Remote Control extension may take a few seconds to bind its port again — poll the port briefly
+  before concluding VS Code is unreachable.
 
 Then load the new `aiskill` and `automationstep` rows with the `reload-list-data` skill
 (`restoredata` for both tables; a restart does not do this).
@@ -286,6 +297,33 @@ Remote services such as transcribe, translate, embedding or face detection are r
   decimals. Read numbers as `((Number) json.get("x")).doubleValue()`, never `(double)` or `(Long)`.
 - Connections are cached per server type in cache `llmconnection`. After changing an `aiserver` row,
   reset the table with `reload-list-data` and then clear caches, or the old URL and key stay in use.
+
+## Splitting or renaming an existing skill
+
+When one skill class is replaced by several (e.g. splitting a dispatcher-style `process()` into one
+class per branch), do all of this or the split breaks at runtime:
+
+1. **Find every reference first.** Grep the whole repo (Java, XML, templates, groovy) for both the
+   class name and the old bean id. Callers usually hold the skill through a getter like
+   `getSearchingSkill()` on a module/manager class — those getters are compile blockers if you
+   delete the class before repointing or removing them. Dead getters that nothing calls can simply
+   be deleted; live call sites must be repointed to the specific new bean.
+2. **Keep the id convention.** Each new class gets `beanId` = lowerCamel of its class name, used for
+   the Spring bean id, the `aiskill` data id, and the `aiskill=` reference in every `automationstep`
+   row that should run it. Do not copy legacy anomalies where the aiskill data id differs from the
+   bean (e.g. the old `searchingChatSkill` row pointed at bean `searchingSkill`).
+3. **Replace the aiskill rows, don't just add.** `restoredata` matches by id, so the stale row with
+   the old id survives the reload and its step fails when it runs (the orchestrator can't resolve the
+   bean). Delete each old row through the mediadb API first, then restoredata — see the
+   `reload-list-data` skill, section 3.
+4. **Point each automationstep at the right new aiskill.** A dispatcher split means different step
+   ids now map to different skills; update every row in every scenario file that referenced the old
+   one (including steps whose branch the class still throws "not supported" for — keep them pointed
+   at whichever new skill preserves the old behavior exactly, and tell the user).
+5. **Verify fidelity against the working tree, not just git HEAD.** If the original file had
+   uncommitted local edits, diffing the split classes against `git show HEAD:...` produces spurious
+   "missing" lines for every local change. Diff against the actual pre-split working-tree copy
+   instead, and account for intentional per-class differences (e.g. locals only one branch used).
 
 ## Calling an LLM: `html/ai/<provider>/calls/*.json` templates
 

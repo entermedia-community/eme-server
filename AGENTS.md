@@ -38,16 +38,21 @@ Use screenshots as the primary verification surface; the configured model accept
 
 When working in VS Code against the local server, the login credentials are always the same. To authenticate HTTP requests (curl, MCP endpoints, JSON APIs), add this header:
 
-```
-Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc
-```
-
-Example:
-
 ```bash
-curl -H 'Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc' \
-  http://localhost:8080/site/mediadb/ai/mcp/
+AUTH="Authorization: Bearer $(bin/refreshtoken.sh)"
+curl -H "$AUTH" http://localhost:8080/site/mediadb/ai/mcp/
 ```
+
+**Never hardcode the token in docs or scripts.** `bin/refreshtoken.sh` resolves it from the root `.env` (gitignored):
+
+1. `TOKEN=` in `.env` — used as-is (the helper persists it there after a fetch).
+2. Otherwise `USER=` + `PASSWORD=` in `.env` are sent to the open endpoint `GET /site/mediadb/services/authentication/unused/getkey.json?id=<USER>&password=<PASSWORD>` (`AdminModule.loadEnterMediaKey`); its `results.entermediakey` is the Bearer token, and the helper stores it as `TOKEN=` in `.env`.
+
+### If a call still fails (login fails / 302 / 403)
+
+1. Delete the `TOKEN=` line from `.env` and re-run `bin/refreshtoken.sh` — it re-fetches via `USER=`/`PASSWORD=`. **Do not ask for new credentials.**
+2. Verify with a guest-forbidden probe: `GET /site/mediadb/services/lists/data/color/52` must return **200** (guest gets 403).
+3. Note: `.mcp.json` and `opencode.json` are static MCP configs that hold a *literal* token — they cannot recompute. If the seed changes, update both with the new output of `bin/refreshtoken.sh`.
 
 ## After editing Java code
 
@@ -67,8 +72,8 @@ bin/restart.sh
 Page configuration (`.xconf`) is cached by the page manager, so edits do not take effect until the cache is cleared. Any time an `.xconf` file is modified, clear the page manager cache with the Authorization header above (no restart needed):
 
 ```bash
-curl -H 'Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc' \
-  http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
+AUTH="Authorization: Bearer $(bin/refreshtoken.sh)"
+curl -H "$AUTH" http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
 ```
 
 ## After editing data list `.xml` files
@@ -76,7 +81,7 @@ curl -H 'Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc
 Data lists (e.g. `plugins/catalog/html/data/lists/<searchtype>/*.xml`) are loaded into the database, so edits do not show up until the table's data is reset. For each table you changed, reset its data from XML and then clear the caches:
 
 ```bash
-AUTH='Authorization: Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc'
+AUTH="Authorization: Bearer $(bin/refreshtoken.sh)"
 for t in automationscenario automationstep automationposition; do
   curl -H "$AUTH" "http://localhost:8080/site/find/views/settings/lists/datamanager/list/restoredata.html?searchtype=$t&oemaxlevel=1"
 done
