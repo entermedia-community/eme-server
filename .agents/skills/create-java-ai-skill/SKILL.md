@@ -17,7 +17,7 @@ conventions used across this project.
   gets the new step appended.
 
 Derive `beanId` = `SkillName` with the first letter lowercased (e.g. `agentJobStatusSkill`). Every
-existing skill uses the _same string_ for the Spring bean id, the `aiskill` table's `data id`, and
+existing skill uses the *same string* for the Spring bean id, the `aiskill` table's `data id`, and
 the `bean=` attribute on that row — e.g. `openCodeJobCreatorSkill` is the bean id in `plugin.xml`, the
 `<data id="openCodeJobCreatorSkill" bean="openCodeJobCreatorSkill" ...>` row in `aiskill/chat_monitor.xml`,
 and the `aiskill="openCodeJobCreatorSkill"` reference in `automationstep/agentorchestrator.xml`. Use
@@ -159,7 +159,7 @@ Editing `plugin.xml` means the server must be restarted — see Step 6.
 
 Add a `<data>` record to `plugins/catalog/html/data/lists/aiskill/*.xml` — pick whichever existing
 file is topically closest (these files are grouped by domain, e.g. `chat_monitor.xml`,
-`automationagentbase.xml`, `goals.xml` — _not_ one-file-per-automationscenario), or add a new
+`automationagentbase.xml`, `goals.xml` — *not* one-file-per-automationscenario), or add a new
 same-pattern file there if none fits. This is a data row on an already-existing list field, so it
 does **not** need the `catalog-table-creator` skill (that's only for new tables/fields).
 
@@ -172,7 +172,7 @@ The parameters will be what the Java code needs to operate. Each parameter will 
 	</name>
 	<markdowncontent><![CDATA[One-sentence description of what this skill does — this text is
 what embedding-based retrieval (see OpenCodeJobCreatorSkill) matches against, so make it descriptive.]]></markdowncontent>
-<parameters><![CDATA[
+<parameters><![CDATA[ 
 [{
 "id":"goal",
 "description":"The goal to be achieved by this skill"
@@ -295,19 +295,16 @@ A Skill that needs to call an LLM (`LlmConnection.callStructure`, `callToolsFunc
 rendered by the **real** Velocity engine (`org.openedit.generators.VelocityGenerator`, see
 `plugins/mediadb/html/ai/_site.xconf` mapping `.json` -> `velocityGenerator`) against the
 `AgentContext`, and the rendered text is then parsed as JSON (`BaseLlmConnection.loadInputFromTemplate`
-
-- `JSONParser`). So the output must be strictly valid JSON, and the template source must be
-  strictly valid VTL — not just "close enough for an LLM to read".
++ `JSONParser`). So the output must be strictly valid JSON, and the template source must be
+strictly valid VTL — not just "close enough for an LLM to read".
 
 ### `#jesc` / `#jrender`
 
 Defined once, in `plugins/system/html/display/velocitymacros.vm:65-66`:
-
 ```
 #macro(jesc $object)"$!jsonUtil.escape($object)"#end
 #macro(jrender $object)$!jsonUtil.escape($object)#end
 ```
-
 - `#jesc($x)` JSON-escapes `$x` (via `JsonUtil.escape`, `plugins/finder/.../asset/util/JsonUtil.java:44`)
   **and wraps it in the surrounding double quotes for you** — use it for any message `"content"`
   value. Never add your own quotes around a `#jesc(...)` call.
@@ -319,7 +316,7 @@ Defined once, in `plugins/system/html/display/velocitymacros.vm:65-66`:
 ### Hard rule: never put a literal `"` inside a `#jesc("...")` argument
 
 The argument to `#jesc(...)` is parsed by Velocity as a double-quoted **string literal** — the
-parser looks for the _next_ unescaped `"` in the template source to end that literal, and it does
+parser looks for the *next* unescaped `"` in the template source to end that literal, and it does
 this at parse time, before any rendering happens. It does not know the text is "meant to be" JSON.
 Confirmed against the actual shipped engine (`velocity-engine-core-2.3.jar`): an embedded `"`
 breaks the parse with `ParseErrorException`, and a backslash-escaped `\"` breaks identically — there
@@ -334,13 +331,11 @@ is no working escape sequence for this. So:
   `$var` inside a double-quoted literal is just one token to the parser (interpolation happens
   after parsing), so whatever quote characters live in `$var`'s runtime value are irrelevant to
   parsing:
-
   ```
   "content": #jesc("[[Here is the list of available skills:]]
 
   $!availableskillsjson")
   ```
-
   with `inAgentContext.put("availableskillsjson", ...)` set from Java (e.g.
   `jsonUtil.toJson(selectedSkills)` or `JSONArray.toString()`).
 

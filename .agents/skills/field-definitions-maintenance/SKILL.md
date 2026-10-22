@@ -90,11 +90,11 @@ Identity requirements:
 
 1. **Same 31 fields, same order** in every base file and in the master template:
    `id, name, description, keywords, longcaption, primaryimage, primarymedia, entity_date,
-entitysourcetype, sourcepath, archivesourcepath, viewusers, viewgroups, viewerusers,
-viewergroups, editorusers, editorgroups, securityalwaysvisible, securityenabled, owner,
-emrecordstatus, rootcategory, enablepublishinggallery, enablepublishingcarousel,
-searchcategory, permissionsupdateddate, contentcreator, semantictopicsindexed, semantictopics,
-taggedbyllm, llmerror`
+   entitysourcetype, sourcepath, archivesourcepath, viewusers, viewgroups, viewerusers,
+   viewergroups, editorusers, editorgroups, securityalwaysvisible, securityenabled, owner,
+   emrecordstatus, rootcategory, enablepublishinggallery, enablepublishingcarousel,
+   searchcategory, permissionsupdateddate, contentcreator, semantictopicsindexed, semantictopics,
+   taggedbyllm, llmerror`
    (Before 2026-10-08 only entityasset/entityassetpage/entitywebcontent had
    `semantictopicsindexed`; it now belongs to all base files, placed right before
    `semantictopics`.)
@@ -116,15 +116,15 @@ position (item 11 in the order above). Never add, remove, or revalue them.
 
 Fix automatically (obvious typos):
 
-| wrong     | right      | seen in                                                         |
-| --------- | ---------- | --------------------------------------------------------------- |
-| `lisstid` | `listid`   | `transaction.xml` (`collectionid`)                              |
-| `editble` | `editable` | `videotrack.xml` (`length`)                                     |
-| `multi`   | `multiple` | `collectiveproduct/collectiveproductrental.xml`(`blockeddates`) |
+| wrong        | right     | seen in                                        |
+| ------------ | --------- | ---------------------------------------------- |
+| `lisstid`    | `listid`  | `transaction.xml` (`collectionid`)             |
+| `editble`    | `editable`| `videotrack.xml` (`length`)                    |
+| `multi`      | `multiple`| `collectiveproduct/collectiveproductrental.xml`(`blockeddates`) |
 
 Typo-fix collision rule: if fixing a typo would create a duplicate attribute name, compare
 values — identical values are deduplicated; **different values are a conflict: stop and ask**.
-Resolved 2026-10-08 (user decision): `videotrack.xml` `length` had `editble="true"` _and_
+Resolved 2026-10-08 (user decision): `videotrack.xml` `length` had `editble="true"` *and*
 `editable="false"` → keep `editable="false"`, drop the dead typo'd attribute (the field stays
 read-only; no code ever read `editble`).
 
@@ -176,7 +176,7 @@ field id (`loadDetails()` skips any id already seen):
 Consequences:
 
 - A site flat file shadows the plugin flat file field-by-field, and both shadow every folder file.
-- A site _folder_ copy of a field that the plugin _flat_ file also defines is **dead code** — the
+- A site *folder* copy of a field that the plugin *flat* file also defines is **dead code** — the
   plugin flat loads first, so the site copy never takes effect at runtime (e.g. the site
   `baseentity.xml` copies' `longcaption`/`primarymedia` for entityassetpage, `keywords` for
   librarycollection). Deleting such a field changes nothing at runtime.
@@ -197,16 +197,16 @@ python3 .agents/skills/field-definitions-maintenance/audit_fields.py --site-fiel
 The mode is **read-only** — it never writes. It classifies every top-level `<property>` in the site
 files against the plugin level, using the load order above to decide what is actually in effect:
 
-| category    | meaning                                                                                                                          | action                                                                             |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `NEW`       | no plugin-level counterpart — a genuine site-only field                                                                          | move-up candidate (see workflow)                                                   |
-| `DRIFT`     | in effect at runtime; attribute values differ from the plugin-side definition that would take over if the site copy were removed | diff each attribute, let the user decide what moves up                             |
-| `LABELS`    | attributes match, localized `<name>` labels differ (site copy is in effect)                                                      | keep the site label (per-table labels are legitimate) or move it up — user decides |
-| `DEAD`      | not in effect at runtime: an earlier-loaded file already defines the id                                                          | safe to delete, no runtime change                                                  |
-| `EMPTY`     | site file with no properties (shell)                                                                                             | safe to delete                                                                     |
-| `IDENTICAL` | field is byte-for-byte equivalent to its plugin counterpart (summarized per file)                                                | pure duplication — safe to delete                                                  |
+| category  | meaning                                                                                              | action                                    |
+| --------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `NEW`     | no plugin-level counterpart — a genuine site-only field                                               | move-up candidate (see workflow)          |
+| `DRIFT`   | in effect at runtime; attribute values differ from the plugin-side definition that would take over if the site copy were removed | diff each attribute, let the user decide what moves up |
+| `LABELS`  | attributes match, localized `<name>` labels differ (site copy is in effect)                           | keep the site label (per-table labels are legitimate) or move it up — user decides |
+| `DEAD`    | not in effect at runtime: an earlier-loaded file already defines the id                               | safe to delete, no runtime change         |
+| `EMPTY`   | site file with no properties (shell)                                                                  | safe to delete                            |
+| `IDENTICAL` | field is byte-for-byte equivalent to its plugin counterpart (summarized per file)                 | pure duplication — safe to delete         |
 
-Canonical-rule violations found _inside_ site properties (unknown attributes, `type` vs
+Canonical-rule violations found *inside* site properties (unknown attributes, `type` vs
 `datatype`, typos, order problems) are printed the same way as in the default audit and counted
 separately. Exit code: 1 if any finding or issue, 0 if the site directory holds no field
 definitions at all.
