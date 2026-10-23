@@ -15,6 +15,6 @@
 	"java.format.settings.url": "formatter.xml",
 	"postman.settings.dotenv-detection-notification-visibility": false,
 	"remoteControl.enable": true,
-	"remoteControl.port": 3710,
+	"remoteControl.port": 3711,
 
 }
