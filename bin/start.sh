@@ -10,6 +10,7 @@ MODE=${1:-start}
 
 if [[ "$INSTANCE" = "localhost" ]]; then
   SERVER_HOME=$(cd "$SCRIPT_DIR/.." && pwd)
+  source "$SCRIPT_DIR/remotecontrolport.sh"
 
   # A Tomcat launched from the VS Code debugger shows catalina.base on its command line
   DEBUG_PATTERN="catalina\.base=$SERVER_HOME/tomcat( |$)"
@@ -28,7 +29,7 @@ if [[ "$INSTANCE" = "localhost" ]]; then
       echo "*** Installing VS Code extension $REMOTE_CONTROL so scripts can drive the debugger"
       code --install-extension "$REMOTE_CONTROL" >/dev/null 2>&1
       for _ in $(seq 1 20); do
-        (exec 3<>/dev/tcp/127.0.0.1/3710) 2>/dev/null && break
+        (exec 3<>/dev/tcp/127.0.0.1/$REMOTE_CONTROL_PORT) 2>/dev/null && break
         sleep 0.5
       done
     fi
@@ -39,15 +40,15 @@ if [[ "$INSTANCE" = "localhost" ]]; then
     DEBUG_COMMAND="workbench.action.debug.restart"
   fi
 
-  # Start/restart the debug session through Remote Control (port in .vscode/settings.json)
+  # Start/restart the debug session through Remote Control (port from .vscode/settings.json)
   if node -e '
-    const ws = new WebSocket("ws://127.0.0.1:3710");
+    const ws = new WebSocket("ws://127.0.0.1:" + process.argv[2]);
     ws.onopen = () => { ws.send(JSON.stringify({ command: process.argv[1] })); setTimeout(() => process.exit(0), 200); };
     ws.onerror = () => process.exit(1);
-  ' "$DEBUG_COMMAND" 2>/dev/null; then
+  ' "$DEBUG_COMMAND" "$REMOTE_CONTROL_PORT" 2>/dev/null; then
     echo "*** Sent $MODE to VS Code debug session"
   else
-    echo "ERROR: VS Code is not reachable on port 3710. Open this workspace in VS Code with the Remote Control extension enabled." >&2
+    echo "ERROR: VS Code is not reachable on port $REMOTE_CONTROL_PORT. Open this workspace in VS Code with the Remote Control extension enabled." >&2
     exit 1
   fi
 else
