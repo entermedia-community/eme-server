@@ -300,3 +300,22 @@ Field XML is read through the xconf cache; changes do **not** apply on page relo
   template that lacked it). If `--fix` reports CONFLICTs, expect to run it again after resolving.
 - Final state: full audit → only the 5 report-only oddities; all 23 base files structurally
   identical (31 fields each); site `userprofile.xml` promoted + deleted (see Known state).
+
+## Gotcha — a field that is not `index="true"` is never saved
+
+`BaseElasticSearcher.updateIndex` skips every property where `detail.isIndex()` is false
+(`if (detail == null || !detail.isIndex()) continue;`). So `index="false"` does not mean "stored but not
+searchable": the value is **never written to Elasticsearch at all**. `stored` has no effect on this.
+The row saves without error, `Data.get(...)` on the in-memory object still returns the value during that request,
+and the value is simply gone on the next load. This bit the `userkey` table (2026-10-22): `publickey` and
+`secrethash` were `index="false"`, so every key sign-in failed after the key had registered "successfully".
+
+- Any field whose value must survive a save needs `index="true"`. For opaque strings that are only ever
+  compared exactly (keys, hashes, tokens, ids) also add `indextype="not_analyzed"`.
+- `index="false"` is only right for values you deliberately never persist, e.g. `sourcepath`
+  (`color.xml`, `emailrecipient.xml`, `fatwireexception.xml`, `oauthprovider.xml` — all `stored="false"` too).
+- The audit/normalize script keeps `index` as written, so it will not catch this. When adding a field, save a row
+  through the API and read it back (see the `mediadb-api` skill) before relying on it.
+- After editing a fields file: clear the page manager and caches, e.g. with a Bearer token from
+  `bin/refreshtoken.sh | tail -n1`, GET `/openedit/views/filemanager/clearpagemanager.html` and
+  `/site/find/views/settings/status/tools/clearcaches.html`. Rows saved before the fix stay incomplete and must be re-saved.

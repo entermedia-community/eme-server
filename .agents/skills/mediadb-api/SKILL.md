@@ -9,12 +9,21 @@ The JSON REST API lives in `plugins/mediadb/html/services/`. Every table ("searc
 embedded Elasticsearch database is reachable through the same few generic endpoints.
 
 - Base URL: `http://localhost:8080/site/mediadb`
-- Every call needs the local admin header (recomputed on demand via `bin/refreshtoken.sh`; see the root `AGENTS.md`):
+- Every call needs a Bearer token. `bin/refreshtoken.sh` (run from the repo root) prints it; take the last line so any
+  messages the script writes before it are ignored. See the root `AGENTS.md`:
 
 ```bash
-A="Authorization: Bearer $(bin/refreshtoken.sh)"
+A="Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)"
 B=http://localhost:8080/site/mediadb
 J='Content-Type: application/json'
+```
+
+Credentials are public keys and application passwords, not the old password-derived `md542` key or the `emekey`
+cookie (both removed). Setup, the `services/authentication/*` endpoints and troubleshooting are in the
+`mediadb-auth` skill. Quick check that the token works:
+
+```bash
+curl -s -H "$A" $B/services/authentication/listkeys.json
 ```
 
 The path is `/site/mediadb/services/...` once. A doubled `/site/mediadb/site/mediadb/services/...`

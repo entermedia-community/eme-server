@@ -62,7 +62,7 @@ grep -n "beanname" plugins/catalog/html/data/fields/<type>.xml
 ## Recipe (curl)
 
 ```bash
-T=<Bearer token from update-app-css>
+T=$(bin/refreshtoken.sh | tail -n1)   # run from the repo root
 B=http://localhost:8080/site/find/views/settings/lists/datamanager/list
 curl -s -c jar.txt -o /dev/null -H "Authorization: Bearer $T" http://localhost:8080/site/find/   # login once
 

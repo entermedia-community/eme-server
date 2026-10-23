@@ -36,23 +36,30 @@ Use screenshots as the primary verification surface; the configured model accept
 
 ## Local login credentials (VS Code / local development)
 
-When working in VS Code against the local server, the login credentials are always the same. To authenticate HTTP requests (curl, MCP endpoints, JSON APIs), add this header:
+Authenticate HTTP requests (curl, MCP endpoints, JSON APIs) with a Bearer token from `bin/refreshtoken.sh`.
+It reads `EME_USER` / `EME_KEY_ID` / `EME_PRIVATE_KEY` (or `EME_APP_PASSWORD`) from the root `.env`, logs in with the
+registered key, caches the 7 day token in `.refreshtoken`, and prints the token as its last line (always use `| tail -n1`). One-time setup:
+`bin/refreshtoken.sh --register` (emails a login code) or `bin/refreshtoken.sh --app-password`.
+Use `bin/refreshtoken.sh --force` after a 401. See the `mediadb-auth` skill for details. The old `adminmd5...` password-derived key no longer works.
 
-```bash
-AUTH="Authorization: Bearer $(bin/refreshtoken.sh)"
-curl -H "$AUTH" http://localhost:8080/site/mediadb/ai/mcp/
+```
+AUTH="Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)"
 ```
 
-**Never hardcode the token in docs or scripts.** `bin/refreshtoken.sh` resolves it from the root `.env` (gitignored):
+Example:
 
-1. `TOKEN=` in `.env` — used as-is (the helper persists it there after a fetch).
-2. Otherwise `USER=` + `PASSWORD=` in `.env` are sent to the open endpoint `GET /site/mediadb/services/authentication/unused/getkey.json?id=<USER>&password=<PASSWORD>` (`AdminModule.loadEnterMediaKey`); its `results.entermediakey` is the Bearer token, and the helper stores it as `TOKEN=` in `.env`.
+```bash
+curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
+  http://localhost:8080/site/mediadb/ai/mcp/
+```
+
+**Never hardcode the token in docs or scripts.** `bin/refreshtoken.sh` resolves it from the root `.env` (gitignored) and caches it in `.refreshtoken`; see the `mediadb-auth` skill.
 
 ### If a call still fails (login fails / 302 / 403)
 
-1. Delete the `TOKEN=` line from `.env` and re-run `bin/refreshtoken.sh` — it re-fetches via `USER=`/`PASSWORD=`. **Do not ask for new credentials.**
+1. Run `bin/refreshtoken.sh --force` to log in again. If it says there is no registered key, run `bin/refreshtoken.sh --register` once from a terminal. **Do not ask for new credentials.**
 2. Verify with a guest-forbidden probe: `GET /site/mediadb/services/lists/data/color/52` must return **200** (guest gets 403).
-3. Note: `.mcp.json` and `opencode.json` are static MCP configs that hold a *literal* token — they cannot recompute. If the seed changes, update both with the new output of `bin/refreshtoken.sh`.
+3. Note: `.mcp.json` and `opencode.json` are static MCP configs that hold a *literal* token — they cannot recompute. If the token changes, update both with the new output of `bin/refreshtoken.sh`.
 
 ## After editing Java code
 
@@ -69,11 +76,11 @@ bin/restart.sh
 
 ## After editing `.xconf` files
 
-Page configuration (`.xconf`) is cached by the page manager, so edits do not take effect until the cache is cleared. Any time an `.xconf` file is modified, clear the page manager cache with the Authorization header above (no restart needed):
+Page configuration (`.xconf`) is cached by the page manager, so edits do not take effect until the cache is cleared. Any time an `.xconf` file is modified, clear the page manager cache with a Bearer token from `bin/refreshtoken.sh` (no restart needed):
 
 ```bash
-AUTH="Authorization: Bearer $(bin/refreshtoken.sh)"
-curl -H "$AUTH" http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
+curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
+  http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
 ```
 
 ## After editing data list `.xml` files
@@ -81,7 +88,7 @@ curl -H "$AUTH" http://localhost:8080/openedit/views/filemanager/clearpagemanage
 Data lists (e.g. `plugins/catalog/html/data/lists/<searchtype>/*.xml`) are loaded into the database, so edits do not show up until the table's data is reset. For each table you changed, reset its data from XML and then clear the caches:
 
 ```bash
-AUTH="Authorization: Bearer $(bin/refreshtoken.sh)"
+AUTH="Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)"
 for t in automationscenario automationstep automationposition; do
   curl -H "$AUTH" "http://localhost:8080/site/find/views/settings/lists/datamanager/list/restoredata.html?searchtype=$t&oemaxlevel=1"
 done
