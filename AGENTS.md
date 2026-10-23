@@ -72,7 +72,7 @@ bin/restart.sh
 - On localhost it restarts the VS Code debug session through the Remote Control extension (`bin/start.sh` installs it if missing). The Java extension recompiles before relaunching.
 - If no debug session is running, it runs `bin/start.sh` to start one.
 - It returns as soon as the restart is sent, so wait for the server before testing, e.g. poll `http://localhost:8080/site/` until it responds.
-- It exits 1 if VS Code is not reachable on port 3710; report that rather than working around it.
+- The Remote Control port is read from `remoteControl.port` in `workspace.code-workspace` by `bin/remotecontrolport.sh` (default 3710 if unset). It exits 1 if VS Code is not reachable on that port; report that rather than working around it.
 
 ## After editing `.xconf` files
 
