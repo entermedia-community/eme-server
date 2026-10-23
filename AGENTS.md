@@ -40,7 +40,7 @@ Authenticate HTTP requests (curl, MCP endpoints, JSON APIs) with a Bearer token 
 It reads `EME_USER` / `EME_KEY_ID` / `EME_PRIVATE_KEY` (or `EME_APP_PASSWORD`) from the root `.env`, logs in with the
 registered key, caches the 7 day token in `.refreshtoken`, and prints the token as its last line (always use `| tail -n1`). One-time setup:
 `bin/refreshtoken.sh --register` (emails a login code) or `bin/refreshtoken.sh --app-password`.
-Use `bin/refreshtoken.sh --force` after a 401. See the `mediadb-auth` skill for details. The old `adminmd5...` password-derived key no longer works.
+Use `bin/refreshtoken.sh --force` after a 401. See the `mediadb-auth` skill for details. The old `adminmd5...` password-derived key no longer works, and users have no password at all: login is an emailed code or a registered key / application password.
 
 ```
 AUTH="Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)"

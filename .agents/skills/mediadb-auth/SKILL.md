@@ -5,6 +5,13 @@ description: Use for anything about how people, browsers, apps, scripts and agen
 
 # MediaDB authentication
 
+Users have no password. The `password` field, the password authenticators (file, LDAP, JAAS, Windows, SPNEGO), the legacy
+login form and the change-password pages are gone; `tempSecurityKeyAuthenticator` (emailed `templogincode`) is the only
+login check. Anything that used to log in to another EME server as a user (`EMPushManager` via the `push_server_apppassword`
+catalog setting, `entermediapublisher` via the destination `apppassword`, `UpdateModule` sync via the sync entry's
+`apppassword`) sends an application password as `Authorization: Bearer`. FTP/SFTP/LDAP/Vizone credentials come from their
+own config (`password` on the repository, `ldap.xml` or the publish destination), never from a user record.
+
 There is no `entermedia.key`, `md542` value, `emekey` cookie or `getEnterMediaKey()` any more. Credentials are rows in the
 system `userkey` table (`plugins/system/html/data/fields/userkey.xml`), one per device or tool, each revocable on its own.
 
@@ -42,7 +49,7 @@ password instead), `--keygen`. An agent cannot register for itself; the code nee
 - `registerkey.json` — POST `publickey` + `label`, or `keytype=apppassword` + `label`. Needs a logged in user, or
   `grant_type=otp` with `username` and `code`. Refused for callers that logged in with an application password and while
   an administrator is switched to another user.
-- `login.json` — legacy password login; add `publickey` (or `keytype=apppassword`) to register in the same call.
+- `login.json` — session login with an emailed `templogincode` (plus `email` or `accountname`); add `publickey` (or `keytype=apppassword`) to register in the same call. There is no password login.
 - `listkeys.json`, `revokekey.json` (`keyid`) — manage your own keys.
 
 Algorithm details are in `StringEncryption` (`generateKeyPair`, `verifySignature`, `verifyKeyLogin`, `createAccessToken`,
