@@ -40,7 +40,7 @@ if [[ "$INSTANCE" = "localhost" ]]; then
     DEBUG_COMMAND="workbench.action.debug.restart"
   fi
 
-  # Start/restart the debug session through Remote Control (port from .vscode/settings.json)
+  # Start/restart the debug session through Remote Control (port from workspace.code-workspace)
   if node -e '
     const ws = new WebSocket("ws://127.0.0.1:" + process.argv[2]);
     ws.onopen = () => { ws.send(JSON.stringify({ command: process.argv[1] })); setTimeout(() => process.exit(0), 200); };

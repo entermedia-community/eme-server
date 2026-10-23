@@ -283,7 +283,7 @@ case "$CMD" in
 
   developer)
     echo "Opening default workspace in VS Code for development"
-    code eme-server.code-workspace
+    code workspace.code-workspace
 
   ;;
 

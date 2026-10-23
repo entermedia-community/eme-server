@@ -12,7 +12,7 @@
   - `update`: git stash / pull main / stash pop in `$SERVERHOME`, then refresh plugins. after update make sure you run bin/restart.sh
   - `updatefork`: adds the `upstream` remote (entermedia-community/eme-server) and merges `upstream/main`.
   - `branchpush`: commits all changes (`$3` = message, default "Update from Client"), pulls, pushes to main.
-  - `developer`: opens `eme-server.code-workspace` in VS Code.
+  - `developer`: opens `workspace.code-workspace` in VS Code.
 - **`start`**: resolves `JAVA_HOME` (env, else sdkman or `/usr/lib/jvm/default-java`), runs `bin/compile.sh`, ensures `data` is a symlink to `webapp/WEB-INF/data`, expands `bin/resources/tomcat.args` into `tomcat/work/tomcat-args.txt` (substituting `$SERVERHOME`, chmod 600), then launches Tomcat via `java -Dappname=<name> @args-file org.apache.catalina.startup.Bootstrap start`.
 - **Docker**:
   - `dockerbuild <path> <nodenumber> <ownedby>`: resolves the owner's UID/GID and runs `bin/resources/docker/scripts/eme-docker-init.sh`.
