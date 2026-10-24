@@ -4,7 +4,7 @@
       "type": "http",
       "url": "http://localhost:8080/site/mediadb/ai/mcp/",
       "headers": {
-        "Authorization": "Bearer adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc"
+        "Authorization": "Bearer ${EME_TOKEN}"
       }
     }
   }
