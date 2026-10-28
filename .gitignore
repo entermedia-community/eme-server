@@ -20,3 +20,4 @@ plugins/mediadb/
 plugins/openedit/
 plugins/app-genailabs/
 .refreshtoken
+*.log
