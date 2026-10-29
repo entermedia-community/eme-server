@@ -65,6 +65,10 @@ curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
 
 Never write Groovy (`.groovy` scripts, `Script.run`). Put server logic in a Java class under `plugins/*/code` (e.g. a module extending `BaseMediaModule` in `plugins/finder/code/org/entermediadb/...`), register it as a bean in `plugins/finder/html/src/plugin.xml`, and call it from the page's `.xconf` with `<path-action name="ModuleName.method"/>`.
 
+## The `description` field
+
+`description` is not a real description: it is a specialized field used by the Elasticsearch index (search text). Never read or show it as a description. Use `longdescription` instead.
+
 ## After editing Java code
 
 Any time you change `.java` files, `plugin.xml`, or jars under `plugins/*/lib`, run `bin/restart.sh` so the running server picks up the change. Do not test against the old server, and do not start Tomcat yourself with `eme.sh start`.
