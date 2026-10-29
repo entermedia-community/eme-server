@@ -61,6 +61,10 @@ curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
 2. Verify with a guest-forbidden probe: `GET /site/mediadb/services/lists/data/color/52` must return **200** (guest gets 403).
 3. Note: `.mcp.json` and `opencode.json` are static MCP configs that hold a *literal* token — they cannot recompute. If the token changes, update both with the new output of `bin/refreshtoken.sh`.
 
+## No Groovy
+
+Never write Groovy (`.groovy` scripts, `Script.run`). Put server logic in a Java class under `plugins/*/code` (e.g. a module extending `BaseMediaModule` in `plugins/finder/code/org/entermediadb/...`), register it as a bean in `plugins/finder/html/src/plugin.xml`, and call it from the page's `.xconf` with `<path-action name="ModuleName.method"/>`.
+
 ## After editing Java code
 
 Any time you change `.java` files, `plugin.xml`, or jars under `plugins/*/lib`, run `bin/restart.sh` so the running server picks up the change. Do not test against the old server, and do not start Tomcat yourself with `eme.sh start`.
