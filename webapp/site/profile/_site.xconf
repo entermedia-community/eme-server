@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <property name="themeid">defaulttheme</property>
+  <property name="themeid">themelight</property>
   <property name="fallbackdirectory">/profile</property>
   <property name="catalogid">site/catalog</property>
   <property name="applicationid">site/profile</property>
