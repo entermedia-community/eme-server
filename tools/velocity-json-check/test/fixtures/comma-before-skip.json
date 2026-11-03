@@ -1,0 +1,9 @@
+{
+  "facets": [
+    #foreach($f in $facets)#if($foreach.count != 1), #end
+      #if(!$hits.isSelected($f))
+        { "id": #jesc($f.id) }
+      #end
+    #end
+  ]
+}

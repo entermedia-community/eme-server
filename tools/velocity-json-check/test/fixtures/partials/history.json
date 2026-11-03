@@ -1,0 +1,4 @@
+#foreach($m in $history)
+  #if($foreach.count > 1),#end
+  { "content": #jesc($m.text) }
+#end

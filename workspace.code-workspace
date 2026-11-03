@@ -20,10 +20,12 @@
 		"remoteControl.port": 3711,
 		"postman.settings.dotenv-detection-notification-visibility": false,
 		"java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable",
+		// Velocity-templated JSON in eme-server (extension: eme-server/tools/vscode-velocity-json)
+		"files.associations": {
+			"**/eme-server/plugins/*/html/**/*.json": "velocity-json",
+		},
 	},
 	"extensions": {
-		"recommendations": [
-			"eliostruyf.vscode-remote-control",
-		],
+		"recommendations": ["eliostruyf.vscode-remote-control"],
 	},
 }

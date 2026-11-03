@@ -1,0 +1,8 @@
+{
+  #ifnotnull($cat)
+  "id": #jesc($cat.id)
+  #end
+  #ifnull($cat)
+  "id": "none",
+  #end
+}

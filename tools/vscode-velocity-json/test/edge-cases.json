@@ -1,0 +1,16 @@
+## line comment
+#* block
+   comment *#
+{
+  "${detail.id}": #if($detail.isViewType("password"))"***"#elseif($detail.isMultiValue())[]#else#jesc($context.getText($hit,$value))#end,
+  "plain": "text with $!user.name and \$escaped",
+  "formal": "$!{user.firstName}",
+  "count": #{if}($x)$x#{else}0#{end},
+  "date": "$jsonUtil.formatDateObj($value)",
+  "list": [#foreach($i in [1..3])#if($foreach.count > 1),#end$i#end],
+  "map": #set($m = {"a": 'b', "c": $d})$m.size(),
+  "index": $list[0].name,
+  "num": -1.5e3,
+  "unknown": #mymacro($a, "s")
+}
+#macro(mymacro $a $b)$a$b#end

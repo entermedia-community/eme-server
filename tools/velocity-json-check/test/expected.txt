@@ -1,0 +1,11 @@
+comma-before-skip.json:4:18: error: Invalid JSON when `$hits.isSelected($f)` is true/present: Unexpected character (','): expected a valid value (number, String, array, object, 'true', 'false' or 'null') — output: ,
+elseif-equals.json:1:15: warning: Invalid JSON when `$status == "ok"` is false/empty/missing: output is empty
+elseif-equals.json:3:19: error: Invalid JSON when `$status == "error"` is true while everything else is false/empty: Unexpected character ('}'): was expecting double-quote to start field name — output: { "status": "error", }
+ifnull-branches.json:2:14: error: Invalid JSON when `$cat` is false/empty/missing: Unexpected character ('}'): was expecting double-quote to start field name — output: }
+null-bare-value.json:2:19: warning: Invalid JSON when `$event.goingcount` is null (it prints as the literal reference, or as nothing with $!; give it a default): Unrecognized token '$event': was expecting ('true', 'false' or 'null') — output: "count": $event.goingcount,
+null-bare-value.json:3:19: warning: Invalid JSON when `$event.interestedcount` is null (it prints as the literal reference, or as nothing with $!; give it a default): Unexpected character ('}'): expected a value — output: }
+static-missing-comma.json:3:3: error: Invalid JSON for any data: Unexpected character ('"'): was expecting comma to separate Object entries — output: "b": "y"
+trailing-comma-empty-list.json:4:20: error: Invalid JSON when `$categories` is false/empty/missing: Unexpected character (']'): expected a valid value (number, String, array, object, 'true', 'false' or 'null') — output: ]
+unescaped-string.json:2:18: info: `$user.name` is inserted into a JSON string without escaping: a value containing " \ or a newline produces invalid JSON. Use #jesc(...).
+velocity-parse-error.json:3:1: error: Velocity parse error: Encountered "}" at tools/velocity-json-check/test/fixtures/velocity-parse-error.json[line 3, column 1]
+checked 11 file(s): 6 error(s), 3 warning(s), 1 unescaped-value hint(s)

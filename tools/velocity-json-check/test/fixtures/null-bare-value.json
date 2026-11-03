@@ -1,0 +1,4 @@
+{
+  "count": $event.goingcount,
+  "safe": $!event.interestedcount
+}

@@ -1,0 +1,9 @@
+{
+  "categories": [
+    { "id": "all" },
+    #foreach($c in $categories)
+      #if($foreach.count > 1),#end
+      { "id": #jesc($c.id) }
+    #end
+  ]
+}

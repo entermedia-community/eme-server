@@ -1,0 +1,7 @@
+{
+  "messages": [
+    { "role": "system" }
+    #if($history.size() > 0),#end
+    $pages.include("./partials/history.json", $context)
+  ]
+}

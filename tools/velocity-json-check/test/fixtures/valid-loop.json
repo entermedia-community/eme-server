@@ -1,0 +1,10 @@
+## No diagnostics expected: the standard comma idiom, #jesc, $! and guarded numbers
+{
+  "items": [
+    #foreach($item in $items)
+      #if($foreach.count > 1),#end
+      { "id": #jesc($item.id), "count": #if($item.count)$item.count#else 0#end }
+    #end
+  ],
+  "total": $!items.size()
+}

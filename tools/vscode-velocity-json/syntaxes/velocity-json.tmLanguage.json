@@ -1,0 +1,559 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Velocity JSON",
+	"scopeName": "source.velocity-json",
+	"comment": "JSON documents rendered through Apache Velocity (EME services/*.json, ai/*.json, ...). Velocity is the base layer; JSON is tokenized with flat, stateless patterns so that directives in key/value/comma positions never knock the grammar into an error state.",
+	"patterns": [
+		{
+			"include": "#velocity"
+		},
+		{
+			"include": "#json"
+		}
+	],
+	"repository": {
+		"velocity": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#unparsed"
+				},
+				{
+					"include": "#escapes"
+				},
+				{
+					"include": "#directives"
+				},
+				{
+					"include": "#references"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.block.velocity",
+					"begin": "#\\*",
+					"end": "\\*#",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.velocity"
+						}
+					}
+				},
+				{
+					"name": "comment.line.double-number-sign.velocity",
+					"match": "(##).*$",
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.comment.velocity"
+						}
+					}
+				}
+			]
+		},
+		"unparsed": {
+			"name": "string.unquoted.cdata.velocity",
+			"begin": "#\\[\\[",
+			"end": "\\]\\]#",
+			"captures": {
+				"0": {
+					"name": "punctuation.definition.string.velocity"
+				}
+			}
+		},
+		"escapes": {
+			"name": "constant.character.escape.velocity",
+			"match": "\\\\+[$#]"
+		},
+		"directives": {
+			"patterns": [
+				{
+					"comment": "#macro(name $arg ...) - highlight the macro name as a definition",
+					"begin": "(#\\{?)(macro)(\\}?)\\s*(\\()\\s*([a-zA-Z_][\\w-]*)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.directive.velocity"
+						},
+						"2": {
+							"name": "storage.type.function.velocity"
+						},
+						"3": {
+							"name": "punctuation.definition.directive.velocity"
+						},
+						"4": {
+							"name": "punctuation.section.arguments.begin.velocity"
+						},
+						"5": {
+							"name": "entity.name.function.velocity"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.arguments.end.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"comment": "Control-flow directives that take arguments. ifnull/ifnotnull are EME block directives closed by #end.",
+					"begin": "(#\\{?)(if|elseif|foreach|set|ifnotnull|ifnull)(\\}?)\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.directive.velocity"
+						},
+						"2": {
+							"name": "keyword.control.velocity"
+						},
+						"3": {
+							"name": "punctuation.definition.directive.velocity"
+						},
+						"4": {
+							"name": "punctuation.section.arguments.begin.velocity"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.arguments.end.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"comment": "Built-in directives that take arguments",
+					"begin": "(#\\{?)(define|parse|include|evaluate)(\\}?)\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.directive.velocity"
+						},
+						"2": {
+							"name": "keyword.other.directive.velocity"
+						},
+						"3": {
+							"name": "punctuation.definition.directive.velocity"
+						},
+						"4": {
+							"name": "punctuation.section.arguments.begin.velocity"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.arguments.end.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"comment": "Argument-less control directives: #else #end #break #stop, plain or formal (#{else})",
+					"match": "(#\\{?)(?:(else|end|break|stop)(\\})|(else|end|break|stop)(?![\\w]))",
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.directive.velocity"
+						},
+						"2": {
+							"name": "keyword.control.velocity"
+						},
+						"3": {
+							"name": "punctuation.definition.directive.velocity"
+						},
+						"4": {
+							"name": "keyword.control.velocity"
+						}
+					}
+				},
+				{
+					"comment": "Macros defined in plugins/system/html/display/velocitymacros.vm that are used in JSON templates",
+					"begin": "(#\\{?)(jesc|jrender|jtext|json|jsonfields|jsonpartial|jsonmap|jsonarray|datajsonmin|rendervalue|esc|escarea|escwrap|text|urlencode|urlescape|uuencode|uudecode|paramencode|makeid|eid|datetime|date|dash|translate|singular|datatext|linebreaks|elidemiddle|debug)(\\}?)\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.macro.velocity"
+						},
+						"2": {
+							"name": "support.function.macro.velocity"
+						},
+						"3": {
+							"name": "punctuation.definition.macro.velocity"
+						},
+						"4": {
+							"name": "punctuation.section.arguments.begin.velocity"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.arguments.end.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"comment": "Any other macro call",
+					"begin": "(#\\{?)([a-zA-Z_][\\w-]*)(\\}?)\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.macro.velocity"
+						},
+						"2": {
+							"name": "entity.name.function.macro.velocity"
+						},
+						"3": {
+							"name": "punctuation.definition.macro.velocity"
+						},
+						"4": {
+							"name": "punctuation.section.arguments.begin.velocity"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.arguments.end.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				}
+			]
+		},
+		"references": {
+			"patterns": [
+				{
+					"comment": "Formal reference: ${a.b(c)} / $!{a.b}",
+					"begin": "(\\$!?\\{)([a-zA-Z_][\\w]*)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.variable.velocity"
+						},
+						"2": {
+							"name": "variable.other.velocity"
+						}
+					},
+					"end": "\\}",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.variable.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#reference-tail"
+						}
+					]
+				},
+				{
+					"comment": "Informal reference: $a.b.c($x) / $!a[0]. Ends as soon as the next character cannot continue the chain.",
+					"begin": "(\\$!?)([a-zA-Z_][\\w]*)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.variable.velocity"
+						},
+						"2": {
+							"name": "variable.other.velocity"
+						}
+					},
+					"end": "(?!\\.[a-zA-Z_]|\\(|\\[)",
+					"applyEndPatternLast": 1,
+					"patterns": [
+						{
+							"include": "#reference-tail"
+						}
+					]
+				}
+			]
+		},
+		"reference-tail": {
+			"patterns": [
+				{
+					"comment": "method call",
+					"begin": "(\\.)([a-zA-Z_][\\w]*)\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.accessor.velocity"
+						},
+						"2": {
+							"name": "entity.name.function.method.velocity"
+						},
+						"3": {
+							"name": "punctuation.section.arguments.begin.velocity"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.arguments.end.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"comment": "property",
+					"match": "(\\.)([a-zA-Z_][\\w]*)",
+					"captures": {
+						"1": {
+							"name": "punctuation.accessor.velocity"
+						},
+						"2": {
+							"name": "variable.other.property.velocity"
+						}
+					}
+				},
+				{
+					"comment": "index",
+					"begin": "\\[",
+					"end": "\\]",
+					"captures": {
+						"0": {
+							"name": "punctuation.section.brackets.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				}
+			]
+		},
+		"expression": {
+			"comment": "Inside directive / macro / method arguments",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#references"
+				},
+				{
+					"name": "string.quoted.double.velocity",
+					"begin": "\"",
+					"end": "\"",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.string.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"name": "constant.character.escape.velocity",
+							"match": "\\\\.|\"\""
+						},
+						{
+							"include": "#directives"
+						},
+						{
+							"include": "#references"
+						}
+					]
+				},
+				{
+					"name": "string.quoted.single.velocity",
+					"begin": "'",
+					"end": "'",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.string.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"name": "constant.character.escape.velocity",
+							"match": "''"
+						}
+					]
+				},
+				{
+					"name": "constant.language.velocity",
+					"match": "\\b(true|false|null)\\b"
+				},
+				{
+					"name": "keyword.operator.word.velocity",
+					"match": "\\b(in|and|or|not|eq|ne|lt|gt|le|ge)\\b"
+				},
+				{
+					"name": "constant.numeric.velocity",
+					"match": "-?\\b\\d+(\\.\\d+)?\\b"
+				},
+				{
+					"name": "keyword.operator.range.velocity",
+					"match": "\\.\\."
+				},
+				{
+					"name": "keyword.operator.comparison.velocity",
+					"match": "==|!=|<=|>=|<|>"
+				},
+				{
+					"name": "keyword.operator.logical.velocity",
+					"match": "&&|\\|\\||!"
+				},
+				{
+					"name": "keyword.operator.assignment.velocity",
+					"match": "="
+				},
+				{
+					"name": "keyword.operator.arithmetic.velocity",
+					"match": "[+\\-*/%]"
+				},
+				{
+					"name": "punctuation.separator.velocity",
+					"match": "[,:]"
+				},
+				{
+					"begin": "\\(",
+					"end": "\\)",
+					"captures": {
+						"0": {
+							"name": "punctuation.section.parens.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"begin": "\\[",
+					"end": "\\]",
+					"captures": {
+						"0": {
+							"name": "punctuation.section.brackets.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"begin": "\\{",
+					"end": "\\}",
+					"captures": {
+						"0": {
+							"name": "punctuation.section.braces.velocity"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				}
+			]
+		},
+		"json": {
+			"patterns": [
+				{
+					"comment": "Object key: a string followed by a colon on the same line",
+					"name": "string.json support.type.property-name.json",
+					"begin": "\"(?=(?:[^\"\\\\]|\\\\.)*\"\\s*:)",
+					"end": "\"",
+					"captures": {
+						"0": {
+							"name": "punctuation.support.type.property-name.json"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#json-string-content"
+						}
+					]
+				},
+				{
+					"name": "string.quoted.double.json",
+					"begin": "\"",
+					"end": "\"|$",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.string.json"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#json-string-content"
+						}
+					]
+				},
+				{
+					"name": "constant.language.json",
+					"match": "\\b(true|false|null)\\b"
+				},
+				{
+					"name": "constant.numeric.json",
+					"match": "-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?"
+				},
+				{
+					"name": "punctuation.definition.dictionary.begin.json",
+					"match": "\\{"
+				},
+				{
+					"name": "punctuation.definition.dictionary.end.json",
+					"match": "\\}"
+				},
+				{
+					"name": "punctuation.definition.array.begin.json",
+					"match": "\\["
+				},
+				{
+					"name": "punctuation.definition.array.end.json",
+					"match": "\\]"
+				},
+				{
+					"name": "punctuation.separator.dictionary.key-value.json",
+					"match": ":"
+				},
+				{
+					"name": "punctuation.separator.json",
+					"match": ","
+				}
+			]
+		},
+		"json-string-content": {
+			"patterns": [
+				{
+					"include": "#escapes"
+				},
+				{
+					"name": "constant.character.escape.json",
+					"match": "\\\\(?:[\"\\\\/bfnrt]|u[0-9a-fA-F]{4})"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#directives"
+				},
+				{
+					"include": "#references"
+				}
+			]
+		}
+	}
+}

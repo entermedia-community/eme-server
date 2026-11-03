@@ -1,0 +1,3 @@
+{
+  "search": #jesc($context.getRequestParameter("q")
+}

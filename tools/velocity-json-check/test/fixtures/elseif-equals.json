@@ -1,0 +1,5 @@
+#if($status == "ok")
+{ "status": "ok" }
+#elseif($status == "error")
+{ "status": "error", }
+#end

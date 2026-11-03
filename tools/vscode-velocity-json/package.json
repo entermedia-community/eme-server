@@ -1,0 +1,54 @@
+{
+	"name": "velocity-json",
+	"displayName": "Velocity JSON (EME)",
+	"description": "Syntax highlighting and render-and-parse JSON validity checks for EME's Velocity-templated .json files. Local to eme-server; not published.",
+	"version": "0.2.0",
+	"publisher": "entermedia-local",
+	"private": true,
+	"license": "UNLICENSED",
+	"repository": { "type": "git", "url": "https://github.com/entermedia-community/eme-server" },
+	"engines": { "vscode": "^1.80.0" },
+	"categories": ["Programming Languages", "Linters"],
+	"main": "./extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "velocity-json",
+				"aliases": ["Velocity JSON", "velocity-json"],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "velocity-json",
+				"scopeName": "source.velocity-json",
+				"path": "./syntaxes/velocity-json.tmLanguage.json"
+			}
+		],
+		"commands": [
+			{
+				"command": "velocityJson.checkAll",
+				"title": "Velocity JSON: Check All Templates"
+			}
+		],
+		"configuration": {
+			"title": "Velocity JSON",
+			"properties": {
+				"velocityJson.renderCheck.enabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "On open and save, render the template with stub data (tools/velocity-json-check) and report outputs that are not valid JSON."
+				},
+				"velocityJson.renderCheck.showUnescapedHints": {
+					"type": "boolean",
+					"default": true,
+					"description": "Show information hints for values inserted into JSON strings without #jesc."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"test": "test/run.sh",
+		"package": "npx --yes @vscode/vsce@3.2.1 package --allow-missing-repository --skip-license -o velocity-json.vsix"
+	}
+}
