@@ -1,0 +1,12 @@
+{
+	"version": "0.2",
+	"language": "en",
+	"ignorePaths": [
+		"node_modules/**",
+		"package-lock.json",
+		"dist/**",
+		"**/*.log",
+		"**/*.db",
+		"plugins/mediadb/html/services/**/*json"
+	]
+}
