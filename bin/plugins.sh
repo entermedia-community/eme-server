@@ -3,7 +3,7 @@
 # Manage the per-plugin git checkouts under plugins/.
 #
 # Usage:
-#   plugins.sh [status|update|pull|push] ["commit message"]
+#   plugins.sh [status|update|pull|push|resetall] ["commit message"]
 #   plugins.sh                 # defaults to "status"
 #
 #   status  read-only. Reports uncommitted changes, and whether local HEAD
@@ -19,6 +19,12 @@
 #           touched) if local history has diverged from origin.
 #   push    commits any local changes (git add -A), then pulls (ff-only)
 #           and pushes. Refuses to push if the ff-only merge fails.
+#   resetall  DESTRUCTIVE sync. For each plugin: git reset --hard
+#           origin/<branch> (discards uncommitted changes AND any local
+#           commits that were never pushed - the old HEAD is tagged
+#           pre-reset-* first so they stay reachable), then git pull to
+#           bring in whatever origin has moved to. Use it to force every
+#           plugin back onto the remote state.
 #
 # Each plugin is declared by dropping a plugins/<name>.json config file
 # into the plugins/ folder, e.g.:
@@ -190,6 +196,41 @@ plugin_push() {
     fi
 }
 
+##destructive sync: reset --hard to origin/<branch>, then pull. Unlike update/pull it does NOT
+##skip a dirty working tree - discarding local changes is the point of this command. The old
+##HEAD is tagged pre-reset-* first so any unpushed commits stay reachable instead of relying
+##on reflog.
+plugin_resetall() {
+    local plugin="$1" branch="$2"
+
+    git fetch --depth=1 origin "$branch"
+
+    local local_sha remote_sha
+    local_sha=$(git rev-parse HEAD)
+    remote_sha=$(git rev-parse "origin/$branch")
+
+    if [ "$local_sha" == "$remote_sha" ] && [ -z "$(git status --porcelain)" ]; then
+        echo -e "\e[32mplugins/$plugin is already up to date.\e[0m\n"
+        return
+    fi
+
+    # Tag the current HEAD first so any unpushed commits stay reachable after the reset.
+    git tag "pre-reset-$(date +%Y%m%d%H%M%S)" "$local_sha" >/dev/null 2>&1
+
+    echo -e "\e[34mplugins/$plugin\e[0m: Resetting to origin/$branch and pulling"
+
+    if ! git reset --hard "origin/$branch"; then
+        echo -e "\e[31mplugins/$plugin: Reset failed - see error above.\e[0m"
+        FOUNDPENDING=true
+        return
+    fi
+
+    if ! git pull; then
+        echo -e "\e[31mplugins/$plugin: Pull failed after reset - see error above.\e[0m"
+        FOUNDPENDING=true
+    fi
+}
+
 ##make sure the webapp symlink is in place for any plugin that ships html/
 plugin_link_webapp() {
     local plugin="$1"
@@ -214,8 +255,9 @@ for plugin in "${plugins[@]}"; do
         update) plugin_update "$plugin" "$branch" ;;
         pull)   plugin_pull   "$plugin" "$branch" ;;
         push)   plugin_push   "$plugin" "$branch" "$COMMITMESSAGE" ;;
+        resetall) plugin_resetall "$plugin" "$branch" ;;
         *)
-            echo "ERROR: Unknown command '$CMD'. Use status, update, pull, or push." >&2
+            echo "ERROR: Unknown command '$CMD'. Use status, update, pull, push, or resetall." >&2
             exit 1
             ;;
     esac
