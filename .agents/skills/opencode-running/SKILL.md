@@ -74,7 +74,7 @@ Answer and Approve set `setExecAutomationStep(<status step>)` so the card keeps 
 ## After changing things
 
 - Java (`OpenCode*Skill.java`, `OpenCodeClient.java`): `bin/restart.sh`, then poll
-  `http://localhost:8080/site/` until it responds.
+  `http://localhost:8080/site/mediadb/` until it responds (302 = up, 404 = still starting).
 - `agent_job_showstatus.html`: no restart; if you touched an `.xconf`, clear the page manager cache.
 - Step or skill docs (`automationstep/*.xml`, `aiskill/opencode.xml`, `aiskill/chat_monitor.xml`):
   reset those tables, see `reload-list-data`.

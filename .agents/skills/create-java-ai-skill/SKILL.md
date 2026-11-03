@@ -231,10 +231,10 @@ bin/restart.sh
   extension on port 3710; the Java extension recompiles before relaunching, so there is no separate
   compile step. If no debug session is running, it runs `bin/start.sh` to start one. On other
   instances it restarts the docker container.
-- It returns as soon as the restart is sent, so poll `http://localhost:8080/site/` until it answers
+- It returns as soon as the restart is sent, so poll `http://localhost:8080/site/mediadb/` until it answers
   before testing. Note Tomcat listening on 8080 does **not** mean the app is ready — after a restart
   the Java extension first compiles (several minutes for this codebase), and even once Tomcat is up,
-  `/site/` can keep returning 404 while the Spring context initializes. Poll `/site/` specifically;
+  `/site/mediadb/` can keep returning 404 while the Spring context initializes. Poll `/site/mediadb/` only (an unauthenticated 302 means up);
   a bare `/` answering HTML does not prove the app is up.
 - If it exits 1 ("VS Code is not reachable on port 3710"), don't work around it blindly: the
   WebSocket port is hardcoded in the script, and a local edit to `bin/restart.sh` (or
