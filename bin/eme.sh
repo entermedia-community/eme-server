@@ -47,7 +47,11 @@ case "$CMD" in
     # Create .env file if missing
     if [ ! -f "$SERVERHOME/.env" ]; then
         echo "Creating $SERVERHOME/.env file"
+        if [ -f "$SERVERHOME/.env.default" ]; then
+            cat "$SERVERHOME/.env.default" >> "$SERVERHOME/.env"
+        fi
         {
+          
           echo "INSTANCE=$SERVERNAME$NODENUMBER"
           echo "SITE=$SERVERNAME"
           echo "NODENUMBER=$NODENUMBER"
@@ -77,12 +81,11 @@ case "$CMD" in
         git checkout -t origin/"${BRANCH:-main}"
     fi
 
-    # check for the WEB-INF/encrypt.properties file and create it if missing
-    if [ ! -f "$SERVERHOME/webapp/WEB-INF/encrypt.properties" ]; then
-        echo "Creating $SERVERHOME/webapp/WEB-INF/encrypt.properties file"
-        touch "$SERVERHOME/webapp/WEB-INF/encrypt.properties"
-        ENCRYPTION_KEY=$(openssl rand -hex 16)
-        echo "userpassword=$ENCRYPTION_KEY" >> "$SERVERHOME/webapp/WEB-INF/encrypt.properties"
+    # check for the PRIVATEKEY in the .env file and create it if missing
+    if ! grep -q "^PRIVATEKEY=" "$SERVERHOME/.env" 2>/dev/null; then
+        echo "Adding PRIVATEKEY to $SERVERHOME/.env"
+        PRIVATEKEY=$(openssl rand -hex 16)
+        echo "PRIVATEKEY=$PRIVATEKEY" >> "$SERVERHOME/.env"
     fi
 
     "$SERVERHOME/bin/plugins.sh" update
