@@ -10,6 +10,7 @@ IP_ADDR=localhost
 
 IP=http://$IP_ADDR:9200
 
+HELP="Usage: health.sh [health | nodes_health | allocation | shards | nodes | master | masters | setmasters | settings | setmaxresultwindow 100000 | watermark | activeshards]"
 
 if [ -z "$1" ]
   then
@@ -40,17 +41,27 @@ else
  	elif [ $1 == "setmasters" ]
  	then
 		curl -XPUT $IP/_cluster/settings -d '{ "persistent" : { "discovery.zen.minimum_master_nodes" : '$2' } }'
-  elif [ $1 == "watermark" ]
-  then
-    curl -XPUT $IP/_cluster/settings -d '{ "transient" : { "cluster.routing.allocation.disk.watermark.low" : "5gb","cluster.routing.allocation.disk.watermark.high" : "2gb" } }'
-  elif [ $1 == "activeshards" ]
-  then
-    if curl $IP/_cluster/health?pretty | grep -q '"active_shards_percent_as_number" : 100.0'
-    then
-      exit $?
-    fi
+	elif [ $1 == "settings" ]
+	then
+		curl $IP/_settings?pretty
+	elif [ $1 == "setmaxresultwindow" ]
+	then
+		curl -XPUT $IP/_settings -d '{ "index" : { "max_result_window" : '$2' } }'
+	elif [ $1 == "watermark" ]
+	then
+		curl -XPUT $IP/_cluster/settings -d '{ "transient" : { "cluster.routing.allocation.disk.watermark.low" : "5gb","cluster.routing.allocation.disk.watermark.high" : "2gb" } }'
+	elif [ $1 == "activeshards" ]
+	then
+		if curl $IP/_cluster/health?pretty | grep -q '"active_shards_percent_as_number" : 100.0'
+		then
+		exit $?
+		fi
+	elif [ $1 == "help" ] || [ $1 == "-h" ]
+	then
+		echo $HELP
+		exit 0
 	else
-		echo "Bad argument. Use health.sh [health | nodes_health | allocation | shards | nodes | master | masters | setmasters | watermark]"
+		echo $HELP
 		exit 1
 	fi
 fi
