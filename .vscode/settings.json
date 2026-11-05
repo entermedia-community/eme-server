@@ -3,7 +3,8 @@
 		"**/index.min.js": true,
 		"**/indexdefer.min.css": true,
 		"**/build/**": true,
-		"**/webapp/**": true
+		"**/webapp/**": true,
+		"**/tomcat/logs/**": true
 	},
 
 	"search.useIgnoreFiles": false,
