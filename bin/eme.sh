@@ -27,10 +27,16 @@ fi
 if [ "$CMD" = "restart" ]; then
     "$0" stop "$SERVERHOME"
     exec "$0" start "$SERVERHOME"
+    exec "$0" restartopencode
+fi
+
+if [ "$CMD" = "restartopencode" ]; then
     if [[ "$OPENCODE_ENABLED" = "true" ]]; then
         sleep 2
         echo "*** Restarting OPENCODE"
         cd "$SERVERHOME" && bin/opencoded.sh start
+    else
+        echo "*** OPENCODE is not enabled"
     fi
 fi
 
