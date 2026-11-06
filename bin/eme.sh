@@ -27,7 +27,7 @@ fi
 if [ "$CMD" = "restart" ]; then
     "$0" stop "$SERVERHOME"
     exec "$0" start "$SERVERHOME"
-    exec "$0" restartopencode
+    exec "$0" restartopencode "$SERVERHOME"
 fi
 
 if [ "$CMD" = "restartopencode" ]; then
@@ -380,6 +380,7 @@ case "$CMD" in
         echo "  start        <server-path>              Start Tomcat server (Ctrl-C/SIGTERM shuts down gracefully)"
         echo "  stop         <server-path>              Gracefully stop a running Tomcat server"
         echo "  restart      <server-path>              Gracefully stop, then start Tomcat server"
+        echo "  restartopencode <server-path>           Restart OPENCODE if enabled inside docker instance"
         echo ""
         echo "Developer commands:"
         echo "  developer    <server-path>                     Clone/setup workspace and open VS Code"
