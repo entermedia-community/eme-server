@@ -26,14 +26,12 @@ fi
 
 if [ "$CMD" = "restart" ]; then
     "$0" stop "$SERVERHOME"
-    exec "$0" restartopencode "$SERVERHOME"
     exec "$0" start "$SERVERHOME"
     
 fi
 
 if [ "$CMD" = "restartopencode" ]; then
     if [[ "$OPENCODE_ENABLED" = "true" ]]; then
-        sleep 2
         echo "*** Restarting OPENCODE"
         cd "$SERVERHOME" && bin/opencoded.sh start
     else
@@ -190,6 +188,9 @@ if [ "$CMD" = "start" ]; then
         exit 143
     }
     trap stop_tomcat TERM INT
+
+    #run other background tasks if needed
+    "$0" restartopencode "$SERVERHOME"
 
     wait "$TOMCATPID" || true
     rm -f "$PIDFILE"
