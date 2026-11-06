@@ -27,6 +27,11 @@ fi
 if [ "$CMD" = "restart" ]; then
     "$0" stop "$SERVERHOME"
     exec "$0" start "$SERVERHOME"
+    if [[ "$OPENCODE_ENABLED" = "true" ]]; then
+        sleep 2
+        echo "*** Restarting OPENCODE"
+        cd "$SERVERHOME" && bin/opencoded.sh start
+    fi
 fi
 
 case "$CMD" in
