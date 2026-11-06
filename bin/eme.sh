@@ -26,8 +26,9 @@ fi
 
 if [ "$CMD" = "restart" ]; then
     "$0" stop "$SERVERHOME"
-    exec "$0" start "$SERVERHOME"
     exec "$0" restartopencode "$SERVERHOME"
+    exec "$0" start "$SERVERHOME"
+    
 fi
 
 if [ "$CMD" = "restartopencode" ]; then
