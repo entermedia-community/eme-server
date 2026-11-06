@@ -181,7 +181,15 @@ PRIV_DER="$(printf '%s' "$PRIV" | b64url_dec | base64 -w64)" \
   echo '-----END PRIVATE KEY-----'
 } > "$WORK/key.pem"
 
-TIMESTAMP="$(date +%s%3N)"
+# Millisecond timestamp. Some date implementations (e.g. uutils coreutils) ignore the %3N width and
+# print all 9 nanosecond digits, so take the first 3 of %N ourselves; fall back to whole seconds if %N is missing.
+SECS="$(date +%s)"
+NS="$(date +%N 2>/dev/null || true)"
+if printf '%s' "$NS" | grep -q '^[0-9]\{3,\}$'; then
+	TIMESTAMP="$(( SECS * 1000 + 10#$(printf '%s' "$NS" | cut -c1-3) ))"
+else
+	TIMESTAMP="$(( SECS * 1000 ))"
+fi
 NONCE="$(openssl rand -hex 16)"
 printf '%s\n%s\n%s\n%s' "$USER_ID" "$KEY_ID" "$TIMESTAMP" "$NONCE" > "$WORK/message"
 SIGNATURE="$(openssl pkeyutl -sign -inkey "$WORK/key.pem" -rawin -in "$WORK/message" | b64url_enc)" \
