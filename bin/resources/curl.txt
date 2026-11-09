@@ -1,18 +1,18 @@
-env GTK_IM_MODULE=ibus /home/shanti/eclipse/java-2024-09/eclipse/eclipse --launcher.openFile "$@"
-
 
 ##Search Asset by Id
-curl -XGET 'http://localhost:9200/site_catalog/entityasset/_search?q=id:AZ1Ka06FJLi7WiFWW4fF' | python3 -mjson.tool
-
-curl -XGET 'http://localhost:9200/site_catalog/aiskill/_search?q=id:asset_aliasduplicates' | python3 -mjson.tool
-
-2026-01-06T20:37:42.683Z
-
-2026-01-06T20:35:17.450Z
-2026-01-06T21:29:02.117Z
+curl -XGET 'http://localhost:9200/site_catalog/asset/_search?q=id:AaENfXN-ATxbZHJ4wuBl' | python3 -mjson.tool
 
 
-curl -XGET http://localhost:9200/assets_catalog/asset/_search -d '{
+##Search any table by Id
+curl -XGET 'http://localhost:9200/site_catalog/agentjob/_search?q=id:billing_check_invoices' | python3 -mjson.tool
+
+
+##Search All
+curl -XGET 'http://localhost:9200/site_catalog/librarycollection/_search' -d '{ "query" : {	"match_all" : {} } }' | python3 -mjson.tool
+
+
+##Search assets by recordmodificationdate nested field
+curl -XGET http://localhost:9200/site_catalog/asset/_search -d '{
   "query" : {
     "range" : {
       "emrecordstatus.recordmodificationdate" : {
@@ -32,7 +32,6 @@ curl -XGET http://localhost:9200/assets_catalog/asset/_search -d '{
 }'| python3 -mjson.tool
 
 
-
 ##Search by field "exact" 
 curl -XGET http://localhost:9200/site_catalog/category/_search -d '{
   "from" : 0,
@@ -42,6 +41,25 @@ curl -XGET http://localhost:9200/site_catalog/category/_search -d '{
       "must" : {
         "term" : {
           "categorypath.exact" : "Collections/General"
+        }
+      }
+    }
+  },
+  "explain" : true
+}'| python3 -mjson.tool
+
+##Delete
+curl -XDELETE 'http://localhost:9200/site_catalog/lock/AWSutPnzs12lHoNKThY8'
+
+
+curl -XGET http://localhost:9200/site_catalog/asset/_search -d '{
+  "from" : 0,
+  "size" : 50,
+  "query" : {
+    "bool" : {
+      "must" : {
+        "term" : {
+          "sourcepath" : "Collections/Collection/wall-animal-dog-pet.jpg"
         }
       }
     }
@@ -63,18 +81,7 @@ curl -XGET http://localhost:9200/site_catalog/category/_search -d '{
 }'| python3 -mjson.tool
 
 
-
-curl -H "Content-Type: application/json" -XPOST https://emediafinder.com/entermediadb/mediadb/services/authentication/validateuser.json -d '{
- 	"accountname":"900020",
-	"entermedia.key":"900020md5420800fc0c1150d80810830c20ab3a0e3400e20ed090fbtstamp2olLXOx+PYxTf3Eign+RFQ==",
-	"collectionid":"AXhwKShBEmxK8rD44diz"
-}'| python -mjson.tool
-
-
-dam_program_sched_request
-
-
-
+##Search deleted data
 curl -XGET 'http://localhost:9200/finder_catalog/entityevent/_search' -d '
 {
   "from" : 0,
@@ -130,88 +137,14 @@ curl -XGET 'http://localhost:9200/finder_catalog/entityevent/_search' -d '
   }
  }' | python -mjson.tool
 
-curl -XGET 'http://localhost:9200/finder_catalog/dam_program_sched_request/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
 
-curl -XGET 'http://localhost:9200/finder_catalog/entityquestions/_search' -d '{ "query" : {	"match_all" : {} } }' | python3 -mjson.tool
+##Search for users
+curl -XGET 'http://localhost:9200/system/user/_search' -d '{ "query" : {	"match_all" : {} } }' | python3 -mjson.tool
 
-curl -XGET 'http://localhost:9200/site_catalog/trackedtopics/_search' -d '{ "query" : {	"match_all" : {} } }' | python3 -mjson.tool
-
-curl -XGET 'http://localhost:9200/finder_catalog/informatics/_search' -d '{ "query" : {	"match_all" : {} } }' | python3 -mjson.tool
+curl -XGET 'http://localhost:9200/system/user/_search?q=id:admin' | python3 -mjson.tool
 
 
-curl -XGET 'http://localhost:9200/finder_catalog/lock/_search' -d '{ "query" : {	"match_all" : {} } }' | python3 -mjson.tool
-
-curl -XGET 'http://localhost:9200/finder_catalog/faceembedding/_search' -d '{ "query" : {	"match_all" : {} } }' | python3 -mjson.tool
-
-curl -XGET 'http://localhost:9200/insights_catalog/insight_project_mip/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-
-curl -XGET 'http://localhost:9200/app_catalog/userupload/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-
-curl -XGET 'http://localhost:9200/site_catalog/librarycollection/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-
-
-curl -XGET 'http://localhost:9200/app_catalog/userupload/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-
-
-insight_project_mip
-
-
-{
-  "from" : 0,
-  "size" : 1000,
-  "query" : {
-    "bool" : {
-      "must" : {
-        "bool" : {
-          "should" : [ {
-            "wildcard" : {
-              "description" : "*produc*"
-            }
-          }, {
-            "match" : {
-              "description" : {
-                "query" : "Produc",
-                "type" : "phrase_prefix",
-                "max_expansions" : 75
-              }
-            }
-          } ]
-        }
-      },
-      "must_not" : {
-        "term" : {
-          "emrecordstatus.recorddeleted" : true
-        }
-      }
-    }
-  },
-  "explain" : false,
-  "_source" : {
-    "includes" : [ ],
-    "excludes" : [ "description" ]
-  },
-  "aggregations_binary" : "OikKBfr7"
-}
-
-INFO: media_catalogs_public/lock/_search' -d '{
-  "from" : 0,
-  "size" : 1,
-  "query" : {
-    "bool" : {
-      "must" : {
-        "term" : {
-          "sourcepath" : "assetconversions/AV_Z-kegsMSY4Mu3GOb8"
-        }
-      }
-    }
-  },
-  "version" : true,
-  "explain" : false,
-  "_source" : {
-    "includes" : [ ],
-    "excludes" : [ "description" ]
-  }
-}' 
+##Mapings
 
 curl -XGET  'http://localhost:9200/assets_catalog/asset/_mapping?pretty=true'  | python -mjson.tool
 curl -XGET  'http://localhost:9200/systen/user/_mapping?pretty=true'  | python -mjson.tool
@@ -257,45 +190,31 @@ curl -XGET 'http://localhost:9200/site_catalog/eduactivity/_search?q=id:AZH8cp4T
 
 
 curl -XGET 'http://localhost:9200/tae_catalog/entitycapture/_search?q=id:AY53viMQxEcYhhVY3x47' | python -mjson.tool
+
 curl -XGET 'http://localhost:9200/tae_catalog/entitycapture/_search' -d '{ "query" : {	"match_all" : {} } }' | python3 -mjson.tool
 
-
 curl -XGET 'http://localhost:9200/finder_catalog/lock/_search?q=id:AYeRa8VzKBD-eE6vn2wS' | python -mjson.tool
+
 curl -XGET 'http://localhost:9200/finder_catalog/module/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
 
 curl -XGET 'http://localhost:9200/finder_catalog/edudepartment/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
 
-
-curl -XGET 'http://localhost:9200/finder_catalog/asset/_search?q=id:AYeRa8VzKBD-eE6vn2wS' | python -mjson.tool
-
-
-curl -XGET 'http://localhost:9200/site_catalog/asset/_search?q=id:AZXxrJ6vD5hAosRFNjDM' | python3 -mjson.tool
-
-
 curl -XGET 'http://localhost:9200/assets_catalog/order/_search?q=id:b0173a11_f45e_4be6_9465_b5985d023382' | python -mjson.tool
 
-
-curl -XGET 'http://localhost:9200/entermedia_catalogs_testcatalog/asset/_search?q=id:talent' | python -mjson.tool
 curl -XGET 'http://localhost:9200/assets_catalog/asset/_search?q=id:AVPN6HCf8OKeBnSPyh4w' | python -mjson.tool
 
 curl -XGET 'http://localhost:9200/assets_catalog/order/_search?q=id:63a8f05b_090f_4fcc_b7e4_c9032912942d' | python -mjson.tool
 
-curl -XGET 'http://localhost:9200/system/user/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-curl -XGET 'http://localhost:9200/system/user/_search?q=id:cburkey' | python -mjson.tool
-
-
-curl -XGET 'http://localhost:9200/assets_catalog/projectgoal/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-curl -XGET 'http://localhost:9200/media_catalogs_public/conversiontask/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-
-
-curl -XGET 'http://localhost:9200/system/user/_search?q=id:admin' | python -mjson.tool
 curl -XGET 'http://localhost:9200/system/group/_search?q=id:administrators' | python -mjson.tool
+
 curl -XGET 'http://localhost:9200/media_catalogs_public/settingsrole/_search?q=id:administrator' | python -mjson.tool
+
 curl -XGET 'http://localhost:9200/assets_catalog/userprofile/_search?q=id:admin' | python -mjson.tool
+
 curl -XGET 'http://localhost:9200/system/searchtypes/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-curl -XGET 'http://localhost:9200/media_catalogs_public/searchtypes/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
 
 curl -XGET  'http://localhost:9200/assets_catalog/asset/_mapping?pretty=true'  | python -mjson.tool
+
 curl -XGET  'http://localhost:9200/assets_catalog/category/_mapping?pretty=true'  | python -mjson.tool
 
 curl -XGET http://localhost:9200/assets_catalog/category/_search -d '{
@@ -414,14 +333,12 @@ $userprofile.getSettingsRole().getValues("permissions")
  curl -XPUT "http://localhost:9200/assets_catalog/settingsrole/administrator" -d ' {"id":"administrator","name":"Administrators","namesorted":"Administrators","profilesearchfilters":"hideassettype","permissions":["viewmap","viewcomments","metadatageneral","convert","converthistory","maximize","download","view","viewmetadatageneral","api-manage-users","deleteasset","asseteditorlibraries","api-load-data","editassettags","api-delete-data","viewbasket","viewcategorynav","filterbyassettype","viewupload","assetpermissions","viewassets","viewlibrarysearch","createnewrecord","editlists","viewuploadmulti","viewsettings","api-manage-events","sharetosocialmedia","addnewcollection","viewattachments","deletecomments","api-create-data","api-search-data","editcategories","multiedit","viewmediaedit","api-update-data","editmetadatasetup","editassetcategories","changeattachment","embedasset","viewassetpreviewhistory","editadvancedsearch","viewconversions","api-manage-list","api-manage-modules","capturehistory","asseteditorpickanylibrary","edittablecolumns","editusersgroups","viewhomelink","publish","shareasset","viewassetedit","viewmyaccount","viewvoting","comment","emaillink","togglesidebar"]}' | python -mjson.tool
 
 curl -XGET  'http://localhost:9200/assets_catalog/lock/_mapping?pretty=true'  | python -mjson.tool
+
 curl -XGET 'http://localhost:9200/assets_catalog/lock/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
-curl -XDELETE 'http://localhost:9200/assets_catalog/lock/AWSutPnzs12lHoNKThY8'
 
 curl -XGET 'http://localhost:9200/assets_catalog/entityproduct/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
 
 curl -XDELETE 'http://localhost:9200/assets_catalog/entityproduct/AXhA-Anv63GqB4tN_H4v'
-
-
 
 curl -XGET 'http://localhost:9200/system/searchtypes/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
 
@@ -511,38 +428,19 @@ curl -XGET localhost:9200/assets_catalog/event/_search' -d '{
   } ]
 }' 
 
-curl -XGET localhost:9200/temp2/tweet/_search -d '{
-  "query" : {
-    "filtered" : {
-      "filter" : {
-        "terms" : {
-          "user" : {
-            "index" : "temp2",
-            "type" : "user",
-            "id" : "2",
-            "path" : "followers"
-          },
-          "_cache_key" : "user_2_friends"
-        }
-      }
-    }
-  }
-}' | python -mjson.tool
-
-curl -XGET localhost:9200/temp2/tweet/_search -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
+##Managing Catalog 
 
 curl -XGET localhost:9200/_cluster/health/?level=shards | python -mjson.tool
 
-
 curl localhost:9200/_nodes/ | python -mjson.tool
 
-
 curl -XGET localhost:9200/_nodes/stats?pretty
+
 curl -XGET localhost:9200/_cat/
 
 curl -XGET localhost:9200/_cat/shards
 
-
+curl -XDELETE 'http://localhost:9200/assets_catalog'
 
 curl -XGET  'http://localhost:9200/finder_catalog/_aliases' | python3 -mjson.tool
 
@@ -575,8 +473,6 @@ curl -XPOST 'http://localhost:9200/_aliases' -d '
    ]
 }'
 
-
-
 curl -XGET 'http://localhost:9200/assets_catalog/country/_search' -d '{
   "from" : 0,
   "size" : 15,
@@ -600,13 +496,17 @@ curl -XGET 'http://localhost:9200/assets_catalog/category/_search' -d '{ "query"
 
 curl -XGET 'http://localhost:9200/archive_catalog/librarycollection/_search' -d '{ "query" : {	"match_all" : {} } }' | python -mjson.tool
 curl -XGET  'http://localhost:9200/archive_catalog/librarycollection/_mapping?pretty=true'  | python -mjson.tool
-Get a single field def:
-_mapping/article/field/title
-curl -XGET  'http://localhost:9200/festi_system/_mapping/field/country?pretty=true'  
+
+
+##Get a single field def:
+
+curl -XGET  'http://localhost:9200/site_catalog/_mapping/field/country?pretty=true'  
 
 curl -XGET  'http://localhost:9200/entermediadb_catalog/_mapping/field/sourcepath?pretty=true'  
 
 
+
+## Managing Clusters
 <!-- Run this in a 2 or 3 node cluster -->
 
 curl -XPUT 'http://localhost:9200/_cluster/settings' -d '
@@ -635,7 +535,7 @@ curl -XPUT 'http://localhost:9200/media_catalogs_public/catalogsettings/siteroot
 curl -XPUT 'http://localhost:9200/finder_catalog/catalogsettings/siteroot' -d '{
     "value" :  ""
 }'
-restart
+
 
 curl -XGET 'http://localhost:9200/_analyze' -d '
 {
@@ -670,9 +570,6 @@ curl -XGET 'localhost:9200/assets_catalog/asset/_explain' -d '{
       }
 }'
 
-
-
-curl -XDELETE 'http://localhost:9200/assets_catalog'
 
 
 
