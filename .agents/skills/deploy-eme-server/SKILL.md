@@ -106,7 +106,19 @@ Also sanity-check the docker side before committing the number (a container may 
 docker ps -aq --filter "name=eme-server-${CLIENTNAME}${NNN}"
 ```
 
-### 4. Dockerbuild
+### 4. Set up the admin account (when ADMIN_EMAIL was given)
+
+A fresh instance ships with a placeholder admin (`id="admin"`, stock email), so re-point it.
+
+
+**Fresh instance (no user data yet) **
+
+1. Edit `$DIR/plugins/system/html/data/lists/user/defaultusers.xml`, admin row →
+   `<row id="admin" email="$ADMIN_EMAIL" enabled="true" firstName="<First>" screenname="<First>" groups="administrators"><First></row>`
+   (keep `id="admin"`; drop the legacy `password` attribute — it is not a field in `user.xml`; leave the `agent` row alone). The file is owned by `entermedia`: `sudo chown "$(id -un):$(id -gn)" <file>`, edit, then `sudo chown "$(id -u entermedia):$(id -g entermedia)" <file>`.
+
+
+### 5. Dockerbuild
 
 ```bash
 cd $DEPLOY_ROOT/eme-server-$CLIENTNAME
@@ -133,7 +145,7 @@ done
 # symlinked deploy root: also add the resolved real path of each repo (see `git rev-parse --show-toplevel` errors)
 ```
 
-### 5. Update to latest
+### 6. Update to latest
 
 ```bash
 bin/eme.sh update .
@@ -157,7 +169,7 @@ sudo chown "$(id -u entermedia):$(id -g entermedia)" $DEPLOY_ROOT/eme-server-$CL
 
 (Use absolute paths in the `sudo chown` calls — the sudoers rule matches on the literal argument string.)
 
-### 6. Register in the instance DB
+### 7. Register in the instance DB
 
 Append exactly one row (keep the header line):
 
@@ -165,7 +177,7 @@ Append exactly one row (keep the header line):
 echo "$CLIENTNAME,$DEPLOY_ROOT/eme-server-$CLIENTNAME,$NNN,$DOMAIN" >> $DEPLOY_ROOT/deployed-instances.txt
 ```
 
-### 7. Create the nginx vhost
+### 8. Create the nginx vhost
 
 Template: `.agents/skills/deploy-eme-server/nginx-site.conf.template` (relative to this repo). Replace placeholders:
 
@@ -205,7 +217,7 @@ sudo docker run --rm --entrypoint cp -v /tmp/opencode/nginx-deploy:/src:ro -v /e
   entermediadb/entermedia:latest /src/$DOMAIN.conf /dst/
 ```
 
-### 8. Reload nginx
+### 9. Reload nginx
 
 ```bash
 sudo nginx -t && sudo systemctl reload nginx
@@ -213,7 +225,7 @@ sudo nginx -t && sudo systemctl reload nginx
 
 If `nginx -t` fails, fix the config (usually a duplicate upstream name) and re-run; do not leave a broken config loaded.
 
-### 9. Verify
+### 10. Verify
 
 The site's entry point is `/` → 302 → `/site/find` (per `webapp/index.xconf`). **Do not probe `/site/`** — it has no index page and returns 404 even on a healthy instance.
 
@@ -224,31 +236,6 @@ The site's entry point is `/` → 302 → `/site/find` (per `webapp/index.xconf`
    `curl -skL -o /dev/null -w '%{http_code}\n' https://$DOMAIN/` → **200**.
 4. Browser check with cua-driver: open Chrome to `https://$DOMAIN/`, take one compact screenshot (`get_window_state`, small `max_dimension`), confirm the EME find app renders (not a cert error or 502).
 
-### 10. Set up the admin account (when ADMIN_EMAIL was given)
-
-EME users have **no passwords** — login is an emailed 6-digit code (`templogincode`; see the `mediadb-auth` skill). The admin is simply a row in the system `user` table with `groups="administrators"`. A fresh instance ships with a placeholder admin (`id="admin"`, stock email), so re-point it.
-
-**Where rows live**: list rows are stored in an embedded Elasticsearch index under `webapp/WEB-INF/elastic/singlenode/data/` (indices `system-0` for system-plugin tables incl. `user`, `site_catalog-0` for catalog). At boot the server seeds these **from the XML list files only when the index is empty**; a running server never re-reads the XML (that is what `restoredata` is for — see the `reload-list-data` skill).
-
-**Fresh instance (no user data yet) — wipe and re-seed:**
-
-1. Edit `$DIR/plugins/system/html/data/lists/user/defaultusers.xml`, admin row →
-   `<row id="admin" email="$ADMIN_EMAIL" enabled="true" firstName="<First>" screenname="<First>" groups="administrators"><First></row>`
-   (keep `id="admin"`; drop the legacy `password` attribute — it is not a field in `user.xml`; leave the `agent` row alone). The file is owned by `entermedia`: `sudo chown "$(id -un):$(id -gn)" <file>`, edit, then `sudo chown "$(id -u entermedia):$(id -g entermedia)" <file>`.
-2. `sudo docker stop eme-server-$CLIENTNAME$NNN`
-3. Wipe the row store: `rm -rf $DIR/webapp/WEB-INF/elastic/singlenode/data` (chown `-R` that tree to yourself first if you cannot delete it; the server recreates it as `entermedia` at boot).
-   **Pitfall**: do not leave the parent `singlenode/` dir owned by the deployer — ES then dies at boot with `AccessDeniedException ... elastic/singlenode/data`. Chown the whole `webapp/WEB-INF/elastic` tree back to `entermedia` before starting.
-4. `sudo docker start eme-server-$CLIENTNAME$NNN`, wait for boot (step 9.2 curl retry).
-5. **Verify live** — this endpoint is unauthenticated, proves the row resolved, *and* emails the admin their first login code:
-   ```bash
-   curl -s -X POST http://172.18.0.$NNN:8080/site/mediadb/services/authentication/sendusercode.json \
-     -H 'Content-Type: application/json' -d '{"email":"'$ADMIN_EMAIL'"}'
-   ```
-   Expect JSON containing `"status":"ok"` with the admin's username and email. (No SMTP config file is needed — mail delivery is built into the server defaults; the live instances have none either.)
-
-**Running instance with data** — never wipe. Edit the XML, then push it with `restoredata` using a Bearer token (`reload-list-data` + `mediadb-auth` skills); that needs a registered key or app password, i.e. a human in the loop.
-
-Tell the user how to log in: open the site → login page → enter the email → request the emailed code (or use the login link) → enter it. The browser auto-registers a key on first logged-in load for seamless re-login.
 
 ## Troubleshooting
 
