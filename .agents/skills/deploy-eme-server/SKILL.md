@@ -1,6 +1,6 @@
 ---
 name: deploy-eme-server
-description: Use when the user asks to deploy, provision, or stand up a new eme-server instance for a client on this machine — "deploy eme-server for X", "create a new client instance", "set up <client>.eme.world". Covers cloning the repo under /media/emsites, allocating a unique node number from the instance DB, dockerbuild, update, creating the nginx site from the template (domain base selectable, default eme.world), reloading nginx, and verifying in the browser.
+description: Use when the user asks to deploy, provision, or stand up a new eme-server instance for a client on this machine — "deploy eme-server for X", "create a new client instance", "set up <client>.eme.world". Covers cloning the repo under /media/eme_sites, allocating a unique node number from the instance DB, dockerbuild, update, creating the nginx site from the template (domain base selectable, default eme.world), reloading nginx, and verifying in the browser.
 ---
 
 # Deploy an eme-server instance
@@ -25,10 +25,10 @@ mkdir -p $DEPLOY_ROOT/.sudoprobe && sudo -n chown "$(id -un):$(id -gn)" "$DEPLOY
   && rmdir "$DEPLOY_ROOT/.sudoprobe" && sudo -n docker ps >/dev/null && sudo -n nginx -t && echo SUDO_RULES_OK
 ```
 
-If that fails, **ask the user to run this once in a real terminal** (the agent cannot type a sudo password). The installer takes the username (default: whoever ran sudo) and the deploy root (default `/media/emsites`, used to scope the chown rule), resolves the real binary paths on that machine, and validates with `visudo` before installing `/etc/sudoers.d/eme-deploy-<user>`:
+If that fails, **ask the user to run this once in a real terminal** (the agent cannot type a sudo password). The installer takes the username (default: whoever ran sudo) and the deploy root (default `/media/eme_sites`, used to scope the chown rule), resolves the real binary paths on that machine, and validates with `visudo` before installing `/etc/sudoers.d/eme-deploy-<user>`:
 
 ```bash
-sudo <repo>/.agents/skills/deploy-eme-server/install-sudoers.sh entermedia /media/emsites
+sudo <repo>/.agents/skills/deploy-eme-server/install-sudoers.sh entermedia /media/eme_sites
 ```
 
 Notes for other machines:
@@ -39,19 +39,19 @@ Notes for other machines:
 
 ## Inputs
 
-- **DEPLOY_ROOT** — where instances live; default `/media/emsites` (create it if missing, owned by the deploying user). The instance DB lives at `$DEPLOY_ROOT/deployed-instances.txt`.
+- **DEPLOY_ROOT** — where instances live; default `/media/eme_sites` (create it if missing, owned by the deploying user). The instance DB lives at `$DEPLOY_ROOT/deployed-instances.txt`.
 - **CLIENTNAME** — from the user; lowercase, no spaces (e.g. `monday`). Everything derives from it:
   - `DIR=$DEPLOY_ROOT/eme-server-$CLIENTNAME`
   - `DOMAIN=$CLIENTNAME.$DOMAIN_BASE`
   - container name = `eme-server-$CLIENTNAME$NNN` (basename of DIR + node number)
-- **DOMAIN_BASE** — which domain family the instance gets. Ask the user if not stated; default is the first option. Add new rows here as options appear:
+- **DOMAIN_BASE** — which domain family the instance gets. If not stated by the user, default is the first option. Add new rows here as options appear:
 
   | Base | Cert dir | Notes |
   |---|---|---|
-  | `eme.world` | `/etc/letsencrypt/live/eme.world` | default (cert must be issued before first deploy) |
+  | `eme.world` | `/etc/letsencrypt/live/eme.world` | default. wildcard cert already on this machine |
   | `entermediadb.net` | `/etc/letsencrypt/live/entermediadb.net` | wildcard cert already on this machine |
 
-- **Node number NNN** — between **2 and 250** (the script validates 1–250, but **node 1 is unusable**: the `entermedia` docker network's bridge gateway occupies `172.18.0.1`, so a container with that IP fails with "Address already in use"). Never reuse one that is already in the DB.
+- **Node number NNN** — between **2 and 240** (the script validates 1–250, but **node 1 is unusable**: the `entermedia` docker network's bridge gateway occupies `172.18.0.1`, so a container with that IP fails with "Address already in use"). Never reuse one that is already in the DB.
 
 ## Workflow
 
