@@ -110,6 +110,8 @@ docker ps -aq --filter "name=eme-server-${CLIENTNAME}${NNN}"
 
 A fresh instance ships with a placeholder admin (`id="admin"`, stock email), so re-point it.
 
+Note: in a fresh clone the plugins are only JSON manifests, so `plugins/system` (and thus `defaultusers.xml`) does not exist until dockerbuild (step 5) pulls them. Do this edit right after step 5 dockerbuild and before the ownership-alignment restart; the first successful boot then seeds ES with the correct admin row, so no wipe/re-seed cycle is needed.
+
 
 **Fresh instance (no user data yet) **
 
@@ -144,6 +146,8 @@ for d in "$DEPLOY_ROOT/eme-server-$CLIENTNAME" "$DEPLOY_ROOT"/eme-server-$CLIENT
 done
 # symlinked deploy root: also add the resolved real path of each repo (see `git rev-parse --show-toplevel` errors)
 ```
+
+Locked-down machines: if the deployer cannot write `~/.gitconfig` (home owned by another user), `git config --global` fails. Do not treat that as fatal - git continues with a warning, and the container boot does not need safe.directory at all; only agent-side git commands run against the entermedia-owned tree do. Show the full list of entries in chat for the user to paste into their own `~/.gitconfig`, or re-chown the tree to the deployer before running agent-side git.
 
 ### 6. Update to latest
 
@@ -194,26 +198,26 @@ Template: `.agents/skills/deploy-eme-server/nginx-site.conf.template` (relative 
 ```bash
 # Wildcard cert for the chosen base must exist, or nginx -t will fail later
 test -f "/etc/letsencrypt/live/$DOMAIN_BASE/fullchain.pem" \
-  || { echo "No cert for $DOMAIN_BASE in /etc/letsencrypt/live/ — issue one first (needs DNS control of the base domain)."; exit 1; }
+  || { echo "No cert for $DOMAIN_BASE in /etc/letsencrypt/live/$DOMAIN_BASE — issue one first (needs DNS control of the base domain)."; exit 1; }
 
-mkdir -p -m 700 /tmp/opencode/nginx-deploy
+mkdir -p $DEPLOY_ROOT/.ngstage   # stage inside the deploy root: always writable, even on locked-down machines
 sed -e "s/__DOMAIN__/$DOMAIN/g" \
     -e "s|__CERT_DIR__|/etc/letsencrypt/live/$DOMAIN_BASE|g" \
     -e "s/__UPSTREAM_NAME__/eme_${CLIENTNAME}/g" \
     -e "s/__CONTAINER_IP__/172.18.0.$NNN/g" \
     -e "s/__PORT__/8080/g" \
   .agents/skills/deploy-eme-server/nginx-site.conf.template \
-  > /tmp/opencode/nginx-deploy/$DOMAIN.conf
-sudo cp /tmp/opencode/nginx-deploy/$DOMAIN.conf /etc/nginx/sites-available/
+  > $DEPLOY_ROOT/.ngstage/$DOMAIN.conf
+sudo cp $DEPLOY_ROOT/.ngstage/$DOMAIN.conf /etc/nginx/sites-available/
 sudo ln -sf /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enabled/
 ```
 
-(The agent has no write access to `/etc/nginx`, so the rendered file is staged in the 700-mode dir and moved by the scoped sudo rules.)
+(The agent has no write access to `/etc/nginx`, so the rendered file is staged inside the deploy root - which stays writable even on locked-down machines - and moved by the scoped sudo rules or the docker workaround below.)
 
 **conf.d machines (no sites-available/enabled)**: install the staged vhost with a throwaway root container instead of fighting missing sudo rules:
 
 ```bash
-sudo docker run --rm --entrypoint cp -v /tmp/opencode/nginx-deploy:/src:ro -v /etc/nginx/conf.d:/dst \
+sudo docker run --rm --entrypoint cp -v $DEPLOY_ROOT/.ngstage:/src:ro -v /etc/nginx/conf.d:/dst \
   entermediadb/entermedia:latest /src/$DOMAIN.conf /dst/
 ```
 
@@ -235,7 +239,7 @@ The site's entry point is `/` → 302 → `/site/find` (per `webapp/index.xconf`
 3. Through nginx (if the domain doesn't resolve yet, force local resolution with `--resolve $DOMAIN:443:127.0.0.1`):
    `curl -skL -o /dev/null -w '%{http_code}\n' https://$DOMAIN/` → **200**.
 4. Browser check with cua-driver: open Chrome to `https://$DOMAIN/`, take one compact screenshot (`get_window_state`, small `max_dimension`), confirm the EME find app renders (not a cert error or 502).
-5. Always display final URL in your final response (e.g., `https://$DOMAIN/`).
+
 
 ## Troubleshooting
 
@@ -256,6 +260,5 @@ The site's entry point is `/` → 302 → `/site/find` (per `webapp/index.xconf`
 sudo docker stop -t 60 eme-server-$CLIENTNAME$NNN && sudo docker rm -f eme-server-$CLIENTNAME$NNN
 sudo rm /etc/nginx/sites-enabled/$DOMAIN.conf /etc/nginx/sites-available/$DOMAIN.conf   # or /etc/nginx/conf.d/$DOMAIN.conf
 sudo nginx -t && sudo systemctl reload nginx
+# remove the DB row, then ask before deleting $DEPLOY_ROOT/eme-server-$CLIENTNAME (client data!)
 ```
-
-Remove the DB row, then ask before deleting $DEPLOY_ROOT/eme-server-$CLIENTNAME (client data!)
