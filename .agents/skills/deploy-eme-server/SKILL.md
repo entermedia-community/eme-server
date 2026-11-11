@@ -256,5 +256,6 @@ The site's entry point is `/` → 302 → `/site/find` (per `webapp/index.xconf`
 sudo docker stop -t 60 eme-server-$CLIENTNAME$NNN && sudo docker rm -f eme-server-$CLIENTNAME$NNN
 sudo rm /etc/nginx/sites-enabled/$DOMAIN.conf /etc/nginx/sites-available/$DOMAIN.conf   # or /etc/nginx/conf.d/$DOMAIN.conf
 sudo nginx -t && sudo systemctl reload nginx
-# remove the DB row, then ask before deleting $DEPLOY_ROOT/eme-server-$CLIENTNAME (client data!)
 ```
+
+Remove the DB row, then ask before deleting $DEPLOY_ROOT/eme-server-$CLIENTNAME (client data!)
