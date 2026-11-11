@@ -235,7 +235,7 @@ The site's entry point is `/` → 302 → `/site/find` (per `webapp/index.xconf`
 3. Through nginx (if the domain doesn't resolve yet, force local resolution with `--resolve $DOMAIN:443:127.0.0.1`):
    `curl -skL -o /dev/null -w '%{http_code}\n' https://$DOMAIN/` → **200**.
 4. Browser check with cua-driver: open Chrome to `https://$DOMAIN/`, take one compact screenshot (`get_window_state`, small `max_dimension`), confirm the EME find app renders (not a cert error or 502).
-
+5. Always display final URL in your final response (e.g., `https://$DOMAIN/`).
 
 ## Troubleshooting
 
