@@ -11,10 +11,15 @@ page documents v1 only. This skill records the v2 surface reverse-engineered fro
 bundles and confirmed by live probing (server 2.0.14, verified 2026-09-23).
 
 For how chat agent job steps run OpenCode (runner, status card, answers, approvals), see
-`opencode-running`.
+`opencode-running`. For My EME chat (one session per chat, events streamed into one message), see
+`opencode-my-eme-chat`.
 
 Primary consumer: `plugins/finder/code/org/entermediadb/mcp/client/OpenCodeClient.java`
-(715 lines, still written against the v1 surface — see the migration mapping below).
+(about 1150 lines; the agent-job path is still written against the v1 surface, see the migration mapping
+below). The v2 methods used by My EME chat are `createSession(title, folder, permissions)`, `sessionExists`,
+`sendPrompt` (returns null or the rejection reason), `openEventQueue` / `closeEventQueue` (a per-session
+`BlockingQueue` fed from the SSE thread, filtered by `data.sessionID`, or `data.form.sessionID` for
+`form.created`) and `replyToPermission`.
 
 ## Starting the web interface (`bin/opencoded.sh`)
 
@@ -139,7 +144,7 @@ any path) but is not a real sub-path deployment — navigation rewrites the URL 
 | Method | Path | Body / query | Success | Notes |
 | ------ | ---- | ------------ | ------- | ----- |
 | GET | `/api/session` | query: `limit, order, search, parentID, directory, project, subpath, cursor` | 200 | `{"data":[session,...]}`. Session object: `{id, projectID, agent, model:{id,providerID,variant?}, cost, tokens:{input,output,reasoning,cache:{read,write}}, outcome, time:{created,updated,idle?,viewed?}, title, location:{directory}}`. |
-| POST | `/api/session` | body: `{id?, title?, agent?, model?, location?, metadata?, permissions?}` | 200 | Returns `{"data":{session}}`. Live-verified with `{title, agent:"build", location:{directory}}`. |
+| POST | `/api/session` | body: `{id?, title?, agent?, model?, location?, metadata?, permissions?}` | 200 | Returns `{"data":{session}}`. Live-verified with `{title, agent:"build", location:{directory}}`. `permissions` is a **list** of `{action, resource, effect}` (see Permission rules below). |
 | GET | `/api/session/{sessionID}` | — | 200 | `{"data":{session}}`. |
 | DELETE | `/api/session/{sessionID}` | — | 204 | empty. |
 
@@ -350,6 +355,28 @@ curl -s -X POST -H "Authorization: Basic $AUTH" "$B/api/experimental/session/$SI
 curl -s -i -X POST -H "Authorization: Basic $AUTH" -H 'Content-Type: application/json' \
   -d '{"decision":"once"}' $B/api/session/$SID/permission/<requestID>/reply
 ```
+
+## Permission rules (verified live, OpenCode 2.2.5)
+
+`permissions` on `POST /api/session` is a list `[{"action":"shell","resource":"*","effect":"deny"}, ...]`,
+stored on the session and echoed back. An object map or `{permission, decision}` keys are rejected with a 400
+naming the missing key. `GET /api/agent` lists the vocabulary: actions `*`, `shell`, `edit`, `read`, `glob`,
+`grep`, `webfetch`, `websearch`, `external_directory`, `browser`, `skill`, `subagent`, `question`; effects
+`allow`, `ask`, `deny`. **Later rules override earlier ones**, so allow `*` first, then deny the exceptions.
+The shell action is `shell`, not `bash` (`bash` is silently ignored). A denied action surfaces as
+`session.tool.failed` (`permission.rejected: Permission denied: external_directory`), not `permission.asked`.
+
+## Text events
+
+`session.text.delta` is `data:{sessionID, assistantMessageID, ordinal, delta}`; `session.text.ended` carries the
+whole part in `data.text`, so use it to correct anything a delta missed. Delta events have no `durable` field;
+`text.ended` / `step.*` / `execution.*` do (`durable.seq`), so dedupe on those only. A local model may send the
+whole answer as one delta after the reasoning.
+
+## Project ids
+
+A plain (non-git) directory gets its own hashed `projectID`. `git init` with no commit gives `global`; a repo
+with a commit gives the root-commit hash. `GET /api/session?directory=<dir>` lists a folder's sessions.
 
 ## Gotchas
 

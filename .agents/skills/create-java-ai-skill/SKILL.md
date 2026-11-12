@@ -110,6 +110,15 @@ message.
   status), since the world may have changed while sleeping.
 - While a skill waits, its step and agent job stay `running`.
 
+### Streaming one growing message
+
+`processUpdate` re-saves and re-sends the whole last response. A skill that builds a long reply from many
+events (My EME chat, `MyEmeChatSkill`) instead sleeps on an event queue, keeps the full message itself and
+sends small patches with `AgentJobManager.broadcastMessagePatch(agentMessage, command, ops, seq, status)`
+(`messageappend` / `messagereplace`, same `messageid`, nothing saved). It then calls `processCompleted` once
+with the finished message so the row is saved and the whole message is sent. Patches are not push-notified.
+See `opencode-my-eme-chat`.
+
 Debounce a chat message (see `LibraryCollectionChatMonitorSkill`):
 
 ```java
