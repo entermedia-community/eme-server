@@ -57,5 +57,8 @@
 			},
 			"enabled": true
 		}
+	},
+	"skills": {
+		"/webapp/system/workspaces/skills"
 	}
 }

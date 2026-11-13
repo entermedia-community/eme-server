@@ -53,7 +53,6 @@ esac
 # The global config is in the repo root. The shared skills live in webapp/system (a link to plugins/system/html);
 # use the real path so the service sees it.
 CONFIG="$(cd "$SCRIPT_DIR/.." && pwd)/opencodeglobal.json"
-SKILLS_DIR="$(readlink -f "$SCRIPT_DIR/../webapp/system/workspaces/skills")"
 
 if [[ ! -f "$CONFIG" ]]; then
   echo "error: config not found: $CONFIG" >&2
@@ -152,12 +151,6 @@ fi
 if [[ -n "${OPENCODE_PASSWORD:-}" && "$(setting password)" != "$OPENCODE_PASSWORD" ]]; then
   echo "setting password (stops the service)"
   "$OPENCODE" service set password "$OPENCODE_PASSWORD"
-fi
-
-# Tell the service where the shared skills are (the config names it as {env:EME_WORKSPACE_SKILLS})
-if [[ "$("$OPENCODE" service get env EME_WORKSPACE_SKILLS 2>/dev/null | tr -d '[:space:]' || true)" != "$SKILLS_DIR" ]]; then
-  echo "setting EME_WORKSPACE_SKILLS -> $SKILLS_DIR (stops the service)"
-  "$OPENCODE" service set env EME_WORKSPACE_SKILLS "$SKILLS_DIR"
 fi
 
 # Start the service if it is not already listening
