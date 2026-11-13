@@ -1,6 +1,6 @@
 ---
 name: reload-list-data
-description: Use after editing or adding any XML/CSV file under plugins/catalog/html/data/lists/<table>/ (aiskill, automationstep, endpoint, agenttype, etc.) so the change reaches a running server. Explains restoredata (add/update only) vs deleteall + restoredata (needed when a row was removed), which tables support it, and how to verify row counts.
+description: Use after editing or adding any XML/CSV file under plugins/catalog/html/data/lists/<table>/ (aiskill, automationstep, endpoint, agenttype, etc.) so the change reaches a running server. Explains restoredata (add/update only) vs deleteall + restoredata (needed when a row was removed), which tables support it, and how to verify row counts. Also the "Reset all chat channels and related tables" subfunction: deleteall + reset fields for the channel, chatterbox and agentcontext tables, then clear the server cache — and nothing else.
 ---
 
 # Skill: reload-list-data
@@ -83,6 +83,41 @@ Each call returns HTTP 200 (an HTML page); judge success by the row count, not t
 
 Verified 2026-09-25 on `aiskill` (17 files): count 167 -> restoredata (no delete) 167 (idempotent) ->
 deleteall 0 -> restoredata 167.
+
+## Subfunction: "Reset all chat channels and related tables"
+
+Trigger phrase: *"Reset all chat channels and related tables"* (or close wording). It wipes the three
+chat tables and re-applies their field definitions, then clears the server cache. **Do exactly these
+steps and nothing else** — no restart, no reindex, no other tables, no extra testing unless the user
+asks for it.
+
+The tables are `channel`, `chatterbox`, `agentcontext` — plain `dataSearcher` (BaseElasticSearcher)
+tables, not list tables:
+
+- `deleteall.html?searchtype=X` works on them (`BaseElasticSearcher.deleteAll(User)` removes every row).
+- `restore.html?searchtype=X` is the "Reset Fields" action (the same button in the datamanager UI):
+  `DataEditModule.restoreDefaults` → `resetMappings()` — clears the table's custom field settings and
+  re-applies the Elasticsearch mapping from the current field-definition XML.
+- **Do not use `restoredata.html` here** — for these tables `searcher.resetData()` is a no-op (only
+  list/folder searchers re-seed rows from `lists/` files), so it would silently do nothing.
+
+```bash
+T=$(bin/refreshtoken.sh | tail -n1)   # run from the repo root
+A="Authorization: Bearer $T"
+B=http://localhost:8080/site/find/views/settings/lists/datamanager/list
+
+for t in channel chatterbox agentcontext; do
+  curl -s -H "$A" -o /dev/null "$B/deleteall.html?&searchtype=$t&origURL="   # delete all records
+  curl -s -H "$A" -o /dev/null "$B/restore.html?searchtype=$t&oemaxlevel=1"  # reset fields
+done
+
+# finally clear the server cache
+curl -s -H "$A" http://localhost:8080/site/find/views/settings/status/tools/clearcaches.html
+```
+
+Order matters per table: deleteall first, then restore. The cache clear goes last. Confirm each
+table is empty with the `count` helper above (expect 0) — that check is part of the reset; after it,
+stop.
 
 ## Notes
 
