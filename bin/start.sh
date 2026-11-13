@@ -62,8 +62,8 @@ else
   if [[ "$OPENCODE_ENABLED" = "true" ]]; then
     sleep 2
     echo "*** Starting OPENCODE"
-    #Run inside docker /home/entermedia/eme-server/bin/opencoded.sh with entermedia user
-    sudo docker exec -u entermedia -it $INSTANCE /home/entermedia/eme-server/bin/opencoded.sh
+    #Run inside docker /home/entermedia/eme-server/bin/opencodeworkspaces.sh with entermedia user
+    sudo docker exec -u entermedia $INSTANCE /home/entermedia/eme-server/bin/opencodeworkspaces.sh start
     echo ""
   fi
 

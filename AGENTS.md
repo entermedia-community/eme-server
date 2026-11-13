@@ -59,7 +59,7 @@ curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
 
 1. Run `bin/refreshtoken.sh --force` to log in again. If it says there is no registered key, run `bin/refreshtoken.sh --register` once from a terminal. **Do not ask for new credentials.**
 2. Verify with a guest-forbidden probe: `GET /site/mediadb/services/lists/data/color/52` must return **200** (guest gets 403).
-3. Note: `.mcp.json` and `opencode.json` are static MCP configs that hold a *literal* token — they cannot recompute. If the token changes, update both with the new output of `bin/refreshtoken.sh`.
+3. Note: `.mcp.json` and `opencodeglobal.json` are static MCP configs that hold a *literal* token — they cannot recompute. If the token changes, update both with the new output of `bin/refreshtoken.sh`.
 
 ## No Groovy
 

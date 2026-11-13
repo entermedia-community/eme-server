@@ -7,7 +7,7 @@
 #   opencoded.sh stop      stop the service
 #   opencoded.sh status    show service status
 #
-# hostname and port come from the "server" block in opencode.json (one folder
+# hostname and port come from the "server" block in opencodeglobal.json (one folder
 # up from this script). There is no fixed password: sign-in happens in the
 # browser through a one-time pairing link (`opencode pair`), which the script
 # prints and opens. Links work once and expire in 5 minutes — re-run the
@@ -36,15 +36,15 @@ case "$ACTION" in
     ;;
 esac
 
-# opencode.json lives one folder up from this script (the repo root)
-CONFIG="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/opencode.json"
+# opencodeglobal.json lives one folder up from this script (the repo root)
+CONFIG="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/opencodeglobal.json"
 
 if [[ ! -f "$CONFIG" ]]; then
   echo "error: config not found: $CONFIG" >&2
   exit 1
 fi
 
-# Read the service binding from the "server" block in opencode.json.
+# Read the service binding from the "server" block in opencodeglobal.json.
 if command -v jq >/dev/null 2>&1; then
   HOST="$(jq -r '.server.hostname // empty' "$CONFIG")"
   PORT="$(jq -r '.server.port // empty' "$CONFIG")"

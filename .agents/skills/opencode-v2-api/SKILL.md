@@ -27,7 +27,7 @@ The repo ships `bin/opencoded.sh` for bringing up this server locally:
 
 - Starts the OpenCode **background service** (`opencode service set/start`, not standalone
   `opencode serve`). Hostname and port come from the `"server"` block in the repo-root
-  `opencode.json` — the script reads them (jq, python3 fallback) and applies them with
+  `opencodeglobal.json` (linked as the global `~/.config/opencode/opencode.jsonc`; named so it is not also loaded as a project config inside the repo) — the script reads them (jq, python3 fallback) and applies them with
   `opencode service set`. The v2 binary itself ignores that deprecated key; the service only
   ever reads `~/.config/opencode/service.json`.
 - **No fixed password**: the script never touches the service password. Sign-in happens in the
@@ -365,6 +365,23 @@ naming the missing key. `GET /api/agent` lists the vocabulary: actions `*`, `she
 `allow`, `ask`, `deny`. **Later rules override earlier ones**, so allow `*` first, then deny the exceptions.
 The shell action is `shell`, not `bash` (`bash` is silently ignored). A denied action surfaces as
 `session.tool.failed` (`permission.rejected: Permission denied: external_directory`), not `permission.asked`.
+
+## Config, skills and MCP are per session folder (verified live, 2.2.5)
+
+- `GET /api/skill?location[directory]=<dir>`, `/api/config?...` and `/api/mcp?...` answer for that folder (the query key is
+  `location[directory]`; the first call after a restart can come back empty while it scans, ask again). OpenCode loads `.agents`,
+  `.claude`, `.opencode`, `opencode.json` from **every ancestor** of the folder and `AGENTS.md` up to the home folder, and a git
+  repository around the folder becomes the project, so `external_directory` is then judged against the repo. Keep session folders
+  outside any repo/project (see `opencode-my-eme-chat`).
+- A user config at an ancestor (`<user>/opencode.json`, `<user>/.agents/skills`) applies to new sessions without a restart.
+- `skills.paths` entries: absolute, `~/...` and `{env:NAME}` work; a relative `./x` does not resolve against the config file.
+- `opencode service set env NAME VALUE` (read with `service get env NAME`) gives the background service an environment variable;
+  `service set password X` fixes the password; one service per OS user (state in `~/.local/state/opencode/service.json`). Use a
+  scratch `HOME` to run a throwaway service on another port.
+- Session `permissions` with action `skill` and the skill id as resource hide skills from the model (`skill * deny`, then `skill <id>
+  allow`); `subagent` is also an action.
+- Every MCP `tools/call` carries `params._meta["ai.opencode/sessionID"]`, set by OpenCode, so an MCP server can tell which session (and
+  so which user) is calling.
 
 ## Text events
 

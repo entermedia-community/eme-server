@@ -11,6 +11,8 @@ Provisions one client instance end to end: git clone → docker container on the
 
 - Repo cloned at `$DEPLOY_ROOT/eme-server-<client>` (owned by the deploying user)
 - Docker container `eme-server-<client><NNN>` running Tomcat at `http://172.18.0.<NNN>:8080` on the `entermedia` docker network (subnet `172.18.0.0/16`)
+- Bind mounts (from `eme-docker-init.sh`): the server dir at `/home/entermedia/eme-server`, `webapp/WEB-INF/data/workspaces` at
+  `/home/entermedia/workspaces` (My EME user folders). With `OPENCODE_ENABLED=true` in `.env` the container also runs `bin/opencodeworkspaces.sh`; see `opencode-my-eme-chat`.
 - Nginx vhost for `https://<client>.$DOMAIN_BASE` (default `eme.world`, wildcard cert) proxying to the container IP
 - A row in the instance DB `$DEPLOY_ROOT/deployed-instances.txt`
 - (When requested) an admin user row with the client's email, verified live

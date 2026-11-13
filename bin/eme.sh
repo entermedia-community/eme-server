@@ -33,7 +33,7 @@ fi
 if [ "$CMD" = "restartopencode" ]; then
     if [[ "$OPENCODE_ENABLED" = "true" ]]; then
         echo "*** Restarting OPENCODE"
-        cd "$SERVERHOME" && bin/opencoded.sh start
+        cd "$SERVERHOME" && bin/opencodeworkspaces.sh start
     else
         echo "*** OPENCODE is not enabled"
     fi

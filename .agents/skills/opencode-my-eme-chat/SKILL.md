@@ -36,19 +36,57 @@ Data: `channel.opencodesessionid` (`plugins/catalog/html/data/fields/channel.xml
 
 ## Workspace and permissions (`MyEmeWorkspace`)
 
-- Folder: `WEB-INF/data/<catalogId>/workspaces/<userid>/` (e.g. `webapp/WEB-INF/data/site/workspaces/admin/`),
-  resolved through the page repository, created on first use. **A plain folder, not a git repo**: OpenCode
-  gives a plain folder its own project id; `git init` without commits falls into the shared `global`
-  project, and a repo with a commit takes the root-commit hash (collides if folders are ever copied).
-  Call it a "workspace" in code; EME already uses "project" for library collections.
-- The user id comes from the channel row, never a request, and must match `^[A-Za-z0-9][A-Za-z0-9._@-]*$`
-  with no `..` (`requireSafeUserId`).
-- Rules (later rules override earlier): `*` allow, then deny `shell`, `external_directory`, `webfetch`,
-  `websearch`, `browser`, `question`. The action for the shell is **`shell`**, not `bash` (a `bash` rule
-  does nothing). Nobody is prompted. A denied action shows up as `session.tool.failed`, not
-  `permission.asked`; a `permission.asked` is auto-rejected with a note as a safety net.
-- `question` is denied **until the chat can show OpenCode's question forms** (step 5, not built).
+Each user has a folder in the **home of the user the server runs as** (in Docker `/home/entermedia/workspaces/<userid>`;
+`EME_WORKSPACES_ROOT` moves it):
+
+```
+~/workspaces/<userid>/                the session folder: the only place a session can read or write; the user's files are here
+~/workspaces/<userid>/opencode.json   the user's own OpenCode config (written by the server if missing, never overwritten)
+~/workspaces/<userid>/.agents/skills/ the user's own skills (a folder per skill with a SKILL.md)
+```
+
+- The session folder is the user's folder itself, so OpenCode loads its `opencode.json`, `.agents/skills` and `AGENTS.md` and the model
+  can see them. The model must not change them (it could add an MCP server or instructions that every later session loads), so
+  `permissions()` denies `edit` (which covers write too) on `opencode.json`, `opencode.jsonc`, `AGENTS.md`, `CLAUDE.md`, `.agents/**`,
+  `.claude/**`, `.opencode/**` (`MyEmeWorkspace.PROTECTED`). Verified on a scratch OpenCode: edit and write fail with "Permission denied:
+  edit" for relative and absolute paths, other files are writable, and the `code` tool has no file access. The model can still **read** its
+  config, so keep secrets out of it (use `{env:...}`). Edits to a user's `opencode.json` apply to the next new session without a restart.
+- **The folder must not be inside a git repo or another project.** The old location (`webapp/WEB-INF/data/<catalog>/workspaces/<user>`
+  inside eme-server) let a session read the repo (it read `eme-server/AGENTS.md`; `external_directory` did not stop it) and listed the
+  repo's 16 developer skills. A new session is started when a channel's saved session works anywhere other than the user's folder (sessions from the `files/` days are replaced).
+- Shared skills for everyone: `webapp/system/workspaces/skills/<id>/SKILL.md`, named in the config as `{env:EME_WORKSPACE_SKILLS}`
+  (the launcher sets it). `skills.paths` accepts an absolute path, `~/...` or `{env:NAME}`; a relative `./skills` is **not** resolved
+  against the config file.
+- The user id comes from the channel row, never a request, and must match `^[A-Za-z0-9][A-Za-z0-9._@-]*$` with no `..`.
+- Rules (later override earlier): `*` allow; deny `shell`, `external_directory`, `webfetch`, `websearch`, `browser`, `question`,
+  `subagent`; `skill *` deny, then `skill <id>` allow for the shared skills and the user's own. So a session sees only those skills (the
+  built-in ones and the personal `~/.claude` skills of whoever runs the service are hidden; verified). The shell action is **`shell`**,
+  not `bash`. A denied action shows up as `session.tool.failed`, not `permission.asked`; a `permission.asked` is auto-rejected with a note.
+- `question` is denied until the chat can show OpenCode's question forms (step 5, not built).
 - This is OpenCode's own permission check, not an OS sandbox. A sandbox is deferred.
+
+## The OpenCode instance (`bin/opencodeworkspaces.sh`)
+
+The launcher the Docker container runs (`bin/eme.sh restartopencode` after Tomcat starts, and `bin/start.sh` via `docker exec`), when
+`.env` has `OPENCODE_ENABLED=true`. A copy of `bin/opencoded.sh` without the browser pairing link, so both link the same **global config,
+`opencodeglobal.json` in the repo root**, as `~/.config/opencode/opencode.jsonc` (provider, model, MCP, `server` block; named so it is
+not also loaded as a project config inside the repo). The launcher sets hostname/port from its `server` block (`OPENCODE_HOST` /
+`OPENCODE_PORT` override), sets `EME_WORKSPACE_SKILLS` with `opencode service set env`, and sets the service password from
+`OPENCODE_PASSWORD` in `.env` if given (otherwise OpenCode makes a random one, and the `aiserver` row `opencode`'s `serverapikey` =
+base64 of `opencode:<password>` must match; a fixed password survives container rebuilds). One OpenCode service per OS user: running
+either script replaces the other's config link.
+
+**`webapp/system/workspaces/opencodeuser.json` is the template for each user's own `opencode.json`** (`MyEmeWorkspace.folderFor`
+copies it when a user's folder is first created, replacing every `{userid}` with the user's id, and never overwrites; a changed template
+reaches new users only; per-user MCP connections go here). It holds only the user-level settings (the shared skills path, `{env:EME_WORKSPACE_SKILLS}`); everything else comes from the global config. A user without
+that file gets no shared skills. Do not put the template's settings in the global config: the dev service has no `EME_WORKSPACE_SKILLS`.
+`webapp/system/workspaces/` is `plugins/system/html/workspaces/`, a **web path** under `/system/workspaces/`: `_site.xconf` limits
+pages such as the `.json` files to administrators (anonymous gets a login redirect), but Tomcat serves plain files like `SKILL.md` and
+`_site.xconf` to anyone (verified), so **nothing in that folder may be secret**. Shared skills: `webapp/system/workspaces/skills/<id>/SKILL.md`.
+
+`eme-docker-init.sh` mounts `webapp/WEB-INF/data/workspaces` at `/home/entermedia/workspaces` so user files survive a rebuilt container
+(existing containers need `dockerbuild` again). OpenCode's own data (`~/.local/share/opencode`, its sessions) is not mounted: after a
+rebuild the saved session ids are gone, and `MyEmeChatSkill` starts a new session for the channel (the user's files are kept).
 
 ## The turn
 
@@ -129,5 +167,5 @@ MCP (per-call user key), OS sandbox, `asset` messages, user attachments, OpenCod
 
 Restart the server, open My EME chat in the app, switch to "My EME Chat", send "Create an html file called
 helloworld.html". Expect one agent bubble that shows a spinner, then tool lines and text, then settles; the file
-must exist in `webapp/WEB-INF/data/<catalog>/workspaces/<user>/`. Try a prompt that reads `/etc/hostname`
+must exist in `~/workspaces/<user>/`. Try asking it to edit `opencode.json` (denied). Try a prompt that reads `../x` or `/etc/hostname`
 (should fail: `external_directory` denied) and one that asks for a shell command (denied).
