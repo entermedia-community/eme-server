@@ -1,9 +1,11 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	"update": "auto",
+	"username": "opencode",
 	"server": {
 		"hostname": "0.0.0.0",
-		"port": 49374
+		"port": 49374,
+		"password": ""
 	},
 	"providers": {
 		"local-llama": {
@@ -31,6 +33,10 @@
 		"providerID": "local-llama",
 		"model": "Qwen3.8-27B-GGUF"
 	},
+	"skills": [
+		 "/media/emsites/opencode/skills",  
+		 "/media/emsites/opencode/.agents/skills"           
+       	],
 	"media": {
 		"image": {
 			"auto_resize": true,
@@ -56,7 +62,59 @@
 			"enabled": true
 		}
 	},
-	"skills": [
-		".agents/skills"
+	"permissions": [
+		{ "action": "*", "resource": "*", "effect": "deny" },
+		{ "action": "read", "resource": "*", "effect": "allow" },
+		{ "action": "edit", "resource": "/media/eme_sites/*", "effect": "allow" },
+		{ "action": "glob", "resource": "*", "effect": "allow" },
+		{ "action": "grep", "resource": "*", "effect": "allow" },
+		{ "action": "question", "resource": "*", "effect": "allow" },
+		{ "action": "webfetch", "resource": "*", "effect": "allow" },
+		{ "action": "subagent", "resource": "*", "effect": "allow" },
+		{ "action": "skill", "resource": "*", "effect": "allow" },
+		{ "action": "execute", "resource": "*", "effect": "allow" },
+		{ "action": "eme_mediadb_*", "resource": "*", "effect": "allow" },
+		{ "action": "external_directory", "resource": "*", "effect": "deny" },
+		{ "action": "external_directory", "resource": "/media/eme_sites/*", "effect": "allow" },
+		{ "action": "external_directory", "resource": "/etc/nginx/sites-available/*", "effect": "allow" },
+		{ "action": "external_directory", "resource": "/etc/nginx/sites-enabled/*", "effect": "allow" },
+		{ "action": "shell", "resource": "*", "effect": "deny" },
+		{ "action": "shell", "resource": "ls *", "effect": "allow" },
+		{ "action": "shell", "resource": "cat *", "effect": "allow" },
+		{ "action": "shell", "resource": "head *", "effect": "allow" },
+		{ "action": "shell", "resource": "tail *", "effect": "allow" },
+		{ "action": "shell", "resource": "grep *", "effect": "allow" },
+		{ "action": "shell", "resource": "find *", "effect": "allow" },
+		{ "action": "shell", "resource": "which *", "effect": "allow" },
+		{ "action": "shell", "resource": "id *", "effect": "allow" },
+		{ "action": "shell", "resource": "pwd *", "effect": "allow" },
+		{ "action": "shell", "resource": "echo *", "effect": "allow" },
+		{ "action": "shell", "resource": "test *", "effect": "allow" },
+		{ "action": "shell", "resource": "mkdir *", "effect": "allow" },
+		{ "action": "shell", "resource": "cp *", "effect": "allow" },
+		{ "action": "shell", "resource": "mv *", "effect": "allow" },
+		{ "action": "shell", "resource": "rm *", "effect": "allow" },
+		{ "action": "shell", "resource": "ln *", "effect": "allow" },
+		{ "action": "shell", "resource": "touch *", "effect": "allow" },
+		{ "action": "shell", "resource": "chmod *", "effect": "allow" },
+		{ "action": "shell", "resource": "sed *", "effect": "allow" },
+		{ "action": "shell", "resource": "awk *", "effect": "allow" },
+		{ "action": "shell", "resource": "sort *", "effect": "allow" },
+		{ "action": "shell", "resource": "uniq *", "effect": "allow" },
+		{ "action": "shell", "resource": "wc *", "effect": "allow" },
+		{ "action": "shell", "resource": "date *", "effect": "allow" },
+		{ "action": "shell", "resource": "env *", "effect": "allow" },
+		{ "action": "shell", "resource": "printf *", "effect": "allow" },
+		{ "action": "shell", "resource": "git *", "effect": "allow" },
+		{ "action": "shell", "resource": "bin/eme.sh *", "effect": "allow" },
+		{ "action": "shell", "resource": "./bin/eme.sh *", "effect": "allow" },
+		{ "action": "shell", "resource": "curl *", "effect": "allow" },
+		{ "action": "shell", "resource": "sudo -u entermedia *", "effect": "allow" },
+		{ "action": "shell", "resource": "sudo docker *", "effect": "allow" },
+		{ "action": "shell", "resource": "sudo nginx -t *", "effect": "allow" },
+		{ "action": "shell", "resource": "sudo systemctl reload nginx *", "effect": "allow" },
+		{ "action": "shell", "resource": "sudo chown *", "effect": "allow" },
+		{ "action": "shell", "resource": "sudo cp /tmp/opencode/nginx-deploy/*.conf /etc/nginx/sites-available/ *", "effect": "allow" },
+		{ "action": "shell", "resource": "sudo ln -sf /etc/nginx/sites-available/*.conf /etc/nginx/sites-enabled/ *", "effect": "allow" }
 	]
 }
