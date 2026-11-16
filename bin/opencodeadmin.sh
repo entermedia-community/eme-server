@@ -33,8 +33,8 @@ case "$ACTION" in
     ;;
 esac
 
-# opencode.json lives one folder up from this script (the repo root)
-CONFIG="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/opencode.json"
+# opencodeadmin.json lives one folder up from this script (the repo root)
+CONFIG="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/opencodeadmin.json"
 
 if [[ ! -f "$CONFIG" ]]; then
   echo "error: config not found: $CONFIG" >&2
@@ -46,23 +46,26 @@ fi
 if command -v jq >/dev/null 2>&1; then
   HOST="$(jq -r '.server.hostname // empty' "$CONFIG")"
   PORT="$(jq -r '.server.port // empty' "$CONFIG")"
+  #CONFIG_USER="$(jq -r '.server.username // empty' "$CONFIG")"
   CONFIG_PW="$(jq -r '.server.password // empty' "$CONFIG")"
 elif command -v python3 >/dev/null 2>&1; then
-  read -r HOST PORT CONFIG_PW < <(python3 -c '
+  read -r HOST PORT CONFIG_USER CONFIG_PW < <(python3 -c '
 import json,sys
 c=json.load(open(sys.argv[1]))
 s=c.get("server",{})
-print(s.get("hostname",""), s.get("port",""), s.get("password",""))' "$CONFIG")
+print(s.get("hostname",""), s.get("port",""), s.get("username",""), s.get("password",""))' "$CONFIG")
 else
   echo "error: need jq or python3 to read $CONFIG" >&2
   exit 1
 fi
 
+#USER="${OPENCODE_USER:-$CONFIG_USER}"
+USER="opencode"
 PASSWORD="${OPENCODE_PASSWORD:-$CONFIG_PW}"
 URL="http://${HOST}:${PORT}"
 
-if [[ -z "$HOST" || -z "$PORT" || -z "$PASSWORD" ]]; then
-  echo "error: server.hostname / server.port / server.password missing in $CONFIG or .env" >&2
+if [[ -z "$HOST" || -z "$PORT" || -z "$USER" || -z "$PASSWORD" ]]; then
+  echo "error: server.hostname / server.port / server.username / server.password missing in $CONFIG or .env" >&2
   exit 1
 fi
 
@@ -157,7 +160,7 @@ if ! alive; then
 fi
 
 echo "OpenCode web interface: $URL"
-echo "sign-in: username=opencode password=$PASSWORD"
+echo "sign-in: username=$USER password=$PASSWORD"
 echo ""
 
 [[ "$ACTION" == start ]] || exit 0
