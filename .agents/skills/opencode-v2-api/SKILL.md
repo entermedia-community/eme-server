@@ -1,6 +1,6 @@
 ---
 name: opencode-v2-api
-description: Use when working with OpenCodeClient.java or any code that talks to a paired OpenCode v2 HTTP server (the "opencode pair" web interface), or when starting/opening the OpenCode web UI locally. Covers the full verified /api/* endpoint surface, Basic auth, request/response envelopes, the SSE event stream wire format and event-type catalog, the v1→v2 migration mapping for OpenCodeClient.java, the browser-pairing startup script bin/opencoded.sh (host/port from opencode.json, sign-in via one-time `opencode pair` links), and the live-probe recipe for re-verifying the API against a running server.
+description: Use when working with OpenCodeClient.java or any code that talks to a paired OpenCode v2 HTTP server (the "opencode pair" web interface), or when starting/opening the OpenCode web UI locally. Covers the full verified /api/* endpoint surface, Basic auth, request/response envelopes, the SSE event stream wire format and event-type catalog, the v1→v2 migration mapping for OpenCodeClient.java, the browser-pairing startup script bin/opencodeadmin.sh (host/port from opencode.json, sign-in via one-time `opencode pair` links), and the live-probe recipe for re-verifying the API against a running server.
 ---
 
 # Skill: opencode-v2-api
@@ -21,9 +21,9 @@ below). The v2 methods used by My EME chat are `createSession(title, folder, per
 `BlockingQueue` fed from the SSE thread, filtered by `data.sessionID`, or `data.form.sessionID` for
 `form.created`) and `replyToPermission`.
 
-## Starting the web interface (`bin/opencoded.sh`)
+## Starting the web interface (`bin/opencodeadmin.sh`)
 
-The repo ships `bin/opencoded.sh` for bringing up this server locally:
+The repo ships `bin/opencodeadmin.sh` for bringing up this server locally:
 
 - Starts the OpenCode **background service** (`opencode service set/start`, not standalone
   `opencode serve`). Hostname and port come from the `"server"` block in the repo-root
@@ -314,7 +314,7 @@ v1 used.
 ## Live probe recipe
 
 ```bash
-PORT=49374   # bin/opencoded.sh default; verify with `opencode service get port`
+PORT=49374   # bin/opencodeadmin.sh default; verify with `opencode service get port`
 PW=$(opencode service get password)   # or read serverapikey from the aiserver table
 AUTH=$(printf 'opencode:%s' "$PW" | base64 -w0)
 B="http://127.0.0.1:$PORT"

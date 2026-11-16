@@ -68,7 +68,7 @@ Each user has a folder in the **home of the user the server runs as** (in Docker
 ## The OpenCode instance (`bin/opencodeworkspaces.sh`)
 
 The launcher the Docker container runs (`bin/eme.sh restartopencode` after Tomcat starts, and `bin/start.sh` via `docker exec`), when
-`.env` has `OPENCODE_ENABLED=true`. A copy of `bin/opencoded.sh` without the browser pairing link, so both link the same **global config,
+`.env` has `OPENCODE_ENABLED=true`. A copy of `bin/opencodeadmin.sh` without the browser pairing link, so both link the same **global config,
 `opencodeglobal.json` in the repo root**, as `~/.config/opencode/opencode.jsonc` (provider, model, MCP, `server` block; named so it is
 not also loaded as a project config inside the repo). The launcher sets hostname/port from its `server` block (`OPENCODE_HOST` /
 `OPENCODE_PORT` override), sets `EME_WORKSPACE_SKILLS` with `opencode service set env`, and sets the service password from
@@ -156,7 +156,7 @@ MCP (per-call user key), OS sandbox, `asset` messages, user attachments, OpenCod
 ## After changing things
 
 - Java: the EME server runs from the VS Code debugger; `bin/restart.sh` needs the Remote Control extension.
-  `bin/compile.sh` accepts `BUILD_DIR` for a scratch compile. OpenCode itself: `bin/opencoded.sh status`
+  `bin/compile.sh` accepts `BUILD_DIR` for a scratch compile. OpenCode itself: `bin/opencodeadmin.sh status`
   (plain `start` also opens a browser pairing link).
 - `channel.xml` or `aiskill/my_eme.xml`: reload the field/list data, see `field-definitions-maintenance` and
   `reload-list-data`.

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
-# opencoded.sh — manage the OpenCode web interface
+# opencodeadmin.sh — manage the OpenCode web interface
 #
-#   opencoded.sh [start]   configure + start the service, open the browser
-#   opencoded.sh restart   configure + restart the service
-#   opencoded.sh stop      stop the service
-#   opencoded.sh status    show service status
+#   opencodeadmin.sh [start]   configure + start the service, open the browser
+#   opencodeadmin.sh restart   configure + restart the service
+#   opencodeadmin.sh stop      stop the service
+#   opencodeadmin.sh status    show service status
 #
 # hostname, port and password come from the "server" block in opencode.json
 # (one folder up from this script). The password is fixed (never rotates),
