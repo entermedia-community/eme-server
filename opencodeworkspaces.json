@@ -9,7 +9,8 @@
 		"local-llama": {
 			"package": "aisdk:@ai-sdk/openai-compatible",
 			"settings": {
-				"baseURL": "https://llamat.emediaworkspace.com/v1"
+				"baseURL": "https://llamat.emediaworkspace.com/v1",
+				"apiKey": "{env:LLAMA_API_KEY}"
 			},
 			"models": {
 				"Qwen3.8-27B-GGUF": {
