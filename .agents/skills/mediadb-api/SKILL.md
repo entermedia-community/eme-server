@@ -9,11 +9,11 @@ The JSON REST API lives in `plugins/mediadb/html/services/`. Every table ("searc
 embedded Elasticsearch database is reachable through the same few generic endpoints.
 
 - Base URL: `http://localhost:8080/site/mediadb`
-- Every call needs a Bearer token. `bin/refreshtoken.sh` (run from the repo root) prints it; take the last line so any
-  messages the script writes before it are ignored. See the root `AGENTS.md`:
+- Every call needs the signed login headers `X-Tokentype: signature` and `X-Token: <json>`. `bin/refreshtoken.sh --signature`
+  (run from the repo root) prints the JSON and re-signs it when it is 24 hours old. See the root `AGENTS.md`:
 
 ```bash
-A="Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)"
+TT="X-Tokentype: signature"; A="X-Token: $(bin/refreshtoken.sh --signature)"
 B=http://localhost:8080/site/mediadb
 J='Content-Type: application/json'
 ```
@@ -23,7 +23,7 @@ cookie (both removed). Setup, the `services/authentication/*` endpoints and trou
 `mediadb-auth` skill. Quick check that the token works:
 
 ```bash
-curl -s -H "$A" $B/services/authentication/listkeys.json
+curl -s -H "$TT" -H "$A" $B/services/authentication/listkeys.json
 ```
 
 The path is `/site/mediadb/services/...` once. A doubled `/site/mediadb/site/mediadb/services/...`
@@ -40,7 +40,7 @@ returns a Tomcat 404 HTML page.
 **All tables** (~400, mostly internal lookup lists):
 
 ```bash
-curl -s -H "$A" $B/services/settings/datamanager/listtables
+curl -s -H "$TT" -H "$A" $B/services/settings/datamanager/listtables
 ```
 
 Returns `results: [{"name": "<searchtype>"}, ...]`.
@@ -49,7 +49,7 @@ Returns `results: [{"name": "<searchtype>"}, ...]`.
 librarycollection, entitydocument, agentjob, ...). The module `id` is the searchtype to use below.
 
 ```bash
-curl -s -H "$A" -H "$J" -X POST $B/services/lists/search/module \
+curl -s -H "$TT" -H "$A" -H "$J" -X POST $B/services/lists/search/module \
   -d '{"page":"1","hitsperpage":"100","query":{"terms":[{"field":"id","operation":"matches","value":"*"}]}}'
 ```
 
@@ -57,7 +57,7 @@ curl -s -H "$A" -H "$J" -X POST $B/services/lists/search/module \
 `toplevelentity.id`:
 
 ```bash
-curl -s -H "$A" -H "$J" -X POST $B/services/lists/search/appsection \
+curl -s -H "$TT" -H "$A" -H "$J" -X POST $B/services/lists/search/appsection \
   -d '{"page":"1","hitsperpage":"20","query":{"terms":[{"field":"id","operation":"matches","value":"*"}]}}'
 ```
 
@@ -69,7 +69,7 @@ curl -s -H "$A" -H "$J" -X POST $B/services/lists/search/appsection \
 ## 2. Inspect and change a table's fields
 
 ```bash
-curl -s -H "$A" "$B/services/settings/datamanager/fields/listfields?searchtype=color"
+curl -s -H "$TT" -H "$A" "$B/services/settings/datamanager/fields/listfields?searchtype=color"
 ```
 
 Each result has `id` (the field id used in searches and saves), localized `name`, `editable`,
@@ -78,7 +78,7 @@ Each result has `id` (the field id used in searches and saves), localized `name`
 ### Add a field to a table
 
 ```bash
-curl -s -H "$A" -H "$J" -X POST $B/services/settings/datamanager/fields/addnew \
+curl -s -H "$TT" -H "$A" -H "$J" -X POST $B/services/settings/datamanager/fields/addnew \
   -d '{"searchtype":"testtable","newproperty":"testfield","datatype.value":"text"}'
 ```
 
@@ -97,7 +97,7 @@ curl -s -H "$A" -H "$J" -X POST $B/services/settings/datamanager/fields/addnew \
 ### Remove a field
 
 ```bash
-curl -s -H "$A" -H "$J" -X POST $B/services/settings/datamanager/fields/remove \
+curl -s -H "$TT" -H "$A" -H "$J" -X POST $B/services/settings/datamanager/fields/remove \
   -d '{"searchtype":"testtable","id":"testfield"}'
 ```
 
@@ -110,11 +110,11 @@ This is a soft delete: the field stays in the XML with `deleted="true"` and disa
 
 ```bash
 # All colors
-curl -s -H "$A" -H "$J" -X POST $B/services/lists/search/color \
+curl -s -H "$TT" -H "$A" -H "$J" -X POST $B/services/lists/search/color \
   -d '{"page":"1","hitsperpage":"20","query":{"terms":[{"field":"id","operation":"matches","value":"*"}]}}'
 
 # Name starting with "Ca"
-curl -s -H "$A" -H "$J" -X POST $B/services/lists/search/color \
+curl -s -H "$TT" -H "$A" -H "$J" -X POST $B/services/lists/search/color \
   -d '{"page":"1","hitsperpage":"20","query":{"terms":[{"field":"name","operation":"matches","value":"Ca*"}]}}'
 ```
 
@@ -169,13 +169,13 @@ All on `$B/services/lists/data/<searchtype>/<id>`.
 
 ```bash
 # Load
-curl -s -H "$A" $B/services/lists/data/color/52
+curl -s -H "$TT" -H "$A" $B/services/lists/data/color/52
 
 # Save — only the fields you send are changed; other fields are kept
-curl -s -H "$A" -H "$J" -X PUT $B/services/lists/data/color/101 -d '{"name":"DarkKhaki"}'
+curl -s -H "$TT" -H "$A" -H "$J" -X PUT $B/services/lists/data/color/101 -d '{"name":"DarkKhaki"}'
 
 # Delete
-curl -s -H "$A" -X DELETE $B/services/lists/data/color/101
+curl -s -H "$TT" -H "$A" -X DELETE $B/services/lists/data/color/101
 ```
 
 Responses: `{"response":{"status":"ok","id":"52"},"data":{...}}`, or `"status":"not found"` for an
@@ -197,7 +197,7 @@ is an html page under `/site/catalog/events/...` that runs on a timer or when tr
 **List all events:**
 
 ```bash
-curl -s -H "$A" $B/services/settings/events/list
+curl -s -H "$TT" -H "$A" $B/services/settings/events/list
 ```
 
 ```json
@@ -220,7 +220,7 @@ curl -s -H "$A" $B/services/settings/events/list
 Quick summary (running events, enabled count):
 
 ```bash
-curl -s -H "$A" $B/services/settings/events/list | python3 -c '
+curl -s -H "$TT" -H "$A" $B/services/settings/events/list | python3 -c '
 import json,sys; r=json.load(sys.stdin)["results"]
 print("running:", [e["name"] for e in r if e["running"]=="true"])
 print("enabled:", sum(e["enabled"]=="true" for e in r), "of", len(r))'
@@ -229,7 +229,7 @@ print("enabled:", sum(e["enabled"]=="true" for e in r), "of", len(r))'
 **One event's details** — POST its `path` as `eventpath`:
 
 ```bash
-curl -s -H "$A" -H "$J" -X POST $B/services/settings/events/event/details \
+curl -s -H "$TT" -H "$A" -H "$J" -X POST $B/services/settings/events/event/details \
   -d '{"eventpath":"/site/catalog/events/agentjob/runagentjobs.html"}'
 ```
 
@@ -248,7 +248,7 @@ than the list output.
 **Run an event now** — POST its `path` as `runpath`:
 
 ```bash
-curl -s -H "$A" -H "$J" -X POST $B/services/settings/events/event/run \
+curl -s -H "$TT" -H "$A" -H "$J" -X POST $B/services/settings/events/event/run \
   -d '{"runpath":"/site/catalog/events/tests/testevent.html"}'
 ```
 

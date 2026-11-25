@@ -27,9 +27,14 @@ the next request. Keys do not expire.
 ## Getting a token for curl / agents
 
 ```bash
-AUTH="Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)"   # run from the repo root
-curl -H "$AUTH" http://localhost:8080/site/mediadb/services/authentication/listkeys.json
+TT="X-Tokentype: signature"; AUTH="X-Token: $(bin/refreshtoken.sh --signature)"   # run from the repo root
+curl -H "$TT" -H "$AUTH" http://localhost:8080/site/mediadb/services/authentication/listkeys.json
 ```
+
+`bin/refreshtoken.sh --signature` prints the login JSON (`username`, `key_id`, `timestamp`, `nonce`, `signature`) from `.env`
+(`EME_USER`, `EME_KEY_ID`, `EME_TIMESTAMP`, `EME_NONCE`, `EME_SIGNATURE`), re-signing it first when it is 24 hours old or more.
+Send it as `X-Token` together with `X-Tokentype: signature` (`AutoLoginByToken`); no token is minted or cached. The same JSON
+is what the MCP configs use (`{env:EME_*}` placeholders). The Bearer flow below still works.
 
 `bin/refreshtoken.sh` reads `.env` (`EME_USER`, `EME_KEY_ID`, `EME_PRIVATE_KEY`, or `EME_APP_PASSWORD`; optional
 `EME_SERVER`), signs a login, caches the token with its date in `.refreshtoken` (reused for 6 days) and prints it as its

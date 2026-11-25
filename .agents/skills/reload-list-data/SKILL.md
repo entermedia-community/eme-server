@@ -9,7 +9,7 @@ List tables are seeded from files in `plugins/catalog/html/data/lists/<searchtyp
 A running server does **not** re-read them on its own. After editing/checking in a list file, load it
 into the server by calling the datamanager URLs below. Do this **every time a list file changes**.
 
-Auth and cookie handling are the same as in `update-app-css` (Bearer header on the first call, then the
+Auth and cookie handling are the same as in `update-app-css` (`X-Tokentype`/`X-Token` headers on the first call, then the
 cookie jar). `<type>` = the folder name under `lists/` (e.g. `aiskill`).
 
 ## 1. Added or changed rows: restoredata
@@ -39,8 +39,8 @@ by several new ones), the old row is **not** touched: it is not updated and not 
 specific stale row through the mediadb API, then restoredata:
 
 ```bash
-A='Authorization: Bearer <admin token>'
-curl -s -H "$A" -X DELETE http://localhost:8080/site/mediadb/services/lists/data/<type>/<oldid>
+TT='X-Tokentype: signature'; A="X-Token: $(bin/refreshtoken.sh --signature)"
+curl -s -H "$TT" -H "$A" -X DELETE http://localhost:8080/site/mediadb/services/lists/data/<type>/<oldid>
 curl -s -b jar.txt -o /dev/null "$B/restoredata.html?searchtype=<type>"
 ```
 
@@ -62,9 +62,9 @@ grep -n "beanname" plugins/catalog/html/data/fields/<type>.xml
 ## Recipe (curl)
 
 ```bash
-T=$(bin/refreshtoken.sh | tail -n1)   # run from the repo root
+TT='X-Tokentype: signature'; A="X-Token: $(bin/refreshtoken.sh --signature)"   # run from the repo root
 B=http://localhost:8080/site/find/views/settings/lists/datamanager/list
-curl -s -c jar.txt -o /dev/null -H "Authorization: Bearer $T" http://localhost:8080/site/find/   # login once
+curl -s -c jar.txt -o /dev/null -H "$TT" -H "$A" http://localhost:8080/site/find/   # login once
 
 # row count for any list table
 count(){ curl -s -b jar.txt -X POST -H "Content-Type: application/json" \
@@ -102,17 +102,16 @@ tables, not list tables:
   list/folder searchers re-seed rows from `lists/` files), so it would silently do nothing.
 
 ```bash
-T=$(bin/refreshtoken.sh | tail -n1)   # run from the repo root
-A="Authorization: Bearer $T"
+TT='X-Tokentype: signature'; A="X-Token: $(bin/refreshtoken.sh --signature)"   # run from the repo root
 B=http://localhost:8080/site/find/views/settings/lists/datamanager/list
 
 for t in channel chatterbox agentcontext; do
-  curl -s -H "$A" -o /dev/null "$B/deleteall.html?&searchtype=$t&origURL="   # delete all records
-  curl -s -H "$A" -o /dev/null "$B/restore.html?searchtype=$t&oemaxlevel=1"  # reset fields
+  curl -s -H "$TT" -H "$A" -o /dev/null "$B/deleteall.html?&searchtype=$t&origURL="   # delete all records
+  curl -s -H "$TT" -H "$A" -o /dev/null "$B/restore.html?searchtype=$t&oemaxlevel=1"  # reset fields
 done
 
 # finally clear the server cache
-curl -s -H "$A" http://localhost:8080/site/find/views/settings/status/tools/clearcaches.html
+curl -s -H "$TT" -H "$A" http://localhost:8080/site/find/views/settings/status/tools/clearcaches.html
 ```
 
 Order matters per table: deleteall first, then restore. The cache clear goes last. Confirm each

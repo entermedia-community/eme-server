@@ -248,7 +248,7 @@ promoted to `plugins/catalog/html/data/fields/userprofile.xml` and the site file
 Field XML is read through the xconf cache; changes do **not** apply on page reload:
 
 1. Clear the page cache (see `plugins/catalog/AGENTS.md` / root AGENTS.md for the
-   `clearpagemanager.html` call with the Bearer header). No server restart needed for XML-only
+   `clearpagemanager.html` call with the `X-Tokentype`/`X-Token` headers). No server restart needed for XML-only
    changes.
 2. If a field's searchability or type changed (`index`, `filter`, `keyword`, `datatype`,
    `indextype`, ...), the Elasticsearch mapping is derived from these definitions — reindex the
@@ -316,6 +316,6 @@ and the value is simply gone on the next load. This bit the `userkey` table (202
   (`color.xml`, `emailrecipient.xml`, `fatwireexception.xml`, `oauthprovider.xml` — all `stored="false"` too).
 - The audit/normalize script keeps `index` as written, so it will not catch this. When adding a field, save a row
   through the API and read it back (see the `mediadb-api` skill) before relying on it.
-- After editing a fields file: clear the page manager and caches, e.g. with a Bearer token from
-  `bin/refreshtoken.sh | tail -n1`, GET `/openedit/views/filemanager/clearpagemanager.html` and
+- After editing a fields file: clear the page manager and caches, e.g. with the headers
+  `X-Tokentype: signature` and `X-Token: $(bin/refreshtoken.sh --signature)`, GET `/openedit/views/filemanager/clearpagemanager.html` and
   `/site/find/views/settings/status/tools/clearcaches.html`. Rows saved before the fix stay incomplete and must be re-saved.

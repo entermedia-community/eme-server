@@ -36,20 +36,22 @@ Use screenshots as the primary verification surface; the configured model accept
 
 ## Local login credentials (VS Code / local development)
 
-Authenticate HTTP requests (curl, MCP endpoints, JSON APIs) with a Bearer token from `bin/refreshtoken.sh`.
-It reads `EME_USER` / `EME_KEY_ID` / `EME_PRIVATE_KEY` (or `EME_APP_PASSWORD`) from the root `.env`, logs in with the
-registered key, caches the 7 day token in `.refreshtoken`, and prints the token as its last line (always use `| tail -n1`). One-time setup:
+Authenticate HTTP requests (curl, JSON APIs) with the signed login headers `X-Tokentype: signature` and
+`X-Token: $(bin/refreshtoken.sh --signature)`. `--signature` prints the login JSON (`username`, `key_id`, `timestamp`, `nonce`,
+`signature`) from `EME_USER` / `EME_KEY_ID` / `EME_TIMESTAMP` / `EME_NONCE` / `EME_SIGNATURE` in the root `.env`, and re-signs
+them first when they are 24 hours old or more. (`bin/refreshtoken.sh` without a flag still prints a 7 day Bearer token, last
+line, for tools that need one.) One-time setup:
 `bin/refreshtoken.sh --register` (emails a login code) or `bin/refreshtoken.sh --app-password`.
 Use `bin/refreshtoken.sh --force` after a 401. See the `mediadb-auth` skill for details. The old `adminmd5...` password-derived key no longer works, and users have no password at all: login is an emailed code or a registered key / application password.
 
 ```
-AUTH="Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)"
+TT="X-Tokentype: signature"; AUTH="X-Token: $(bin/refreshtoken.sh --signature)"
 ```
 
 Example:
 
 ```bash
-curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
+curl -H "X-Tokentype: signature" -H "X-Token: $(bin/refreshtoken.sh --signature)" \
   http://localhost:8080/site/mediadb/ai/mcp/
 ```
 
@@ -60,6 +62,14 @@ curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
 1. Run `bin/refreshtoken.sh --force` to log in again. If it says there is no registered key, run `bin/refreshtoken.sh --register` once from a terminal. **Do not ask for new credentials.**
 2. Verify with a guest-forbidden probe: `GET /site/mediadb/services/lists/data/color/52` must return **200** (guest gets 403).
 3. Note: `.mcp.json` and `opencodeglobal.json` are static MCP configs that hold a *literal* token — they cannot recompute. If the token changes, update both with the new output of `bin/refreshtoken.sh`.
+
+Local MCP endoings authenticates with headers "X-Tokentype": "signature" and "X-Token": "{\"username\":\"{env:EME_USER}\",\"key_id\":\"{env:EME_KEY_ID}\",\"timestamp\":\"{env:EME_TIMESTAMP}\",\"nonce\":\"{env:EME_NONCE}\",\"signature\":\"{env:EME_SIGNATURE}\"}"
+
+The way to generate EME_KEY_ID, EME_TIMESTAMP, EME_NONCE, EME_SIGNATURE is with bin/refreshtoken.sh
+
+When working in a user workspace ''workspaces/{username}'' use the .env file located in that path within the refreshtoken.sh
+
+
 
 ## No Groovy
 
@@ -84,10 +94,10 @@ bin/restart.sh
 
 ## After editing `.xconf` files
 
-Page configuration (`.xconf`) is cached by the page manager, so edits do not take effect until the cache is cleared. Any time an `.xconf` file is modified, clear the page manager cache with a Bearer token from `bin/refreshtoken.sh` (no restart needed):
+Page configuration (`.xconf`) is cached by the page manager, so edits do not take effect until the cache is cleared. Any time an `.xconf` file is modified, clear the page manager cache with the signed login headers from `bin/refreshtoken.sh` (no restart needed):
 
 ```bash
-curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
+curl -H "X-Tokentype: signature" -H "X-Token: $(bin/refreshtoken.sh --signature)" \
   http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
 ```
 
@@ -96,15 +106,15 @@ curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
 Data lists (e.g. `plugins/catalog/html/data/lists/<searchtype>/*.xml`) are loaded into the database, so edits do not show up until the table's data is reset. For each table you changed, reset its data from XML and then clear the caches:
 
 ```bash
-AUTH="Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)"
+TT="X-Tokentype: signature"; AUTH="X-Token: $(bin/refreshtoken.sh --signature)"
 for t in automationscenario automationstep automationposition; do
-  curl -H "$AUTH" "http://localhost:8080/site/find/views/settings/lists/datamanager/list/restoredata.html?searchtype=$t&oemaxlevel=1"
+  curl -H "$TT" -H "$AUTH" "http://localhost:8080/site/find/views/settings/lists/datamanager/list/restoredata.html?searchtype=$t&oemaxlevel=1"
 done
-curl -H "$AUTH" http://localhost:8080/site/find/views/settings/status/tools/clearcaches.html
+curl -H "$TT" -H "$AUTH" http://localhost:8080/site/find/views/settings/status/tools/clearcaches.html
 ```
 
 A reset overwrites records with what is in the XML files, so any edits made only in the UI are lost. It does **not** remove records that were deleted from (or renamed in) the XML; delete those explicitly, before resetting:
 
 ```bash
-curl -H "$AUTH" -X DELETE "http://localhost:8080/site/mediadb/services/lists/data/<searchtype>/<id>"
+curl -H "$TT" -H "$AUTH" -X DELETE "http://localhost:8080/site/mediadb/services/lists/data/<searchtype>/<id>"
 ```

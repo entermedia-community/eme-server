@@ -103,14 +103,14 @@ Read the nearest `_site.xconf` **before writing a page** — it defines what is 
 Clear the page manager cache (no restart needed):
 
 ```bash
-curl -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
+curl -H "X-Tokentype: signature" -H "X-Token: $(bin/refreshtoken.sh --signature)" \
   http://localhost:8080/openedit/views/filemanager/clearpagemanager.html
 ```
 
-Verify against the running server (Bearer header auto-logs-in; see AGENTS.md for token rules):
+Verify against the running server (the `X-Tokentype`/`X-Token` headers auto-log-in; see AGENTS.md for token rules):
 
 ```bash
-curl -s -H "Authorization: Bearer $(bin/refreshtoken.sh | tail -n1)" \
+curl -s -H "X-Tokentype: signature" -H "X-Token: $(bin/refreshtoken.sh --signature)" \
   http://localhost:8080/site/find/views/<area>/<page>.html | head -50
 ```
 
